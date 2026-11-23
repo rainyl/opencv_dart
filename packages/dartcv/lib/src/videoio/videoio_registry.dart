@@ -4,10 +4,10 @@
 
 library cv.videoio_registry;
 
+import '../bindings/videoio.dart' as cvg;
 import '../core/base.dart';
 import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/videoio.g.dart' if (dart.library.js_interop) '../web/g/videoio.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'videoio.dart';
 

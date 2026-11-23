@@ -1,6 +1,6 @@
+import '../bindings/types.dart' as cvg;
 import '../core/base.dart';
 import '../ffi.dart' as ffi;
-import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class UsacParams extends CvStruct<cvg.UsacParams> {

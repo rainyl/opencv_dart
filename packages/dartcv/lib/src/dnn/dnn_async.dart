@@ -8,6 +8,8 @@ library cv.dnn;
 
 import 'dart:typed_data';
 
+import '../bindings/dnn.dart' as cdnn;
+import '../bindings/dnn.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -16,8 +18,6 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/dnn.g.dart' if (dart.library.js_interop) '../web/g/dnn.g.dart' as cdnn;
-import '../g/dnn.g.dart' if (dart.library.js_interop) '../web/g/dnn.g.dart' as cvg;
 import '../package_ffi.dart';
 import './dnn.dart';
 

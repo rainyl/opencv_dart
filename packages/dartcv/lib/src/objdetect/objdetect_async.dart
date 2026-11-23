@@ -4,6 +4,7 @@
 
 library cv.objdetect;
 
+import '../bindings/objdetect.dart' as cobjdetect;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
@@ -11,7 +12,6 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/objdetect.g.dart' if (dart.library.js_interop) '../web/g/objdetect.g.dart' as cobjdetect;
 import '../package_ffi.dart';
 import './objdetect.dart';
 

@@ -2,19 +2,15 @@
 
 ## Unreleased
 
-- new: **web support (experimental)**. The C wrapper in `src/dartcv` and OpenCV are compiled to WebAssembly with Emscripten, and the hand-written bindings are shared with native: `lib/src/ffi.dart` and `lib/src/package_ffi.dart` export a wasm-backed stand-in for `dart:ffi` / `package:ffi` on the web, and `lib/src/web/g/` mirrors the ffigen output with wasm32 ABI lowering. Works with dart2js and dart2wasm, including Flutter web (CanvasKit and skwasm). Await `initDartcv()` once before any other call; it is a no-op on native platforms. `highgui` and `gapi` are not part of the web build and `videoio` is built without capture backends, so their functions throw `UnsupportedError`.
-- new: `ml` works on the web as well, the whole module including `save`/`load` (Emscripten's in-memory file system is what `FileStorage` writes to).
-- new: `tool/web/build_wasm.sh` builds `dartcv.mjs` + `dartcv.wasm`, exporting every C symbol the bindings declare for the modules that were built (a module left out throws `UnsupportedError` at call time instead of failing the build). `tool/web/build_wasm.ps1` is the Windows port; it finds Emscripten through `-Emsdk`, an `emcc` already on PATH, `EMSDK`/`EMSDK_ROOT`, or the usual scoop/chocolatey/emsdk locations, and links through a response file because the object list is longer than a Windows command line.
-- new: `dart tool/ffigen.dart` now refreshes `lib/src/web/g` as well, so one command regenerates both mirrors; `--no-web` keeps the native-only behaviour, and `dart tool/web/gen_web_bindings.dart --check` reports a stale mirror without writing anything (CI uses it).
-- new: browser test suite (`test/web_test.dart`): runs the package's own tests in Chrome against the wasm build, with both dart2js and dart2wasm. It covers 58 of the 67 test files - everything that compiles for the web - and copies the fixtures into Emscripten's in-memory file system, so tests keep using plain paths.
-- new: the by-value struct handling of 2.3.2 also applies on the web, where `Struct.create`/`Union.create` build the struct on Dart-managed memory.
-- fix: `tool/ffigen.dart` uses the ffigen 23 API (`Input`, `Output(dart: DartOutput(...))`, a `Visitor` for `@RecordUse`). It did not compile against ffigen 23, and `make ffigen` / `dart run ffigen --config ...` still cannot replace it: they skip the record-use mapping and silently break tree-shaking.
-- new: `package:opencv_dart` re-exports the `ml` module, and its example app runs on the web (`initDartcv()` before `runApp`, `imdecode` for the image `image_picker` hands back as a `blob:` URL).
+- new: **web support (experimental)**: the C wrapper and OpenCV are compiled to WebAssembly with Emscripten, the hand-written bindings are shared with native, and `highgui`/`gapi`/capture-backend `videoio` throw `UnsupportedError`; await `initDartcv()` once before any other call.
+- new: `dart tool/ffigen.dart` also refreshes `lib/src/web/g`, so one command regenerates both mirrors (`--no-web` skips the web half, `gen_web_bindings.dart --check` reports a stale one).
+- new: `dart run dartcv4:build_wasm` builds the module from an application, straight into its `web/`.
+- new: the module records the version it was built from, and `initDartcv()` warns a mismatch.
 
 ## 2.3.3
 
 - fix: the native build declares its non-Dart inputs (`src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**`) as build-hook dependencies, so editing them invalidates the hook cache.
-- fix: tree-shaking happens in the link hook, with the keep-list of the current build (#462). The build hook no longer applies the previous build's list, so a clean build is tree-shaken too and a stale list can no longer strip symbols the new code uses. Falls back to the unrestricted library when no usages are recorded.
+- fix: tree-shaking happens in the link hook, with the keep-list of the current build (#462).
 
 ## 2.3.2
 

@@ -6,12 +6,12 @@ library cv.videoio;
 
 import 'dart:convert';
 
+import '../bindings/videoio.dart' as cvg;
+import '../bindings/videoio.dart' as cvideoio;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/videoio.g.dart' if (dart.library.js_interop) '../web/g/videoio.g.dart' as cvg;
-import '../g/videoio.g.dart' if (dart.library.js_interop) '../web/g/videoio.g.dart' as cvideoio;
 import '../package_ffi.dart';
 
 class VideoCapture extends CvStruct<cvg.VideoCapture> {

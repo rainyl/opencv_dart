@@ -4,6 +4,6 @@
 /// Loads the dartcv WebAssembly module. Must be awaited once before any other dartcv call on the
 /// web; on native platforms the library is loaded by the native-assets hooks and this does nothing.
 ///
-/// [moduleUrl] is the URL of `dartcv.mjs` (resolved against the page's base URI); `dartcv.wasm`
+/// [moduleUrl] is the URL of `dartcv.js` (resolved against the page's base URI); `dartcv.wasm`
 /// is loaded from next to it.
-Future<void> initDartcv({String moduleUrl = 'dartcv.mjs'}) async {}
+Future<void> initDartcv({String moduleUrl = 'dartcv.js'}) async {}

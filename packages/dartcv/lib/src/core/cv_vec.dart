@@ -2,9 +2,9 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
+import '../bindings/core.dart' as ccore;
+import '../bindings/types.dart' as cvg;
 import '../ffi.dart' as ffi;
-import '../g/core.g.dart' if (dart.library.js_interop) '../web/g/core.g.dart' as ccore;
-import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'base.dart';
 import 'vec.dart';

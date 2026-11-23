@@ -9,9 +9,9 @@ library cv;
 
 import 'dart:async';
 
+import '../bindings/core.dart' as ccore;
+import '../bindings/types.dart' as cvg;
 import '../ffi.dart' as ffi;
-import '../g/core.g.dart' if (dart.library.js_interop) '../web/g/core.g.dart' as ccore;
-import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 import "exception.dart" show CvException, CvdException;
 

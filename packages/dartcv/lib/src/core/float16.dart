@@ -4,8 +4,8 @@
 
 import 'dart:collection';
 
+import '../bindings/types.dart' as cvg;
 import '../ffi.dart' as ffi;
-import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 
 extension type Float16P(ffi.Pointer<ffi.Uint16> ptr) {

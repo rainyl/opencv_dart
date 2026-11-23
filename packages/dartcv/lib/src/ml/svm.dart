@@ -8,13 +8,13 @@ library cv.ml;
 
 import 'package:meta/meta.dart';
 
+import '../bindings/ml.dart' as cml;
+import '../bindings/types.dart' as cvg;
 import '../core/base.dart';
 import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/termcriteria.dart';
 import '../ffi.dart' as ffi;
-import '../g/ml.g.dart' if (dart.library.js_interop) '../web/g/ml.g.dart' as cml;
-import '../g/types.g.dart' if (dart.library.js_interop) '../web/g/types.g.dart' as cvg;
 import '../package_ffi.dart';
 import 'ml_constants.dart';
 import 'train_data.dart';

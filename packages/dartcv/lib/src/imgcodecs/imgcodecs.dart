@@ -7,12 +7,12 @@ library cv.imgcodecs;
 import 'dart:async';
 import 'dart:typed_data';
 
+import '../bindings/imgcodecs.dart' as cimgcodecs;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/imgcodecs.g.dart' if (dart.library.js_interop) '../web/g/imgcodecs.g.dart' as cimgcodecs;
 import '../package_ffi.dart';
 
 /// Returns true if the specified image can be decoded by OpenCV.

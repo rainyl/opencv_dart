@@ -7,6 +7,9 @@
   Windows counterpart of `tool/web/build_wasm.sh`; it does the same steps and takes the same
   knobs, so both produce the same module.
 
+  DEPRECATED: use `dart tool/web/build_wasm.dart`, which builds the same module through
+  package:native_toolchain_cmake and is what CI runs. Kept for one release, then deleted.
+
   Needs Emscripten (the SDK installed, not just emsdk unpacked), CMake and Ninja. Emscripten is
   looked up in this order and used for the duration of the script, whatever installed it:
 

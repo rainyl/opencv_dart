@@ -4,9 +4,8 @@
 
 library cv.svd;
 
+import '../bindings/core.dart' as ccore;
 import '../ffi.dart' as ffi;
-
-import '../g/core.g.dart' if (dart.library.js_interop) '../web/g/core.g.dart' as ccore;
 import 'base.dart';
 import 'mat.dart';
 

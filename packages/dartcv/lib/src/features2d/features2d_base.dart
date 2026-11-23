@@ -6,13 +6,13 @@
 
 library cv.features2d;
 
+import '../bindings/features2d.dart' as cfeatures2d;
+import '../bindings/features2d.dart' as cvg;
 import '../core/base.dart';
 import '../core/keypoint.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/features2d.g.dart' if (dart.library.js_interop) '../web/g/features2d.g.dart' as cfeatures2d;
-import '../g/features2d.g.dart' if (dart.library.js_interop) '../web/g/features2d.g.dart' as cvg;
 import '../package_ffi.dart';
 
 abstract class Feature2D<T extends ffi.Struct> extends CvStruct<T> {

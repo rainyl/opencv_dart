@@ -6,6 +6,8 @@ library cv.freetype;
 
 import 'dart:typed_data';
 
+import '../bindings/contrib.dart' as ccontrib;
+import '../bindings/contrib.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
@@ -13,8 +15,6 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../ffi.dart' as ffi;
 import '../g/constants.g.dart' show LINE_8;
-import '../g/contrib.g.dart' if (dart.library.js_interop) '../web/g/contrib.g.dart' as ccontrib;
-import '../g/contrib.g.dart' if (dart.library.js_interop) '../web/g/contrib.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class FreeType2 extends CvStruct<cvg.FreeType2> {

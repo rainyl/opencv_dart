@@ -6,11 +6,11 @@
 
 library cv.calib3d;
 
+import '../bindings/calib3d.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
 import '../ffi.dart' as ffi;
-import '../g/calib3d.g.dart' if (dart.library.js_interop) '../web/g/calib3d.g.dart' as cvg;
 import '../package_ffi.dart';
 
 /// Class for computing stereo correspondence using the block matching algorithm,

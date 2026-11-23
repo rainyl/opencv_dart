@@ -1,6 +1,6 @@
 // Runs the package's own tests in a browser against the WebAssembly build:
 //
-//   tool/web/build_wasm.sh            # writes build/web/dartcv.{mjs,wasm}
+//   dart tool/web/build_wasm.dart     # writes build/web/dartcv.{js,wasm}
 //   dart test -p chrome test/web_test.dart
 //
 // Every test file listed here compiles for the web unchanged; files that need dart:io, highgui or
@@ -15,6 +15,9 @@ import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
 import 'package:dartcv4/dartcv.dart' as cv;
+import 'package:dartcv4/src/package_version.dart';
+import 'package:dartcv4/src/web/ffi.dart' as ffi;
+import 'package:dartcv4/src/web/package_ffi.dart' as package_ffi;
 import 'package:dartcv4/src/web/runtime.dart' as rt;
 import 'package:test/test.dart';
 
@@ -173,8 +176,52 @@ Future<void> _preload() async {
 
 Future<void> main() async {
   // Before any group: the test files build Mats while declaring their tests.
-  await cv.initDartcv(moduleUrl: '../build/web/dartcv.mjs');
+  await cv.initDartcv(moduleUrl: '../build/web/dartcv.js');
   await _preload();
+
+  group('runtime.dart', () {
+    // Calls with five or more arguments go through `Reflect.apply` instead of `callAsFunction`.
+    // `Function.prototype.apply` on a wasm function object runs it with no arguments at all in the
+    // browser, which used to make every such call act on garbage: `Mat.fromScalar` (six arguments)
+    // wrote its Mat to address 16, so every Mat came back empty.
+    // dart2js has no 64-bit integers and `ByteData.getInt64` throws there, while `Net.getPerfProfile`
+    // returns an `int64*` (and a struct may hold an `int64` field). The stand-in reads and writes the
+    // two 32-bit halves instead.
+    test('64-bit pointers round-trip on dart2js', () {
+      final i = package_ffi.calloc.allocate<ffi.Int64>(8);
+      addTearDown(() => package_ffi.calloc.free(i));
+      for (final v in [0, 1, -1, 0x123456789, -0x123456789, 0x7FFFFFFF, -0x80000000]) {
+        i.value = v;
+        expect(i.value, v, reason: 'int64 ${v.toRadixString(16)}');
+      }
+      final u = package_ffi.calloc.allocate<ffi.Uint64>(8);
+      addTearDown(() => package_ffi.calloc.free(u));
+      for (final v in [0, 1, 0xFFFFFFFF, 0x100000000, 0x123456789]) {
+        u.value = v;
+        expect(u.value, v, reason: 'uint64 ${v.toRadixString(16)}');
+      }
+    });
+
+    // The module is stamped with the version it was built from and `initDartcv()` refuses a
+    // mismatch; if the build tool stops embedding it, that check silently stops working.
+    // The stamp is a named export of the ES module, so read it from the namespace, not from the
+    // factory's instance (`rt.module`).
+    test('the wasm module reports the package version', () async {
+      final namespace = await importModule('../build/web/dartcv.js'.toJS).toDart;
+      final reported = namespace['dartcvVersion'];
+      expect(reported, isA<JSString>(), reason: 'rebuild build/web/dartcv.js');
+      expect((reported! as JSString).toDart, packageVersion);
+    });
+
+    test('a call with six arguments reaches the C wrapper', () {
+      final mat = cv.Mat.fromScalar(4, 5, cv.MatType.CV_8UC3, cv.Scalar.white);
+      addTearDown(mat.dispose);
+      expect(
+        (mat.rows, mat.cols, mat.channels, mat.type.value),
+        (4, 5, 3, cv.MatType.CV_8UC3.value),
+      );
+    });
+  });
   group('calib3d/calib3d_fisheye_test.dart', () {
     calib3d_calib3d_fisheye_test.main();
   });

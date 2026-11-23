@@ -211,6 +211,35 @@ extension AllocatorAlloc on Allocator {
   Pointer<T> call<T extends SizedNativeType>([int count = 1]) => allocate<T>(sizeOf<T>() * count);
 }
 
+// ---- 64-bit accessors ----
+//
+// `ByteData.getInt64`/`getUint64`/`setInt64`/`setUint64` throw `Unsupported operation` under dart2js,
+// which has no 64-bit integers, and the bindings do use them (`Net.getPerfProfile` returns an
+// `int64*`, `VecI64`/`VecU64` hand out `int64*`, a struct may hold an `int64` field). Going through
+// the two 32-bit halves keeps the stand-in working on both compilers: exact for every value under
+// dart2wasm, and for values within +-2^53 under dart2js - which is the range `int` itself covers
+// there, so nothing is lost that dart2js could have represented.
+
+const _twoPow32 = 0x100000000;
+
+int _readInt64(ByteData d, int offset, {required bool signed}) {
+  final lo = d.getUint32(offset, Endian.little);
+  final hi = signed ? d.getInt32(offset + 4, Endian.little) : d.getUint32(offset + 4, Endian.little);
+  return hi * _twoPow32 + lo;
+}
+
+void _writeInt64(ByteData d, int offset, int value) {
+  var hi = value ~/ _twoPow32;
+  var lo = value - hi * _twoPow32;
+  // `~/` truncates towards zero while the halves want floor division: -1 is hi -1, lo 0xFFFFFFFF.
+  if (lo < 0) {
+    hi -= 1;
+    lo += _twoPow32;
+  }
+  d.setUint32(offset, lo, Endian.little);
+  d.setUint32(offset + 4, hi, Endian.little);
+}
+
 // ---- compounds ----
 
 /// Base of the generated structs. Backed either by wasm memory (`$bytes == null`, `$offset` is
@@ -234,7 +263,7 @@ abstract base class _Compound extends NativeType {
   int $u16(int o) => _d.getUint16($offset + o, Endian.little);
   int $i32(int o) => _d.getInt32($offset + o, Endian.little);
   int $u32(int o) => _d.getUint32($offset + o, Endian.little);
-  int $i64(int o) => _d.getInt64($offset + o, Endian.little);
+  int $i64(int o) => _readInt64(_d, $offset + o, signed: true);
   double $f32(int o) => _d.getFloat32($offset + o, Endian.little);
   double $f64(int o) => _d.getFloat64($offset + o, Endian.little);
   void $si8(int o, int v) => _d.setInt8($offset + o, v);
@@ -243,7 +272,7 @@ abstract base class _Compound extends NativeType {
   void $su16(int o, int v) => _d.setUint16($offset + o, v, Endian.little);
   void $si32(int o, int v) => _d.setInt32($offset + o, v, Endian.little);
   void $su32(int o, int v) => _d.setUint32($offset + o, v, Endian.little);
-  void $si64(int o, int v) => _d.setInt64($offset + o, v, Endian.little);
+  void $si64(int o, int v) => _writeInt64(_d, $offset + o, v);
   void $sf32(int o, double v) => _d.setFloat32($offset + o, v, Endian.little);
   void $sf64(int o, double v) => _d.setFloat64($offset + o, v, Endian.little);
 
@@ -488,17 +517,17 @@ extension SizePointer on Pointer<Size> {
 }
 
 extension Int64Pointer on Pointer<Int64> {
-  int get value => rt.view.getInt64(address, Endian.little);
-  set value(int v) => rt.view.setInt64(address, v, Endian.little);
-  int operator [](int i) => rt.view.getInt64(address + i * 8, Endian.little);
-  void operator []=(int i, int v) => rt.view.setInt64(address + i * 8, v, Endian.little);
+  int get value => _readInt64(rt.view, address, signed: true);
+  set value(int v) => _writeInt64(rt.view, address, v);
+  int operator [](int i) => _readInt64(rt.view, address + i * 8, signed: true);
+  void operator []=(int i, int v) => _writeInt64(rt.view, address + i * 8, v);
 }
 
 extension Uint64Pointer on Pointer<Uint64> {
-  int get value => rt.view.getUint64(address, Endian.little);
-  set value(int v) => rt.view.setUint64(address, v, Endian.little);
-  int operator [](int i) => rt.view.getUint64(address + i * 8, Endian.little);
-  void operator []=(int i, int v) => rt.view.setUint64(address + i * 8, v, Endian.little);
+  int get value => _readInt64(rt.view, address, signed: false);
+  set value(int v) => _writeInt64(rt.view, address, v);
+  int operator [](int i) => _readInt64(rt.view, address + i * 8, signed: false);
+  void operator []=(int i, int v) => _writeInt64(rt.view, address + i * 8, v);
 }
 
 extension FloatPointer on Pointer<Float> {

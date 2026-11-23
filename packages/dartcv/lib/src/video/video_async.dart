@@ -4,6 +4,8 @@
 
 library cv.video;
 
+import '../bindings/video.dart' as cvg;
+import '../bindings/video.dart' as cvideo;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -14,8 +16,6 @@ import '../core/termcriteria.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/video.g.dart' if (dart.library.js_interop) '../web/g/video.g.dart' as cvg;
-import '../g/video.g.dart' if (dart.library.js_interop) '../web/g/video.g.dart' as cvideo;
 import '../package_ffi.dart';
 import 'video.dart';
 

@@ -5,14 +5,14 @@
 // ignore_for_file: constant_identifier_names
 library cv.imgproc.subdiv2d;
 
+import '../bindings/imgproc.dart' as cimgproc;
+import '../bindings/imgproc.dart' as cvg;
 import '../core/base.dart';
 import '../core/cv_vec.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
 import '../ffi.dart' as ffi;
-import '../g/imgproc.g.dart' if (dart.library.js_interop) '../web/g/imgproc.g.dart' as cimgproc;
-import '../g/imgproc.g.dart' if (dart.library.js_interop) '../web/g/imgproc.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class Subdiv2D extends CvStruct<cvg.Subdiv2D> {

@@ -4,11 +4,11 @@
 
 library cv.dnn;
 
+import '../bindings/dnn.dart' as cdnn;
+import '../bindings/dnn.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../ffi.dart' as ffi;
-import '../g/dnn.g.dart' if (dart.library.js_interop) '../web/g/dnn.g.dart' as cdnn;
-import '../g/dnn.g.dart' if (dart.library.js_interop) '../web/g/dnn.g.dart' as cvg;
 import '../package_ffi.dart';
 
 class AsyncArray extends CvStruct<cvg.AsyncArray> {

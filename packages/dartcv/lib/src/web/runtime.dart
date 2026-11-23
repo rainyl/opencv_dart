@@ -24,9 +24,17 @@ void setModule(JSObject m) {
   _buffer = null;
 }
 
-/// Argument arrays for `Function.prototype.apply`, reused per arity: most OpenCV calls take five or
-/// more arguments, and `callAsFunction` stops at four.
+/// Argument arrays for `Reflect.apply`, reused per arity: most OpenCV calls take five or more
+/// arguments, and `callAsFunction` stops at four.
 final _applyArgs = <int, JSArray<JSAny?>>{};
+
+/// `Reflect.apply(target, thisArgument, argumentsList)`.
+///
+/// Not `target.apply(...)`: an Emscripten-exported function is a wasm function object, and in the
+/// browser `Function.prototype.apply` on it runs the function with *no* arguments (verified on
+/// Chrome 142 with dart2js; `fn.apply(null, [addr])` left the out-parameter untouched while
+/// `Reflect.apply(fn, null, [addr])` wrote it). `Reflect.apply` goes through `[[Call]]` directly.
+final _reflectApply = (globalContext['Reflect']! as JSObject)['apply']! as JSFunction;
 
 /// Calls the exported C function [name] with already converted arguments.
 JSAny? call(String name, List<JSAny?> args) {
@@ -43,18 +51,18 @@ JSAny? call(String name, List<JSAny?> args) {
     2 => fn.callAsFunction(null, args[0], args[1]),
     3 => fn.callAsFunction(null, args[0], args[1], args[2]),
     4 => fn.callAsFunction(null, args[0], args[1], args[2], args[3]),
-    // `apply` copies the arguments into the call when it dispatches, so sharing one array per arity
-    // is safe even if the callee calls back into Dart (a listener callback, ...).
+    // `Reflect.apply` copies the arguments into the call when it dispatches, so sharing one array
+    // per arity is safe even if the callee calls back into Dart (a listener callback, ...).
     _ => _apply(fn, args),
   };
 }
 
 JSAny? _apply(JSFunction fn, List<JSAny?> args) {
-  final arr = _applyArgs.putIfAbsent(args.length + 1, () => List<JSAny?>.filled(args.length + 1, null).toJS);
+  final arr = _applyArgs.putIfAbsent(args.length, () => List<JSAny?>.filled(args.length, null).toJS);
   for (var k = 0; k < args.length; k++) {
-    arr[k + 1] = args[k];
+    arr[k] = args[k];
   }
-  return fn.callMethod<JSAny?>('apply'.toJS, null, arr);
+  return _reflectApply.callAsFunction(null, fn, null, arr);
 }
 
 bool hasSymbol(String name) => module.has('_$name');

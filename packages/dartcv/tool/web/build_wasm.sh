@@ -2,6 +2,9 @@
 # Build the dartcv C wrapper + OpenCV to WebAssembly with Emscripten and link it into an
 # ES module: `dartcv.mjs` (loader) + `dartcv.wasm`.
 #
+# DEPRECATED: use `dart tool/web/build_wasm.dart`, which builds the same module through
+# package:native_toolchain_cmake and is what CI runs. Kept for one release, then deleted.
+#
 # Usage (from packages/dartcv, with emsdk activated: `source <emsdk>/emsdk_env.sh`):
 #   tool/web/build_wasm.sh
 #
