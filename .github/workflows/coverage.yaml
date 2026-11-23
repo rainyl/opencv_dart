@@ -18,11 +18,34 @@ on:
 jobs:
   windows:
     name: windows
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - name: Enable Git long paths
         run: git config --global core.longpaths true
+      # The build tree holds objects produced by the image's compiler, and `windows-latest`
+      # silently moves between Visual Studio generations (`windows-2022` is VS2022, the 2025 image is
+      # VS2026). A cache keyed only on `runner.os` would then restore objects from a different
+      # toolset, which ninja reuses while CMake reconfigures around them. Fold the image and the
+      # compiler version into the key instead: a new image generation misses the cache once, and
+      # never mixes toolsets.
+      - name: Toolchain fingerprint
+        id: toolchain
+        shell: bash
+        run: |
+          fp="${ImageOS:-$RUNNER_OS}"
+          case "$RUNNER_OS" in
+            Windows)
+              vs="/c/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+              if [ -x "$vs" ]; then
+                fp="$fp-$("$vs" -latest -property installationVersion | cut -d. -f1-2)"
+              fi
+              ;;
+            macOS) fp="$fp-$(clang -dumpversion | cut -d. -f1-2)" ;;
+            *) fp="$fp-$(cc -dumpversion 2>/dev/null || gcc -dumpversion | cut -d. -f1-2)" ;;
+          esac
+          echo "value=$fp" >> "$GITHUB_OUTPUT"
+          echo "toolchain: $fp"
       - uses: subosito/flutter-action@v2
         with:
           # The SDK `.fvmrc` pins.
@@ -34,11 +57,11 @@ jobs:
         with:
           path: packages/dartcv/.dart_tool/hooks_runner/shared
           key: >-
-            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-${{
+            hooks-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-${{ hashFiles('.fvmrc') }}-${{
             hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
             'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
           restore-keys: |
-            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-
+            hooks-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-${{ hashFiles('.fvmrc') }}-
       - name: Force the native build hooks to re-run
         shell: bash
         run: |

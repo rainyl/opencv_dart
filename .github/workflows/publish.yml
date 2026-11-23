@@ -42,6 +42,29 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      # The build tree holds objects produced by the image's compiler, and `windows-latest`
+      # silently moves between Visual Studio generations (`windows-2022` is VS2022, the 2025 image is
+      # VS2026). A cache keyed only on `runner.os` would then restore objects from a different
+      # toolset, which ninja reuses while CMake reconfigures around them. Fold the image and the
+      # compiler version into the key instead: a new image generation misses the cache once, and
+      # never mixes toolsets.
+      - name: Toolchain fingerprint
+        id: toolchain
+        shell: bash
+        run: |
+          fp="${ImageOS:-$RUNNER_OS}"
+          case "$RUNNER_OS" in
+            Windows)
+              vs="/c/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+              if [ -x "$vs" ]; then
+                fp="$fp-$("$vs" -latest -property installationVersion | cut -d. -f1-2)"
+              fi
+              ;;
+            macOS) fp="$fp-$(clang -dumpversion | cut -d. -f1-2)" ;;
+            *) fp="$fp-$(cc -dumpversion 2>/dev/null || gcc -dumpversion | cut -d. -f1-2)" ;;
+          esac
+          echo "value=$fp" >> "$GITHUB_OUTPUT"
+          echo "toolchain: $fp"
       - uses: subosito/flutter-action@v2
         with:
           # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
@@ -58,11 +81,11 @@ jobs:
         with:
           path: packages/dartcv/.dart_tool/hooks_runner/shared
           key: >-
-            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-${{
+            hooks-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-${{ hashFiles('.fvmrc') }}-${{
             hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
             'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
           restore-keys: |
-            hooks-${{ runner.os }}-${{ hashFiles('.fvmrc') }}-
+            hooks-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-${{ hashFiles('.fvmrc') }}-
       - name: Force the native build hooks to re-run
         shell: bash
         run: |
@@ -120,6 +143,29 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      # The build tree holds objects produced by the image's compiler, and `windows-latest`
+      # silently moves between Visual Studio generations (`windows-2022` is VS2022, the 2025 image is
+      # VS2026). A cache keyed only on `runner.os` would then restore objects from a different
+      # toolset, which ninja reuses while CMake reconfigures around them. Fold the image and the
+      # compiler version into the key instead: a new image generation misses the cache once, and
+      # never mixes toolsets.
+      - name: Toolchain fingerprint
+        id: toolchain
+        shell: bash
+        run: |
+          fp="${ImageOS:-$RUNNER_OS}"
+          case "$RUNNER_OS" in
+            Windows)
+              vs="/c/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+              if [ -x "$vs" ]; then
+                fp="$fp-$("$vs" -latest -property installationVersion | cut -d. -f1-2)"
+              fi
+              ;;
+            macOS) fp="$fp-$(clang -dumpversion | cut -d. -f1-2)" ;;
+            *) fp="$fp-$(cc -dumpversion 2>/dev/null || gcc -dumpversion | cut -d. -f1-2)" ;;
+          esac
+          echo "value=$fp" >> "$GITHUB_OUTPUT"
+          echo "toolchain: $fp"
       - name: Install Ninja
         shell: bash
         run: |
@@ -136,12 +182,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: packages/dartcv/build/wasm
-          key: wasm-${{ runner.os }}-emsdk-${{ matrix.emsdk }}-all-${{
-            hashFiles('packages/dartcv/tool/web/**', 'packages/dartcv/bin/**',
-            'packages/dartcv/src/**', 'packages/dartcv/lib/src/g/*.g.dart',
-            'packages/dartcv/pubspec.yaml') }}
+          key: wasm-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-emsdk-${{
+            matrix.emsdk }}-all-${{ hashFiles('packages/dartcv/tool/web/**',
+            'packages/dartcv/bin/**', 'packages/dartcv/src/**',
+            'packages/dartcv/lib/src/g/*.g.dart', 'packages/dartcv/pubspec.yaml') }}
           restore-keys: |
-            wasm-${{ runner.os }}-emsdk-${{ matrix.emsdk }}-
+            wasm-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-emsdk-${{ matrix.emsdk }}-
       - uses: mymindstorm/setup-emsdk@v14
         with:
           # No actions-cache-folder: setup-emsdk builds the cache key from the workflow name, and the
