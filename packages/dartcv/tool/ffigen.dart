@@ -8,9 +8,10 @@
 // ffigen's per-module settings stay in `ffigen/*.yaml` (the source of truth);
 // this script loads each config via `YamlConfig`, rebuilds the `FfiGenerator`
 // copying every field, and overrides two things the YAML format cannot express:
-//   * `Functions.recordUse: (_) => true` - emits `@RecordUse()` on every
-//     `@ffi.Native` function (the compiler records which native symbols the
-//     final program uses, feeding the `dartcv_keep.txt` tree-shaking keep-list),
+//   * a `Visitor` setting `Func.recordUse` on every function - emits
+//     `@RecordUse()` on each `@ffi.Native` declaration (the compiler records
+//     which native symbols the final program uses, feeding the tree-shaking
+//     keep-list `hook/link.dart` links with),
 //   * `Output.recordUseMapping` - ffigen writes the
 //     `<module>.record_use_mapping.g.dart` name-to-symbol tables directly
 //     (read by `hook/link.dart`).
@@ -44,52 +45,38 @@ const _modules = <String, String>{
   'videoio': 'videoio',
 };
 
-/// Rebuilds [y] (the YAML-derived config) with `@RecordUse()` enabled and the
-/// record-use mapping output set.
+/// Emits `@RecordUse()` on every generated function; the compiler then records the native symbols
+/// the final program reaches, which is what the tree-shaking keep-list is built from.
+final ffigen.Visitor _recordUseVisitor = ffigen.Visitor(func: (node) => node.recordUse = true);
+
+/// Rebuilds [y] (the YAML-derived generator) with [_recordUseVisitor] appended and the record-use
+/// mapping output set. `FfiGenerator` has no `copyWith`, so every field is carried over by hand.
 ffigen.FfiGenerator _withRecordUse(ffigen.FfiGenerator y, Directory outDir) {
-  final fns = y.functions;
-  final baseName = y.output.dartFile.pathSegments.last.replaceAll('.g.dart', '');
+  final baseName = y.output.dart.path.pathSegments.last.replaceAll('.g.dart', '');
   return ffigen.FfiGenerator(
+    input: y.input,
+    // ignore: experimental_member_use
+    cpp: y.cpp,
+    objectiveC: y.objectiveC,
     output: ffigen.Output(
-      dartFile: y.output.dartFile,
+      dart: y.output.dart,
       objectiveCFile: y.output.objectiveCFile,
       cppFile: y.output.cppFile,
       symbolFile: y.output.symbolFile,
-      recordUseMapping: File(
-        '${outDir.path}/$baseName.record_use_mapping.g.dart',
-      ).absolute.uri,
       commentType: y.output.commentType,
       preamble: y.output.preamble,
       format: y.output.format,
       style: y.output.style,
+      recordUseMapping: File(
+        '${outDir.path}/$baseName.record_use_mapping.g.dart',
+      ).absolute.uri,
     ),
-    headers: y.headers,
-    functions: ffigen.Functions(
-      include: fns.include,
-      includeSymbolAddress: fns.includeSymbolAddress,
-      rename: fns.rename,
-      renameMember: fns.renameMember,
-      includeTypedef: fns.includeTypedef,
-      isLeaf: fns.isLeaf,
-      recordUse: (_) => true,
-      varArgs: fns.varArgs,
-    ),
-    structs: y.structs,
-    unions: y.unions,
-    enums: y.enums,
-    macros: y.macros,
-    globals: y.globals,
-    typedefs: y.typedefs,
-    integers: y.integers,
-    unnamedEnums: y.unnamedEnums,
-    cpp: y.cpp,
-    objectiveC: y.objectiveC,
-    // ignore: deprecated_member_use
-    libraryImports: y.libraryImports,
-    // ignore: deprecated_member_use
-    importedTypesByUsr: y.importedTypesByUsr,
-    // ignore: deprecated_member_use
-    libclangDylib: y.libclangDylib,
+    // The YAML config's own visitors (include filters, renames, leaf, ...) must keep running, in
+    // order; ffigen applies them sequentially.
+    visitors: [...y.visitors, _recordUseVisitor],
+    importType: y.importType,
+    // `libclangDylib` is deliberately not copied over: it is deprecated, only there for YAML
+    // plumbing, and no `ffigen/*.yaml` sets `llvm-path`; `generate` finds libclang itself.
   );
 }
 
@@ -109,7 +96,7 @@ Future<void> main(List<String> args) async {
       packageConfig: packageConfig,
     );
     final gen = _withRecordUse(config.configAdapter(), outDir);
-    gen.generate(logger: logger);
+    await gen.generate(logger: logger);
     print('generated ${outDir.path}/$name.g.dart');
   }
 }

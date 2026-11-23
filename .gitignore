@@ -42,6 +42,8 @@ libdartcv*
 build*/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
+# Local dependency overrides (e.g. a path to a working copy of a dependency)
+pubspec_overrides.yaml
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.

@@ -1,5 +1,13 @@
 # opencv_dart
 
+## Unreleased
+
+- chore: `dartcv4` — tree-shaking fix (#462).
+
+## 2.3.3
+
+- fix: the native build declares its non-Dart inputs as build-hook dependencies: `src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**` and, while it is used, the tree-shaking keep-list `dartcv_keep.txt`.
+
 ## 2.3.2
 
 - new: add the `ml` module: `SVM` (with `trainAuto` / `getDefaultGrid` / `getDecisionFunction`), `KNearest`, `ANN_MLP`, `DTrees`, `RTrees` (with `getVotes` / `getVarImportance` / `getOOBError`), `Boost`, `EM`, `LogisticRegression`, `NormalBayesClassifier`, `SVMSGD` and `TrainData`, sync and async. It is opt-in: add `ml` to `hooks.user_defines.dartcv4.include_modules`.

@@ -1,30 +1,33 @@
 // Copyright (c) 2025, Rainyl. All rights reserved. Use of this source code is governed by a
 // Apache 2.0 license that can be found in the LICENSE file.
 
-// Link hook: writes a keep-list of the native symbols actually used by the
-// Dart code into `dartcv_keep.txt`. `hook/build.dart` (run_build.dart) passes
-// that file to CMake as `DARTCV_KEEP_FILE`, which restricts the dartcv library
-// exports to these symbols and garbage-collects everything unreachable from
-// them (`DARTCV_TREESHAKE`).
+// Link hook: links the final `dartcv` library with only the native symbols the
+// Dart code of *this* build actually uses (tree-shaking).
+//
+// The link hook is the only hook that sees `input.recordedUses` (the
+// `@ffi.Native` functions the compiler recorded as called), so it is also the
+// only place where the keep-list can be computed.
+//
+// `hook/build.dart` therefore never restricts the exports: in a tree-shaking
+// build it hands the unrestricted library over (routed to this hook), and
+// `CMakeBuilder.runLink` builds the `dartcv_treeshake` target of the build
+// hook's CMake tree with the keep-list below (see `cmake/treeshake.cmake` of
+// package:native_toolchain_cmake).
 //
 // The keep-list is the union of:
-//  1. the `@ffi.Native` functions recorded as called by the frontend
-//     (`input.recordedUses`, only available during AOT builds), and
+//  1. the `@ffi.Native` functions recorded as called by the frontend, and
 //  2. the finalizer-registered symbols from the ffigen `_SymbolAddresses`
 //     (`*_close` / `*_free` / `*_delete`), because the compiler does NOT record
 //     usages made through `ffi.Native.addressOf` (NativeFinalizer) - without
 //     them the runtime fails to resolve the finalizer symbols.
-//
-// ffigen keeps the Dart external function names identical to the C symbols, so
-// the names can be used directly as the keep-list. Because the build hook runs
-// before this hook, the keep-list produced here only affects a subsequent
-// build / re-link pass.
 
 import 'dart:io';
 
 import 'package:code_assets/code_assets.dart';
+import 'package:dartcv4/src/hook_helpers/library_names.dart';
 import 'package:dartcv4/src/hook_helpers/user_defines.dart';
 import 'package:hooks/hooks.dart';
+import 'package:native_toolchain_cmake/native_toolchain_cmake.dart';
 
 /// Maps a dartcv module to the ffigen binding file that declares it.
 const _moduleGfile = <String, String>{
@@ -102,59 +105,90 @@ Map<String, String> _recordUseMapping(Uri gDir, Set<String> modules) {
   return result;
 }
 
+/// Hands the unrestricted library the build hook produced to the application.
+void _passThrough(LinkOutputBuilder output, String packageName, Uri library, String reason) {
+  stdout.writeln('[dartcv4] link: keeping all exports ($reason)');
+  output.assets.code.add(
+    CodeAsset(
+      package: packageName,
+      name: dartcvAssetName,
+      file: library,
+      linkMode: DynamicLoadingBundled(),
+    ),
+    routing: const ToAppBundle(),
+  );
+}
+
 void main(List<String> args) async {
   await link(args, (input, output) async {
-    final recorded = input.recordedUses;
-    final userArgs = UserDefineArgsParser(
-      input.userDefines,
-      targetOS: input.config.buildCodeAssets ? input.config.code.targetOS : null,
-    );
-    final modules = userArgs.modules;
-    final gDir = input.packageRoot.resolve('lib/src/g/');
-    final mapping = _recordUseMapping(gDir, modules);
-    final finalizerSymbols = await _finalizerSymbols(gDir, modules);
-    final symbols = <String>{
-      if (recorded != null)
-        for (final d in recorded.calls.keys) mapping[d.name] ?? d.name,
-      ...finalizerSymbols,
-    };
+    // Web (data assets only) builds have no code config: accessing
+    // `input.config.code` would throw.
+    if (!input.config.buildCodeAssets) return;
+    final targetOS = input.config.code.targetOS;
+    final userArgs = UserDefineArgsParser(input.userDefines, targetOS: targetOS);
 
-    // Shared, checksum-independent location (also used by the build hook in
-    // run_build.dart) so the keep-list persists across build passes.
-    final sharedDir = input.outputDirectory.resolve('../../');
-    final diag = sharedDir.resolve('dartcv_link_diag.txt');
-
-    // The keep-list only restricts the exports of a tree-shaking build; with `treeshake`
-    // off the build hook deletes it, so writing it here would just leave a file the next
-    // build has to remove again.
-    final writeKeepList = recorded != null && userArgs.treeshake;
-
-    final db = StringBuffer();
-    db.writeln('recorded == null: ${recorded == null}');
-    db.writeln('treeshake: ${userArgs.treeshake}');
-    db.writeln('calls count: ${recorded?.calls.length ?? 0}');
-    if (recorded != null) {
-      db.writeln('sample keys: ${recorded.calls.keys.take(10).map((d) => d.name).toList()}');
+    final library = input.assets.code
+        .where((asset) => asset.id.endsWith('/$dartcvAssetName'))
+        .firstOrNull
+        ?.file;
+    if (library == null) {
+      // `hook/build.dart` only hands the library over for an AOT tree-shaking
+      // build; otherwise it bundles it directly and there is nothing to do.
+      return;
     }
-    db.writeln('finalizer symbols: ${finalizerSymbols.length}');
-    db.writeln('total keep symbols: ${symbols.length}');
-    db.writeln('wrote keep-list: $writeKeepList');
-    File.fromUri(diag).writeAsStringSync(db.toString());
 
-    if (writeKeepList) {
-      final keepFile = sharedDir.resolve('dartcv_keep.txt');
-      File.fromUri(keepFile).createSync(recursive: true);
-      File.fromUri(keepFile).writeAsStringSync(symbols.join('\n'));
-      stdout.writeln(
-        '[dartcv4] link: wrote ${symbols.length} native symbols '
-        '(${recorded.calls.length} recorded + ${finalizerSymbols.length} finalizer) to ${sharedDir.toFilePath()}dartcv_keep.txt',
+    final diagFile = File.fromUri(input.outputDirectory.resolve('dartcv_link_diag.txt'));
+    final recorded = input.recordedUses;
+    if (recorded == null) {
+      // An SDK without the `record-use` experiment: nothing to link with, and
+      // the `.g.dart` files do not need to be scanned for it.
+      diagFile.writeAsStringSync('recorded uses: none\nlibrary: $library\n');
+      _passThrough(output, input.packageName, library, 'the build recorded no native usages');
+      return;
+    }
+
+    final gDir = input.packageRoot.resolve('lib/src/g/');
+    final mapping = _recordUseMapping(gDir, userArgs.modules);
+    final finalizerSymbols = await _finalizerSymbols(gDir, userArgs.modules);
+    final recordedSymbols = symbolsFromRecordedUses(input, mapping: mapping);
+    final symbols = {...recordedSymbols, ...finalizerSymbols};
+
+    final diag = StringBuffer()
+      ..writeln('recorded symbols: ${recordedSymbols.length}')
+      ..writeln('finalizer symbols: ${finalizerSymbols.length}')
+      ..writeln('total keep symbols: ${symbols.length}')
+      ..writeln('treeshake: ${userArgs.treeshake}')
+      ..writeln('library: $library');
+    diagFile.writeAsStringSync(diag.toString());
+
+    if (recordedSymbols.isEmpty) {
+      _passThrough(output, input.packageName, library, 'the build recorded no native usages');
+      return;
+    }
+
+    try {
+      final linked = await CMakeBuilder.forLink(name: dartcvLibraryName).runLink(
+        input: input,
+        output: output,
+        assetName: dartcvAssetName,
+        symbolsToKeep: symbols,
+        libraryName: dartcvLibraryName,
       );
-    } else if (!userArgs.treeshake) {
-      stdout.writeln('[dartcv4] link: treeshake is off, keep-list not written');
-    } else {
+      if (!linked) {
+        _passThrough(output, input.packageName, library, 'the tree-shaken link was not possible');
+        return;
+      }
+      diagFile.writeAsStringSync('$diag\nlinked: true\n');
       stdout.writeln(
-        '[dartcv4] link: no recorded uses (JIT build), keep-list left untouched',
+        '[dartcv4] link: tree-shaken library with ${symbols.length} symbols '
+        '(${recordedSymbols.length} recorded + ${finalizerSymbols.length} finalizer)',
       );
+    } on Exception catch (e) {
+      // Shipping the unrestricted library is always correct, only bigger, so
+      // never fail the build over the tree-shaken link.
+      final reason = e.toString().split('\n').first;
+      diagFile.writeAsStringSync('$diag\nlink failed: $e\n');
+      _passThrough(output, input.packageName, library, 'the tree-shaken link failed: $reason');
     }
   });
 }
