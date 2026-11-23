@@ -28,12 +28,6 @@ jobs:
           # The SDK `.fvmrc` pins.
           flutter-version-file: .fvmrc
           cache: true
-      - name: Cache the Dart package cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.pub-cache
-          key: pub-${{ runner.os }}-${{ hashFiles('packages/**/pubspec.yaml') }}
-          restore-keys: pub-${{ runner.os }}-
       # Same reasoning as `publish.yml`: cache the CMake build tree, then drop the hook *results* so
       # the hook re-runs against this checkout instead of reusing a stale binary.
       - name: Restore the OpenCV build tree

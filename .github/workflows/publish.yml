@@ -47,12 +47,6 @@ jobs:
           # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
           flutter-version-file: .fvmrc
           cache: true
-      - name: Cache the Dart package cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.pub-cache
-          key: pub-${{ runner.os }}-${{ hashFiles('packages/**/pubspec.yaml') }}
-          restore-keys: pub-${{ runner.os }}-
       # The native build (OpenCV from source) is the slow part of these jobs. Dart caches the hook
       # output itself, in `.dart_tool/hooks_runner`, but only on the machine that built it, and that
       # cache's key covers the hook files - not `src/**` - so restoring it wholesale would hand a PR
@@ -94,12 +88,10 @@ jobs:
       - name: Install dependencies
         working-directory: packages/dartcv
         run: dart pub get
-      # Errors and warnings only: the repo carries a handful of `use_named_constants` infos. One OS
-      # is enough, and analysis does not need the native library.
       - name: Analyze
         if: runner.os == 'Linux'
         working-directory: packages/dartcv
-        run: dart analyze --no-fatal-infos
+        run: dart analyze
       - name: Run Test
         working-directory: packages/dartcv
         run: dart test -x skip-workflow
@@ -155,12 +147,6 @@ jobs:
           # The SDK `.fvmrc` pins; also what `dart test -p chrome` runs on.
           flutter-version-file: .fvmrc
           cache: true
-      - name: Cache the Dart package cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.pub-cache
-          key: pub-${{ runner.os }}-${{ hashFiles('packages/**/pubspec.yaml') }}
-          restore-keys: pub-${{ runner.os }}-
       - name: Install dependencies
         working-directory: packages/dartcv
         run: dart pub get

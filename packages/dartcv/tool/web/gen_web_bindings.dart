@@ -190,6 +190,10 @@ void _format(Directory dir) {
   if (fmt.exitCode != 0) throw StateError('dart format failed: ${fmt.stderr}');
 }
 
+/// Line endings are not content here: `dart format` keeps whatever the file already used, and a
+/// Windows checkout with `core.autocrlf=true` rewrites every file to CRLF.
+String _withoutCrlf(String s) => s.replaceAll('\r\n', '\n');
+
 /// Formats [expected] into a temp directory and compares it with [outDir] without writing there.
 void _checkGeneratedFiles(
   Directory outDir,
@@ -209,7 +213,8 @@ void _checkGeneratedFiles(
       final onDisk = File('${outDir.path}/${e.key}');
       if (!onDisk.existsSync()) {
         problems.add('missing   ${e.key}');
-      } else if (onDisk.readAsStringSync() != File('${tmp.path}/${e.key}').readAsStringSync()) {
+      } else if (_withoutCrlf(onDisk.readAsStringSync()) !=
+          _withoutCrlf(File('${tmp.path}/${e.key}').readAsStringSync())) {
         problems.add('differs   ${e.key}');
       }
     }
