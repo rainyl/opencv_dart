@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# The dartcv WebAssembly module, built with `dart run dartcv4:build_wasm` (see README).
+# It is a ~15 MB build artifact, so it is not committed: the web target needs it, the others do not.
+/web/dartcv.js
+/web/dartcv.wasm

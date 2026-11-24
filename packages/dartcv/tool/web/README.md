@@ -139,4 +139,5 @@ in-memory file system.
 
 To try the Flutter example, point `packages/opencv_dart` at the local package (see `AGENTS.md`),
 copy `build/web/dartcv.{js,wasm}` into `packages/opencv_dart/example/web/` and run
-`flutter run -d chrome` there.
+`flutter run -d chrome` there. `packages/dartcv/example/flutter` is web-ready as well, and depends on
+this package by path already: copy the same two files into its `web/` and run it (see its README).
