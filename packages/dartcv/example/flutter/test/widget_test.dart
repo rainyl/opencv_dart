@@ -7,7 +7,9 @@ import 'package:material_ui/material_ui.dart';
 import 'package:dartcv_example/main.dart';
 
 void main() {
-  testWidgets('renders the pick and process buttons', (WidgetTester tester) async {
+  testWidgets('renders the pick and process buttons', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
     expect(find.text('Pick Image'), findsOneWidget);

@@ -49,7 +49,10 @@ class _MyAppState extends State<MyApp> {
         blur.dispose();
       }
     }
-    final encoded = (cv.imencode(".png", gray).$2, cv.imencode(".png", blur).$2);
+    final encoded = (
+      cv.imencode(".png", gray).$2,
+      cv.imencode(".png", blur).$2,
+    );
     im.dispose();
     gray.dispose();
     blur.dispose();
@@ -96,7 +99,9 @@ class _MyAppState extends State<MyApp> {
                     // On the web the picked file is a `blob:` URL, not a path the decoder can open,
                     // so decode its bytes instead of handing `imread` the path.
                     final bytes = await img.readAsBytes();
-                    final mat = kIsWeb ? cv.imdecode(bytes, cv.IMREAD_COLOR) : cv.imread(img.path);
+                    final mat = kIsWeb
+                        ? cv.imdecode(bytes, cv.IMREAD_COLOR)
+                        : cv.imread(img.path);
                     print(
                       "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: ${img.path}",
                     );
@@ -113,7 +118,8 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(context)
+                      .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   print("bytes: ${bytes.length}");
                   // heavy computation
@@ -137,7 +143,8 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
+                        itemBuilder: (ctx, idx) =>
+                            Card(child: Image.memory(images[idx])),
                       ),
                     ),
                     Expanded(
