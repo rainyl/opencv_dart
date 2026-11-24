@@ -21,11 +21,21 @@ import 'umat.dart';
 import 'vec.dart';
 
 class Mat extends CvStruct<cvg.Mat> {
-  Mat._(cvg.MatPtr ptr, {bool attach = true, int? externalSize}) : super.fromPointer(ptr) {
+  Mat._(cvg.MatPtr ptr, {bool attach = true, int? externalSize, Object? externalOwner})
+    : _externalOwner = externalOwner,
+      super.fromPointer(ptr) {
     if (attach) {
       finalizer.attach(this, ptr.cast(), detach: this, externalSize: externalSize);
     }
   }
+
+  /// The Dart object this Mat borrows its pixels from, if any.
+  ///
+  /// `Mat.fromVec(..., copyData: false)` points the Mat at the [Vec]'s buffer, so the Vec has to stay
+  /// reachable for as long as the Mat does: without this the next GC frees it and the Mat silently
+  /// reads zeros. (A `Mat.fromBuffer` caller passes a raw pointer, which cannot be tracked here.)
+  // ignore: unused_field - never read: it exists so the GC keeps that object reachable.
+  final Object? _externalOwner;
 
   // Creates a Mat wrapper from a fresh calloc'd struct, freeing the struct if
   // the native call fails (otherwise `p` would be leaked on the error path).
@@ -215,6 +225,8 @@ class Mat extends CvStruct<cvg.Mat> {
   /// data will be copied if [copyData] is true, if [vec] is large, remember to dispose it.
   factory Mat.fromVec(Vec vec, {int? rows, int? cols, MatType? type, bool copyData = true}) {
     final p = calloc<cvg.Mat>();
+    // Kept alive by the returned Mat when the pixels are not copied.
+    Object? owner;
     try {
       switch (vec) {
         case VecPoint():
@@ -238,6 +250,7 @@ class Mat extends CvStruct<cvg.Mat> {
                 ? ccore.cv_Mat_create_6(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr)
                 : ccore.cv_Mat_create_6_no_copy(rows, cols, type.value, vec.asVoid(), p, ffi.nullptr),
           );
+          if (!copyData) owner = vec;
         default:
           throw UnsupportedError("Unsupported Vec type ${vec.runtimeType}");
       }
@@ -245,7 +258,7 @@ class Mat extends CvStruct<cvg.Mat> {
       calloc.free(p);
       rethrow;
     }
-    return Mat._(p);
+    return Mat._(p, externalOwner: owner);
   }
 
   factory Mat.create({int rows = 0, int cols = 0, int r = 0, int g = 0, int b = 0, MatType? type}) {
@@ -886,7 +899,8 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat add<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => addMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      // `T != double`: on the web 1.0 is also an int, so `add<double>(1)` must not take this branch.
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => addU8(val as int, inplace: inplace),
         MatType.CV_8S => addI8(val as int, inplace: inplace),
         MatType.CV_16U => addU16(val as int, inplace: inplace),
@@ -952,7 +966,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat subtract<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => subtractMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => subtractU8(val as int, inplace: inplace),
         MatType.CV_8S => subtractI8(val as int, inplace: inplace),
         MatType.CV_16U => subtractU16(val as int, inplace: inplace),
@@ -1019,7 +1033,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat multiply<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => multiplyMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => multiplyU8(val as int, inplace: inplace),
         MatType.CV_8S => multiplyI8(val as int, inplace: inplace),
         MatType.CV_16U => multiplyU16(val as int, inplace: inplace),
@@ -1087,7 +1101,7 @@ class Mat extends CvStruct<cvg.Mat> {
   Mat divide<T>(T val, {bool inplace = false}) {
     return switch (val) {
       Mat() => divideMat(val as Mat, inplace: inplace),
-      int() => switch (type.depth) {
+      int() when T != double => switch (type.depth) {
         MatType.CV_8U => divideU8(val as int, inplace: inplace),
         MatType.CV_8S => divideI8(val as int, inplace: inplace),
         MatType.CV_16U => divideU16(val as int, inplace: inplace),
