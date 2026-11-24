@@ -6,12 +6,12 @@
 - new: `dart tool/ffigen.dart` also refreshes `lib/src/web/g`, so one command regenerates both mirrors (`--no-web` skips the web half, `gen_web_bindings.dart --check` reports a stale one).
 - new: `dart run dartcv4:build_wasm` builds the module from an application, straight into its `web/`.
 - new: the module records the version it was built from, and `initDartcv()` warns a mismatch.
-- fix: `Mat.fromVec(..., copyData: false)` keeps its source `Vec` alive, so the Mat no longer reads freed memory (zeros) after a GC.
 
 ## 2.3.3
 
-- fix: the native build declares its non-Dart inputs (`src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**`) as build-hook dependencies, so editing them invalidates the hook cache.
-- fix: tree-shaking happens in the link hook, with the keep-list of the current build (#462).
+- fix: the native build declares its non-Dart inputs as build-hook dependencies: `src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**` and, while it is used, the tree-shaking keep-list `dartcv_keep.txt`.
+- fix: tree-shaking happens in the link hook with the keep-list of the current build (#462).
+- fix: `Mat.fromVec(..., copyData: false)` keeps its source `Vec` alive, so the Mat no longer reads freed memory (zeros) after a GC.
 
 ## 2.3.2
 
