@@ -19,7 +19,7 @@ export 'imgproc.dart';
 export 'ml.dart';
 export 'objdetect.dart';
 export 'photo.dart';
-export "src/g/constants.g.dart";
+export 'src/g/constants.g.dart';
 export 'stitching.dart';
 export 'video.dart';
 export 'videoio.dart';

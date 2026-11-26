@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -7,10 +5,9 @@ import 'ml_test_data.dart';
 
 void main() {
   test('cv.TrainData.loadFromCSVAsync', () async {
-    final dir = Directory.systemTemp.createTempSync('dartcv_ml_test_');
-    addTearDown(() => dir.deleteSync(recursive: true));
-    final csv = File('${dir.path}/data.csv')..writeAsStringSync('1,2,0\n3,4,1\n5,6,0\n');
-    final data = await cv.TrainDataAsync.loadFromCSVAsync(csv.path, 0, varTypeSpec: 'ord[0-1]cat[2]');
+    final path = '${tempDir()}/data.csv';
+    writeAsString(path, '1,2,0\n3,4,1\n5,6,0\n');
+    final data = await cv.TrainDataAsync.loadFromCSVAsync(path, 0, varTypeSpec: 'ord[0-1]cat[2]');
     expect(data.nSamples, 3);
     expect(data.nVars, 2);
     await expectLater(

@@ -5,15 +5,14 @@
 library cv.gapi;
 
 import 'dart:async';
-import 'dart:ffi' as ffi;
-import 'dart:ffi';
 
-import 'package:ffi/ffi.dart';
-
+import '../bindings/gapi.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/scalar.dart';
-import '../g/gapi.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../ffi.dart';
+import '../package_ffi.dart';
 import 'gmat.dart';
 import 'gscalar.dart';
 

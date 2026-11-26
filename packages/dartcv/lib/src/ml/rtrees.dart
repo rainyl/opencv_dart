@@ -6,17 +6,15 @@
 
 library cv.ml;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/ml.dart' as cml;
+import '../bindings/types.dart' as cvg;
 import '../core/base.dart';
 import '../core/exception.dart';
 import '../core/mat.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
-import '../g/ml.g.dart' as cml;
-import '../g/types.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 import 'dtrees.dart';
 import 'ml_constants.dart';
 import 'train_data.dart';

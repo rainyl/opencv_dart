@@ -6,13 +6,11 @@
 
 library cv;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/core.dart' as ccore;
+import '../bindings/core.dart' as cvg;
+import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/core.g.dart' as cvg;
-import '../g/core.g.dart' as ccore;
+import '../package_ffi.dart';
 import 'base.dart';
 import 'mat.dart';
 import 'mat_type.dart';

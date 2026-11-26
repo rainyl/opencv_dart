@@ -6,15 +6,13 @@
 
 library cv.contrib;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/contrib.dart' as ccontrib;
+import '../bindings/contrib.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../g/contrib.g.dart' as ccontrib;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 abstract class ImgHashBase {
   double compare(InputArray hashOne, InputArray hashTwo);

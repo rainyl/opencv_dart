@@ -2,13 +2,12 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:ffi/ffi.dart';
-
-import '../g/core.g.dart' as ccore;
-import '../g/types.g.dart' as cvg;
+import '../bindings/core.dart' as ccore;
+import '../bindings/types.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 import 'base.dart';
 import 'cv_vec.dart';
 import 'float16.dart';

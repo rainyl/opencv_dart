@@ -4,18 +4,16 @@
 
 library cv.gapi;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+// import '../core/scalar.dart';
+// import '../core/vec.dart';
+import '../bindings/gapi.dart' as cvg;
 // import '../g/constants.g.dart';
 import '../core/base.dart';
 // import '../core/dmatch.dart';
 // import '../core/keypoint.dart';
 import '../core/mat.dart';
-// import '../core/scalar.dart';
-// import '../core/vec.dart';
-import '../g/gapi.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 class GMat extends CvStruct<cvg.GMat> {
   GMat.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {

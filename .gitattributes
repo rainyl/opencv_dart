@@ -1,0 +1,6 @@
+# The generated mirrors (`lib/src/g`, `lib/src/web/g`, `lib/src/bindings`) are compared byte-for-byte
+# by `dart tool/web/gen_web_bindings.dart --check`, and `dart format` keeps a file's existing line
+# endings. A Windows checkout (whose Git default, `core.autocrlf=true`, rewrites LF as CRLF) would
+# therefore report every generated file as out of date, so pin the working tree to LF everywhere.
+# `text=auto` still leaves binaries alone.
+* text=auto eol=lf

@@ -2,11 +2,9 @@
 // Use of this source code is governed by a Apache-2.0 license
 // that can be found in the LICENSE file.
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
-import '../g/types.g.dart' as cvg;
+import '../bindings/types.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 import 'base.dart';
 
 class Size extends CvStruct<cvg.CvSize> {

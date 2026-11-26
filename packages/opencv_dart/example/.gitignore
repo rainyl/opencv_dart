@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# dartcv WebAssembly build (tool/web/build_wasm.sh or the GitHub release asset)
+/web/dartcv.mjs
+/web/dartcv.wasm

@@ -4,15 +4,13 @@
 
 library cv.imgproc.clahe;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/imgproc.dart' as cimgproc;
+import '../bindings/imgproc.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
-import '../g/imgproc.g.dart' as cvg;
-import '../g/imgproc.g.dart' as cimgproc;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 class CLAHE extends CvStruct<cvg.CLAHE> {
   CLAHE._(cvg.CLAHEPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

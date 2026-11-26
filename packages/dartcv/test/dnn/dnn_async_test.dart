@@ -1,8 +1,8 @@
 @Tags(["no-local-files"])
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
+
+import '../io_helpers.dart';
 
 Future<bool> checkCaffeNetAsync(cv.Net net) async {
   expect(net.isEmpty, false);
@@ -152,8 +152,8 @@ void main() async {
   });
 
   test('cv.NetAsync.fromBytesAsync', () async {
-    final bytes = await File("test/models/bvlc_googlenet.caffemodel").readAsBytes();
-    final config = await File("test/models/bvlc_googlenet.prototxt").readAsBytes();
+    final bytes = readAsBytes("test/models/bvlc_googlenet.caffemodel");
+    final config = readAsBytes("test/models/bvlc_googlenet.prototxt");
     final model = await cv.NetAsync.fromBytesAsync("caffe", bytes, bufferConfig: config);
     await checkCaffeNetAsync(model);
 
@@ -169,8 +169,8 @@ void main() async {
   });
 
   test('cv.NetAsync.fromCaffeBytesAsync', () async {
-    final bytes = await File("test/models/bvlc_googlenet.caffemodel").readAsBytes();
-    final config = await File("test/models/bvlc_googlenet.prototxt").readAsBytes();
+    final bytes = readAsBytes("test/models/bvlc_googlenet.caffemodel");
+    final config = readAsBytes("test/models/bvlc_googlenet.prototxt");
     final model = await cv.NetAsync.fromCaffeBytesAsync(config, bytes);
     await checkCaffeNetAsync(model);
   });
@@ -181,7 +181,7 @@ void main() async {
   });
 
   test('cv.NetAsync.fromOnnxBytesAsync', () async {
-    final bytes = await File("test/models/googlenet-9.onnx").readAsBytes();
+    final bytes = readAsBytes("test/models/googlenet-9.onnx");
     final model = await cv.NetAsync.fromOnnxBytesAsync(bytes);
     await checkOnnxAsync(model);
   });
@@ -193,7 +193,7 @@ void main() async {
   });
 
   test('cv.NetAsync.fromTensorflowBytesAsync', () async {
-    final bytes = await File("test/models/tensorflow_inception_graph.pb").readAsBytes();
+    final bytes = readAsBytes("test/models/tensorflow_inception_graph.pb");
     final model = await cv.NetAsync.fromTensorflowBytesAsync(bytes);
     expect(model.isEmpty, false);
     await checkTensorflowAsync(model);

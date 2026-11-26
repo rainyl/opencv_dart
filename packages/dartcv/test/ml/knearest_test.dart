@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -46,9 +44,7 @@ void main() {
   });
 
   test('cv.KNearest save and load', () {
-    final dir = Directory.systemTemp.createTempSync('dartcv_ml_test_');
-    addTearDown(() => dir.deleteSync(recursive: true));
-    final path = '${dir.path}/knn.yml';
+    final path = '${tempDir()}/knn.yml';
     trainedKnn()
       ..defaultK = 3
       ..save(path);

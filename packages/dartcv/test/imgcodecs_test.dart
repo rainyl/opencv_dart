@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
+
+import 'io_helpers.dart';
 
 void main() async {
   test('cv.haveImageReader, cv.haveImageWriter', () {
@@ -39,7 +39,7 @@ void main() async {
     final (success, buf) = cv.imencode(".png", cvImage);
     expect(success, true);
     expect(buf.length, greaterThan(0));
-    await File("test/images_out/test_imencode.png").writeAsBytes(buf);
+    writeBytes("test/images_out/test_imencode.png", buf);
     final params = [cv.IMWRITE_PNG_COMPRESSION, 9].i32;
     final (success1, buf1) = cv.imencode(".png", cvImage, params: params);
     expect(success1, true);
@@ -62,7 +62,7 @@ void main() async {
     final (success, buf) = cv.imencodeVec(".png", cvImage);
     expect(success, true);
     expect(buf.length, greaterThan(0));
-    await File("test/images_out/test_imencode.png").writeAsBytes(buf.data);
+    writeBytes("test/images_out/test_imencode.png", buf.data);
     final params = [cv.IMWRITE_PNG_COMPRESSION, 9].i32;
     final (success1, buf1) = cv.imencodeVec(".png", cvImage, params: params);
     expect(success1, true);
@@ -86,7 +86,7 @@ void main() async {
     expect(success, true);
     expect(buf.length, greaterThan(0));
 
-    await File("test/images_out/test_imencode.png").writeAsBytes(buf);
+    writeBytes("test/images_out/test_imencode.png", buf);
     final params = [cv.IMWRITE_PNG_COMPRESSION, 9].i32;
     final (success1, buf1) = await cv.imencodeAsync(".png", cvImage, params: params);
     expect(success1, true);
@@ -105,7 +105,7 @@ void main() async {
     expect(success, true);
     expect(buf.length, greaterThan(0));
 
-    await File("test/images_out/test_imencode.png").writeAsBytes(buf.data);
+    writeBytes("test/images_out/test_imencode.png", buf.data);
     final params = [cv.IMWRITE_PNG_COMPRESSION, 9].i32;
     final (success1, buf1) = await cv.imencodeVecAsync(".png", cvImage, params: params);
     expect(success1, true);

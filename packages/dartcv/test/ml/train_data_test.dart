@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -43,19 +41,17 @@ void main() {
   });
 
   test('cv.TrainData.loadFromCSV', () {
-    final dir = Directory.systemTemp.createTempSync('dartcv_ml_test_');
-    addTearDown(() => dir.deleteSync(recursive: true));
-    final csv = File('${dir.path}/data.csv');
+    final path = '${tempDir()}/data.csv';
     // two ordered features, a categorical feature with 3 values and a categorical response
     const colors = ['red', 'green', 'blue'];
     final rows = [
       for (var i = 0; i < 10; i++)
         '${clusterPoints[i * 2]},${clusterPoints[i * 2 + 1]},${colors[i % 3]},${clusterLabels[i] == 0 ? 'a' : 'b'}',
     ];
-    csv.writeAsStringSync('x,y,color,label\n${rows.join('\n')}\n');
+    writeAsString(path, 'x,y,color,label\n${rows.join('\n')}\n');
 
     final data = cv.TrainData.loadFromCSV(
-      csv.path,
+      path,
       1,
       responseStartIdx: 3,
       responseEndIdx: 4,

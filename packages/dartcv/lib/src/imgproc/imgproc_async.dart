@@ -7,10 +7,9 @@
 library cv.imgproc;
 
 import 'dart:async';
-import 'dart:ffi' as ffi;
 
-import 'package:ffi/ffi.dart';
-
+import '../bindings/imgproc.dart' as cimgproc;
+import '../bindings/imgproc.dart' as cvg;
 import '../core/base.dart';
 import '../core/contours.dart';
 import '../core/cv_vec.dart';
@@ -22,9 +21,9 @@ import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
+import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/imgproc.g.dart' as cvg;
-import '../g/imgproc.g.dart' as cimgproc;
+import '../package_ffi.dart';
 
 /// ApproxPolyDP approximates a polygonal curve(s) with the specified precision.
 ///

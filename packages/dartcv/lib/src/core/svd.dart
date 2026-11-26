@@ -4,9 +4,8 @@
 
 library cv.svd;
 
-import 'dart:ffi' as ffi;
-
-import '../g/core.g.dart' as ccore;
+import '../bindings/core.dart' as ccore;
+import '../ffi.dart' as ffi;
 import 'base.dart';
 import 'mat.dart';
 

@@ -4,18 +4,16 @@
 
 library cv.contrib;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/contrib.dart' as ccontrib;
+import '../bindings/contrib.dart' as cvg;
 import '../core/base.dart';
 import '../core/cv_vec.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as ccontrib;
-import '../g/contrib.g.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 import 'aruco.dart';
 import 'charuco_board.dart';
 

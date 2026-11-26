@@ -4,16 +4,14 @@
 
 library cv.calib3d.fisheye;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/calib3d.dart' as ccalib3d;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
-import '../g/calib3d.g.dart' as ccalib3d;
+import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
+import '../package_ffi.dart';
 import 'calib3d.dart';
 
 class Fisheye {

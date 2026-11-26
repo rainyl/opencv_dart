@@ -4,10 +4,8 @@
 
 library cv.video;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/video.dart' as cvg;
+import '../bindings/video.dart' as cvideo;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -16,9 +14,9 @@ import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
 import '../core/vec.dart';
+import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/video.g.dart' as cvg;
-import '../g/video.g.dart' as cvideo;
+import '../package_ffi.dart';
 
 class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
   BackgroundSubtractorMOG2(cvg.BackgroundSubtractorMOG2Ptr ptr, [bool attach = true])

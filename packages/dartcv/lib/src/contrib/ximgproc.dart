@@ -6,10 +6,8 @@
 
 library cv.contrib.ximgproc;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/contrib.dart' as ccontrib;
+import '../bindings/contrib.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -18,8 +16,8 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as cvg;
-import '../g/contrib.g.dart' as ccontrib;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 class ximgproc {
   /// Performs anisotropic diffusion on an image.

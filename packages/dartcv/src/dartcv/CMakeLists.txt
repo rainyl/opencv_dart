@@ -215,7 +215,16 @@ if(NOT DEFINED DARTCV_DEP_INCLUDE_DIRS)
 endif()
 set(dartcv_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
 
-add_library(${LIBRARY_NAME} SHARED ${_cpp_files} ${_header_files})
+# Under Emscripten the wrapper is never a shared library: `tool/web/build_wasm.dart` links it
+# into the `dartcv_wasm` executable together with OpenCV's static libraries, and only the exports
+# listed in `DARTCV_WASM_EXPORTS` survive. Making it an OBJECT library here keeps a single compile
+# for both, and the deprecated shell scripts (they build the `dartcv` target and glob its objects,
+# whose paths do not change) keep working.
+if (EMSCRIPTEN)
+  add_library(${LIBRARY_NAME} OBJECT ${_cpp_files} ${_header_files})
+else ()
+  add_library(${LIBRARY_NAME} SHARED ${_cpp_files} ${_header_files})
+endif ()
 target_include_directories(${LIBRARY_NAME} SYSTEM PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${DARTCV_INCLUDE_DIRS}
@@ -247,7 +256,7 @@ if (_link_flags)
   set_target_properties(${LIBRARY_NAME} PROPERTIES LINK_FLAGS "${_link_flags}")
 endif ()
 
-if (UNIX AND NOT APPLE)
+if (UNIX AND NOT APPLE AND NOT EMSCRIPTEN)
   set_target_properties(${LIBRARY_NAME} PROPERTIES
     BUILD_WITH_INSTALL_RPATH FALSE
     BUILD_RPATH "\$ORIGIN"
@@ -269,6 +278,58 @@ message(DEBUG "DARTCV_DEP_INCLUDE_DIRS: ${DARTCV_DEP_INCLUDE_DIRS}")
 target_link_libraries(${LIBRARY_NAME} PUBLIC ${DARTCV_DEPS} ${PLATFORM_LIBS})
 if (ANDROID)
   target_link_options(${LIBRARY_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
+endif ()
+
+# ---------------------------------------------------------------------------
+# WebAssembly module (Emscripten)
+# ---------------------------------------------------------------------------
+# The module is a *main* module that carries OpenCV and the wrapper, not a dylink side module:
+# the objects of ${LIBRARY_NAME} and the OpenCV static libraries are linked into one executable
+# and only the exports in DARTCV_WASM_EXPORTS remain callable from Dart.
+#
+# Only added when the caller can supply the export list (`tool/web/build_wasm.dart` always does),
+# so a plain `emcmake cmake` - and the deprecated scripts, which do their own linking - still
+# configure and build only the objects.
+if (EMSCRIPTEN)
+  if (NOT DARTCV_WASM_EXPORTS)
+    message(STATUS "DARTCV_WASM_EXPORTS not set: building the objects only, no dartcv_wasm target")
+  else ()
+    add_executable(dartcv_wasm $<TARGET_OBJECTS:${LIBRARY_NAME}>)
+    # An OBJECT library does not link, so the dependencies are repeated here.
+    target_link_libraries(dartcv_wasm PRIVATE ${DARTCV_DEPS} ${PLATFORM_LIBS})
+    target_link_options(dartcv_wasm PRIVATE
+      # A *response file for emcc*, whose lines are `-Wl,--export-if-defined=cv_...`:
+      # `-sEXPORTED_FUNCTIONS` cannot be read from a file without failing on the symbols of modules
+      # that were not built, and `-Wl,@file` is expanded by emcc itself, which then feeds the flags
+      # to the compiler instead of the linker.
+      "@${DARTCV_WASM_EXPORTS}"
+      # malloc/free come from Emscripten, not from the wrapper, and `--export-if-defined` does not
+      # reach them, so they stay in the setting (which is where its `_`-prefixed names belong).
+      "-sEXPORTED_FUNCTIONS=_malloc,_free"
+      # There is no main(); lib/src/web/runtime.dart looks the wrapper's functions up as
+      # `Module['_cv_...']`, which needs the exports and nothing else.
+      "--no-entry"
+      "-sMODULARIZE=1"
+      "-sEXPORT_ES6=1"
+      "-sEXPORT_NAME=createDartcvModule"
+      "-sENVIRONMENT=web,worker,node"
+      # ximgproc's EdgeDrawing keeps 64 MB of static lookup tables (zero-initialised, so they are
+      # not in the .wasm file), hence the large initial memory.
+      "-sINITIAL_MEMORY=96MB"
+      "-sSTACK_SIZE=1MB"
+      "-sALLOW_MEMORY_GROWTH=1"
+      "-sALLOW_TABLE_GROWTH=1"
+      "-sFORCE_FILESYSTEM=1"
+      "-sEXPORTED_RUNTIME_METHODS=HEAPU8,wasmMemory,addFunction,removeFunction,FS"
+      "-sERROR_ON_UNDEFINED_SYMBOLS=1"
+    )
+    # `target_link_options` does not make the link depend on that file, and the export list changes
+    # whenever a binding does: without LINK_DEPENDS ninja would happily ship the previous module.
+    set_target_properties(dartcv_wasm PROPERTIES LINK_DEPENDS "${DARTCV_WASM_EXPORTS}")
+    # The builder collects `<name>.js`/`<name>.wasm`, and the runtime loads `dartcv.js`.
+    set_target_properties(dartcv_wasm PROPERTIES OUTPUT_NAME ${LIBRARY_NAME})
+    message(STATUS "Added WebAssembly module: dartcv_wasm -> ${LIBRARY_NAME}.js")
+  endif ()
 endif ()
 
 # if (APPLE)
@@ -293,7 +354,8 @@ target_compile_definitions(${LIBRARY_NAME} PUBLIC DART_SHARED_LIB)
 
 # The tree-shaken variant of the library. It is added last, once ${LIBRARY_NAME}
 # has all its compile and link settings: `dntcm_add_treeshake_target` mirrors them.
-if (DARTCV_TREESHAKE_LINK)
+# It is a native-assets/AOT concern only; the web module is trimmed by its export list instead.
+if (DARTCV_TREESHAKE_LINK AND NOT EMSCRIPTEN)
   if (NOT DEFINED DNTCM_CMAKE_DIR)
     message(FATAL_ERROR
       "DARTCV_TREESHAKE_LINK needs the CMake modules of package:native_toolchain_cmake. "

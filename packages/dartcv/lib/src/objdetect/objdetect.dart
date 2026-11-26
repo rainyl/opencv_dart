@@ -6,19 +6,18 @@
 
 library cv.objdetect;
 
-import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:ffi/ffi.dart';
-
+import '../bindings/objdetect.dart' as cobjdetect;
+import '../bindings/objdetect.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/objdetect.g.dart' as cvg;
-import '../g/objdetect.g.dart' as cobjdetect;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
   CascadeClassifier._(cvg.CascadeClassifierPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {

@@ -3,8 +3,6 @@
 // are passed as typed closures.
 // ignore_for_file: avoid_dynamic_calls
 
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -171,7 +169,7 @@ void main() {
       // a saved model can be loaded back from its content
       final path = '${tempDir()}/model.yml';
       model.save(path);
-      final loaded = c.loadFromString(File(path).readAsStringSync());
+      final loaded = c.loadFromString(readAsString(path));
       expect(loaded.defaultName, model.defaultName);
       expect((loaded.predict(queryPoints()) as cv.Mat).rows, 2);
 
@@ -200,7 +198,7 @@ void main() {
 
     final path = '${tempDir()}/em.yml';
     em.save(path);
-    expect(cv.EM.loadFromString(File(path).readAsStringSync()).means.rows, 2);
+    expect(cv.EM.loadFromString(readAsString(path)).means.rows, 2);
     em.clear();
     expect(em.isTrained, false);
   });

@@ -4,13 +4,12 @@
 
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:ffi/ffi.dart';
-
-import '../g/core.g.dart' as ccore;
-import '../g/types.g.dart' as cvg;
+import '../bindings/core.dart' as ccore;
+import '../bindings/types.dart' as cvg;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 import 'base.dart';
 import 'float16.dart';
 

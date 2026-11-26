@@ -4,13 +4,11 @@
 
 library cv.videoio_registry;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/videoio.dart' as cvg;
 import '../core/base.dart';
+import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/videoio.g.dart' as cvg;
+import '../package_ffi.dart';
 import 'videoio.dart';
 
 class CameraInfo {

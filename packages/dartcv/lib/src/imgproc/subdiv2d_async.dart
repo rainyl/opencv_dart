@@ -5,17 +5,15 @@
 // ignore_for_file: constant_identifier_names
 library cv.imgproc.subdiv2d;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/imgproc.dart' as cimgproc;
+import '../bindings/imgproc.dart' as cvg;
 import '../core/base.dart';
 import '../core/cv_vec.dart';
 import '../core/point.dart';
 import '../core/rect.dart';
 import '../core/vec.dart';
-import '../g/imgproc.g.dart' as cvg;
-import '../g/imgproc.g.dart' as cimgproc;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 import 'subdiv2d.dart';
 
 /// Async version of [Subdiv2D]

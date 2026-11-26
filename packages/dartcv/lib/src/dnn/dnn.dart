@@ -6,11 +6,10 @@
 
 library cv.dnn;
 
-import 'dart:ffi' as ffi;
 import 'dart:typed_data';
 
-import 'package:ffi/ffi.dart';
-
+import '../bindings/dnn.dart' as cdnn;
+import '../bindings/dnn.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/mat_type.dart';
@@ -19,8 +18,8 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/vec.dart';
-import '../g/dnn.g.dart' as cvg;
-import '../g/dnn.g.dart' as cdnn;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 /// Layer is a wrapper around the cv::dnn::Layer algorithm.
 class Layer extends CvStruct<cvg.Layer> {

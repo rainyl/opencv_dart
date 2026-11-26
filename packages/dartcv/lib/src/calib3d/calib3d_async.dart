@@ -4,10 +4,8 @@
 
 library cv.calib3d;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/calib3d.dart' as ccalib3d;
+import '../bindings/types.dart' as cvg;
 import '../core/base.dart';
 import '../core/contours.dart';
 import '../core/cv_vec.dart';
@@ -17,9 +15,9 @@ import '../core/rect.dart';
 import '../core/scalar.dart';
 import '../core/size.dart';
 import '../core/termcriteria.dart';
-import '../g/calib3d.g.dart' as ccalib3d;
+import '../ffi.dart' as ffi;
 import '../g/constants.g.dart';
-import '../g/types.g.dart' as cvg;
+import '../package_ffi.dart';
 import 'calib3d.dart';
 import 'usac_params.dart';
 

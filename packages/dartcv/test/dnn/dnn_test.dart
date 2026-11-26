@@ -1,8 +1,8 @@
 @Tags(["no-local-files"])
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
+
+import '../io_helpers.dart';
 
 bool checkCaffeNet(cv.Net net) {
   expect(net.isEmpty, false);
@@ -158,8 +158,8 @@ void main() async {
   });
 
   test('cv.Net.fromBytes', () {
-    final bytes = File("test/models/bvlc_googlenet.caffemodel").readAsBytesSync();
-    final config = File("test/models/bvlc_googlenet.prototxt").readAsBytesSync();
+    final bytes = readAsBytes("test/models/bvlc_googlenet.caffemodel");
+    final config = readAsBytes("test/models/bvlc_googlenet.prototxt");
     final model = cv.Net.fromBytes("caffe", bytes, bufferConfig: config);
     checkCaffeNet(model);
 
@@ -175,8 +175,8 @@ void main() async {
   });
 
   test('cv.Net.fromCaffeBytes', () {
-    final bytes = File("test/models/bvlc_googlenet.caffemodel").readAsBytesSync();
-    final config = File("test/models/bvlc_googlenet.prototxt").readAsBytesSync();
+    final bytes = readAsBytes("test/models/bvlc_googlenet.caffemodel");
+    final config = readAsBytes("test/models/bvlc_googlenet.prototxt");
     final model = cv.Net.fromCaffeBytes(config, bytes);
     checkCaffeNet(model);
   });
@@ -187,7 +187,7 @@ void main() async {
   });
 
   test('cv.Net.fromOnnxBytes', () {
-    final bytes = File("test/models/googlenet-9.onnx").readAsBytesSync();
+    final bytes = readAsBytes("test/models/googlenet-9.onnx");
     final model = cv.Net.fromOnnxBytes(bytes);
     checkOnnx(model);
   });
@@ -199,7 +199,7 @@ void main() async {
   });
 
   test('cv.Net.fromTensorflowBytes', () {
-    final bytes = File("test/models/tensorflow_inception_graph.pb").readAsBytesSync();
+    final bytes = readAsBytes("test/models/tensorflow_inception_graph.pb");
     final model = cv.Net.fromTensorflowBytes(bytes);
     expect(model.isEmpty, false);
     checkTensorflow(model);

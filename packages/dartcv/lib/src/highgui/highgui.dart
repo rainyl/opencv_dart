@@ -6,15 +6,13 @@
 
 library cv.highgui;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/highgui.dart' as chighgui;
+import '../bindings/highgui.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/rect.dart';
-import '../g/highgui.g.dart' as cvg;
-import '../g/highgui.g.dart' as chighgui;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 String currentUIFramework() {
   final p = chighgui.cv_currentUIFramework();

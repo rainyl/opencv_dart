@@ -4,12 +4,12 @@
 
 library cv.contrib;
 
+import '../bindings/contrib.dart' as ccontrib;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
 import '../core/scalar.dart';
 import '../core/vec.dart';
-import '../g/contrib.g.dart' as ccontrib;
 import 'aruco.dart';
 import 'aruco_dict.dart';
 

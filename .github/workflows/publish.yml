@@ -22,85 +22,252 @@ on:
         type: boolean
 
 jobs:
-  test-ubuntu:
-    name: test-ubuntu
-    runs-on: ubuntu-latest
-
+  test:
+    name: test-${{ matrix.os }}
+    strategy:
+      # One OS failing must not cancel the others: they are independent signals.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: setup
+      - name: Enable Git long paths
+        if: runner.os == 'Windows'
+        run: git config --global core.longpaths true
+      - name: Install the GTK headers highgui needs
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev
       - uses: actions/checkout@v4
         with:
           submodules: true
+      # The build tree holds objects produced by the image's compiler, and `windows-latest`
+      # silently moves between Visual Studio generations (`windows-2022` is VS2022, the 2025 image is
+      # VS2026). A cache keyed only on `runner.os` would then restore objects from a different
+      # toolset, which ninja reuses while CMake reconfigures around them. Fold the image and the
+      # compiler version into the key instead: a new image generation misses the cache once, and
+      # never mixes toolsets.
+      - name: Toolchain fingerprint
+        id: toolchain
+        shell: bash
+        run: |
+          fp="${ImageOS:-$RUNNER_OS}"
+          case "$RUNNER_OS" in
+            Windows)
+              vs="/c/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+              if [ -x "$vs" ]; then
+                fp="$fp-$("$vs" -latest -property installationVersion | cut -d. -f1-2)"
+              fi
+              ;;
+            macOS) fp="$fp-$(clang -dumpversion | cut -d. -f1-2)" ;;
+            *) fp="$fp-$(cc -dumpversion 2>/dev/null || gcc -dumpversion | cut -d. -f1-2)" ;;
+          esac
+          echo "value=$fp" >> "$GITHUB_OUTPUT"
+          echo "toolchain: $fp"
       - uses: subosito/flutter-action@v2
         with:
-          channel: "main"
-      - uses: robinraju/release-downloader@v1.10
+          # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
+          flutter-version-file: .fvmrc
+      # The native build (OpenCV from source) is the slow part of these jobs. Dart caches the hook
+      # output itself, in `.dart_tool/hooks_runner`, but only on the machine that built it, and that
+      # cache's key covers the hook files - not `src/**` - so restoring it wholesale would hand a PR
+      # that changed C++ a stale binary. Cache the CMake build tree (`shared/`) instead and drop the
+      # cached *results* below: the hook then re-runs, `cmake --build` only redoes what changed, and
+      # the job drops from ~10-15 min to ~1 min. Must run after checkout: `hashFiles` reads the work
+      # tree.
+      - name: Restore the OpenCV build tree
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/.dart_tool/hooks_runner/shared
+          key: >-
+            hooks-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-${{ hashFiles('.fvmrc') }}-${{
+            hashFiles('packages/dartcv/src/**', 'packages/dartcv/hook/**',
+            'packages/dartcv/lib/src/hook_helpers/**', 'packages/dartcv/pubspec.yaml') }}
+          restore-keys: |
+            hooks-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-${{ hashFiles('.fvmrc') }}-
+      - name: Force the native build hooks to re-run
+        shell: bash
+        run: |
+          rm -rf packages/dartcv/.dart_tool/hooks_runner/dartcv4
+          rm -rf packages/dartcv/.dart_tool/hooks_runner/ffigen
+      - name: Cache the dnn test models
+        id: models
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/test/models
+          # Bump the trailing version if the `dnn_test_files` release is replaced.
+          key: models-dnn_test_files-v1
+      - name: Download the dnn test models
+        if: steps.models.outputs.cache-hit != 'true'
+        uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
           out-file-path: "packages/dartcv/test/"
           extract: true
-      - name: Run Test
+      - name: Install dependencies
+        working-directory: packages/dartcv
+        run: dart pub get
+      - name: Analyze
+        if: runner.os == 'Linux'
         working-directory: packages/dartcv
         run: |
-          dart pub get
-          dart test -x skip-workflow
+          # `example/dart_cli` and `example/flutter` are packages of their own (a path dependency on
+          # dartcv4, own `analysis_options.yaml`); analysing them without resolving their own
+          # dependencies reports every `package:` import in them as missing.
+          (cd example/dart_cli && dart pub get)
+          (cd example/flutter && flutter pub get)
+          dart analyze
+      - name: Run Test
+        working-directory: packages/dartcv
+        run: dart test -x skip-workflow
 
-  test-windows:
-    name: test-windows
-    runs-on: windows-latest
+  web:
+    name: web-${{ matrix.os }}
+    strategy:
+      # Every platform builds the module *and* runs the browser suite against its own build: the
+      # toolchain is what these jobs cover, and a Windows- or macOS-only regression (path separators,
+      # `emcc.exe`, response files, a missing Ninja) is exactly what a single-OS job misses.
+      fail-fast: false
+      matrix:
+        include:
+          # The oldest Emscripten the builder supports, so a regression in the floor version shows up.
+          - os: ubuntu-latest
+            emsdk: "6.0.13"
+          - os: windows-latest
+            emsdk: "7.0.0"
+          - os: macos-latest
+            emsdk: "7.0.0"
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Enable Git long paths
-        run: git config --global core.longpaths true
       - uses: actions/checkout@v4
+      # The build tree holds objects produced by the image's compiler, and `windows-latest`
+      # silently moves between Visual Studio generations (`windows-2022` is VS2022, the 2025 image is
+      # VS2026). A cache keyed only on `runner.os` would then restore objects from a different
+      # toolset, which ninja reuses while CMake reconfigures around them. Fold the image and the
+      # compiler version into the key instead: a new image generation misses the cache once, and
+      # never mixes toolsets.
+      - name: Toolchain fingerprint
+        id: toolchain
+        shell: bash
+        run: |
+          fp="${ImageOS:-$RUNNER_OS}"
+          case "$RUNNER_OS" in
+            Windows)
+              vs="/c/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+              if [ -x "$vs" ]; then
+                fp="$fp-$("$vs" -latest -property installationVersion | cut -d. -f1-2)"
+              fi
+              ;;
+            macOS) fp="$fp-$(clang -dumpversion | cut -d. -f1-2)" ;;
+            *) fp="$fp-$(cc -dumpversion 2>/dev/null || gcc -dumpversion | cut -d. -f1-2)" ;;
+          esac
+          echo "value=$fp" >> "$GITHUB_OUTPUT"
+          echo "toolchain: $fp"
+      - name: Install Ninja
+        shell: bash
+        run: |
+          if ninja --version; then exit 0; fi
+          case "$RUNNER_OS" in
+            Linux) sudo apt-get update && sudo apt-get install -y ninja-build ;;
+            macOS) brew install ninja ;;
+            *) choco install ninja -y ;;
+          esac
+      # The CMake build tree for the wasm target holds the compiled OpenCV objects and its source
+      # checkout (`_deps`), so restoring it turns most of the build into a no-op. The key follows the
+      # Emscripten version and the CMake inputs; `build/wasm` only gets reused for the same toolchain.
+      - name: Restore the wasm build tree
+        uses: actions/cache@v4
         with:
-          submodules: true
+          path: packages/dartcv/build/wasm
+          key: wasm-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-emsdk-${{
+            matrix.emsdk }}-all-${{ hashFiles('packages/dartcv/tool/web/**',
+            'packages/dartcv/bin/**', 'packages/dartcv/src/**',
+            'packages/dartcv/lib/src/g/*.g.dart', 'packages/dartcv/pubspec.yaml') }}
+          restore-keys: |
+            wasm-${{ runner.os }}-${{ steps.toolchain.outputs.value }}-emsdk-${{ matrix.emsdk }}-
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          # No actions-cache-folder: setup-emsdk builds the cache key from the workflow name, and the
+          # comma in this workflow's name is rejected as a key.
+          version: ${{ matrix.emsdk }}
       - uses: subosito/flutter-action@v2
         with:
-          channel: "main"
-      - uses: robinraju/release-downloader@v1.10
+          # The SDK `.fvmrc` pins; also what `dart test -p chrome` runs on.
+          flutter-version-file: .fvmrc
+      - name: Install dependencies
+        working-directory: packages/dartcv
+        run: dart pub get
+      - name: Check the generated bindings, facades and version are up to date
+        working-directory: packages/dartcv
+        run: dart tool/web/gen_web_bindings.dart --check
+      - name: Build dartcv.js / dartcv.wasm
+        working-directory: packages/dartcv
+        run: dart tool/web/build_wasm.dart
+      - name: Check the module
+        shell: bash
+        working-directory: packages/dartcv
+        run: |
+          test -f build/web/dartcv.js
+          test -f build/web/dartcv.wasm
+          size=$(wc -c < build/web/dartcv.wasm)
+          echo "dartcv.wasm: $size bytes"
+          if [ "$size" -lt 1000000 ]; then
+            echo "::error::dartcv.wasm is suspiciously small ($size bytes)"
+            exit 1
+          fi
+          exports=$(wc -l < build/wasm/exports.txt)
+          echo "exports: $exports"
+          if [ "$exports" -lt 500 ]; then
+            echo "::error::only $exports exports"
+            exit 1
+          fi
+      - name: Cache the dnn test models
+        id: models
+        uses: actions/cache@v4
+        with:
+          path: packages/dartcv/test/models
+          # Bump the trailing version if the `dnn_test_files` release is replaced.
+          key: models-dnn_test_files-v1
+      - name: Download the dnn test models
+        if: steps.models.outputs.cache-hit != 'true'
+        uses: robinraju/release-downloader@v1.10
         with:
           repository: "rainyl/opencv_dart"
           tag: "dnn_test_files"
           fileName: "models.zip"
           out-file-path: "packages/dartcv/test/"
           extract: true
-      - name: Run Test
-        shell: pwsh
+      - name: Run tests in Chrome (dart2js and dart2wasm)
         working-directory: packages/dartcv
         run: |
-          dart pub get
-          dart test -x skip-workflow
-  test-macos:
-    name: test-macos
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "main"
-      - uses: robinraju/release-downloader@v1.10
-        with:
-          repository: "rainyl/opencv_dart"
-          tag: "dnn_test_files"
-          fileName: "models.zip"
-          out-file-path: "packages/dartcv/test/"
-          extract: true
-      - name: Run Test
-        working-directory: packages/dartcv
+          dart test -p chrome test/web_test.dart
+          dart test -p chrome -c dart2wasm test/web_test.dart
+      - name: Build the opencv_dart example for the web against this dartcv4
+        shell: bash
+        working-directory: packages/opencv_dart/example
         run: |
-          dart pub get
-          dart test -x skip-workflow
+          printf 'dependency_overrides:\n  dartcv4:\n    path: ../../dartcv\n' > pubspec_overrides.yaml
+          cp ../../dartcv/build/web/dartcv.js ../../dartcv/build/web/dartcv.wasm web/
+          flutter pub get
+          flutter build web
+          flutter build web --wasm
+      # One artifact is enough for `release` to ship; the other two platforms only validate.
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'Linux'
+        with:
+          name: dartcv-web
+          path: |
+            packages/dartcv/build/web/dartcv.js
+            packages/dartcv/build/web/dartcv.wasm
+          if-no-files-found: error
+
   check-release:
     name: check-release
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [test-ubuntu, test-windows, test-macos]
+    needs: [test, web]
     runs-on: ubuntu-latest
     outputs:
       # "true" when that package still has to be published, "false" when the version is already on
@@ -160,7 +327,7 @@ jobs:
   publish-dartcv4:
     name: Publish dartcv4
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [test-ubuntu, test-windows, test-macos, check-release]
+    needs: [test, web, check-release]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -195,7 +362,8 @@ jobs:
       - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
+          flutter-version-file: .fvmrc
       - name: Wait until opencv_dart resolves the new dartcv4
         if: needs.check-release.outputs.wrapper == 'true'
         working-directory: packages/opencv_dart
@@ -234,7 +402,7 @@ jobs:
   publish-opencv-dart:
     name: Publish opencv_dart
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
-    needs: [check-release, wait-for-dartcv4]
+    needs: [web, check-release, wait-for-dartcv4]
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
@@ -244,7 +412,8 @@ jobs:
       - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
+          flutter-version-file: .fvmrc
       - name: Install dependencies
         if: needs.check-release.outputs.wrapper == 'true'
         working-directory: packages/opencv_dart
@@ -281,7 +450,8 @@ jobs:
       - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          # The SDK `.fvmrc` pins: `stable` moves under the tests several times a year.
+          flutter-version-file: .fvmrc
       - name: dartcv4
         working-directory: packages/dartcv
         run: |
@@ -290,19 +460,45 @@ jobs:
       - name: opencv_dart
         working-directory: packages/opencv_dart
         run: |
-          flutter pub get
+          # The wrapper pins an exact dartcv4 (`^2.4.0-dev.0` while that is unreleased), so on a PR
+          # before the release there is nothing to validate - the constraint is *supposed* to fail
+          # until dartcv4 is on pub.dev. Anything else (a real packaging problem) still fails below.
+          if ! out=$(flutter pub get 2>&1); then
+            echo "$out"
+            # Only "the pinned dartcv4 is not on pub.dev yet" is expected before a release; any
+            # other resolution failure is a real problem and must fail.
+            if grep -q "doesn't match any versions" <<< "$out"; then
+              echo "::warning::dartcv4 is not on pub.dev yet; skipping the opencv_dart dry-run"
+              exit 0
+            fi
+            exit 1
+          fi
           flutter pub publish --dry-run
 
   release:
-    needs: [test-ubuntu, test-windows, test-macos, publish-dartcv4, publish-opencv-dart]
+    needs: [test, web, publish-dartcv4, publish-opencv-dart]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dartcv-web
+          path: dartcv-web
+      # The asset name carries the version, so a downloaded zip says which dartcv4 it belongs to.
+      - name: Package the web build
+        id: package
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^version: *//p' packages/dartcv/pubspec.yaml)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          cd dartcv-web
+          zip "../dartcv-web-$version.zip" dartcv.js dartcv.wasm
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           draft: false
-          prerelease: false
+          prerelease: ${{ contains(steps.package.outputs.version, '-') }}
           generate_release_notes: true
+          files: dartcv-web-${{ steps.package.outputs.version }}.zip

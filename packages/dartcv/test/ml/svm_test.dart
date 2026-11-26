@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -94,16 +92,14 @@ void main() {
   });
 
   test('cv.SVM save, load and loadFromString', () {
-    final dir = Directory.systemTemp.createTempSync('dartcv_ml_test_');
-    addTearDown(() => dir.deleteSync(recursive: true));
-    final path = '${dir.path}/svm.yml';
+    final path = '${tempDir()}/svm.yml';
     final svm = trainedSvm()..save(path);
 
     final loaded = cv.SVM.load(path);
     expect(loaded.isTrained, true);
     expect(labelsOf(loaded.predict(queryPoints())), [0, 1]);
 
-    final fromString = cv.SVM.loadFromString(File(path).readAsStringSync());
+    final fromString = cv.SVM.loadFromString(readAsString(path));
     const flags = cv.StatModel.RAW_OUTPUT;
     expect(
       fromString.predict(queryPoints(), flags: flags).at<double>(1, 0),

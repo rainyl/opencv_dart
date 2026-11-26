@@ -6,15 +6,13 @@
 
 library cv.stitching;
 
-import 'dart:ffi' as ffi;
-
-import 'package:ffi/ffi.dart';
-
+import '../bindings/stitching.dart' as cstitching;
+import '../bindings/stitching.dart' as cvg;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/vec.dart';
-import '../g/stitching.g.dart' as cvg;
-import '../g/stitching.g.dart' as cstitching;
+import '../ffi.dart' as ffi;
+import '../package_ffi.dart';
 
 /// High level image stitcher.
 ///

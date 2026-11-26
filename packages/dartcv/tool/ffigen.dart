@@ -5,25 +5,31 @@
 
 // Regenerates all OpenCV FFI bindings through the ffigen Dart API.
 //
-// ffigen's per-module settings stay in `ffigen/*.yaml` (the source of truth);
-// this script loads each config via `YamlConfig`, rebuilds the `FfiGenerator`
-// copying every field, and overrides two things the YAML format cannot express:
-//   * a `Visitor` setting `Func.recordUse` on every function - emits
-//     `@RecordUse()` on each `@ffi.Native` declaration (the compiler records
-//     which native symbols the final program uses, feeding the tree-shaking
-//     keep-list `hook/link.dart` links with),
-//   * `Output.recordUseMapping` - ffigen writes the
-//     `<module>.record_use_mapping.g.dart` name-to-symbol tables directly
-//     (read by `hook/link.dart`).
+// ffigen's per-module settings stay in `ffigen/*.yaml` (the source of truth); this script loads
+// each config via `YamlConfig`, which turns it into an `FfiGenerator`, and adds the two things the
+// YAML format cannot express:
+//   * a `Visitor` setting `Func.recordUse` on every function, which emits `@RecordUse()` on the
+//     generated `@ffi.Native` declarations (the compiler then records which native symbols the
+//     final program uses, feeding the tree-shaking keep-list that `hook/link.dart` links with),
+//   * `Output.recordUseMapping`, which makes ffigen write the
+//     `<module>.record_use_mapping.g.dart` name-to-symbol tables directly (read by
+//     `hook/link.dart`).
+//
+// The web mirror in `lib/src/web/g` is regenerated at the end by `tool/web/gen_web_bindings.dart`
+// (a separate library, also runnable on its own), so one command refreshes both:
 //
 // Usage (from packages/dartcv):
-//   dart tool/ffigen.dart
+//   dart tool/ffigen.dart              # every module, in dependency order, then lib/src/web/g
+//   dart tool/ffigen.dart types ml     # just these (regenerate the module list order yourself)
+//   dart tool/ffigen.dart --no-web     # native bindings only
 
 import 'dart:io';
 
 import 'package:ffigen/ffigen.dart' as ffigen;
 import 'package:logging/logging.dart';
 import 'package:package_config/package_config.dart';
+
+import 'web/gen_web_bindings.dart' as web;
 
 const _modules = <String, String>{
   'types': 'types',
@@ -44,6 +50,11 @@ const _modules = <String, String>{
   'video': 'video',
   'videoio': 'videoio',
 };
+
+/// Modules whose bindings are plain Dart, so the web build uses the same file instead of a mirror
+/// (see `tool/web/gen_web_bindings.dart`). ffigen still writes an `import 'dart:ffi' as ffi;` that
+/// nothing in the file uses, and `dart:ffi` cannot be imported on the web, so it is dropped.
+const _platformIndependent = {'constants'};
 
 /// Emits `@RecordUse()` on every generated function; the compiler then records the native symbols
 /// the final program reaches, which is what the tree-shaking keep-list is built from.
@@ -81,22 +92,60 @@ ffigen.FfiGenerator _withRecordUse(ffigen.FfiGenerator y, Directory outDir) {
 }
 
 Future<void> main(List<String> args) async {
+  // tool/ffigen.dart -> packages/dartcv
+  final packageDir = File.fromUri(Platform.script).parent.parent;
+
   hierarchicalLoggingEnabled = true;
   Logger.root.level = Level.INFO;
+
+  final flags = args.where((a) => a.startsWith('-')).toSet();
+  final requested = args.where((a) => !a.startsWith('-')).toList();
+  if (requested.isEmpty) requested.addAll(_modules.keys);
+  final unknown = requested.where((name) => !_modules.containsKey(name)).toList();
+  if (unknown.isNotEmpty) {
+    throw ArgumentError.value(unknown.join(', '), 'module', 'known: ${_modules.keys.join(', ')}');
+  }
 
   final packageConfig = await findPackageConfig(Directory.current);
   final outDir = Directory('lib/src/g');
 
-  for (final entry in _modules.entries) {
-    final name = entry.key;
+  for (final name in requested) {
     final logger = Logger('ffigen.$name');
     final config = ffigen.YamlConfig.fromFile(
-      File('ffigen/ffigen_${entry.value}.yaml'),
+      File('ffigen/ffigen_${_modules[name]}.yaml'),
       logger,
       packageConfig: packageConfig,
     );
     final gen = _withRecordUse(config.configAdapter(), outDir);
     await gen.generate(logger: logger);
+    if (_platformIndependent.contains(name)) {
+      _dropUnusedFfiImport(File('${outDir.path}/$name.g.dart'));
+    }
     print('generated ${outDir.path}/$name.g.dart');
   }
+
+  if (!flags.contains('--no-web')) {
+    web.generateWebBindings(packageDir: packageDir);
+  }
+}
+
+/// Removes the `import 'dart:ffi' as ffi;` ffigen writes into a file that has no FFI
+/// declarations, so that such a file also compiles on the web.
+///
+/// Fails loudly when the import survives in another shape: this file has no web mirror, so a
+/// leftover `dart:ffi` import would break the web build with an error far from its cause.
+void _dropUnusedFfiImport(File file) {
+  final src = file.readAsStringSync();
+  final stripped = src.replaceFirst(
+    RegExp(r"^import 'dart:ffi' as ffi;\n\n+", multiLine: true),
+    '',
+  );
+  final leftover = stripped.contains("import 'dart:ffi'");
+  if (leftover) {
+    throw StateError(
+      '${file.path} still imports dart:ffi, but it is shared with the web build; '
+      'update _dropUnusedFfiImport() in tool/ffigen.dart',
+    );
+  }
+  if (stripped != src) file.writeAsStringSync(stripped);
 }

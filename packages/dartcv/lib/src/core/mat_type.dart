@@ -7,7 +7,7 @@
 
 library cv;
 
-import 'dart:ffi';
+import '../ffi.dart';
 
 import 'exception.dart';
 

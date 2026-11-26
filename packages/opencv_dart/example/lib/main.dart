@@ -1,11 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:opencv_dart/opencv.dart' as cv;
 import 'package:image_picker/image_picker.dart';
 
-void main() {
+Future<void> main() async {
+  // Loads web/dartcv.wasm on the web; a no-op on other platforms.
+  await cv.initDartcv();
   runApp(const MyApp());
 }
 
@@ -60,7 +62,10 @@ class _MyAppState extends State<MyApp> {
                   );
                   if (img != null) {
                     final path = img.path;
-                    final mat = cv.imread(path);
+                    // On the web the picked file is a blob: URL, not a path the decoder can open.
+                    final mat = kIsWeb
+                        ? cv.imdecode(await img.readAsBytes(), cv.IMREAD_COLOR)
+                        : cv.imread(path);
                     print(
                       "cv.imread: width: ${mat.cols}, height: ${mat.rows}, path: $path",
                     );
@@ -80,7 +85,8 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final data = await DefaultAssetBundle.of(context).load("images/lenna.png");
+                  final data = await DefaultAssetBundle.of(context)
+                      .load("images/lenna.png");
                   final bytes = data.buffer.asUint8List();
                   final (gray, blur) = await heavyTaskAsync(
                     cv.imdecode(bytes, cv.IMREAD_COLOR),
@@ -102,7 +108,8 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: ListView.builder(
                         itemCount: images.length,
-                        itemBuilder: (ctx, idx) => Card(child: Image.memory(images[idx])),
+                        itemBuilder: (ctx, idx) =>
+                            Card(child: Image.memory(images[idx])),
                       ),
                     ),
                     Expanded(

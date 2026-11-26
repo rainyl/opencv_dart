@@ -4,10 +4,10 @@
 
 library cv.photo;
 
+import '../bindings/photo.dart' as cphoto;
 import '../core/base.dart';
 import '../core/mat.dart';
 import '../core/point.dart';
-import '../g/photo.g.dart' as cphoto;
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {

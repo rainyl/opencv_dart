@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'package:test/test.dart';
 
@@ -77,13 +75,11 @@ void main() {
   });
 
   test('cv.ANN_MLP save and load', () {
-    final dir = Directory.systemTemp.createTempSync('dartcv_ml_test_');
-    addTearDown(() => dir.deleteSync(recursive: true));
-    final path = '${dir.path}/mlp.xml';
+    final path = '${tempDir()}/mlp.xml';
     final mlp = trainedMlp()..save(path);
     final expected = mlp.predict(queryPoints());
 
-    for (final loaded in [cv.ANN_MLP.load(path), cv.ANN_MLP.loadFromString(File(path).readAsStringSync())]) {
+    for (final loaded in [cv.ANN_MLP.load(path), cv.ANN_MLP.loadFromString(readAsString(path))]) {
       final out = loaded.predict(queryPoints());
       expect(out.at<double>(0, 0), closeTo(expected.at<double>(0, 0), 1e-5));
       expect(out.at<double>(1, 1), closeTo(expected.at<double>(1, 1), 1e-5));
