@@ -134,9 +134,22 @@ A few properties are worth knowing:
   oversubscribe CPU-bound work.
 - `cv.asyncPending()` and `cv.asyncDrain()` expose the queue, for tests and shutdown.
 - Each `Async` function takes a `Duration? timeout`. A timeout abandons the *wait*, not the work:
-  OpenCV has no cancellation point, so the job runs to completion and still writes its results. That
-  is safe because the job keeps a reference to every handle it was given, so you may `dispose()` an
-  argument while the call is in flight.
+  OpenCV has no cancellation point, so the job runs to completion and still writes the output
+  arguments it was given. It throws an `AsyncTimeoutException`, which tells you exactly that and
+  hands back `completion`, the moment those arguments stop changing:
+
+  ```dart
+  try {
+    await cv.gaussianBlurAsync(src, (31, 31), 0, dst: dst, timeout: const Duration(seconds: 2));
+  } on cv.AsyncTimeoutException catch (e) {
+    await e.completion; // dst is final here
+  }
+  ```
+
+  The job keeps a reference to every handle it was given, so disposing an argument while the call is
+  in flight is safe, and using it *synchronously* meanwhile is refused. If you pass no output
+  argument (`dst` defaults to a new matrix) the abandoned result belongs to nobody, so nothing you
+  hold changes.
 - An error raised inside the job arrives as a failed `Future`, not as a synchronous throw, because the
   C entry point has already returned by then.
 - Only the `Async` calls are ordered with respect to each other. A synchronous call runs immediately,

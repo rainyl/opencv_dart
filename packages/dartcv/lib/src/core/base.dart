@@ -13,7 +13,7 @@ import '../bindings/core.dart' as ccore;
 import '../bindings/types.dart' as cvg;
 import '../ffi.dart' as ffi;
 import '../package_ffi.dart';
-import "exception.dart" show CvException, CvdException;
+import "exception.dart" show AsyncTimeoutException, CvException, CvdException;
 
 /* fundamental constants */
 const double CV_PI = 3.1415926535897932384626433832795;
@@ -139,14 +139,18 @@ typedef VoidPtr = ffi.Pointer<ffi.Void>;
 /// still surfaces as a failed [Future].
 ///
 /// [timeout] abandons the wait, not the work: OpenCV has no cancellation point, so the job runs to
-/// completion and still writes its out-parameters. The handles it was given are held by the job, so
-/// abandoning is safe, but the result is not observable through the abandoned [Future].
+/// completion and still writes the output arguments it was given. It throws an
+/// [AsyncTimeoutException], whose `completion` resolves when that has happened - the moment those
+/// arguments stop changing. The handles it was given are held by the job, so abandoning is safe.
 Future<T> cvRunAsync0<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
   void Function(Completer<T> completer) onComplete, {
   Duration? timeout,
 }) {
   final completer = Completer<T>();
+  // Resolves when the native job is done with the objects it was given, whether or not anyone is
+  // still waiting for the result; it is what `AsyncTimeoutException.completion` hands back.
+  final completion = Completer<void>();
   late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
   var closed = false;
   void close() {
@@ -154,6 +158,7 @@ Future<T> cvRunAsync0<T>(
       closed = true;
       ccallback.close();
     }
+    if (!completion.isCompleted) completion.complete();
   }
 
   void onResponse(ffi.Pointer<cvg.CvStatus> status) {
@@ -186,9 +191,10 @@ Future<T> cvRunAsync0<T>(
     rethrow;
   }
   if (timeout != null) {
+    final watch = Stopwatch()..start();
     final timer = Timer(timeout, () {
       if (!completer.isCompleted) {
-        completer.completeError(TimeoutException('async call timed out after $timeout', timeout));
+        completer.completeError(AsyncTimeoutException(watch.elapsed, completion.future));
       }
     });
     return completer.future.whenComplete(timer.cancel);
@@ -204,6 +210,7 @@ Future<T> cvRunAsync1<T>(
   Duration? timeout,
 }) {
   final completer = Completer<T>();
+  final completion = Completer<void>();
   late final ffi.NativeCallable<cvg.CvCallback_1Function> ccallback;
   var closed = false;
   void close() {
@@ -211,6 +218,7 @@ Future<T> cvRunAsync1<T>(
       closed = true;
       ccallback.close();
     }
+    if (!completion.isCompleted) completion.complete();
   }
 
   void onResponse(ffi.Pointer<cvg.CvStatus> status, VoidPtr p) {
@@ -239,9 +247,10 @@ Future<T> cvRunAsync1<T>(
     rethrow;
   }
   if (timeout != null) {
+    final watch = Stopwatch()..start();
     final timer = Timer(timeout, () {
       if (!completer.isCompleted) {
-        completer.completeError(TimeoutException('async call timed out after $timeout', timeout));
+        completer.completeError(AsyncTimeoutException(watch.elapsed, completion.future));
       }
     });
     return completer.future.whenComplete(timer.cancel);

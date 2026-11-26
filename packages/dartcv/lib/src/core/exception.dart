@@ -4,6 +4,8 @@
 
 // coverage:ignore-file
 // ignore_for_file: avoid_print
+import 'dart:async';
+
 import 'error_code.dart';
 
 class CvException implements Exception {
@@ -52,6 +54,51 @@ class CvException implements Exception {
 //   final fp = ffi.NativeCallable<cvg.ErrorCallbackFunction>.isolateLocal(callback);
 //   CFFI.registerErrorCallback(fp.nativeFunction);
 // }
+
+/// Thrown when an `*Async` call gave up waiting on its `timeout` but the work itself was not - and
+/// cannot be - cancelled.
+///
+/// An OpenCV call has no cancellation point: once it started it runs to completion and still writes
+/// the output arguments it was given. [completion] resolves when that has happened, which is the only
+/// moment those arguments are safe to use again:
+///
+/// ```dart
+/// try {
+///   await cv.gaussianBlurAsync(src, (31, 31), 0, dst: dst, timeout: const Duration(seconds: 2));
+/// } on cv.AsyncTimeoutException catch (e) {
+///   // either wait for the write to land ...
+///   await e.completion;
+///   use(dst);
+///   // ... or treat the result as lost, knowing dst may change underneath you until then
+/// }
+/// ```
+///
+/// A call that passes no output argument (`*Async` creates its own `dst` when it is not given) is
+/// unaffected: nothing the caller holds is written, and [completion] is only useful to know when the
+/// job released the CPU.
+class AsyncTimeoutException implements TimeoutException {
+  AsyncTimeoutException(this.elapsed, this.completion)
+    : message =
+          'the call was not cancelled after $elapsed: OpenCV calls have no cancellation point, so '
+          'the work still runs and may still write the output arguments it was given. Await '
+          '`completion` (or `cv.asyncDrain()`) before using them.';
+
+  /// How long the call waited before this was thrown.
+  final Duration elapsed;
+
+  /// Resolves when the abandoned job released its handles - the point after which the output
+  /// arguments it was given are no longer touched.
+  final Future<void> completion;
+
+  @override
+  final String message;
+
+  @override
+  Duration? get duration => elapsed;
+
+  @override
+  String toString() => 'AsyncTimeoutException after $elapsed: $message';
+}
 
 class CvdException implements Exception {
   final String message;

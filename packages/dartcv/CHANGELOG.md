@@ -27,6 +27,9 @@
 - new: a synchronous call that would race an async job on the same object is refused with a
   `CvException` instead of corrupting it (`cvd::dispatch` checks on the synchronous entry point, and
   the wrappers without an async twin check with `CVD_CHECK`); unrelated objects are unaffected.
+- new: a `timeout` now throws `AsyncTimeoutException` instead of a bare `TimeoutException`: it states
+  that the work was not cancelled (OpenCV has no cancellation point) and carries `completion`, which
+  resolves when the job stopped writing the output arguments it was given.
 ## 2.3.3
 
 - fix: the native build declares its non-Dart inputs as build-hook dependencies: `src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**` and, while it is used, the tree-shaking keep-list `dartcv_keep.txt`.

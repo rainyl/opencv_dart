@@ -85,8 +85,9 @@ struct pool {
                     // Take a job only if its lane is idle, so calls that touch the same object run
                     // in the order they were made even with several workers.
                     return std::any_of(queue.begin(), queue.end(), [this](const auto& entry) {
-                        return entry.first == 0 || std::find(running_lanes.begin(), running_lanes.end(),
-                                                            entry.first) == running_lanes.end();
+                        return entry.first == 0 ||
+                               std::find(running_lanes.begin(), running_lanes.end(), entry.first) ==
+                                   running_lanes.end();
                     });
                 });
                 if (stop) return;
@@ -106,7 +107,9 @@ struct pool {
                 std::lock_guard<std::mutex> lock(mu);
                 --active;
                 if (lane != 0) {
-                    running_lanes.erase(std::find(running_lanes.begin(), running_lanes.end(), lane));
+                    running_lanes.erase(
+                        std::find(running_lanes.begin(), running_lanes.end(), lane)
+                    );
                 }
                 if (queue.empty() && active == 0) cv_idle.notify_all();
                 cv_job.notify_all();
@@ -333,13 +336,20 @@ std::vector<void*> hold(const H&... handles) {
 
 /// Refuses a synchronous call that would race an async one on the same object. Used by the wrappers
 /// that take handles but have no callback parameter (a `CvStatus*` return lets them report it).
-#define CVD_CHECK(...)                                                         do {                                                                           CvStatus* _cvd_conflict = ::cvd::detail::conflict_status(::cvd::hold(__VA_ARGS__));         if (_cvd_conflict != nullptr) return _cvd_conflict;                     } while (0)
+#define CVD_CHECK(...)                                                       \
+    do {                                                                     \
+        CvStatus* _cvd_conflict =                                            \
+            ::cvd::detail::conflict_status(::cvd::hold(__VA_ARGS__));        \
+        if (_cvd_conflict != nullptr) return _cvd_conflict;                  \
+    } while (0)
 
 /// Runs [work] now and returns its status, or queues it and returns an "accepted" status.
 ///
 /// `callback == nullptr` is the synchronous call: same behaviour as before, exceptions are translated
 /// by the work's own `BEGIN_WRAP`/`END_WRAP`.
-inline CvStatus* dispatch(CvCallback_0 callback, std::vector<void*> holders, std::function<CvStatus*()> work) {
+inline CvStatus* dispatch(
+    CvCallback_0 callback, std::vector<void*> holders, std::function<CvStatus*()> work
+) {
     if (callback == nullptr) {
         // The synchronous caller runs on its own thread right now: refuse if an async job is still
         // using one of the same objects.
@@ -355,7 +365,8 @@ inline CvStatus* dispatch(CvCallback_0 callback, std::vector<void*> holders, std
 #else
     detail::register_holds(holders);
     const std::uintptr_t lane = detail::lane_of(holders);
-    detail::the_pool().submit(lane, [holders = std::move(holders), work = std::move(work), callback]() {
+    detail::the_pool().submit(lane, [holders = std::move(holders), work = std::move(work),
+                                     callback]() {
         CvStatus* status = nullptr;
         try {
             status = work();

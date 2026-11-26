@@ -84,18 +84,41 @@ void main() async {
     cv.asyncDrain();
   });
 
-  test('a timeout abandons the wait but not the work', () async {
-    final src = source();
-    final dst = cv.Mat.empty();
-    await expectLater(
-      cv.gaussianBlurAsync(src, (61, 61), 0, dst: dst, timeout: const Duration(microseconds: 1)),
-      throwsA(isA<TimeoutException>()),
-    );
-    // The job still runs to completion; draining keeps the test from racing the next one.
-    cv.asyncDrain();
-    expect(cv.asyncPending(), 0);
+  test('a timeout abandons the wait but not the work, and says so', () async {
+    final src = cv.Mat.fromScalar(1200, 1200, cv.MatType.CV_8UC3, cv.Scalar.all(255));
+    final dst = cv.Mat.zeros(1200, 1200, cv.MatType.CV_8UC3);
+    try {
+      await cv.gaussianBlurAsync(
+        src,
+        (61, 61),
+        0,
+        dst: dst,
+        timeout: const Duration(microseconds: 1),
+      );
+      fail('expected a timeout');
+    } on cv.AsyncTimeoutException catch (e) {
+      // The exception says the work continues and hands back the moment it stops writing.
+      expect(e.elapsed, greaterThan(Duration.zero));
+      expect(e.message, contains('not cancelled'));
+      expect(e, isA<TimeoutException>(), reason: 'still catchable as a TimeoutException');
+      // While the job runs, the object it writes is not safe to touch...
+      await expectLater(Future(() => cv.mean(dst)), throwsA(isA<cv.CvException>()));
+      await e.completion; // ...and this is the moment it is.
+      expect(cv.mean(dst).val1, closeTo(255, 0.5), reason: 'the abandoned job did write dst');
+    }
     src.dispose();
     dst.dispose();
+  });
+
+  test('a timeout on a call that owns its output writes nothing the caller holds', () async {
+    final src = source();
+    try {
+      await cv.gaussianBlurAsync(src, (61, 61), 0, timeout: const Duration(microseconds: 1));
+      fail('expected a timeout');
+    } on cv.AsyncTimeoutException catch (e) {
+      await e.completion;
+    }
+    src.dispose();
   });
 
   test('disposing arguments mid-flight is safe with several workers too', () async {
