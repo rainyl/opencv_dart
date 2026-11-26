@@ -60,9 +60,12 @@ struct pool {
     int threads = kDefaultAsyncThreads;
     bool stop = false;
     bool started = false;
+    /// Set while `set_threads` is retiring the old workers: a submit that arrives then must only
+    /// enqueue, because a worker spawned now would see `stop` and exit immediately.
+    bool stopping = false;
 
     void start_workers_locked() {
-        if (started) return;
+        if (started || stopping) return;
         started = true;
         const int n = std::max(1, threads);
         workers.reserve(static_cast<std::size_t>(n));
@@ -133,11 +136,14 @@ struct pool {
     void set_threads(int n) {
         n = std::max(1, n);
         std::vector<std::thread> retired;
+        bool was_started = false;
         {
             std::unique_lock<std::mutex> lock(mu);
             cv_idle.wait(lock, [this]() { return queue.empty() && active == 0; });
             if (n == threads && started) return;
             threads = n;
+            was_started = started;
+            stopping = true;
             stop = true;
             retired.swap(workers);
             started = false;
@@ -146,14 +152,13 @@ struct pool {
         for (auto& worker : retired) {
             if (worker.joinable()) worker.join();
         }
-        // A submit that raced with the stop left its job queued; start the new workers now instead of
-        // waiting for the next submit, or `drain()` would wait forever.
+        // A submit that raced with the retirement only queued its job; start the new workers here, or
+        // nothing would ever run it and `drain()` would wait forever.
         std::lock_guard<std::mutex> lock(mu);
         stop = false;
-        if (!queue.empty()) {
-            start_workers_locked();
-            cv_job.notify_all();
-        }
+        stopping = false;
+        if (was_started || !queue.empty()) start_workers_locked();
+        cv_job.notify_all();
     }
 
     int thread_count() {
@@ -175,6 +180,10 @@ inline pool& the_pool() {
 /// Holders (a wrapper's `ptr` field) currently referenced by a job, and the number of jobs that are
 /// somewhere in the pipeline. `busy_jobs == 0` is the fast path for `release`: no job can be using
 /// any holder, so nothing needs the registry.
+///
+/// The fast path is only sound because a wrapper is registered and released on the thread that owns
+/// it (the isolate that created it): `dispatch` registers before it returns to Dart, so a `release()`
+/// can never run between an increment and the matching insert.
 struct hold_registry {
     std::mutex mu;
     std::unordered_map<void*, int> counts;
