@@ -159,7 +159,16 @@ Future<T> cvRunAsync0<T>(
   void onResponse(ffi.Pointer<cvg.CvStatus> status) {
     try {
       throwIfFailed(status);
-      if (!completer.isCompleted) onComplete(completer);
+    } catch (e, s) {
+      if (!completer.isCompleted) completer.completeError(e, s);
+      close();
+      return;
+    }
+    try {
+      // Run it even when the wait was abandoned (a timeout): the closure takes ownership of whatever
+      // the job produced, so the finalizer reclaims it instead of it being leaked. On that path
+      // completing twice throws, which the catch below ignores because the future is already done.
+      onComplete(completer);
     } catch (e, s) {
       if (!completer.isCompleted) completer.completeError(e, s);
     } finally {
@@ -207,7 +216,14 @@ Future<T> cvRunAsync1<T>(
   void onResponse(ffi.Pointer<cvg.CvStatus> status, VoidPtr p) {
     try {
       throwIfFailed(status);
-      if (!completer.isCompleted) onComplete(completer, p);
+    } catch (e, s) {
+      if (!completer.isCompleted) completer.completeError(e, s);
+      close();
+      return;
+    }
+    try {
+      // see cvRunAsync0: run it even when a timeout abandoned the wait
+      onComplete(completer, p);
     } catch (e, s) {
       if (!completer.isCompleted) completer.completeError(e, s);
     } finally {

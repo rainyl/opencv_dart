@@ -98,6 +98,27 @@ void main() async {
     dst.dispose();
   });
 
+  test('disposing arguments mid-flight is safe with several workers too', () async {
+    // With more than one worker the deletion of a wrapper cannot simply be queued: another worker
+    // could run it while the job still points at the handle. It is handed to the job that drops the
+    // last reference instead, which is what this exercises.
+    cv.setAsyncThreads(4);
+    try {
+      for (var round = 0; round < 20; round++) {
+        final src = source();
+        final dst = cv.Mat.empty();
+        final pending = cv.gaussianBlurAsync(src, (21, 21), 0, dst: dst);
+        src.dispose();
+        dst.dispose();
+        await pending;
+      }
+      cv.asyncDrain();
+      expect(cv.asyncPending(), 0);
+    } finally {
+      cv.setAsyncThreads(1);
+    }
+  });
+
   test('one worker keeps calls in order', () async {
     final src = small();
     final dsts = List.generate(3, (_) => cv.Mat.empty());

@@ -146,9 +146,14 @@ struct pool {
         for (auto& worker : retired) {
             if (worker.joinable()) worker.join();
         }
-        // The next submit starts `threads` fresh workers.
+        // A submit that raced with the stop left its job queued; start the new workers now instead of
+        // waiting for the next submit, or `drain()` would wait forever.
         std::lock_guard<std::mutex> lock(mu);
         stop = false;
+        if (!queue.empty()) {
+            start_workers_locked();
+            cv_job.notify_all();
+        }
     }
 
     int thread_count() {
@@ -157,9 +162,13 @@ struct pool {
     }
 };
 
+/// Deliberately never destroyed: a process that exits while a worker is parked would otherwise run
+/// `std::thread`'s destructor on a joinable thread and `std::terminate` (measured: `exit(0)` turned
+/// into exit code 127), and a destructor that joins could touch the `holds()` singleton after that
+/// one was destroyed. The OS reclaims both at exit.
 inline pool& the_pool() {
-    static pool p;
-    return p;
+    static pool* instance = new pool();
+    return *instance;
 }
 #endif  // !__EMSCRIPTEN__
 
@@ -169,12 +178,16 @@ inline pool& the_pool() {
 struct hold_registry {
     std::mutex mu;
     std::unordered_map<void*, int> counts;
+    /// Wrappers whose `dispose()` arrived while a job still held them: the job that drops the last
+    /// reference deletes them, which keeps the deletion off the worker that may still be using them
+    /// (queuing it would let another worker run it in parallel once the pool has more than one).
+    std::unordered_map<void*, std::function<void()>> pending_release;
     std::atomic<int> busy_jobs{0};
 };
 
 inline hold_registry& holds() {
-    static hold_registry r;
-    return r;
+    static hold_registry* instance = new hold_registry();
+    return *instance;
 }
 
 inline void register_holds(const std::vector<void*>& holders) {
@@ -188,16 +201,42 @@ inline void register_holds(const std::vector<void*>& holders) {
 
 inline void unregister_holds(const std::vector<void*>& holders) {
     auto& r = holds();
+    std::vector<std::function<void()>> released;
     {
         std::lock_guard<std::mutex> lock(r.mu);
         for (void* holder : holders) {
             if (holder == nullptr) continue;
             auto it = r.counts.find(holder);
-            if (it == r.counts.end()) continue;
-            if (--it->second <= 0) r.counts.erase(it);
+            if (it != r.counts.end()) {
+                if (--it->second > 0) continue;
+                r.counts.erase(it);
+            }
+            auto pending = r.pending_release.find(holder);
+            if (pending != r.pending_release.end()) {
+                released.push_back(std::move(pending->second));
+                r.pending_release.erase(pending);
+            }
         }
     }
     r.busy_jobs.fetch_sub(1, std::memory_order_release);
+    // Outside the lock: a destructor may call back into the registry.
+    for (auto& release : released) release();
+}
+
+/// Remembers a wrapper whose `dispose()` has to wait for the jobs that still hold it.
+inline void defer_release(void* holder, std::function<void()> deleter) {
+    auto& r = holds();
+    std::function<void()> immediate;
+    {
+        std::lock_guard<std::mutex> lock(r.mu);
+        auto it = r.counts.find(holder);
+        if (it == r.counts.end() || it->second <= 0) {
+            immediate = std::move(deleter);
+        } else {
+            r.pending_release[holder] = std::move(deleter);
+        }
+    }
+    if (immediate) immediate();
 }
 
 inline bool holder_in_use(void* holder) {
@@ -272,7 +311,23 @@ inline CvStatus* dispatch(CvCallback_0 callback, std::vector<void*> holders, std
     detail::register_holds(holders);
     const std::uintptr_t lane = detail::lane_of(holders);
     detail::the_pool().submit(lane, [holders = std::move(holders), work = std::move(work), callback]() {
-        CvStatus* status = work();
+        CvStatus* status = nullptr;
+        try {
+            status = work();
+        } catch (...) {
+            // The body reports its own failures; this only catches what escapes it (a failure while
+            // building the status, say), and the holders below still have to be released.
+        }
+        if (status == nullptr) {
+            status = new CvStatus{
+                .code = 2,
+                .msg = strdup("async job failed"),
+                .err = strdup("async job failed"),
+                .func = strdup(__func__),
+                .file = strdup(__FILE__),
+                .line = __LINE__,
+            };
+        }
         callback(status);
         detail::unregister_holds(holders);
     });
@@ -285,24 +340,19 @@ inline CvStatus* dispatch(CvCallback_0 callback, std::vector<void*> holders, std
 template <typename H>
 void release(H* value) {
     if (value == nullptr) return;
-    if (detail::holds().busy_jobs.load(std::memory_order_acquire) > 0 &&
-        detail::holder_in_use(static_cast<void*>(value->ptr))) {
-        auto* self = value;
-#ifdef __EMSCRIPTEN__
-        // Nothing can be running off-thread on the web, so this only happens for a job that already
-        // finished; delete now and keep the web build free of a queue hop.
+    auto* self = value;
+    auto deleter = [self]() {
         delete self->ptr;
         delete self;
-#else
-        detail::the_pool().submit(0, [self]() {
-            delete self->ptr;
-            delete self;
-        });
-#endif
+    };
+    if (detail::holds().busy_jobs.load(std::memory_order_acquire) > 0 &&
+        detail::holder_in_use(static_cast<void*>(value->ptr))) {
+        // The job that drops the last reference runs `deleter`, so this never races a worker that is
+        // still dereferencing the holder.
+        detail::defer_release(static_cast<void*>(value->ptr), std::move(deleter));
         return;
     }
-    delete value->ptr;
-    delete value;
+    deleter();
 }
 
 inline void set_async_threads(int n) {
