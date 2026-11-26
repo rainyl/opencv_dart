@@ -115,9 +115,6 @@ abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {
 void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final code = s.ref.code;
   if (code == 0) {
-    // The strings are only needed to build the exception, so the success path decodes nothing.
-    // (Measured with benchmark/async_vs_sync.dart's `Mat.empty()` variant: no measurable difference
-    // at ~1 us/call - kept because it is the honest shape, not because it is faster.)
     ccore.CvStatus_close(s);
     return;
   }

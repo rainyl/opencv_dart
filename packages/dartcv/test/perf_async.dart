@@ -3,7 +3,10 @@
 
 // Sync vs async: what the worker thread costs and what it buys.
 //
-//   dart run benchmark/async_vs_sync.dart
+//   dart run test/perf_async.dart
+//
+// Like test/perf_mat.dart, this is a manual script: it is not named `*_test.dart`, so `dart test`
+// does not pick it up.
 //
 // Both sides run the same OpenCV call on the same preallocated destination, so the difference is the
 // call machinery and nothing else. The async side awaits every call, which is what a loop that needs
