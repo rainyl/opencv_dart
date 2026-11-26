@@ -256,6 +256,25 @@ double_t cv_getTickFrequency(void);
 void cv_setNumThreads(int n);
 int cv_getNumThreads(void);
 
+/**
+ * @brief Diagnostics: how many wrapped C++ objects are alive right now.
+ *
+ * A handle that a live object outlived (a job still in flight, a `VecVecPoint[i]` view) keeps its
+ * object counted, so this is the number of objects, not of Dart wrappers. Tests use it to assert
+ * that disposing and finalizing released everything.
+ *
+ * @return int64_t
+ */
+int64_t cv_live_object_count(void);
+
+/**
+ * @brief Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+ *
+ * @param out VecChar*
+ * @return CvStatus
+ */
+CvStatus* cv_live_object_stats(VecChar* out);
+
 // OpenCL functions
 bool cv_ocl_haveAmdBlas();
 bool cv_ocl_haveAmdFft();

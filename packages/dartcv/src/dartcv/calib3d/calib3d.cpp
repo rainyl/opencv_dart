@@ -8,6 +8,7 @@
 #pragma warning(disable : 4996)
 #include <opencv2/imgcodecs.hpp>
 #include "dartcv/calib3d/calib3d.h"
+#include "dartcv/core/handle.hpp"
 
 cv::UsacParams cv_UsacParams_c2cpp(struct UsacParams params) {
     cv::UsacParams _params;

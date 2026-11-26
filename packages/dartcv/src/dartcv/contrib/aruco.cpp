@@ -7,6 +7,7 @@
 */
 #include "dartcv/contrib/aruco.h"
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_aruco_detectorParameters_create(ArucoDetectorParams* rval) {
     BEGIN_WRAP

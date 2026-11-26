@@ -10,6 +10,7 @@
 #include "dartcv/core/vec.hpp"
 #include <cstdint>
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 // AsyncArray_New creates a new empty AsyncArray
 CvStatus* cv_dnn_AsyncArray_new(AsyncArray* rval) {

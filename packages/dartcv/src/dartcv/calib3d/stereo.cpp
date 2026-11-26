@@ -4,6 +4,7 @@
 //
 
 #include "stereo.h"
+#include "dartcv/core/handle.hpp"
 
 // StereoBM
 CvStatus* cv_StereoBM_create(

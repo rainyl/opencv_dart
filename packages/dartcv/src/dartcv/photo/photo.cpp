@@ -8,6 +8,7 @@
 
 #include "dartcv/photo/photo.h"
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_colorChange(
     Mat src,

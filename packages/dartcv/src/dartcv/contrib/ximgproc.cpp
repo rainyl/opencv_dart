@@ -6,6 +6,7 @@
 #include <vector>
 #include "dartcv/contrib/ximgproc.h"
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_ximgproc_anisotropicDiffusion(
     Mat src, CVD_OUT Mat dst, float alpha, float K, int niters, CvCallback_0 callback

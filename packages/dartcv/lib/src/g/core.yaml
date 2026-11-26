@@ -643,6 +643,10 @@ files:
         name: cv_kmeans
       c:@F@cv_kmeans_points:
         name: cv_kmeans_points
+      c:@F@cv_live_object_count:
+        name: cv_live_object_count
+      c:@F@cv_live_object_stats:
+        name: cv_live_object_stats
       c:@F@cv_log:
         name: cv_log
       c:@F@cv_magnitude:

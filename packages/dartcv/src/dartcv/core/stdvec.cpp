@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CVD_STD_VEC_FUNC_IMPL(VecU8, uint8_t);
 VecU8* std_VecU8_clone(VecU8* self) {

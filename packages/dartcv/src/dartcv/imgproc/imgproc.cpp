@@ -8,6 +8,7 @@
 
 #include "dartcv/imgproc/imgproc.h"
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_arcLength(VecPoint curve, bool is_closed, double* rval, CvCallback_0 callback) {
     BEGIN_WRAP

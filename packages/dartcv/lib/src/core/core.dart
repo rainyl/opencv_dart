@@ -114,14 +114,15 @@ void defaultLogCallbackEx(
 }
 
 typedef LogCallbackFunction = void Function(LogLevel logLevel, String message);
-typedef LogCallbackExFunction = void Function(
-  LogLevel logLevel,
-  String tag,
-  String file,
-  int line,
-  String func,
-  String message,
-);
+typedef LogCallbackExFunction =
+    void Function(
+      LogLevel logLevel,
+      String tag,
+      String file,
+      int line,
+      String func,
+      String message,
+    );
 
 ffi.NativeCallable<cvg.LogCallbackExFunction>? _logCallbackEx;
 ffi.NativeCallable<cvg.LogCallbackFunction>? _logCallback;
@@ -1441,6 +1442,24 @@ void setNumThreads(int n) => ccore.cv_setNumThreads(n);
 
 /// Get the number of threads for OpenCV.
 int getNumThreads() => ccore.cv_getNumThreads();
+
+/// Diagnostics: how many wrapped C++ objects are alive right now.
+///
+/// A handle that outlived its Dart wrapper (a job still in flight, a `VecVecPoint[i]` view) keeps
+/// its object counted, so this is a count of objects, not of Dart wrappers. Tests use it to assert
+/// that disposing and finalizing released everything; see `test/core/lifetime_test.dart`.
+int liveObjectCount() => ccore.cv_live_object_count();
+
+/// Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+///
+/// Handy in the failure message of a leak test, since it names the type that was kept alive.
+String liveObjectStats() {
+  final v = VecChar();
+  cvRun(() => ccore.cv_live_object_stats(v.ptr));
+  final stats = v.asString();
+  v.dispose();
+  return stats;
+}
 
 // OpenCL functions
 /// https://docs.opencv.org/4.12.0/dc/d83/group__core__opencl.html#gad2e486ab8104a3b197001e27d54e2a95

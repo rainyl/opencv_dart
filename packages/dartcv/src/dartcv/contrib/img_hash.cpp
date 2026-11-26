@@ -5,6 +5,7 @@
 
 #include "dartcv/contrib/img_hash.h"
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_img_hash_pHash_compute(Mat inputArr, Mat outputArr, CvCallback_0 callback) {
     BEGIN_WRAP

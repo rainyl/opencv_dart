@@ -107,27 +107,16 @@ extern "C" {
 // Macros, not templates: this header is included from inside the module headers' own
 // `extern "C" {` blocks, where a template would be given C linkage.
 
-/// Stores a fresh handle, releasing whatever the wrapper held before: a reused out-parameter must
-/// not leak the previous object (with a shared_ptr a leak would also pin the C++ object).
-#define CVD_SET(holder, raw_ptr)                                                 \
-    do {                                                                         \
-        auto* _cvd_handle = (raw_ptr);                                           \
-        delete (holder)->ptr;                                                    \
-        (holder)->ptr = (_cvd_handle == nullptr)                                 \
-            ? nullptr                                                            \
-            : new std::shared_ptr<std::remove_pointer_t<decltype(_cvd_handle)>>(  \
-                  _cvd_handle                                                    \
-              );                                                                 \
-    } while (0)
+// The wrappers' `ptr` field and these macros live in handle.hpp (which has the counting deleter
+// and the `cvd::live_*` counters); the macros stay here so C-only translation units keep compiling.
+#define CVD_SET(holder, raw_ptr) (::cvd::set((holder), (raw_ptr)))
 
 /// A fresh heap `std::shared_ptr<TYPE>` around a newly constructed `TYPE`: what a wrapper's `ptr`
 /// field holds.
-#define CVD_MAKE(TYPE, ...) (new std::shared_ptr<TYPE>(new TYPE(__VA_ARGS__)))
+#define CVD_MAKE(TYPE, ...) (::cvd::make<TYPE>(__VA_ARGS__))
 
 /// Takes ownership of an already-constructed raw pointer (`std::vector` built by hand, etc.).
-#define CVD_ADOPT(raw_ptr)                                    \
-    (new std::shared_ptr<std::remove_pointer_t<               \
-         std::remove_reference_t<decltype(raw_ptr)>>>(raw_ptr))
+#define CVD_ADOPT(raw_ptr) (::cvd::adopt((raw_ptr)))
 
 #define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(CVDEREF(value))
 // for test, value should not be freed here

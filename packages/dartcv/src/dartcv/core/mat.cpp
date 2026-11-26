@@ -5,6 +5,7 @@
 
 #include "dartcv/core/mat.h"
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_Mat_create(Mat* rval) {
     BEGIN_WRAP

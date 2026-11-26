@@ -10,6 +10,7 @@
 #include "dartcv/core/vec.hpp"
 
 #include <iostream>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_BackgroundSubtractorMOG2_create(BackgroundSubtractorMOG2* rval) {
     BEGIN_WRAP

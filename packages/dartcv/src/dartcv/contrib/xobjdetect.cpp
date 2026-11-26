@@ -5,6 +5,7 @@
 
 #include "dartcv/contrib/xobjdetect.h"
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_xobjdetect_WBDetector_create(PtrWBDetector* rval) {
     BEGIN_WRAP

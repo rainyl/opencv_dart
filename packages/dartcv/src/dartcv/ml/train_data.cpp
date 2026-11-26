@@ -6,6 +6,7 @@
 #include "dartcv/ml/stat_model.hpp"
 #include <string>
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_ml_TrainData_create(
     Mat samples,

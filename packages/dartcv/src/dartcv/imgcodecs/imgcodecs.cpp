@@ -8,6 +8,7 @@
 
 #include <vector>
 #include "dartcv/imgcodecs/imgcodecs.h"
+#include "dartcv/core/handle.hpp"
 
 bool cv_haveImageReader(const char* filename) {
     return cv::haveImageReader(filename);

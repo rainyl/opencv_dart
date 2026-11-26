@@ -8,6 +8,8 @@
 #include "dartcv/ml/stat_model.h"
 #include <string>
 
+#include "dartcv/core/handle.hpp"
+
 /// Throws instead of handing back an empty model, OpenCV returns an empty Ptr on failure.
 template <typename T> inline cv::Ptr<T> cvd_ml_checked(cv::Ptr<T> p, const std::string& what) {
     if (p.empty()) {

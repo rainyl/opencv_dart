@@ -11,6 +11,9 @@
   real async APIs that follow; the C ABI, `lib/src/g/*` and the public Dart API are unchanged.
 - fix: `VecVecPoint[i]` (and the `Point2f`/`Point3f` variants) shares the parent container's control
   block, so a view keeps its parent alive instead of aliasing storage it does not own.
+- new: `liveObjectCount()` / `liveObjectStats()` report how many wrapped C++ objects are alive (a
+  handle that outlived its Dart wrapper keeps its object counted), so a leak is assertable from a
+  test; `test/core/lifetime_test.dart` covers create/use/release, out-parameter reuse and views.
 
 ## 2.3.3
 

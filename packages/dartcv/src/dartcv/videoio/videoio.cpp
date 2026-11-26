@@ -9,6 +9,7 @@
 #include "dartcv/videoio/videoio.h"
 
 #include <iostream>
+#include "dartcv/core/handle.hpp"
 
 // VideoCapture
 CvStatus *cv_VideoCapture_create(VideoCapture *rval) {

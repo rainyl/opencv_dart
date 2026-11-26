@@ -2900,6 +2900,27 @@ external ffi.Pointer<CvStatus> cv_kmeans_points(
   imp$1.CvCallback_0 callback,
 );
 
+/// @brief Diagnostics: how many wrapped C++ objects are alive right now.
+///
+/// A handle that a live object outlived (a job still in flight, a `VecVecPoint[i]` view) keeps its
+/// object counted, so this is the number of objects, not of Dart wrappers. Tests use it to assert
+/// that disposing and finalizing released everything.
+///
+/// @return int64_t
+@meta.RecordUse()
+@ffi.Native<ffi.Int64 Function()>()
+external int cv_live_object_count();
+
+/// @brief Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+///
+/// @param out VecChar*
+/// @return CvStatus
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> cv_live_object_stats(
+  ffi.Pointer<VecChar> out,
+);
+
 @meta.RecordUse()
 @ffi.Native<ffi.Pointer<CvStatus> Function(Mat, Mat, imp$1.CvCallback_0)>()
 external ffi.Pointer<CvStatus> cv_log(

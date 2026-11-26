@@ -10,6 +10,7 @@
 #include <cmath>
 #include <vector>
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 // CascadeClassifier
 CvStatus* cv_CascadeClassifier_create(CascadeClassifier* rval) {

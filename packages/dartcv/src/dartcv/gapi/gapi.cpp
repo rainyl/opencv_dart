@@ -4,6 +4,7 @@
 //
 
 #include "dartcv/gapi/gapi.h"
+#include "dartcv/core/handle.hpp"
 
 CvStatus *gapi_GMat_New_Empty(GMat *rval)
 {

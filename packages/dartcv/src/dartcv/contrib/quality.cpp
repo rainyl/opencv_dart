@@ -4,6 +4,7 @@
 //
 
 #include "dartcv/contrib/quality.h"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_quality_QualityBRISQUE_create(
     const char* model_file, const char* range_file, QualityBRISQUE* rval, CvCallback_0 callback

@@ -3561,6 +3561,25 @@ ffi.Pointer<CvStatus> cv_kmeans_points(
   }
 }
 
+/// @brief Diagnostics: how many wrapped C++ objects are alive right now.
+///
+/// A handle that a live object outlived (a job still in flight, a `VecVecPoint[i]` view) keeps its
+/// object counted, so this is the number of objects, not of Dart wrappers. Tests use it to assert
+/// that disposing and finalizing released everything.
+///
+/// @return int64_t
+int cv_live_object_count() {
+  return $rt.rj($rt.call('cv_live_object_count', []));
+}
+
+/// @brief Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+///
+/// @param out VecChar*
+/// @return CvStatus
+ffi.Pointer<CvStatus> cv_live_object_stats(ffi.Pointer<VecChar> out) {
+  return ffi.Pointer<CvStatus>.fromAddress($rt.ru($rt.call('cv_live_object_stats', [$rt.i(out.address)])));
+}
+
 ffi.Pointer<CvStatus> cv_log(Mat src, Mat dst, imp$1.CvCallback_0 callback) {
   return ffi.Pointer<CvStatus>.fromAddress(
     $rt.ru($rt.call('cv_log', [$rt.i(src.ptr.address), $rt.i(dst.ptr.address), $rt.i(callback.address)])),

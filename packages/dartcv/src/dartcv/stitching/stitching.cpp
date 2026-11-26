@@ -6,6 +6,7 @@
 #include "dartcv/stitching/stitching.h"
 #include <vector>
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_Stitcher_create(int mode, Stitcher* rval) {
     BEGIN_WRAP

@@ -11,6 +11,7 @@
 #include <opencv2/features2d.hpp>
 #include "dartcv/core/vec.hpp"
 #include "dartcv/features2d/utils.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_AKAZE_create(AKAZE* rval) {
     BEGIN_WRAP

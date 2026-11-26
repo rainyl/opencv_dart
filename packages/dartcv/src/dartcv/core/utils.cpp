@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "dartcv/core/utils.h"
+#include "dartcv/core/handle.hpp"
 
 VecU8* cv_yuv420_888_to_nv21(VecU8 y, VecU8 u, VecU8 v, size_t width, size_t height) {
     if (width == 0 || height == 0) {

@@ -327,6 +327,8 @@ const recordUseMapping = {
   'cv_invert': 'cv_invert',
   'cv_kmeans': 'cv_kmeans',
   'cv_kmeans_points': 'cv_kmeans_points',
+  'cv_live_object_count': 'cv_live_object_count',
+  'cv_live_object_stats': 'cv_live_object_stats',
   'cv_log': 'cv_log',
   'cv_magnitude': 'cv_magnitude',
   'cv_max': 'cv_max',

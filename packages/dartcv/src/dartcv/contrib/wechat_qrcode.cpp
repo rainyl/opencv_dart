@@ -6,6 +6,7 @@
 #include "dartcv/contrib/wechat_qrcode.h"
 #include "dartcv/core/vec.hpp"
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_wechat_qrcode_WeChatQRCode_create(WeChatQRCode* qrcode) {
     BEGIN_WRAP

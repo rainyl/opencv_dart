@@ -60,6 +60,7 @@
 
 #include <hb.h>
 #include <hb-ft.h>
+#include "dartcv/core/handle.hpp"
 namespace cv {
 
 namespace freetype {

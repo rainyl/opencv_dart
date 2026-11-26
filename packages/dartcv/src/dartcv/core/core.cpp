@@ -13,6 +13,7 @@
 #include <cstring>
 #include <vector>
 #include <opencv2/core/ocl.hpp>
+#include "dartcv/core/handle.hpp"
 
 
 CvStatus* cv_RotatedRect_points(RotatedRect rect, VecPoint2f* out_pts) {
@@ -1392,6 +1393,17 @@ void cv_setNumThreads(int n) {
 }
 int cv_getNumThreads(void) {
     return cv::getNumThreads();
+}
+
+int64_t cv_live_object_count(void) {
+    return cvd::live_total().load();
+}
+
+CvStatus* cv_live_object_stats(VecChar* out) {
+    BEGIN_WRAP
+    auto stats = cvd::live_stats();
+    CVD_SET(out, new std::vector<char>(stats.begin(), stats.end()));
+    END_WRAP
 }
 
 // OpenCL functions
