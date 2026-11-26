@@ -28,8 +28,10 @@ Differences from native:
   browser's garbage collector does not see the wasm heap, so it may collect late.
 - `Mat.data` and other typed-data views point into the wasm heap; growing the heap (any large
   allocation) detaches them, so re-read them after further OpenCV calls instead of keeping them.
-- The `*Async` functions return Futures but run on the calling thread (as on native, where the
-  C side completes the callback before returning). Move heavy work to a Web Worker if needed.
+- The `*Async` functions return Futures but run on the calling thread: the browser has no threads
+  (native platforms get a real worker thread, see `src/dartcv/core/async.h`), and a blocking wasm call
+  also blocks the JavaScript event loop. A timeout therefore cannot abandon the wait early either -
+  it fires as soon as the work returns. Move heavy work to a Web Worker if needed.
 - File paths refer to Emscripten's in-memory file system. Decode browser data with `imdecode`
   instead of `imread`, and load models with the `fromBytes`/buffer variants.
 - `highgui` and `gapi` are not in the web build; their functions throw `UnsupportedError`.

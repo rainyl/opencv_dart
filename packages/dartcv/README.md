@@ -292,7 +292,7 @@ Neither option changes anything for projects that do not set them.
 - [ ] documentation
 - [x] modify C wrapper to catch exceptions
 - [x] Native Assets
-- [x] async?
+- [x] async? (real worker thread on native, `*Async` + `Duration? timeout`)
 - [x] more/full test coverage
 - [x] directly include opencv source code, refactor cmakelists.txt
 
