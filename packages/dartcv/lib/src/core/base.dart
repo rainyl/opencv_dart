@@ -114,15 +114,20 @@ abstract class CvStruct<T extends ffi.Struct> extends ICvStruct<T> {
 // error handler
 void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
   final code = s.ref.code;
+  if (code == 0) {
+    // The strings are only needed to build the exception, so the success path decodes nothing.
+    // (Measured with benchmark/async_vs_sync.dart's `Mat.empty()` variant: no measurable difference
+    // at ~1 us/call - kept because it is the honest shape, not because it is faster.)
+    ccore.CvStatus_close(s);
+    return;
+  }
   // String err = s.ref.err.cast<Utf8>().toDartString();
   final msg = s.ref.msg.cast<Utf8>().toDartString();
   final file = s.ref.file.cast<Utf8>().toDartString();
   final funcName = s.ref.func.cast<Utf8>().toDartString();
   final line = s.ref.line;
   ccore.CvStatus_close(s);
-  if (code != 0) {
-    throw CvException(code, msg: msg, file: file, func: funcName, line: line);
-  }
+  throw CvException(code, msg: msg, file: file, func: funcName, line: line);
 }
 
 // sync runner
