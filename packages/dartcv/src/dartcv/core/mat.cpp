@@ -349,14 +349,18 @@ CvStatus* cv_Mat_row(Mat self, int y, Mat* rval, CvCallback_0 callback) {
 }
 
 CvStatus* cv_rowRange(Mat self, int start, int end, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->rowRange(start, end)));
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->rowRange(start, end)));
+        END_WRAP
+    });
 }
 CvStatus* cv_colRange(Mat self, int start, int end, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->colRange(start, end)));
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->colRange(start, end)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_copyTo(Mat self, Mat dst, CvCallback_0 callback) {

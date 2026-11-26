@@ -153,6 +153,18 @@ void main() async {
     src.dispose();
   });
 
+  test('every async twin completes (rowRange/colRange used to never call back)', () async {
+    // Regression: these two C wrappers took a callback and never invoked it, so their Futures hung.
+    final src = cv.Mat.zeros(64, 64, cv.MatType.CV_8UC1);
+    final rows = await src.rowRangeAsync(0, 32).timeout(const Duration(seconds: 10));
+    expect((rows.rows, rows.cols), (32, 64));
+    final cols = await src.colRangeAsync(0, 32).timeout(const Duration(seconds: 10));
+    expect((cols.rows, cols.cols), (64, 32));
+    rows.dispose();
+    cols.dispose();
+    src.dispose();
+  });
+
   test('one worker keeps calls in order', () async {
     final src = small();
     final dsts = List.generate(3, (_) => cv.Mat.empty());

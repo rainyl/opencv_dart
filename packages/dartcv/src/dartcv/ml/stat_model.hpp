@@ -75,11 +75,13 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_save(NAME self, const char* filename) {                               \
+        CVD_CHECK(self);                                                                          \
         BEGIN_WRAP                                                                                 \
         cvd_ml_save(*CVDEREF(self), filename);                                                     \
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_clear(NAME self) {                                                    \
+        CVD_CHECK(self);                                                                          \
         BEGIN_WRAP(CVDEREF(self))                                                                  \
         ->clear();                                                                                 \
         END_WRAP                                                                                   \
@@ -97,6 +99,7 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         return (CVDEREF(self))->getVarCount();                                                     \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_getDefaultName(NAME self, char** rval) {                              \
+        CVD_CHECK(self);                                                                          \
         BEGIN_WRAP                                                                                 \
         *rval = strdup((CVDEREF(self))->getDefaultName().c_str());                                 \
         END_WRAP                                                                                   \
@@ -104,6 +107,7 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
     CvStatus* cv_ml_##NAME##_train(                                                                \
         NAME self, TrainData data, int flags, bool* rval, CvCallback_0 callback                    \
     ) {                                                                                            \
+        CVD_CHECK(self);                                                                          \
         return cvd::dispatch(callback, cvd::hold(self, data), [=]() -> CvStatus* {                \
             BEGIN_WRAP                                                                            \
             *rval = (CVDEREF(self))->train(CVDEREF(data), flags);                                 \
@@ -143,16 +147,19 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
 /// Defines the functions declared by CVD_ML_TREES_DECL(NAME) (see dartcv/ml/dtrees.h).
 #define CVD_ML_TREES_IMPL(NAME)                                                                    \
     CvStatus* cv_ml_##NAME##_getRoots(NAME self, VecI32* rval) {                                   \
+        CVD_CHECK(self);                                                                          \
         BEGIN_WRAP                                                                                 \
         CVDEREF_P(rval) = (CVDEREF(self))->getRoots();                                             \
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_getSubsets(NAME self, VecI32* rval) {                                 \
+        CVD_CHECK(self);                                                                          \
         BEGIN_WRAP                                                                                 \
         CVDEREF_P(rval) = (CVDEREF(self))->getSubsets();                                           \
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_getNodes(NAME self, MlDTreesNode* rval, int capacity, int* count) {   \
+        CVD_CHECK(self);                                                                          \
         BEGIN_WRAP                                                                                 \
         const auto& nodes = (CVDEREF(self))->getNodes();                                           \
         *count = static_cast<int>(nodes.size());                                                   \
