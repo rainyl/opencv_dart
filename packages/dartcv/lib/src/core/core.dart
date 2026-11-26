@@ -1452,6 +1452,10 @@ int getAsyncThreads() => ccore.cv_getAsyncThreads();
 void setAsyncThreads(int n) => ccore.cv_setAsyncThreads(n);
 
 /// How many async jobs are queued or running.
+///
+/// A job is counted until its worker has finished with it, which is a moment after the callback that
+/// completes the Dart `Future`: right after an `await`, this can still read 1. Use [asyncDrain] when
+/// the answer has to be exact.
 int asyncPending() => ccore.cv_asyncPending();
 
 /// Blocks until no async job is queued or running (tests, shutdown).

@@ -20,6 +20,18 @@ void main() async {
   /// An image big enough that a Gaussian blur takes tens of milliseconds.
   cv.Mat source() => cv.Mat.zeros(1200, 1200, cv.MatType.CV_8UC3);
 
+  /// Waits until no job is queued, running or finishing its bookkeeping.
+  ///
+  /// `asyncPending()` is decremented by the worker after it calls back, so it can still read 1 for a
+  /// moment after the Future has completed; `asyncDrain()` waits for the native side, the loop for
+  /// the counter.
+  Future<void> waitUntilIdle() async {
+    cv.asyncDrain();
+    while (cv.asyncPending() > 0) {
+      await Future<void>.delayed(Duration.zero);
+    }
+  }
+
   /// A small image whose pixels can be compared cheaply.
   cv.Mat small() => cv.Mat.fromScalar(64, 64, cv.MatType.CV_8UC1, cv.Scalar.all(7));
 
@@ -44,6 +56,7 @@ void main() async {
           'was even returned)',
     );
     expect(ticks, greaterThan(0), reason: 'the event loop was blocked for the whole computation');
+    await waitUntilIdle();
     expect(cv.asyncPending(), 0);
     src.dispose();
     dst.dispose();
@@ -68,6 +81,7 @@ void main() async {
       cv.gaussianBlurAsync(src, (4, 4), 0),
       throwsA(isA<cv.CvException>()),
     );
+    await waitUntilIdle();
     expect(cv.asyncPending(), 0);
     src.dispose();
   });
@@ -135,7 +149,7 @@ void main() async {
         dst.dispose();
         await pending;
       }
-      cv.asyncDrain();
+      await waitUntilIdle();
       expect(cv.asyncPending(), 0);
     } finally {
       cv.setAsyncThreads(1);
