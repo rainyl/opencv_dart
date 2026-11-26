@@ -119,6 +119,40 @@ void main() async {
     }
   });
 
+  test('a synchronous call on an in-flight object is refused, not raced', () async {
+    final src = source();
+    final dst = cv.Mat.empty();
+    final pending = cv.gaussianBlurAsync(src, (31, 31), 0, dst: dst);
+    await expectLater(
+      // same dst, while the job is still writing it
+      Future(() => cv.gaussianBlur(src, (5, 5), 0, dst: dst)),
+      throwsA(isA<cv.CvException>()),
+    );
+    await pending; // the async call itself is unaffected
+    // and synchronous calls work again once the Future is done
+    cv.gaussianBlur(src, (5, 5), 0, dst: dst);
+    src.dispose();
+    dst.dispose();
+  });
+
+  test('a wrapper without an async twin is refused on an in-flight object too', () async {
+    final src = source();
+    final pending = cv.gaussianBlurAsync(src, (31, 31), 0);
+    await expectLater(Future(src.release), throwsA(isA<cv.CvException>()));
+    await pending;
+    src.dispose();
+  });
+
+  test('an unrelated synchronous call is not refused', () async {
+    final src = source();
+    final other = cv.Mat.zeros(32, 32, cv.MatType.CV_8UC1);
+    final pending = cv.gaussianBlurAsync(src, (31, 31), 0);
+    // a different object may be used synchronously while the job runs
+    other.dispose();
+    await pending;
+    src.dispose();
+  });
+
   test('one worker keeps calls in order', () async {
     final src = small();
     final dsts = List.generate(3, (_) => cv.Mat.empty());

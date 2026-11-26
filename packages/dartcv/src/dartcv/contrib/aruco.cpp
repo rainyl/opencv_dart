@@ -339,6 +339,7 @@ CvStatus* cv_aruco_getPredefinedDictionary(int dictionaryId, ArucoDictionary* rv
 CvStatus* cv_aruco_Dictionary_create_1(
     Mat bytesList, int markerSize, int maxCorr, ArucoDictionary* rval
 ) {
+    CVD_CHECK(bytesList);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::Dictionary(CVDEREF(bytesList), markerSize, maxCorr));
     END_WRAP
@@ -347,6 +348,7 @@ CvStatus* cv_aruco_Dictionary_create_1(
 CvStatus* cv_aruco_Dictionary_generateImageMarker(
     ArucoDictionary self, int id, int sidePixels, Mat _img, int borderBits
 ) {
+    CVD_CHECK(self, _img);
     BEGIN_WRAP
     (*self.ptr)->generateImageMarker(id, sidePixels, CVDEREF(_img), borderBits);
     END_WRAP
@@ -364,6 +366,7 @@ bool cv_aruco_Dictionary_identify(
     return rval;
 }
 CvStatus* cv_aruco_Dictionary_get_bytesList(ArucoDictionary self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->bytesList));
     END_WRAP
@@ -376,6 +379,7 @@ int cv_aruco_Dictionary_get_maxCorrectionBits(ArucoDictionary self) {
 }
 
 CvStatus* cv_aruco_Dictionary_set_bytesList(ArucoDictionary self, Mat value){
+    CVD_CHECK(self, value);
     BEGIN_WRAP
     (*self.ptr)->bytesList = CVDEREF(value);
     END_WRAP
@@ -400,6 +404,7 @@ CvStatus* cv_aruco_arucoDetector_create(ArucoDetector* rval) {
 CvStatus* cv_aruco_arucoDetector_create_1(
     ArucoDictionary dictionary, ArucoDetectorParams params, ArucoDetector* rval
 ) {
+    CVD_CHECK(dictionary, params);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::ArucoDetector(CVDEREF(dictionary), CVDEREF(params)));
     END_WRAP
@@ -464,6 +469,7 @@ CvStatus* cv_aruco_charucoBoard_create_1(
     ArucoDictionary dictionary,
     CharucoBoard* rval
 ) {
+    CVD_CHECK(dictionary);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoBoard(
         cv::Size(size.width, size.height),
@@ -482,6 +488,7 @@ CvStatus* cv_aruco_charucoBoard_create_2(
     VecI32 ids,
     CharucoBoard* rval
 ) {
+    CVD_CHECK(dictionary, ids);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoBoard(
         cv::Size(size.width, size.height),
@@ -517,6 +524,7 @@ CvStatus* cv_aruco_charucoBoard_generateImage(
 }
 
 CvStatus* cv_aruco_charucoBoard_getChessboardCorners(CharucoBoard self, VecPoint3f* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new std::vector<cv::Point3f>((*self.ptr)->getChessboardCorners()));
     END_WRAP
@@ -544,12 +552,14 @@ void cv_aruco_charucoBoard_setLegacyPattern(CharucoBoard self, bool value) {
 }
 
 CvStatus* cv_aruco_charucoBoard_getIds(CharucoBoard self, VecI32* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new std::vector<int>((*self.ptr)->getIds()));
     END_WRAP
 }
 
 CvStatus* cv_aruco_charucoBoard_getObjPoints(CharucoBoard self, VecVecPoint3f* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new std::vector<std::vector<cv::Point3f>>((*self.ptr)->getObjPoints()));
     END_WRAP
@@ -581,24 +591,28 @@ void cv_aruco_charucoDetectorParameters_close(CharucoDetectorParamsPtr self) {
 }
 
 CvStatus* cv_aruco_charucoDetectorParameters_get_cameraMatrix(CharucoDetectorParams self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->cameraMatrix));
     END_WRAP
 }
 
 CvStatus* cv_aruco_charucoDetectorParameters_set_cameraMatrix(CharucoDetectorParams self, Mat value) {
+    CVD_CHECK(self, value);
     BEGIN_WRAP
     (*self.ptr)->cameraMatrix = CVDEREF(value);
     END_WRAP
 }
 
 CvStatus* cv_aruco_charucoDetectorParameters_get_distCoeffs(CharucoDetectorParams self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->distCoeffs));
     END_WRAP
 }
 
 CvStatus* cv_aruco_charucoDetectorParameters_set_distCoeffs(CharucoDetectorParams self, Mat value) {
+    CVD_CHECK(self, value);
     BEGIN_WRAP
     (*self.ptr)->distCoeffs = CVDEREF(value);
     END_WRAP
@@ -632,6 +646,7 @@ CvStatus* cv_aruco_charucoDetector_create_1(
     CharucoBoard board,
     CharucoDetector* rval
 ) {
+    CVD_CHECK(board);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoDetector(CVDEREF(board)));
     END_WRAP
@@ -642,6 +657,7 @@ CvStatus* cv_aruco_charucoDetector_create_2(
     CharucoDetectorParams charucoParams,
     CharucoDetector* rval
 ) {
+    CVD_CHECK(board, charucoParams);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoDetector(
         CVDEREF(board),
@@ -656,6 +672,7 @@ CvStatus* cv_aruco_charucoDetector_create_3(
     ArucoDetectorParams detectorParams,
     CharucoDetector* rval
 ) {
+    CVD_CHECK(board, charucoParams, detectorParams);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoDetector(
         CVDEREF(board),
@@ -672,6 +689,7 @@ CvStatus* cv_aruco_charucoDetector_create_4(
     ArucoRefineParams refineParams,
     CharucoDetector* rval
 ) {
+    CVD_CHECK(board, charucoParams, detectorParams, refineParams);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoDetector(
         CVDEREF(board),
@@ -731,6 +749,7 @@ CvStatus* cv_aruco_charucoDetector_detectDiamonds(
 }
 
 CvStatus* cv_aruco_charucoDetector_getBoard(CharucoDetector self, CharucoBoard* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoBoard((*self.ptr)->getBoard()));
     END_WRAP
@@ -744,6 +763,7 @@ CvStatus* cv_aruco_charucoDetector_getCharucoParameters(
     CharucoDetector self,
     CharucoDetectorParams* rval
 ) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::CharucoParameters((*self.ptr)->getCharucoParameters()));
     END_WRAP
@@ -760,6 +780,7 @@ CvStatus* cv_aruco_charucoDetector_getDetectorParameters(
     CharucoDetector self,
     ArucoDetectorParams* rval
 ) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::DetectorParameters((*self.ptr)->getDetectorParameters()));
     END_WRAP
@@ -776,6 +797,7 @@ CvStatus* cv_aruco_charucoDetector_getRefineParameters(
     CharucoDetector self,
     ArucoRefineParams* rval
 ) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::aruco::RefineParameters((*self.ptr)->getRefineParameters()));
     END_WRAP

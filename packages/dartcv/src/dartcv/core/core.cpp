@@ -390,6 +390,7 @@ CvStatus* cv_getOptimalDFTSize(int vecsize, int* rval, CvCallback_0 callback) {
 }
 
 CvStatus* cv_hasNonZero(Mat src, bool* rval) {
+    CVD_CHECK(src);
     BEGIN_WRAP
     *rval = cv::hasNonZero(CVDEREF(src));
     END_WRAP
@@ -1218,21 +1219,25 @@ CvStatus* cv_RNG_fill(
     });
 }
 CvStatus* cv_RNG_gaussian(RNG rng, double sigma, double* rval) {
+    CVD_CHECK(rng);
     BEGIN_WRAP
     *rval = (*rng.ptr)->gaussian(sigma);
     END_WRAP
 }
 CvStatus* cv_RNG_uniform(RNG rng, int a, int b, int* rval) {
+    CVD_CHECK(rng);
     BEGIN_WRAP
     *rval = (*rng.ptr)->uniform(a, b);
     END_WRAP
 }
 CvStatus* cv_RNG_uniformDouble(RNG rng, double a, double b, double* rval) {
+    CVD_CHECK(rng);
     BEGIN_WRAP
     *rval = (*rng.ptr)->uniform(a, b);
     END_WRAP
 }
 CvStatus* cv_RNG_next(RNG rng, uint32_t* rval) {
+    CVD_CHECK(rng);
     BEGIN_WRAP
     *rval = (*rng.ptr)->next();
     END_WRAP

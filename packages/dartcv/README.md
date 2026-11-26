@@ -140,8 +140,9 @@ A few properties are worth knowing:
 - An error raised inside the job arrives as a failed `Future`, not as a synchronous throw, because the
   C entry point has already returned by then.
 - Only the `Async` calls are ordered with respect to each other. A synchronous call runs immediately,
-  so calling it on an object that an in-flight `Async` call is using is a data race; await first, or
-  pick one style per object.
+  so using an object that an in-flight `Async` call is working on would be a data race; it is refused
+  with a `CvException` instead ("a synchronous call used an object that an async call is still working
+  on"). Await the `Future` first, or pick one style per object.
 - On the web there are no threads (see `tool/web/README.md`): `Async` still returns a `Future`, but the
   work runs on the calling thread.
 

@@ -28,6 +28,7 @@ void cv_CascadeClassifier_close(CascadeClassifierPtr self) {
 }
 
 CvStatus* cv_CascadeClassifier_load(CascadeClassifier self, const char* name, int* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     *rval = (*self.ptr)->load(name);
     END_WRAP
@@ -146,6 +147,7 @@ void cv_HOGDescriptor_close(HOGDescriptorPtr self) {
 }
 
 CvStatus* cv_HOGDescriptor_load(HOGDescriptor self, const char* name, bool* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     *rval = (*self.ptr)->load(name);
     END_WRAP
@@ -235,6 +237,7 @@ CvStatus* cv_HOGDescriptor_getDefaultPeopleDetector(VecF32* rval) {
     END_WRAP
 }
 CvStatus* cv_HOGDescriptor_setSVMDetector(HOGDescriptor self, VecF32 det) {
+    CVD_CHECK(self, det);
     BEGIN_WRAP
     (*self.ptr)->setSVMDetector(CVDEREF(det));
     END_WRAP
@@ -496,6 +499,7 @@ CvStatus* cv_FaceDetectorYN_create_1(
     int target_id,
     FaceDetectorYN* rval
 ) {
+    CVD_CHECK(buffer, buffer_config);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Ptr<cv::FaceDetectorYN>(cv::FaceDetectorYN::create(
         framework,

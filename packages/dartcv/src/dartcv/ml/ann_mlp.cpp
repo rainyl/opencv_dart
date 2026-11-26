@@ -8,11 +8,13 @@
 CVD_ML_STAT_MODEL_IMPL(ANN_MLP, cv::ml::ANN_MLP)
 
 CvStatus* cv_ml_ANN_MLP_getLayerSizes(ANN_MLP self, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getLayerSizes();
     END_WRAP
 }
 CvStatus* cv_ml_ANN_MLP_setLayerSizes(ANN_MLP self, Mat val) {
+    CVD_CHECK(self, val);
     BEGIN_WRAP(CVDEREF(self))
     ->setLayerSizes(CVDEREF(val));
     END_WRAP
@@ -20,11 +22,13 @@ CvStatus* cv_ml_ANN_MLP_setLayerSizes(ANN_MLP self, Mat val) {
 CvStatus* cv_ml_ANN_MLP_setActivationFunction(
     ANN_MLP self, int type, double param1, double param2
 ) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setActivationFunction(type, param1, param2);
     END_WRAP
 }
 CvStatus* cv_ml_ANN_MLP_setTrainMethod(ANN_MLP self, int method, double param1, double param2) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setTrainMethod(method, param1, param2);
     END_WRAP
@@ -33,17 +37,20 @@ int cv_ml_ANN_MLP_get_trainMethod(ANN_MLP self) {
     return (CVDEREF(self))->getTrainMethod();
 }
 CvStatus* cv_ml_ANN_MLP_getTermCriteria(ANN_MLP self, TermCriteria* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     auto tc = (CVDEREF(self))->getTermCriteria();
     *rval = {tc.type, tc.maxCount, tc.epsilon};
     END_WRAP
 }
 CvStatus* cv_ml_ANN_MLP_setTermCriteria(ANN_MLP self, TermCriteria val) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setTermCriteria(cv::TermCriteria(val.type, val.maxCount, val.epsilon));
     END_WRAP
 }
 CvStatus* cv_ml_ANN_MLP_getWeights(ANN_MLP self, int layerIdx, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getWeights(layerIdx);
     END_WRAP

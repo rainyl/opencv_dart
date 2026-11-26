@@ -12,6 +12,7 @@ int cv_ml_EM_get_clustersNumber(EM self) {
     return (CVDEREF(self))->getClustersNumber();
 }
 CvStatus* cv_ml_EM_set_clustersNumber(EM self, int val) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setClustersNumber(val);
     END_WRAP
@@ -21,36 +22,42 @@ int cv_ml_EM_get_covarianceMatrixType(EM self) {
     return (CVDEREF(self))->getCovarianceMatrixType();
 }
 CvStatus* cv_ml_EM_set_covarianceMatrixType(EM self, int val) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setCovarianceMatrixType(val);
     END_WRAP
 }
 
 CvStatus* cv_ml_EM_getWeights(EM self, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getWeights();
     END_WRAP
 }
 
 CvStatus* cv_ml_EM_getMeans(EM self, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getMeans();
     END_WRAP
 }
 
 CvStatus* cv_ml_EM_getTermCriteria(EM self, TermCriteria* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     auto tc = (CVDEREF(self))->getTermCriteria();
     *rval = {tc.type, tc.maxCount, tc.epsilon};
     END_WRAP
 }
 CvStatus* cv_ml_EM_setTermCriteria(EM self, TermCriteria val) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setTermCriteria(cv::TermCriteria(val.type, val.maxCount, val.epsilon));
     END_WRAP
 }
 
 CvStatus* cv_ml_EM_getCovs(EM self, VecMat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->getCovs(CVDEREF_P(rval));
     END_WRAP

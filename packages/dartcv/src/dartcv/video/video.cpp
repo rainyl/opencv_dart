@@ -268,127 +268,152 @@ CvStatus* cv_KalmanFilter_correct(
 }
 
 CvStatus* cv_KalmanFilter_get_statePre(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->statePre));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_statePost(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->statePost));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_transitionMatrix(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->transitionMatrix));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_controlMatrix(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->controlMatrix));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_measurementMatrix(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->measurementMatrix));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_processNoiseCov(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->processNoiseCov));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_measurementNoiseCov(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->measurementNoiseCov));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_errorCovPre(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->errorCovPre));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_gain(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->gain));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_errorCovPost(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->errorCovPost));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_temp1(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->temp1));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_temp2(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->temp2));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_temp3(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->temp3));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_temp4(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->temp4));
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_get_temp5(KalmanFilter self, Mat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Mat((*self.ptr)->temp5));
     END_WRAP
 }
 
 CvStatus* cv_KalmanFilter_set_statePre(KalmanFilter self, Mat statePre) {
+    CVD_CHECK(self, statePre);
     BEGIN_WRAP
     (*self.ptr)->statePre = CVDEREF(statePre);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_statePost(KalmanFilter self, Mat statePost) {
+    CVD_CHECK(self, statePost);
     BEGIN_WRAP
     (*self.ptr)->statePost = CVDEREF(statePost);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_transitionMatrix(KalmanFilter self, Mat transitionMatrix) {
+    CVD_CHECK(self, transitionMatrix);
     BEGIN_WRAP
     (*self.ptr)->transitionMatrix = CVDEREF(transitionMatrix);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_controlMatrix(KalmanFilter self, Mat controlMatrix) {
+    CVD_CHECK(self, controlMatrix);
     BEGIN_WRAP
     (*self.ptr)->controlMatrix = CVDEREF(controlMatrix);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_measurementMatrix(KalmanFilter self, Mat measurementMatrix) {
+    CVD_CHECK(self, measurementMatrix);
     BEGIN_WRAP
     (*self.ptr)->measurementMatrix = CVDEREF(measurementMatrix);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_processNoiseCov(KalmanFilter self, Mat processNoiseCov) {
+    CVD_CHECK(self, processNoiseCov);
     BEGIN_WRAP
     (*self.ptr)->processNoiseCov = CVDEREF(processNoiseCov);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_measurementNoiseCov(KalmanFilter self, Mat measurementNoiseCov) {
+    CVD_CHECK(self, measurementNoiseCov);
     BEGIN_WRAP
     (*self.ptr)->measurementNoiseCov = CVDEREF(measurementNoiseCov);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_errorCovPre(KalmanFilter self, Mat errorCovPre) {
+    CVD_CHECK(self, errorCovPre);
     BEGIN_WRAP
     (*self.ptr)->errorCovPre = CVDEREF(errorCovPre);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_gain(KalmanFilter self, Mat gain) {
+    CVD_CHECK(self, gain);
     BEGIN_WRAP
     (*self.ptr)->gain = CVDEREF(gain);
     END_WRAP
 }
 CvStatus* cv_KalmanFilter_set_errorCovPost(KalmanFilter self, Mat errorCovPost) {
+    CVD_CHECK(self, errorCovPost);
     BEGIN_WRAP
     (*self.ptr)->errorCovPost = CVDEREF(errorCovPost);
     END_WRAP

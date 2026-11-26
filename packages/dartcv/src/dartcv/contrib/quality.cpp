@@ -56,6 +56,7 @@ CvStatus* cv_quality_QualityBRISQUE_computeFeatures_static(
 }
 
 CvStatus* cv_quality_QualityGMSD_create(Mat ref, QualityGMSD* rval) {
+    CVD_CHECK(ref);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Ptr<cv::quality::QualityGMSD>(cv::quality::QualityGMSD::create(CVDEREF(ref))));
     END_WRAP

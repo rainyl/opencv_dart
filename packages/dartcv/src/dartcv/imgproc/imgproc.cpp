@@ -1700,6 +1700,7 @@ CvStatus* cv_fitLine2f(
 }
 
 CvStatus * cv_getClosestEllipsePoints(RotatedRect ellipse_params, Mat points, MatOut closest_pts){
+    CVD_CHECK(points);
     BEGIN_WRAP
     auto center = cv::Point2f(ellipse_params.center.x, ellipse_params.center.y);
     auto size = cv::Size2f(ellipse_params.size.width, ellipse_params.size.height);

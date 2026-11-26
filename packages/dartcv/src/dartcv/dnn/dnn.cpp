@@ -25,6 +25,7 @@ void cv_dnn_AsyncArray_close(AsyncArrayPtr a) {
 }
 
 CvStatus* cv_dnn_AsyncArray_get(AsyncArray async_out, Mat out) {
+    CVD_CHECK(async_out, out);
     BEGIN_WRAP
     (*async_out.ptr)->get(CVDEREF(out));
     END_WRAP
@@ -111,6 +112,7 @@ CvStatus* cv_dnn_getBlobChannel(
 }
 
 CvStatus* cv_dnn_getBlobSize(Mat blob, VecI32* rval) {
+    CVD_CHECK(blob);
     BEGIN_WRAP
     auto size = (*blob.ptr)->size;
     CVD_SET(rval, new std::vector<int32_t>(size.p, size.p + size.dims()));
@@ -150,6 +152,7 @@ CvStatus* cv_dnn_NMSBoxes_1(
 }
 
 CvStatus* cv_dnn_Net_forwardAsync(Net net, const char* outputName, AsyncArray* rval) {
+    CVD_CHECK(net);
     BEGIN_WRAP
     CVD_SET(rval, new cv::AsyncArray((*net.ptr)->forwardAsync(outputName)));
     END_WRAP
@@ -270,6 +273,7 @@ bool cv_dnn_Net_empty(Net net) {
 }
 
 CvStatus* cv_dnn_Net_dump(Net net, char** rval) {
+    CVD_CHECK(net);
     BEGIN_WRAP
     auto ss = (*net.ptr)->dump();
     *rval = strdup(ss.c_str());
@@ -307,12 +311,14 @@ CvStatus* cv_dnn_Net_forwardLayers(
 }
 
 CvStatus* cv_dnn_Net_setPreferableBackend(Net net, int backend) {
+    CVD_CHECK(net);
     BEGIN_WRAP
     (*net.ptr)->setPreferableBackend(backend);
     END_WRAP
 }
 
 CvStatus* cv_dnn_Net_setPreferableTarget(Net net, int target) {
+    CVD_CHECK(net);
     BEGIN_WRAP
     (*net.ptr)->setPreferableTarget(target);
     END_WRAP
@@ -368,24 +374,28 @@ CvStatus* cv_dnn_Net_getInputDetails(
 }
 
 CvStatus* cv_dnn_Net_getLayer(Net net, int layerid, Layer* rval) {
+    CVD_CHECK(net);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Ptr<cv::dnn::Layer>((*net.ptr)->getLayer(layerid)));
     END_WRAP
 }
 
 CvStatus* cv_dnn_Layer_inputNameToIndex(Layer layer, const char* name, int* rval) {
+    CVD_CHECK(layer);
     BEGIN_WRAP
     *rval = (CVDEREF(layer))->inputNameToIndex(name);
     END_WRAP
 }
 
 CvStatus* cv_dnn_Layer_outputNameToIndex(Layer layer, const char* name, int* rval) {
+    CVD_CHECK(layer);
     BEGIN_WRAP
     *rval = (CVDEREF(layer))->outputNameToIndex(name);
     END_WRAP
 }
 
 CvStatus* cv_dnn_Layer_getName(Layer layer, char** rval) {
+    CVD_CHECK(layer);
     BEGIN_WRAP
     auto ss = (CVDEREF(layer))->name;
     *rval = strdup(ss.c_str());
@@ -393,6 +403,7 @@ CvStatus* cv_dnn_Layer_getName(Layer layer, char** rval) {
 }
 
 CvStatus* cv_dnn_Layer_getType(Layer layer, char** rval) {
+    CVD_CHECK(layer);
     BEGIN_WRAP
     auto ss = (CVDEREF(layer))->type;
     *rval = strdup(ss.c_str());

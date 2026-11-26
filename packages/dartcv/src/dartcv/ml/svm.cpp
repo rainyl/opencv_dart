@@ -62,33 +62,39 @@ void cv_ml_SVM_set_p(SVM self, double val) {
 }
 
 CvStatus* cv_ml_SVM_getClassWeights(SVM self, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getClassWeights();
     END_WRAP
 }
 CvStatus* cv_ml_SVM_setClassWeights(SVM self, Mat val) {
+    CVD_CHECK(self, val);
     BEGIN_WRAP(CVDEREF(self))
     ->setClassWeights(CVDEREF(val));
     END_WRAP
 }
 CvStatus* cv_ml_SVM_getTermCriteria(SVM self, TermCriteria* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     auto tc = (CVDEREF(self))->getTermCriteria();
     *rval = {tc.type, tc.maxCount, tc.epsilon};
     END_WRAP
 }
 CvStatus* cv_ml_SVM_setTermCriteria(SVM self, TermCriteria val) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setTermCriteria(cv::TermCriteria(val.type, val.maxCount, val.epsilon));
     END_WRAP
 }
 
 CvStatus* cv_ml_SVM_getSupportVectors(SVM self, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getSupportVectors();
     END_WRAP
 }
 CvStatus* cv_ml_SVM_getUncompressedSupportVectors(SVM self, Mat rval) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getUncompressedSupportVectors();
     END_WRAP

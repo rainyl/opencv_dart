@@ -210,6 +210,7 @@ CvStatus* cv_Mat_toFmtString(
     bool multiLine,
     char** rval
 ) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     auto fmt = cv::Formatter::get(static_cast<cv::Formatter::FormatType>(fmtType));
     fmt->set16fPrecision(f16Precision);
@@ -232,6 +233,7 @@ void cv_Mat_closeVoid(void* self) {
 }
 
 CvStatus* cv_Mat_release(Mat self) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     (*self.ptr)->release();
     END_WRAP
@@ -823,168 +825,200 @@ void cv_Mat_set_Vec6d(Mat self, int i0, int i1, Vec6d val) {
 }
 
 CvStatus* cv_Mat_op_add_mat(Mat self, Mat val) {
+    CVD_CHECK(self, val);
     BEGIN_WRAP
     CVDEREF(self) += CVDEREF(val);
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_mat(Mat self, Mat val) {
+    CVD_CHECK(self, val);
     BEGIN_WRAP
     CVDEREF(self) -= CVDEREF(val);
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_mat(Mat self, Mat val) {
+    CVD_CHECK(self, val);
     BEGIN_WRAP
     CVDEREF(self) *= CVDEREF(val);
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_mat(Mat self, Mat val) {
+    CVD_CHECK(self, val);
     BEGIN_WRAP
     CVDEREF(self) /= CVDEREF(val);
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_u8(Mat self, uint8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_u8(Mat self, uint8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_u8(Mat self, uint8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_u8(Mat self, uint8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_i8(Mat self, int8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_i8(Mat self, int8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_i8(Mat self, int8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_i8(Mat self, int8_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_i16(Mat self, int16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_i16(Mat self, int16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_i16(Mat self, int16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_i16(Mat self, int16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_u16(Mat self, uint16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_u16(Mat self, uint16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_u16(Mat self, uint16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_u16(Mat self, uint16_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_i32(Mat self, int32_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_i32(Mat self, int32_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_i32(Mat self, int32_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_i32(Mat self, int32_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_f32(Mat self, float_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_f32(Mat self, float_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_f32(Mat self, float_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_f32(Mat self, float_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
 }
 
 CvStatus* cv_Mat_op_add_f64(Mat self, double_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) += val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_sub_f64(Mat self, double_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) -= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_mul_f64(Mat self, double_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) *= val;
     END_WRAP
 }
 CvStatus* cv_Mat_op_div_f64(Mat self, double_t val) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self) /= val;
     END_WRAP
@@ -994,6 +1028,7 @@ CvStatus* cv_Mat_op_div_f64(Mat self, double_t val) {
  * element-wise
  */
 CvStatus* cv_Mat_mul(Mat self, Mat value, Mat* dst, double scale) {
+    CVD_CHECK(self, value);
     BEGIN_WRAP
     CVD_SET(dst, new cv::Mat((CVDEREF(self)).mul(CVDEREF(value), scale)));
     END_WRAP
@@ -1045,6 +1080,7 @@ CvStatus* cv_UMat_create_5(
 //! copy constructor
 // UMat(const UMat& m);
 CvStatus* cv_UMat_create_6(UMat self, UMat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::UMat(CVDEREF(self)));
     END_WRAP
@@ -1055,6 +1091,7 @@ CvStatus* cv_UMat_create_6(UMat self, UMat* rval) {
 CvStatus* cv_UMat_create_7(
     UMat self, int rowStart, int rowEnd, int colStart, int colEnd, UMat* rval
 ) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::UMat(CVDEREF(self), cv::Range(rowStart, rowEnd), cv::Range(colStart, colEnd)));
     END_WRAP
@@ -1062,12 +1099,14 @@ CvStatus* cv_UMat_create_7(
 
 // UMat(const UMat& m, const Rect& roi);
 CvStatus* cv_UMat_create_8(UMat self, int x, int y, int width, int height, UMat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVD_SET(rval, new cv::UMat(CVDEREF(self), cv::Rect(x, y, width, height)));
     END_WRAP
 }
 
 CvStatus* cv_UMat_create_9(UMat self, CvRect roi, UMat* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     const auto _roi = cv::Rect(roi.x, roi.y, roi.width, roi.height);
     CVD_SET(rval, new cv::UMat(CVDEREF(self), _roi));
@@ -1115,6 +1154,7 @@ CvStatus* cv_UMat_create_eye(int rows, int cols, int type, int usageFlags, UMat*
 }
 
 CvStatus* cv_UMat_create_diag(UMat d, int usageFlags, UMat* rval) {
+    CVD_CHECK(d);
     BEGIN_WRAP
     CVD_SET(rval, new cv::UMat(cv::UMat::diag(CVDEREF(d))));
     END_WRAP

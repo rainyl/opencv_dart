@@ -81,6 +81,7 @@ CvStatus *cv_VideoCapture_read(VideoCapture self, Mat buf, bool *rval, CvCallbac
     });
 }
 CvStatus *cv_VideoCapture_release(VideoCapture self) {
+    CVD_CHECK(self);
   BEGIN_WRAP
   (*self.ptr)->release();
   END_WRAP
@@ -258,6 +259,7 @@ CvStatus *cv_VideoWriter_write(VideoWriter self, Mat img, CvCallback_0 callback)
     });
 }
 CvStatus *cv_VideoWriter_release(VideoWriter self) {
+    CVD_CHECK(self);
   BEGIN_WRAP
   (*self.ptr)->release();
   END_WRAP

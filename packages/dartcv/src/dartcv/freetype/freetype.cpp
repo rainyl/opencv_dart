@@ -875,6 +875,7 @@ CvStatus* cv_freetype_FreeType2_loadFontData_buf(
 }
 
 CvStatus* cv_freetype_FreeType2_setSplitNumber(FreeType2 self, int num) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     CVDEREF(self)->setSplitNumber(num);
     END_WRAP

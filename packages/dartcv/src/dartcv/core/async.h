@@ -232,6 +232,33 @@ inline void unregister_holds(const std::vector<void*>& holders) {
     for (auto& release : released) release();
 }
 
+/// Non-null when one of `holders` is in the hands of an async job: a synchronous call on the same
+/// object would read it while another thread writes it, which is undefined behaviour rather than a
+/// wait. The caller returns this as the status, so the Dart side sees a CvException.
+inline CvStatus* conflict_status(const std::vector<void*>& holders) {
+    auto& r = holds();
+    if (r.busy_jobs.load(std::memory_order_acquire) == 0) return nullptr;  // nothing in flight
+    std::lock_guard<std::mutex> lock(r.mu);
+    for (void* holder : holders) {
+        if (holder == nullptr) continue;
+        auto it = r.counts.find(holder);
+        if (it != r.counts.end() && it->second > 0) {
+            return new CvStatus{
+                .code = 3,
+                .msg = strdup(
+                    "dartcv: a synchronous call used an object that an async call is still working "
+                    "on; await that Future first (only Async calls are ordered with each other)"
+                ),
+                .err = strdup("async call in flight on the same object"),
+                .func = strdup(__func__),
+                .file = strdup(__FILE__),
+                .line = __LINE__,
+            };
+        }
+    }
+    return nullptr;
+}
+
 /// Remembers a wrapper whose `dispose()` has to wait for the jobs that still hold it.
 inline void defer_release(void* holder, std::function<void()> deleter) {
     auto& r = holds();
@@ -304,12 +331,21 @@ std::vector<void*> hold(const H&... handles) {
     return std::vector<void*>(out);
 }
 
+/// Refuses a synchronous call that would race an async one on the same object. Used by the wrappers
+/// that take handles but have no callback parameter (a `CvStatus*` return lets them report it).
+#define CVD_CHECK(...)                                                         do {                                                                           CvStatus* _cvd_conflict = ::cvd::detail::conflict_status(::cvd::hold(__VA_ARGS__));         if (_cvd_conflict != nullptr) return _cvd_conflict;                     } while (0)
+
 /// Runs [work] now and returns its status, or queues it and returns an "accepted" status.
 ///
 /// `callback == nullptr` is the synchronous call: same behaviour as before, exceptions are translated
 /// by the work's own `BEGIN_WRAP`/`END_WRAP`.
 inline CvStatus* dispatch(CvCallback_0 callback, std::vector<void*> holders, std::function<CvStatus*()> work) {
-    if (callback == nullptr) return work();
+    if (callback == nullptr) {
+        // The synchronous caller runs on its own thread right now: refuse if an async job is still
+        // using one of the same objects.
+        if (CvStatus* conflict = detail::conflict_status(holders)) return conflict;
+        return work();
+    }
 #ifdef __EMSCRIPTEN__
     // No threads on the web: the work runs here and the callback still fires, so callers keep the
     // same promise/Future shape (see tool/web/README.md).
@@ -337,8 +373,11 @@ inline CvStatus* dispatch(CvCallback_0 callback, std::vector<void*> holders, std
                 .line = __LINE__,
             };
         }
-        callback(status);
+        // Release before reporting: the Dart continuation may immediately call something
+        // synchronously on the same object, and would otherwise be told a finished job is in flight.
+        // `callback` only posts a message, it does not touch the objects.
         detail::unregister_holds(holders);
+        callback(status);
     });
     return accepted_status();
 #endif

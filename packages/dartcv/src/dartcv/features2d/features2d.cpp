@@ -237,6 +237,7 @@ CvStatus* cv_BRISK_create(BRISK* rval) {
 CvStatus* cv_BRISK_create_1(
     VecF32 radiusList, VecI32 numberList, float dMax, float dMin, VecI32 indexChange, BRISK* rval
 ) {
+    CVD_CHECK(radiusList, numberList, indexChange);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Ptr<cv::BRISK>(cv::BRISK::create(
         CVDEREF(radiusList), CVDEREF(numberList), dMax, dMin, CVDEREF(indexChange)
@@ -254,6 +255,7 @@ CvStatus* cv_BRISK_create_2(
     VecI32 indexChange,
     BRISK* rval
 ) {
+    CVD_CHECK(radiusList, numberList, indexChange);
     BEGIN_WRAP
     CVD_SET(rval, new cv::Ptr<cv::BRISK>(cv::BRISK::create(
         thresh, octaves, CVDEREF(radiusList), CVDEREF(numberList), dMax, dMin, CVDEREF(indexChange)
@@ -1106,6 +1108,7 @@ CvStatus* cv_FlannBasedMatcher_create(FlannBasedMatcher* rval) {
 CvStatus* cv_FlannBasedMatcher_create_1(
     FlannBasedMatcher* rval, FlannIndexParams indexParams, FlannIndexParams searchParams
 ) {
+    CVD_CHECK(indexParams, searchParams);
     BEGIN_WRAP
     int checks = (CVDEREF(searchParams))->getInt("checks", 32);
     float eps = (CVDEREF(searchParams))->getDouble("eps", 0.0);

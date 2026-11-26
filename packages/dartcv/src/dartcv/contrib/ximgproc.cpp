@@ -114,6 +114,7 @@ CvStatus* cv_ximgproc_RFFeatureGetter_getFeatures(
 }
 
 CvStatus* cv_ximgproc_RFFeatureGetter_clear(RFFeatureGetter self) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))->clear();
     END_WRAP
 }
