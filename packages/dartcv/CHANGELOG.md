@@ -6,30 +6,12 @@
 - new: `dart tool/ffigen.dart` also refreshes `lib/src/web/g`, so one command regenerates both mirrors (`--no-web` skips the web half, `gen_web_bindings.dart --check` reports a stale one).
 - new: `dart run dartcv4:build_wasm` builds the module from an application, straight into its `web/`.
 - new: the module records the version it was built from, and `initDartcv()` warns a mismatch.
-- internal: handle wrappers hold a refcounted `std::shared_ptr` instead of a raw pointer, and every
-  out-parameter releases the value it held before (reusing one used to leak). Prerequisite for the
-  real async APIs that follow; the C ABI, `lib/src/g/*` and the public Dart API are unchanged.
 - fix: `VecVecPoint[i]` (and the `Point2f`/`Point3f` variants) shares the parent container's control
   block, so a view keeps its parent alive instead of aliasing storage it does not own.
 - new: `liveObjectCount()` / `liveObjectStats()` report how many wrapped C++ objects are alive (a
   handle that outlived its Dart wrapper keeps its object counted), so a leak is assertable from a
   test; `test/core/lifetime_test.dart` covers create/use/release, out-parameter reuse and views.
-- new: **real async**: the `*Async` APIs run their work on a worker thread instead of blocking the
-  caller, and every `*Async` function takes a `Duration? timeout`. One worker runs the jobs in order;
-  `setAsyncThreads(n)` raises the count for work that blocks on I/O. A timeout abandons the wait, not
-  the work, and a job keeps a reference to every handle it was given, so disposing an argument while
-  a call is in flight is safe. Errors raised inside the job arrive as a failed `Future`.
-- breaking: `CvCallback_0`/`CvCallback_1` carry the work's `CvStatus*` (the callback is the only
-  channel left for an error once the call has returned), and the unused `CvCallback_2..9` are gone.
-- breaking: the `Async` methods that had optional positional parameters kept them positional, so the
-  timeout is the last optional positional argument there instead of a named one.
-
-- new: a synchronous call that would race an async job on the same object is refused with a
-  `CvException` instead of corrupting it (`cvd::dispatch` checks on the synchronous entry point, and
-  the wrappers without an async twin check with `CVD_CHECK`); unrelated objects are unaffected.
-- new: a `timeout` now throws `AsyncTimeoutException` instead of a bare `TimeoutException`: it states
-  that the work was not cancelled (OpenCV has no cancellation point) and carries `completion`, which
-  resolves when the job stopped writing the output arguments it was given.
+- new: **real async**: `*Async` calls run on a worker thread instead of blocking the caller (errors and a `Duration? timeout` come back through the `Future`, a racing synchronous call is refused), with `setAsyncThreads()`/`asyncPending()`/`asyncDrain()` to tune the pool and the web staying single-threaded; breaking, since `CvCallback_0`/`CvCallback_1` now receive the work's `CvStatus*`.
 
 ## 2.3.3
 
