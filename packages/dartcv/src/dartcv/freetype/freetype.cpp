@@ -845,12 +845,12 @@ CV_EXPORTS_W Ptr<FreeType2> createFreeType2() {
 // C wrappers
 CvStatus* cv_freetype_FreeType2_create(FreeType2* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::freetype::FreeType2>(new cv::freetype::FreeType2Impl());
+    CVD_SET(rval, new cv::Ptr<cv::freetype::FreeType2>(new cv::freetype::FreeType2Impl()));
     END_WRAP
 }
 
 void cv_freetype_FreeType2_close(FreeType2Ptr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 

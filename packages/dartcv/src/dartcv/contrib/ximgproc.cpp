@@ -92,12 +92,12 @@ CvStatus* cv_ximgproc_thinning(Mat src, Mat dst, int thinningType, CvCallback_0 
 // RFFeatureGetter
 CvStatus* cv_ximgproc_RFFeatureGetter_create(CVD_OUT RFFeatureGetter* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::ximgproc::RFFeatureGetter>(cv::ximgproc::createRFFeatureGetter())};
+    CVD_SET(rval, new cv::Ptr<cv::ximgproc::RFFeatureGetter>(cv::ximgproc::createRFFeatureGetter()));
     END_WRAP
 }
 
 void cv_ximgproc_RFFeatureGetter_close(RFFeatureGetterPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -134,9 +134,9 @@ CvStatus* cv_ximgproc_StructuredEdgeDetection_create(
     const char* model, CVD_OUT StructuredEdgeDetection* rval
 ) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::ximgproc::StructuredEdgeDetection>(
+    CVD_SET(rval, new cv::Ptr<cv::ximgproc::StructuredEdgeDetection>(
         cv::ximgproc::createStructuredEdgeDetection(model)
-    )};
+    ));
     END_WRAP
 }
 
@@ -144,14 +144,14 @@ CvStatus* cv_ximgproc_StructuredEdgeDetection_create_1(
     const char* model, RFFeatureGetter* howToGetFeatures, CVD_OUT StructuredEdgeDetection* rval
 ) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::ximgproc::StructuredEdgeDetection>(
-        cv::ximgproc::createStructuredEdgeDetection(model, *howToGetFeatures->ptr)
-    )};
+    CVD_SET(rval, new cv::Ptr<cv::ximgproc::StructuredEdgeDetection>(
+        cv::ximgproc::createStructuredEdgeDetection(model, CVDEREF_P(howToGetFeatures))
+    ));
     END_WRAP
 }
 
 void cv_ximgproc_StructuredEdgeDetection_close(StructuredEdgeDetectionPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -212,7 +212,7 @@ CvStatus* cv_ximgproc_EdgeBoxes_create(
     EdgeBoxes* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::ximgproc::EdgeBoxes>(cv::ximgproc::createEdgeBoxes(
+    CVD_SET(rval, new cv::Ptr<cv::ximgproc::EdgeBoxes>(cv::ximgproc::createEdgeBoxes(
         alpha,
         beta,
         eta,
@@ -225,133 +225,133 @@ CvStatus* cv_ximgproc_EdgeBoxes_create(
         minBoxArea,
         gamma,
         kappa
-    ));
+    )));
     END_WRAP
 }
 
 void cv_ximgproc_EdgeBoxes_close(EdgeBoxesPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 // Returns the step size of sliding window search.
 float cv_ximgproc_EdgeBoxes_getAlpha(EdgeBoxes self) {
-    return self.ptr->get()->getAlpha();
+    return CVDEREF(self).get()->getAlpha();
 }
 
 // Returns the nms threshold for object proposals.
 float cv_ximgproc_EdgeBoxes_getBeta(EdgeBoxes self) {
-    return self.ptr->get()->getBeta();
+    return CVDEREF(self).get()->getBeta();
 }
 
 // Returns the cluster min magnitude.
 float cv_ximgproc_EdgeBoxes_getClusterMinMag(EdgeBoxes self) {
-    return self.ptr->get()->getClusterMinMag();
+    return CVDEREF(self).get()->getClusterMinMag();
 }
 
 // Returns the edge merge threshold.
 float cv_ximgproc_EdgeBoxes_getEdgeMergeThr(EdgeBoxes self) {
-    return self.ptr->get()->getEdgeMergeThr();
+    return CVDEREF(self).get()->getEdgeMergeThr();
 }
 
 // Returns the edge min magnitude.
 float cv_ximgproc_EdgeBoxes_getEdgeMinMag(EdgeBoxes self) {
-    return self.ptr->get()->getEdgeMinMag();
+    return CVDEREF(self).get()->getEdgeMinMag();
 }
 
 // Returns adaptation rate for nms threshold.
 float cv_ximgproc_EdgeBoxes_getEta(EdgeBoxes self) {
-    return self.ptr->get()->getEta();
+    return CVDEREF(self).get()->getEta();
 }
 
 // Returns the affinity sensitivity.
 float cv_ximgproc_EdgeBoxes_getGamma(EdgeBoxes self) {
-    return self.ptr->get()->getGamma();
+    return CVDEREF(self).get()->getGamma();
 }
 
 // Returns the scale sensitivity.
 float cv_ximgproc_EdgeBoxes_getKappa(EdgeBoxes self) {
-    return self.ptr->get()->getKappa();
+    return CVDEREF(self).get()->getKappa();
 }
 
 // Returns the max aspect ratio of boxes.
 float cv_ximgproc_EdgeBoxes_getMaxAspectRatio(EdgeBoxes self) {
-    return self.ptr->get()->getMaxAspectRatio();
+    return CVDEREF(self).get()->getMaxAspectRatio();
 }
 
 // Returns the max number of boxes to detect.
 int cv_ximgproc_EdgeBoxes_getMaxBoxes(EdgeBoxes self) {
-    return self.ptr->get()->getMaxBoxes();
+    return CVDEREF(self).get()->getMaxBoxes();
 }
 
 // Returns the minimum area of boxes.
 float cv_ximgproc_EdgeBoxes_getMinBoxArea(EdgeBoxes self) {
-    return self.ptr->get()->getMinBoxArea();
+    return CVDEREF(self).get()->getMinBoxArea();
 }
 
 // Returns the min score of boxes to detect.
 float cv_ximgproc_EdgeBoxes_getMinScore(EdgeBoxes self) {
-    return self.ptr->get()->getMinScore();
+    return CVDEREF(self).get()->getMinScore();
 }
 
 // Sets the step size of sliding window search.
 void cv_ximgproc_EdgeBoxes_setAlpha(EdgeBoxes self, float value) {
-    self.ptr->get()->setAlpha(value);
+    CVDEREF(self).get()->setAlpha(value);
 }
 
 // Sets the nms threshold for object proposals.
 void cv_ximgproc_EdgeBoxes_setBeta(EdgeBoxes self, float value) {
-    self.ptr->get()->setBeta(value);
+    CVDEREF(self).get()->setBeta(value);
 }
 
 // Sets the cluster min magnitude.
 void cv_ximgproc_EdgeBoxes_setClusterMinMag(EdgeBoxes self, float value) {
-    self.ptr->get()->setClusterMinMag(value);
+    CVDEREF(self).get()->setClusterMinMag(value);
 }
 
 // Sets the edge merge threshold.
 void cv_ximgproc_EdgeBoxes_setEdgeMergeThr(EdgeBoxes self, float value) {
-    self.ptr->get()->setEdgeMergeThr(value);
+    CVDEREF(self).get()->setEdgeMergeThr(value);
 }
 
 // Sets the edge min magnitude.
 void cv_ximgproc_EdgeBoxes_setEdgeMinMag(EdgeBoxes self, float value) {
-    self.ptr->get()->setEdgeMinMag(value);
+    CVDEREF(self).get()->setEdgeMinMag(value);
 }
 
 // Sets the adaptation rate for nms threshold.
 void cv_ximgproc_EdgeBoxes_setEta(EdgeBoxes self, float value) {
-    self.ptr->get()->setEta(value);
+    CVDEREF(self).get()->setEta(value);
 }
 
 // Sets the affinity sensitivity.
 void cv_ximgproc_EdgeBoxes_setGamma(EdgeBoxes self, float value) {
-    self.ptr->get()->setGamma(value);
+    CVDEREF(self).get()->setGamma(value);
 }
 
 // Sets the scale sensitivity.
 void cv_ximgproc_EdgeBoxes_setKappa(EdgeBoxes self, float value) {
-    self.ptr->get()->setKappa(value);
+    CVDEREF(self).get()->setKappa(value);
 }
 
 // Sets the max aspect ratio of boxes.
 void cv_ximgproc_EdgeBoxes_setMaxAspectRatio(EdgeBoxes self, float value) {
-    self.ptr->get()->setMaxAspectRatio(value);
+    CVDEREF(self).get()->setMaxAspectRatio(value);
 }
 
 // Sets max number of boxes to detect.
 void cv_ximgproc_EdgeBoxes_setMaxBoxes(EdgeBoxes self, int value) {
-    self.ptr->get()->setMaxBoxes(value);
+    CVDEREF(self).get()->setMaxBoxes(value);
 }
 
 // Sets the minimum area of boxes.
 void cv_ximgproc_EdgeBoxes_setMinBoxArea(EdgeBoxes self, float value) {
-    self.ptr->get()->setMinBoxArea(value);
+    CVDEREF(self).get()->setMinBoxArea(value);
 }
 
 // Sets the min score of boxes to detect.
 void cv_ximgproc_EdgeBoxes_setMinScore(EdgeBoxes self, float value) {
-    self.ptr->get()->setMinScore(value);
+    CVDEREF(self).get()->setMinScore(value);
 }
 
 // EdgeBoxes
@@ -377,12 +377,12 @@ CvStatus* cv_ximgproc_GraphSegmentation_create(
     float sigma, float k, int min_size, GraphSegmentation* rval
 ) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>(cv::ximgproc::segmentation::createGraphSegmentation(sigma, k, min_size))};
+    CVD_SET(rval, new cv::Ptr<cv::ximgproc::segmentation::GraphSegmentation>(cv::ximgproc::segmentation::createGraphSegmentation(sigma, k, min_size)));
     END_WRAP
 }
 
 void cv_ximgproc_GraphSegmentation_close(GraphSegmentationPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -423,12 +423,12 @@ void cv_ximgproc_GraphSegmentation_setSigma(GraphSegmentation self, double val) 
 // EdgeDrawing
 CvStatus* cv_ximgproc_EdgeDrawing_create(EdgeDrawing* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::ximgproc::EdgeDrawing>(cv::ximgproc::createEdgeDrawing())};
+    CVD_SET(rval, new cv::Ptr<cv::ximgproc::EdgeDrawing>(cv::ximgproc::createEdgeDrawing()));
     END_WRAP
 }
 
 void cv_ximgproc_EdgeDrawing_close(EdgeDrawingPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -481,7 +481,7 @@ CvStatus* cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
 ) {
     BEGIN_WRAP
     std::vector<int32_t> _rval = (CVDEREF(self))->getSegmentIndicesOfLines();
-    *rval = {new std::vector<int32_t>(_rval)};
+    CVD_SET(rval, new std::vector<int32_t>(_rval));
     if (callback != nullptr) {
         callback();
     }
@@ -493,9 +493,9 @@ CvStatus* cv_ximgproc_EdgeDrawing_getSegments(
 ) {
     BEGIN_WRAP
     auto _rval = (CVDEREF(self))->getSegments();
-    rval->ptr->reserve(_rval.size());
+    (*rval->ptr)->reserve(_rval.size());
     for (auto & i : _rval) {
-        rval->ptr->emplace_back(i);
+        (*rval->ptr)->emplace_back(i);
     }
     if (callback != nullptr) {
         callback();
@@ -602,7 +602,7 @@ CvStatus* cv_ximgproc_rl_getStructuringElement(
     BEGIN_WRAP
     cv::Mat _rval =
         cv::ximgproc::rl::getStructuringElement(shape, cv::Size(ksize.width, ksize.height));
-    rval->ptr = new cv::Mat(_rval);
+    CVD_SET(rval, new cv::Mat(_rval));
     if (callback != nullptr) {
         callback();
     }

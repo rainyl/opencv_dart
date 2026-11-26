@@ -6,6 +6,11 @@
 - new: `dart tool/ffigen.dart` also refreshes `lib/src/web/g`, so one command regenerates both mirrors (`--no-web` skips the web half, `gen_web_bindings.dart --check` reports a stale one).
 - new: `dart run dartcv4:build_wasm` builds the module from an application, straight into its `web/`.
 - new: the module records the version it was built from, and `initDartcv()` warns a mismatch.
+- internal: handle wrappers hold a refcounted `std::shared_ptr` instead of a raw pointer, and every
+  out-parameter releases the value it held before (reusing one used to leak). Prerequisite for the
+  real async APIs that follow; the C ABI, `lib/src/g/*` and the public Dart API are unchanged.
+- fix: `VecVecPoint[i]` (and the `Point2f`/`Point3f` variants) shares the parent container's control
+  block, so a view keeps its parent alive instead of aliasing storage it does not own.
 
 ## 2.3.3
 

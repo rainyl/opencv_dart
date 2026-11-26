@@ -20,6 +20,8 @@
 #include <math.h>
 
 #ifdef __cplusplus
+#include <memory>
+#include <type_traits>
 #include <opencv2/core.hpp>
 
 extern "C" {
@@ -84,10 +86,10 @@ extern "C" {
     typedef NAME* NAME##Ptr
 
 #ifdef __cplusplus
-#define CVD_TYPEDEF_STD_VEC(TYPE, NAME) \
-    typedef struct NAME {               \
-        std::vector<TYPE>* ptr;         \
-    } NAME;                             \
+#define CVD_TYPEDEF_STD_VEC(TYPE, NAME)          \
+    typedef struct NAME {                        \
+        std::shared_ptr<std::vector<TYPE>>* ptr; \
+    } NAME;                                      \
     typedef NAME* NAME##Ptr
 #else
 #define CVD_TYPEDEF_STD_VEC(TYPE, NAME) \
@@ -98,7 +100,36 @@ extern "C" {
 #endif
 
 #ifdef __cplusplus
-#define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(value->ptr)
+// Handle wrappers (CVD_TYPEDEF) hold a `std::shared_ptr<T>*`, not a bare `T*`: an asynchronous call
+// can outlive the Dart object that started it, so a wrapper has to be able to hand out a strong
+// reference. Seen from C and from ffigen the struct is still one pointer, so no binding changes.
+//
+// Macros, not templates: this header is included from inside the module headers' own
+// `extern "C" {` blocks, where a template would be given C linkage.
+
+/// Stores a fresh handle, releasing whatever the wrapper held before: a reused out-parameter must
+/// not leak the previous object (with a shared_ptr a leak would also pin the C++ object).
+#define CVD_SET(holder, raw_ptr)                                                 \
+    do {                                                                         \
+        auto* _cvd_handle = (raw_ptr);                                           \
+        delete (holder)->ptr;                                                    \
+        (holder)->ptr = (_cvd_handle == nullptr)                                 \
+            ? nullptr                                                            \
+            : new std::shared_ptr<std::remove_pointer_t<decltype(_cvd_handle)>>(  \
+                  _cvd_handle                                                    \
+              );                                                                 \
+    } while (0)
+
+/// A fresh heap `std::shared_ptr<TYPE>` around a newly constructed `TYPE`: what a wrapper's `ptr`
+/// field holds.
+#define CVD_MAKE(TYPE, ...) (new std::shared_ptr<TYPE>(new TYPE(__VA_ARGS__)))
+
+/// Takes ownership of an already-constructed raw pointer (`std::vector` built by hand, etc.).
+#define CVD_ADOPT(raw_ptr)                                    \
+    (new std::shared_ptr<std::remove_pointer_t<               \
+         std::remove_reference_t<decltype(raw_ptr)>>>(raw_ptr))
+
+#define CVD_TYPECAST_CPP(TYPE, value) reinterpret_cast<TYPE##_CPP>(CVDEREF(value))
 // for test, value should not be freed here
 #ifdef CVD_ENABLE_TEST
 #define CVD_FREE(value) \
@@ -113,14 +144,14 @@ extern "C" {
     value = nullptr
 #endif
 
-#define CVDEREF(value) (*value.ptr)
-#define CVDEREF_P(value) (*value->ptr)
+#define CVDEREF(value) (**(value).ptr)
+#define CVDEREF_P(value) (**((value)->ptr))
 
-#define CVD_TYPEDEF(TYPE, NAME) \
-    typedef TYPE* NAME##_CPP;   \
-    typedef struct NAME {       \
-        TYPE* ptr;              \
-    } NAME;                     \
+#define CVD_TYPEDEF(TYPE, NAME)                  \
+    typedef TYPE* NAME##_CPP;                    \
+    typedef struct NAME {                        \
+        std::shared_ptr<TYPE>* ptr;              \
+    } NAME;                                      \
     typedef NAME* NAME##Ptr;
 CVD_TYPEDEF(cv::Mat, Mat);
 CVD_TYPEDEF(cv::UMat, UMat);

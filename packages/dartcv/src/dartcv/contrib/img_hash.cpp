@@ -42,7 +42,7 @@ CvStatus* cv_img_hash_averageHash_compare(Mat a, Mat b, double* rval, CvCallback
 
 CvStatus* cv_img_hash_BlockMeanHash_create(int mode, BlockMeanHash* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::img_hash::BlockMeanHash>(cv::img_hash::BlockMeanHash::create(mode))};
+    CVD_SET(rval, new cv::Ptr<cv::img_hash::BlockMeanHash>(cv::img_hash::BlockMeanHash::create(mode)));
     if (callback != nullptr) {
         callback();
     }
@@ -53,7 +53,7 @@ CvStatus* cv_img_hash_BlockMeanHash_getMean(
 ) {
     BEGIN_WRAP
     auto m = (CVDEREF(self))->getMean();
-    *rval = {new std::vector<double_t>(m)};
+    CVD_SET(rval, new std::vector<double_t>(m));
     if (callback != nullptr) {
         callback();
     }
@@ -68,14 +68,15 @@ CvStatus* cv_img_hash_BlockMeanHash_setMode(BlockMeanHash self, int mode, CvCall
 }
 
 void cv_img_hash_BlockMeanHash_close(BlockMeanHashPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_img_hash_BlockMeanHash_compute(
     BlockMeanHash self, Mat inputArr, Mat outputArr, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(self.ptr)->get()->compute(CVDEREF(inputArr), CVDEREF(outputArr));
+    BEGIN_WRAP
+    CVDEREF(self).get()->compute(CVDEREF(inputArr), CVDEREF(outputArr));
     if (callback != nullptr) {
         callback();
     }
@@ -85,7 +86,7 @@ CvStatus* cv_img_hash_BlockMeanHash_compare(
     BlockMeanHash self, Mat a, Mat b, double* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    *rval = (self.ptr)->get()->compare(CVDEREF(a), CVDEREF(b));
+    *rval = CVDEREF(self).get()->compare(CVDEREF(a), CVDEREF(b));
     if (callback != nullptr) {
         callback();
     }
@@ -123,7 +124,7 @@ CvStatus* cv_img_hash_marrHildrethHash_compare(
     Mat a, Mat b, float alpha, float scale, double* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    *rval = cv::img_hash::MarrHildrethHash::create(alpha, scale)->compare(*a.ptr, *b.ptr);
+    *rval = cv::img_hash::MarrHildrethHash::create(alpha, scale)->compare(CVDEREF(a), CVDEREF(b));
     if (callback != nullptr) {
         callback();
     }
@@ -145,7 +146,7 @@ CvStatus* cv_img_hash_radialVarianceHash_compare(
 ) {
     BEGIN_WRAP
     *rval =
-        cv::img_hash::RadialVarianceHash::create(sigma, numOfAngleLine)->compare(*a.ptr, *b.ptr);
+        cv::img_hash::RadialVarianceHash::create(sigma, numOfAngleLine)->compare(CVDEREF(a), CVDEREF(b));
     if (callback != nullptr) {
         callback();
     }

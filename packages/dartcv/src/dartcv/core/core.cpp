@@ -933,12 +933,12 @@ CvStatus* cv_SVDecomp(Mat w, Mat u, Mat vt, Mat d, int flags, CvCallback_0 callb
 // https://docs.opencv.org/4.x/db/da5/tutorial_how_to_scan_images.html#:~:text=Goal
 CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
     BEGIN_WRAP
-    auto cn = src.ptr->channels(), depth = src.ptr->depth();
+    auto cn = (*src.ptr)->channels(), depth = (*src.ptr)->depth();
     if (depth == CV_8U || depth == CV_8S) {
         cv::LUT(CVDEREF(src), CVDEREF(lut), CVDEREF(dst));
     } else {
-        int lutcn = lut.ptr->channels(), lut_depth = lut.ptr->depth();
-        size_t lut_total = lut.ptr->total(), expect_total = 0;
+        int lutcn = (*lut.ptr)->channels(), lut_depth = (*lut.ptr)->depth();
+        size_t lut_total = (*lut.ptr)->total(), expect_total = 0;
         switch (depth) {
             case CV_8U:
             case CV_8S:
@@ -963,11 +963,11 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
         }
 
         CV_Assert(
-            (lutcn == cn || lutcn == 1) && lut_total == expect_total && lut.ptr->isContinuous()
+            (lutcn == cn || lutcn == 1) && lut_total == expect_total && (*lut.ptr)->isContinuous()
         );
-        dst.ptr->create(src.ptr->dims, src.ptr->size, CV_MAKETYPE(lut.ptr->depth(), cn));
+        (*dst.ptr)->create((*src.ptr)->dims, (*src.ptr)->size, CV_MAKETYPE((*lut.ptr)->depth(), cn));
 
-        const cv::Mat* arrays[] = {src.ptr, dst.ptr, nullptr};
+        const cv::Mat* arrays[] = {(*src.ptr).get(), (*dst.ptr).get(), nullptr};
         uchar* ptrs[2] = {};
         cv::NAryMatIterator it(arrays, ptrs);
         int len = (int)it.size;
@@ -975,9 +975,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
         switch (depth) {
             case CV_8U:
                 cvd::LUT8u_16f(
-                    src.ptr->ptr<uchar>(),
-                    lut.ptr->ptr<cv::hfloat>(),
-                    dst.ptr->ptr<cv::hfloat>(),
+                    (*src.ptr)->ptr<uchar>(),
+                    (*lut.ptr)->ptr<cv::hfloat>(),
+                    (*dst.ptr)->ptr<cv::hfloat>(),
                     len,
                     cn,
                     lutcn
@@ -985,9 +985,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                 break;
             case CV_8S:
                 cvd::LUT8s_16f(
-                    src.ptr->ptr<char>(),
-                    lut.ptr->ptr<cv::hfloat>(),
-                    dst.ptr->ptr<cv::hfloat>(),
+                    (*src.ptr)->ptr<char>(),
+                    (*lut.ptr)->ptr<cv::hfloat>(),
+                    (*dst.ptr)->ptr<cv::hfloat>(),
                     len,
                     cn,
                     lutcn
@@ -998,9 +998,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                 switch (lut_depth) {
                     case CV_8U:
                         cvd::LUT16u_8u(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<uchar>(),
-                            dst.ptr->ptr<uchar>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<uchar>(),
+                            (*dst.ptr)->ptr<uchar>(),
                             len,
                             cn,
                             lutcn
@@ -1008,9 +1008,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_8S:
                         cvd::LUT16u_8s(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<char>(),
-                            dst.ptr->ptr<char>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<char>(),
+                            (*dst.ptr)->ptr<char>(),
                             len,
                             cn,
                             lutcn
@@ -1018,9 +1018,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_16U:
                         cvd::LUT16u_16u(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<ushort>(),
-                            dst.ptr->ptr<ushort>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<ushort>(),
+                            (*dst.ptr)->ptr<ushort>(),
                             len,
                             cn,
                             lutcn
@@ -1028,9 +1028,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_16S:
                         cvd::LUT16u_16s(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<short>(),
-                            dst.ptr->ptr<short>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<short>(),
+                            (*dst.ptr)->ptr<short>(),
                             len,
                             cn,
                             lutcn
@@ -1038,9 +1038,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_32S:
                         cvd::LUT16u_32s(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<int>(),
-                            dst.ptr->ptr<int>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<int>(),
+                            (*dst.ptr)->ptr<int>(),
                             len,
                             cn,
                             lutcn
@@ -1048,9 +1048,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_32F:
                         cvd::LUT16u_32f(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<float>(),
-                            dst.ptr->ptr<float>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<float>(),
+                            (*dst.ptr)->ptr<float>(),
                             len,
                             cn,
                             lutcn
@@ -1058,9 +1058,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_64F:
                         cvd::LUT16u_64f(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<double>(),
-                            dst.ptr->ptr<double>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<double>(),
+                            (*dst.ptr)->ptr<double>(),
                             len,
                             cn,
                             lutcn
@@ -1068,9 +1068,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_16F:
                         cvd::LUT16u_16f(
-                            src.ptr->ptr<ushort>(),
-                            lut.ptr->ptr<cv::hfloat>(),
-                            dst.ptr->ptr<cv::hfloat>(),
+                            (*src.ptr)->ptr<ushort>(),
+                            (*lut.ptr)->ptr<cv::hfloat>(),
+                            (*dst.ptr)->ptr<cv::hfloat>(),
                             len,
                             cn,
                             lutcn
@@ -1087,9 +1087,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                 switch (lut_depth) {
                     case CV_8U:
                         cvd::LUT16s_8u(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<uchar>(),
-                            dst.ptr->ptr<uchar>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<uchar>(),
+                            (*dst.ptr)->ptr<uchar>(),
                             len,
                             cn,
                             lutcn
@@ -1097,9 +1097,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_8S:
                         cvd::LUT16s_8s(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<char>(),
-                            dst.ptr->ptr<char>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<char>(),
+                            (*dst.ptr)->ptr<char>(),
                             len,
                             cn,
                             lutcn
@@ -1107,9 +1107,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_16U:
                         cvd::LUT16s_16u(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<ushort>(),
-                            dst.ptr->ptr<ushort>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<ushort>(),
+                            (*dst.ptr)->ptr<ushort>(),
                             len,
                             cn,
                             lutcn
@@ -1117,9 +1117,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_16S:
                         cvd::LUT16s_16s(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<short>(),
-                            dst.ptr->ptr<short>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<short>(),
+                            (*dst.ptr)->ptr<short>(),
                             len,
                             cn,
                             lutcn
@@ -1127,9 +1127,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_32S:
                         cvd::LUT16s_32s(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<int>(),
-                            dst.ptr->ptr<int>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<int>(),
+                            (*dst.ptr)->ptr<int>(),
                             len,
                             cn,
                             lutcn
@@ -1137,9 +1137,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_32F:
                         cvd::LUT16s_32f(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<float>(),
-                            dst.ptr->ptr<float>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<float>(),
+                            (*dst.ptr)->ptr<float>(),
                             len,
                             cn,
                             lutcn
@@ -1147,9 +1147,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_64F:
                         cvd::LUT16s_64f(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<double>(),
-                            dst.ptr->ptr<double>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<double>(),
+                            (*dst.ptr)->ptr<double>(),
                             len,
                             cn,
                             lutcn
@@ -1157,9 +1157,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_16F:
                         cvd::LUT16s_16f(
-                            src.ptr->ptr<short>(),
-                            lut.ptr->ptr<cv::hfloat>(),
-                            dst.ptr->ptr<cv::hfloat>(),
+                            (*src.ptr)->ptr<short>(),
+                            (*lut.ptr)->ptr<cv::hfloat>(),
+                            (*dst.ptr)->ptr<cv::hfloat>(),
                             len,
                             cn,
                             lutcn
@@ -1176,9 +1176,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                 switch (lut_depth) {
                     case CV_32S:
                         cvd::LUT32s_32s(
-                            src.ptr->ptr<int>(),
-                            lut.ptr->ptr<int>(),
-                            dst.ptr->ptr<int>(),
+                            (*src.ptr)->ptr<int>(),
+                            (*lut.ptr)->ptr<int>(),
+                            (*dst.ptr)->ptr<int>(),
                             len,
                             cn,
                             lutcn
@@ -1186,9 +1186,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_32F:
                         cvd::LUT32s_32f(
-                            src.ptr->ptr<int>(),
-                            lut.ptr->ptr<float>(),
-                            dst.ptr->ptr<float>(),
+                            (*src.ptr)->ptr<int>(),
+                            (*lut.ptr)->ptr<float>(),
+                            (*dst.ptr)->ptr<float>(),
                             len,
                             cn,
                             lutcn
@@ -1196,9 +1196,9 @@ CvStatus* cv_LUT(Mat src, Mat lut, Mat dst, CvCallback_0 callback) {
                         break;
                     case CV_64F:
                         cvd::LUT32s_64f(
-                            src.ptr->ptr<int>(),
-                            lut.ptr->ptr<double>(),
-                            dst.ptr->ptr<double>(),
+                            (*src.ptr)->ptr<int>(),
+                            (*lut.ptr)->ptr<double>(),
+                            (*dst.ptr)->ptr<double>(),
                             len,
                             cn,
                             lutcn
@@ -1291,12 +1291,12 @@ CvStatus* cv_norm_1(
 
 CvStatus* cv_RNG_create(RNG* rval) {
     BEGIN_WRAP
-    *rval = {new cv::RNG()};
+    CVD_SET(rval, new cv::RNG());
     END_WRAP
 }
 CvStatus* cv_RNG_create_1(uint64_t state, RNG* rval) {
     BEGIN_WRAP
-    *rval = {new cv::RNG(state)};
+    CVD_SET(rval, new cv::RNG(state));
     END_WRAP
 }
 void cv_RNG_close(RNGPtr rng) {
@@ -1306,7 +1306,7 @@ CvStatus* cv_RNG_fill(
     RNG rng, Mat mat, int distType, double a, double b, bool saturateRange, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rng.ptr->fill(CVDEREF(mat), distType, a, b, saturateRange);
+    (*rng.ptr)->fill(CVDEREF(mat), distType, a, b, saturateRange);
     if (callback != nullptr) {
         callback();
     }
@@ -1314,28 +1314,28 @@ CvStatus* cv_RNG_fill(
 }
 CvStatus* cv_RNG_gaussian(RNG rng, double sigma, double* rval) {
     BEGIN_WRAP
-    *rval = rng.ptr->gaussian(sigma);
+    *rval = (*rng.ptr)->gaussian(sigma);
     END_WRAP
 }
 CvStatus* cv_RNG_uniform(RNG rng, int a, int b, int* rval) {
     BEGIN_WRAP
-    *rval = rng.ptr->uniform(a, b);
+    *rval = (*rng.ptr)->uniform(a, b);
     END_WRAP
 }
 CvStatus* cv_RNG_uniformDouble(RNG rng, double a, double b, double* rval) {
     BEGIN_WRAP
-    *rval = rng.ptr->uniform(a, b);
+    *rval = (*rng.ptr)->uniform(a, b);
     END_WRAP
 }
 CvStatus* cv_RNG_next(RNG rng, uint32_t* rval) {
     BEGIN_WRAP
-    *rval = rng.ptr->next();
+    *rval = (*rng.ptr)->next();
     END_WRAP
 }
 
 CvStatus* cv_theRNG(RNGPtr rval) {
     BEGIN_WRAP
-    *rval = {new cv::RNG(cv::theRNG())};
+    CVD_SET(rval, new cv::RNG(cv::theRNG()));
     END_WRAP
 }
 CvStatus* cv_setRNGSeed(int seed) {
@@ -1364,7 +1364,7 @@ CvStatus* cv_randShuffle(Mat mat, CvCallback_0 callback) {
 }
 CvStatus* cv_randShuffle_1(Mat mat, double iterFactor, RNG rng, CvCallback_0 callback) {
     BEGIN_WRAP
-    cv::randShuffle(CVDEREF(mat), iterFactor, rng.ptr);
+    cv::randShuffle(CVDEREF(mat), iterFactor, (*rng.ptr).get());
     if (callback != nullptr) {
         callback();
     }

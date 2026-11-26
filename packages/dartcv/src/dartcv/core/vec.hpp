@@ -158,7 +158,7 @@
 
 // strings
 inline std::vector<std::string> vecvecchar_c2cpp_s(VecVecChar v) {
-    auto _v = *v.ptr;
+    auto _v = CVDEREF(v);
     std::vector<std::string> rv(_v.size());
     for (int i = 0; i < _v.size(); i++) {
         auto _t = _v.at(i);
@@ -402,7 +402,7 @@ inline std::vector<std::vector<char>>* vecstr_2_vecvecchar(std::vector<std::stri
 //     std::vector<cv::Mat> rv(v.length);
 //     for (int i = 0; i < v.length; i++) {
 //         Mat m = v.ptr[i];
-//         rv[i] = *m.ptr;
+//         rv[i] = CVDEREF(m);
 //     }
 //     return rv;
 // }

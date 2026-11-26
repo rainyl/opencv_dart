@@ -9,9 +9,9 @@ CvStatus* cv_quality_QualityBRISQUE_create(
     const char* model_file, const char* range_file, QualityBRISQUE* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::quality::QualityBRISQUE>(
+    CVD_SET(rval, new cv::Ptr<cv::quality::QualityBRISQUE>(
         cv::quality::QualityBRISQUE::create(model_file, range_file)
-    );
+    ));
     if (callback != nullptr) {
         callback();
     }
@@ -19,7 +19,7 @@ CvStatus* cv_quality_QualityBRISQUE_create(
 }
 
 void cv_quality_QualityBRISQUE_close(QualityBRISQUEPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -60,13 +60,12 @@ CvStatus* cv_quality_QualityBRISQUE_computeFeatures_static(
 
 CvStatus* cv_quality_QualityGMSD_create(Mat ref, QualityGMSD* rval) {
     BEGIN_WRAP
-    rval->ptr =
-        new cv::Ptr<cv::quality::QualityGMSD>(cv::quality::QualityGMSD::create(CVDEREF(ref)));
+    CVD_SET(rval, new cv::Ptr<cv::quality::QualityGMSD>(cv::quality::QualityGMSD::create(CVDEREF(ref))));
     END_WRAP
 }
 
 void cv_quality_QualityGMSD_close(QualityGMSDPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -97,7 +96,7 @@ CvStatus* cv_quality_QualityGMSD_compute_static(
 
 CvStatus* cv_quality_QualityMSE_create(Mat ref, QualityMSE* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::quality::QualityMSE>(cv::quality::QualityMSE::create(CVDEREF(ref)))};
+    CVD_SET(rval, new cv::Ptr<cv::quality::QualityMSE>(cv::quality::QualityMSE::create(CVDEREF(ref))));
     if (callback != nullptr) {
         callback();
     }
@@ -105,7 +104,7 @@ CvStatus* cv_quality_QualityMSE_create(Mat ref, QualityMSE* rval, CvCallback_0 c
 }
 
 void cv_quality_QualityMSE_close(QualityMSEPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -138,9 +137,9 @@ CvStatus* cv_quality_QualityPSNR_create(
     Mat ref, double maxPixelValue, QualityPSNR* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::quality::QualityPSNR>(
+    CVD_SET(rval, new cv::Ptr<cv::quality::QualityPSNR>(
         cv::quality::QualityPSNR::create(CVDEREF(ref), maxPixelValue)
-    )};
+    ));
     if (callback != nullptr) {
         callback();
     }
@@ -148,7 +147,7 @@ CvStatus* cv_quality_QualityPSNR_create(
 }
 
 void cv_quality_QualityPSNR_close(QualityPSNRPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -188,7 +187,7 @@ void cv_quality_QualityPSNR_setMaxPixelValue(QualityPSNR self, double maxPixelVa
 
 CvStatus* cv_quality_QualitySSIM_create(Mat ref, QualitySSIM* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::quality::QualitySSIM>(cv::quality::QualitySSIM::create(CVDEREF(ref)))};
+    CVD_SET(rval, new cv::Ptr<cv::quality::QualitySSIM>(cv::quality::QualitySSIM::create(CVDEREF(ref))));
     if (callback != nullptr) {
         callback();
     }
@@ -196,7 +195,7 @@ CvStatus* cv_quality_QualitySSIM_create(Mat ref, QualitySSIM* rval, CvCallback_0
 }
 
 void cv_quality_QualitySSIM_close(QualitySSIMPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 

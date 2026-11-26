@@ -410,9 +410,9 @@ CvStatus* cv_boxPoints(RotatedRect rect, VecPoint2f* boxPts, CvCallback_0 callba
     auto center = cv::Point2f(rect.center.x, rect.center.y);
     auto size = cv::Size2f(rect.size.width, rect.size.height);
     cv::boxPoints(cv::RotatedRect(center, size, rect.angle), mat);
-    boxPts->ptr->resize(mat.rows);
+    (*boxPts->ptr)->resize(mat.rows);
     for (int i = 0; i < mat.rows; i++) {
-        boxPts->ptr->at(i) = cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1));
+        (*boxPts->ptr)->at(i) = cv::Point2f(mat.at<float>(i, 0), mat.at<float>(i, 1));
     }
     if (callback != nullptr) {
         callback();
@@ -625,7 +625,7 @@ CvStatus* cv_getGaussianKernel(
     int ksize, double sigma, int ktype, Mat* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::getGaussianKernel(ksize, sigma, ktype));
+    CVD_SET(rval, new cv::Mat(cv::getGaussianKernel(ksize, sigma, ktype)));
     if (callback != nullptr) {
         callback();
     }
@@ -671,7 +671,7 @@ CvStatus* cv_Scharr(
 
 CvStatus* cv_getStructuringElement(int shape, CvSize ksize, Mat* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::getStructuringElement(shape, cv::Size(ksize.width, ksize.height)));
+    CVD_SET(rval, new cv::Mat(cv::getStructuringElement(shape, cv::Size(ksize.width, ksize.height))));
     if (callback != nullptr) {
         callback();
     }
@@ -774,20 +774,20 @@ CvStatus* cv_cornerSubPix(
 
 CvStatus* cv_LineSegmentDetector_create(LineSegmentDetector* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::LineSegmentDetector>(cv::createLineSegmentDetector())};
+    CVD_SET(rval, new cv::Ptr<cv::LineSegmentDetector>(cv::createLineSegmentDetector()));
     END_WRAP
 }
 
 CvStatus* cv_LineSegmentDetector_create1(int refine, double scale, double sigma_scale, double quant, double ang_th, double log_eps, double density_th, int n_bins, LineSegmentDetector* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::LineSegmentDetector>(
+    CVD_SET(rval, new cv::Ptr<cv::LineSegmentDetector>(
         cv::createLineSegmentDetector(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins)
-    )};
+    ));
     END_WRAP
 }
 
 void cv_LineSegmentDetector_close(LineSegmentDetectorPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -1435,7 +1435,7 @@ CvStatus* cv_getRotationMatrix2D(
     CvPoint2f center, double angle, double scale, Mat* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::getRotationMatrix2D(cv::Point2f(center.x, center.y), angle, scale));
+    CVD_SET(rval, new cv::Mat(cv::getRotationMatrix2D(cv::Point2f(center.x, center.y), angle, scale)));
     if (callback != nullptr) {
         callback();
     }
@@ -1547,15 +1547,15 @@ CvStatus* cv_getPerspectiveTransform(
     VecPoint src, VecPoint dst, Mat* rval, int solveMethod, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    std::vector<cv::Point2f> src2f(src.ptr->size());
-    std::vector<cv::Point2f> dst2f(dst.ptr->size());
-    for (int i = 0; i < src.ptr->size(); ++i) {
-        src2f.at(i) = cv::Point2f(src.ptr->at(i));
+    std::vector<cv::Point2f> src2f((*src.ptr)->size());
+    std::vector<cv::Point2f> dst2f((*dst.ptr)->size());
+    for (int i = 0; i < (*src.ptr)->size(); ++i) {
+        src2f.at(i) = cv::Point2f((*src.ptr)->at(i));
     }
-    for (int i = 0; i < dst.ptr->size(); ++i) {
-        dst2f.at(i) = cv::Point2f(dst.ptr->at(i));
+    for (int i = 0; i < (*dst.ptr)->size(); ++i) {
+        dst2f.at(i) = cv::Point2f((*dst.ptr)->at(i));
     }
-    rval->ptr = new cv::Mat(cv::getPerspectiveTransform(src2f, dst2f, solveMethod));
+    CVD_SET(rval, new cv::Mat(cv::getPerspectiveTransform(src2f, dst2f, solveMethod)));
     if (callback != nullptr) {
         callback();
     }
@@ -1566,7 +1566,7 @@ CvStatus* cv_getPerspectiveTransform2f(
     VecPoint2f src, VecPoint2f dst, Mat* rval, int solveMethod, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::getPerspectiveTransform(CVDEREF(src), CVDEREF(dst), solveMethod));
+    CVD_SET(rval, new cv::Mat(cv::getPerspectiveTransform(CVDEREF(src), CVDEREF(dst), solveMethod)));
     if (callback != nullptr) {
         callback();
     }
@@ -1575,15 +1575,15 @@ CvStatus* cv_getPerspectiveTransform2f(
 
 CvStatus* cv_getAffineTransform(VecPoint src, VecPoint dst, Mat* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    std::vector<cv::Point2f> src2f(src.ptr->size());
-    std::vector<cv::Point2f> dst2f(dst.ptr->size());
-    for (int i = 0; i < src.ptr->size(); ++i) {
-        src2f.at(i) = cv::Point2f(src.ptr->at(i));
+    std::vector<cv::Point2f> src2f((*src.ptr)->size());
+    std::vector<cv::Point2f> dst2f((*dst.ptr)->size());
+    for (int i = 0; i < (*src.ptr)->size(); ++i) {
+        src2f.at(i) = cv::Point2f((*src.ptr)->at(i));
     }
-    for (int i = 0; i < dst.ptr->size(); ++i) {
-        dst2f.at(i) = cv::Point2f(dst.ptr->at(i));
+    for (int i = 0; i < (*dst.ptr)->size(); ++i) {
+        dst2f.at(i) = cv::Point2f((*dst.ptr)->at(i));
     }
-    rval->ptr = new cv::Mat(cv::getAffineTransform(src2f, dst2f));
+    CVD_SET(rval, new cv::Mat(cv::getAffineTransform(src2f, dst2f)));
     if (callback != nullptr) {
         callback();
     }
@@ -1594,7 +1594,7 @@ CvStatus* cv_getAffineTransform2f(
     VecPoint2f src, VecPoint2f dst, Mat* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::getAffineTransform(CVDEREF(src), CVDEREF(dst)));
+    CVD_SET(rval, new cv::Mat(cv::getAffineTransform(CVDEREF(src), CVDEREF(dst))));
     if (callback != nullptr) {
         callback();
     }
@@ -1878,20 +1878,20 @@ CvStatus* cv_clipLine(CvRect imgRect, CvPoint pt1, CvPoint pt2, bool* rval, CvCa
 
 CvStatus* cv_CLAHE_create(CLAHE* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::CLAHE>(cv::createCLAHE())};
+    CVD_SET(rval, new cv::Ptr<cv::CLAHE>(cv::createCLAHE()));
     END_WRAP
 }
 
 CvStatus* cv_CLAHE_create_1(double clipLimit, CvSize tileGridSize, CLAHE* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::CLAHE>(
+    CVD_SET(rval, new cv::Ptr<cv::CLAHE>(
         cv::createCLAHE(clipLimit, cv::Size(tileGridSize.width, tileGridSize.height))
-    )};
+    ));
     END_WRAP
 }
 
 void cv_CLAHE_close(CLAHEPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -1930,13 +1930,13 @@ void cv_CLAHE_setTilesGridSize(CLAHE self, CvSize size) {
 
 CvStatus* cv_Subdiv2D_create(Subdiv2D* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Subdiv2D()};
+    CVD_SET(rval, new cv::Subdiv2D());
     END_WRAP
 }
 
 CvStatus* cv_Subdiv2D_create_1(CvRect rect, Subdiv2D* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height))};
+    CVD_SET(rval, new cv::Subdiv2D(cv::Rect(rect.x, rect.y, rect.width, rect.height)));
     END_WRAP
 }
 
@@ -1949,7 +1949,7 @@ CvStatus* cv_Subdiv2D_edgeDst(
 ) {
     BEGIN_WRAP
     auto p = cv::Point2f();
-    *rval = self.ptr->edgeDst(edge, &p);
+    *rval = (*self.ptr)->edgeDst(edge, &p);
     *dstpt = {p.x, p.y};
     if (callback != nullptr) {
         callback();
@@ -1962,7 +1962,7 @@ CvStatus* cv_Subdiv2D_edgeOrg(
 ) {
     BEGIN_WRAP
     auto p = cv::Point2f();
-    *rval = self.ptr->edgeOrg(edge, &p);
+    *rval = (*self.ptr)->edgeOrg(edge, &p);
     *orgpt = {p.x, p.y};
     if (callback != nullptr) {
         callback();
@@ -1975,7 +1975,7 @@ CvStatus* cv_Subdiv2D_findNearest(
 ) {
     BEGIN_WRAP
     auto p = cv::Point2f();
-    *rval = self.ptr->findNearest(cv::Point2f(pt.x, pt.y), &p);
+    *rval = (*self.ptr)->findNearest(cv::Point2f(pt.x, pt.y), &p);
     *nearestPt = {p.x, p.y};
     if (callback != nullptr) {
         callback();
@@ -1987,7 +1987,7 @@ CvStatus* cv_Subdiv2D_getEdge(
     Subdiv2D self, int edge, int nextEdgeType, int* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    *rval = self.ptr->getEdge(edge, nextEdgeType);
+    *rval = (*self.ptr)->getEdge(edge, nextEdgeType);
     if (callback != nullptr) {
         callback();
     }
@@ -1999,7 +1999,7 @@ CvStatus* cv_Subdiv2D_getEdgeList(
 ) {
     BEGIN_WRAP
     auto v = std::vector<cv::Vec4f>();
-    self.ptr->getEdgeList(v);
+    (*self.ptr)->getEdgeList(v);
     *size = v.size();
     auto rv = new Vec4f[v.size()];
     for (int i = 0; i < v.size(); i++) {
@@ -2016,7 +2016,7 @@ CvStatus* cv_Subdiv2D_getLeadingEdgeList(
     Subdiv2D self, VecI32* leadingEdgeList, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    self.ptr->getLeadingEdgeList(CVDEREF_P(leadingEdgeList));
+    (*self.ptr)->getLeadingEdgeList(CVDEREF_P(leadingEdgeList));
     if (callback != nullptr) {
         callback();
     }
@@ -2028,7 +2028,7 @@ CvStatus* cv_Subdiv2D_getTriangleList(
 ) {
     BEGIN_WRAP
     auto v = std::vector<cv::Vec6f>();
-    self.ptr->getTriangleList(v);
+    (*self.ptr)->getTriangleList(v);
     *size = v.size();
     auto rv = new Vec6f[v.size()];
     for (int i = 0; i < v.size(); i++) {
@@ -2045,7 +2045,7 @@ CvStatus* cv_Subdiv2D_getVertex(
     Subdiv2D self, int vertex, int* firstEdge, CvPoint2f* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    auto p = self.ptr->getVertex(vertex, firstEdge);
+    auto p = (*self.ptr)->getVertex(vertex, firstEdge);
     *rval = {p.x, p.y};
     if (callback != nullptr) {
         callback();
@@ -2061,7 +2061,7 @@ CvStatus* cv_Subdiv2D_getVoronoiFacetList(
     CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    self.ptr->getVoronoiFacetList(CVDEREF(idx), CVDEREF_P(facetList), CVDEREF_P(facetCenters));
+    (*self.ptr)->getVoronoiFacetList(CVDEREF(idx), CVDEREF_P(facetList), CVDEREF_P(facetCenters));
     if (callback != nullptr) {
         callback();
     }
@@ -2070,7 +2070,7 @@ CvStatus* cv_Subdiv2D_getVoronoiFacetList(
 
 CvStatus* cv_Subdiv2D_initDelaunay(Subdiv2D self, CvRect rect, CvCallback_0 callback) {
     BEGIN_WRAP
-    self.ptr->initDelaunay(cv::Rect(rect.x, rect.y, rect.width, rect.height));
+    (*self.ptr)->initDelaunay(cv::Rect(rect.x, rect.y, rect.width, rect.height));
     if (callback != nullptr) {
         callback();
     }
@@ -2079,7 +2079,7 @@ CvStatus* cv_Subdiv2D_initDelaunay(Subdiv2D self, CvRect rect, CvCallback_0 call
 
 CvStatus* cv_Subdiv2D_insert(Subdiv2D self, CvPoint2f pt, int* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = self.ptr->insert(cv::Point2f(pt.x, pt.y));
+    *rval = (*self.ptr)->insert(cv::Point2f(pt.x, pt.y));
     if (callback != nullptr) {
         callback();
     }
@@ -2088,7 +2088,7 @@ CvStatus* cv_Subdiv2D_insert(Subdiv2D self, CvPoint2f pt, int* rval, CvCallback_
 
 CvStatus* cv_Subdiv2D_insertVec(Subdiv2D self, VecPoint2f ptvec, CvCallback_0 callback) {
     BEGIN_WRAP
-    self.ptr->insert(CVDEREF(ptvec));
+    (*self.ptr)->insert(CVDEREF(ptvec));
     if (callback != nullptr) {
         callback();
     }
@@ -2099,7 +2099,7 @@ CvStatus* cv_Subdiv2D_locate(
     Subdiv2D self, CvPoint2f pt, int* edge, int* vertex, int* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    *rval = self.ptr->locate(cv::Point2f(pt.x, pt.y), *edge, *vertex);
+    *rval = (*self.ptr)->locate(cv::Point2f(pt.x, pt.y), *edge, *vertex);
     if (callback != nullptr) {
         callback();
     }
@@ -2108,7 +2108,7 @@ CvStatus* cv_Subdiv2D_locate(
 
 CvStatus* cv_Subdiv2D_nextEdge(Subdiv2D self, int edge, int* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = self.ptr->nextEdge(edge);
+    *rval = (*self.ptr)->nextEdge(edge);
     if (callback != nullptr) {
         callback();
     }
@@ -2119,7 +2119,7 @@ CvStatus* cv_Subdiv2D_rotateEdge(
     Subdiv2D self, int edge, int rotate, int* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    *rval = self.ptr->rotateEdge(edge, rotate);
+    *rval = (*self.ptr)->rotateEdge(edge, rotate);
     if (callback != nullptr) {
         callback();
     }
@@ -2128,7 +2128,7 @@ CvStatus* cv_Subdiv2D_rotateEdge(
 
 CvStatus* cv_Subdiv2D_symEdge(Subdiv2D self, int edge, int* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = self.ptr->symEdge(edge);
+    *rval = (*self.ptr)->symEdge(edge);
     if (callback != nullptr) {
         callback();
     }

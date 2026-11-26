@@ -153,16 +153,16 @@ CvStatus* cv_fastNlMeansDenoisingColored_1(
 
 CvStatus* cv_createMergeMertens(MergeMertens* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::MergeMertens>(cv::createMergeMertens())};
+    CVD_SET(rval, new cv::Ptr<cv::MergeMertens>(cv::createMergeMertens()));
     END_WRAP
 }
 CvStatus* cv_createMergeMertens_1(
     float contrast_weight, float saturation_weight, float exposure_weight, MergeMertens* rval
 ) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::MergeMertens>(
+    CVD_SET(rval, new cv::Ptr<cv::MergeMertens>(
         cv::createMergeMertens(contrast_weight, saturation_weight, exposure_weight)
-    )};
+    ));
     END_WRAP
 }
 CvStatus* cv_MergeMertens_process(MergeMertens b, VecMat src, Mat dst, CvCallback_0 callback) {
@@ -174,18 +174,18 @@ CvStatus* cv_MergeMertens_process(MergeMertens b, VecMat src, Mat dst, CvCallbac
     END_WRAP
 }
 void cv_MergeMertens_close(MergeMertensPtr b) {
-    b->ptr->reset();
+    (*b->ptr)->reset();
     CVD_FREE(b);
 }
 
 CvStatus* cv_createAlignMTB(AlignMTB* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::AlignMTB>(cv::createAlignMTB())};
+    CVD_SET(rval, new cv::Ptr<cv::AlignMTB>(cv::createAlignMTB()));
     END_WRAP
 }
 CvStatus* cv_createAlignMTB_1(int max_bits, int exclude_range, bool cut, AlignMTB* rval) {
     BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::AlignMTB>(cv::createAlignMTB(max_bits, exclude_range, cut))};
+    CVD_SET(rval, new cv::Ptr<cv::AlignMTB>(cv::createAlignMTB(max_bits, exclude_range, cut)));
     END_WRAP
 }
 CvStatus* cv_AlignMTB_process(AlignMTB b, VecMat src, const VecMat* dst, CvCallback_0 callback) {
@@ -197,7 +197,7 @@ CvStatus* cv_AlignMTB_process(AlignMTB b, VecMat src, const VecMat* dst, CvCallb
     END_WRAP
 }
 void cv_AlignMTB_close(AlignMTBPtr b) {
-    b->ptr->reset();
+    (*b->ptr)->reset();
     CVD_FREE(b);
 }
 

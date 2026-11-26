@@ -24,7 +24,7 @@ size_t cv_imcount(const char* filename, int flags) {
 CvStatus* cv_imdecode(VecUChar buf, int flags, Mat* rval, CvCallback_0 callback) {
     BEGIN_WRAP
     auto m = cv::imdecode(CVDEREF(buf), flags);
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -60,7 +60,7 @@ CvStatus* cv_imencode_1(
 
 CvStatus* cv_imread(const char* filename, int flags, Mat* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    *rval = {new cv::Mat(cv::imread(filename, flags))};
+    CVD_SET(rval, new cv::Mat(cv::imread(filename, flags)));
     if (callback != nullptr) {
         callback();
     }

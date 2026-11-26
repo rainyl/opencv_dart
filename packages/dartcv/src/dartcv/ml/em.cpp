@@ -94,8 +94,8 @@ CvStatus* cv_ml_EM_trainE(
     CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    cv::_InputArray covs = covs0.ptr == nullptr || covs0.ptr->empty() ? cv::_InputArray()
-                                                                      : cv::_InputArray(*covs0.ptr);
+    cv::_InputArray covs = (*covs0.ptr).get() == nullptr || (*covs0.ptr)->empty() ? cv::_InputArray()
+                                                                      : cv::_InputArray(CVDEREF(covs0));
     *rval = (CVDEREF(self))
                 ->trainE(
                     CVDEREF(samples),

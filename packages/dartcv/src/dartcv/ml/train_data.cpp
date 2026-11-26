@@ -27,7 +27,7 @@ CvStatus* cv_ml_TrainData_create(
         cvd_or_noarray(sampleWeights),
         cvd_or_noarray(varType)
     );
-    rval->ptr = new cv::Ptr<cv::ml::TrainData>(p);
+    CVD_SET(rval, new cv::Ptr<cv::ml::TrainData>(p));
     END_WRAP
 }
 
@@ -55,7 +55,7 @@ CvStatus* cv_ml_TrainData_loadFromCSV(
     if (p.empty()) {
         CV_Error(cv::Error::StsError, std::string("Failed to load train data from ") + filename);
     }
-    rval->ptr = new cv::Ptr<cv::ml::TrainData>(p);
+    CVD_SET(rval, new cv::Ptr<cv::ml::TrainData>(p));
     if (callback != nullptr) {
         callback();
     }
@@ -63,7 +63,7 @@ CvStatus* cv_ml_TrainData_loadFromCSV(
 }
 
 void cv_ml_TrainData_close(TrainDataPtr self) {
-    self->ptr->reset();
+    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -137,7 +137,7 @@ CvStatus* cv_ml_TrainData_getNames(TrainData self, VecVecChar* rval) {
     BEGIN_WRAP
     std::vector<cv::String> names;
     (CVDEREF(self))->getNames(names);
-    // fill the caller-owned vector in place, replacing rval->ptr would leak it
+    // fill the caller-owned vector in place: replacing the vector would leak it
     auto& out = CVDEREF_P(rval);
     out.clear();
     for (const auto& name : names) {

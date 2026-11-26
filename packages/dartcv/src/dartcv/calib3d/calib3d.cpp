@@ -472,7 +472,7 @@ CvStatus* cv_estimateAffinePartial2D(
     VecPoint2f from, VecPoint2f to, Mat* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::estimateAffinePartial2D(CVDEREF(from), CVDEREF(to)));
+    CVD_SET(rval, new cv::Mat(cv::estimateAffinePartial2D(CVDEREF(from), CVDEREF(to))));
     if (callback != nullptr) {
         callback();
     }
@@ -502,7 +502,7 @@ CvStatus* cv_estimateAffinePartial2D_1(
         confidence,
         refineIters
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -511,7 +511,7 @@ CvStatus* cv_estimateAffinePartial2D_1(
 
 CvStatus* cv_estimateAffine2D(VecPoint2f from, VecPoint2f to, Mat* rval, CvCallback_0 callback) {
     BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::estimateAffine2D(CVDEREF(from), CVDEREF(to)));
+    CVD_SET(rval, new cv::Mat(cv::estimateAffine2D(CVDEREF(from), CVDEREF(to))));
     if (callback != nullptr) {
         callback();
     }
@@ -541,7 +541,7 @@ CvStatus* cv_estimateAffine2D_1(
         confidence,
         refineIters
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -552,8 +552,7 @@ CvStatus* cv_estimateAffine3D(
     Mat src, Mat dst, double* scale, bool force_rotation, Mat* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    rval->ptr =
-        new cv::Mat(cv::estimateAffine3D(CVDEREF(src), CVDEREF(dst), scale, force_rotation));
+    CVD_SET(rval, new cv::Mat(cv::estimateAffine3D(CVDEREF(src), CVDEREF(dst), scale, force_rotation)));
     if (callback != nullptr) {
         callback();
     }
@@ -765,7 +764,7 @@ CvStatus* cv_findEssentialMat(
         maxIters,
         CVDEREF(mask)
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -795,7 +794,7 @@ CvStatus* cv_findEssentialMat_1(
         maxIters,
         CVDEREF(mask)
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -823,7 +822,7 @@ CvStatus* cv_findFundamentalMat(
         maxIters,
         CVDEREF(mask)
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -837,7 +836,7 @@ CvStatus* cv_findFundamentalMat_1(
     auto m = cv::findFundamentalMat(
         CVDEREF(points1), CVDEREF(points2), CVDEREF(mask), cv_UsacParams_c2cpp(params)
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -858,7 +857,7 @@ CvStatus* cv_findFundamentalMat_2(
     auto m = cv::findFundamentalMat(
         CVDEREF(points1), CVDEREF(points2), CVDEREF(mask), method, ransacReprojThreshold, confidence
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -886,7 +885,7 @@ CvStatus* cv_findHomography(
         maxIters,
         confidence
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -905,7 +904,7 @@ CvStatus* cv_findHomography_1(
     auto m = cv::findHomography(
         CVDEREF(srcPoints), CVDEREF(dstPoints), CVDEREF(mask), cv_UsacParams_c2cpp(params)
     );
-    rval->ptr = new cv::Mat(m);
+    CVD_SET(rval, new cv::Mat(m));
     if (callback != nullptr) {
         callback();
     }
@@ -917,8 +916,7 @@ CvStatus* cv_getDefaultNewCameraMatrix(
 ) {
     BEGIN_WRAP
     cv::Size sz(size.width, size.height);
-    rval->ptr =
-        new cv::Mat(cv::getDefaultNewCameraMatrix(CVDEREF(cameraMatrix), sz, centerPrincipalPoint));
+    CVD_SET(rval, new cv::Mat(cv::getDefaultNewCameraMatrix(CVDEREF(cameraMatrix), sz, centerPrincipalPoint)));
     if (callback != nullptr) {
         callback();
     }
@@ -947,7 +945,7 @@ CvStatus* cv_getOptimalNewCameraMatrix(
     validPixROI->y = rect.y;
     validPixROI->width = rect.width;
     validPixROI->height = rect.height;
-    rval->ptr = new cv::Mat(mat);
+    CVD_SET(rval, new cv::Mat(mat));
     if (callback != nullptr) {
         callback();
     }

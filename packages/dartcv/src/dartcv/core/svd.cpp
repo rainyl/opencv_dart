@@ -10,7 +10,7 @@
 
 CvStatus* cv_SVD_Compute(Mat src, Mat w_r, Mat u_r, Mat vt_r, int flags, CvCallback_0 callback) {
     BEGIN_WRAP
-    cv::SVD::compute(*src.ptr, CVDEREF(w_r), CVDEREF(u_r), CVDEREF(vt_r), flags);
+    cv::SVD::compute(CVDEREF(src), CVDEREF(w_r), CVDEREF(u_r), CVDEREF(vt_r), flags);
     if (callback != nullptr) {
         callback();
     }
@@ -19,7 +19,7 @@ CvStatus* cv_SVD_Compute(Mat src, Mat w_r, Mat u_r, Mat vt_r, int flags, CvCallb
 
 CvStatus* cv_SVD_backSubst(Mat w, Mat u, Mat vt, Mat rhs, Mat dst, CvCallback_0 callback) {
     BEGIN_WRAP
-    cv::SVD::backSubst(*w.ptr, *u.ptr, *vt.ptr, *rhs.ptr, CVDEREF(dst));
+    cv::SVD::backSubst(CVDEREF(w), CVDEREF(u), CVDEREF(vt), CVDEREF(rhs), CVDEREF(dst));
     if (callback != nullptr) {
         callback();
     }

@@ -10,12 +10,12 @@
 CvStatus* cv_Stitcher_create(int mode, Stitcher* rval) {
     BEGIN_WRAP
     const auto ptr = cv::Stitcher::create(static_cast<cv::Stitcher::Mode>(mode));
-    rval->ptr = new cv::Ptr<cv::Stitcher>(ptr);
+    CVD_SET(rval, new cv::Ptr<cv::Stitcher>(ptr));
     END_WRAP
 }
 
 void cv_Stitcher_close(StitcherPtr stitcher) {
-    stitcher->ptr->reset();
+    (*stitcher->ptr)->reset();
     CVD_FREE(stitcher);
 }
 
@@ -72,7 +72,7 @@ CvStatus* cv_Stitcher_estimateTransform(
     Stitcher self, VecMat mats, VecMat masks, int* rval, CvCallback_0 callback
 ) {
     BEGIN_WRAP
-    if (!masks.ptr->empty()) {
+    if (!(*masks.ptr)->empty()) {
         *rval = static_cast<int>((CVDEREF(self))->estimateTransform(CVDEREF(mats), CVDEREF(masks)));
     } else {
         *rval = static_cast<int>((CVDEREF(self))->estimateTransform(CVDEREF(mats)));
@@ -126,7 +126,7 @@ CvStatus* cv_Stitcher_stitch_1(
 CvStatus* cv_Stitcher_component(Stitcher self, VecI32* rval, CvCallback_0 callback) {
     BEGIN_WRAP
     std::vector<int> _rval = (CVDEREF(self))->component();
-    *rval = {new std::vector<int32_t>(_rval)};
+    CVD_SET(rval, new std::vector<int32_t>(_rval));
     if (callback != nullptr) {
         callback();
     }

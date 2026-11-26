@@ -24,5 +24,5 @@ VecU8* cv_yuv420_888_to_nv21(VecU8 y, VecU8 u, VecU8 v, size_t width, size_t hei
         nv21_ptr->at(y_size + 2 * i) = _v[i];  // V first in NV21
         nv21_ptr->at(y_size + 2 * i + 1) = _u[i];  // U second in NV21
     }
-    return new VecU8{nv21_ptr};
+    return new VecU8{CVD_ADOPT(nv21_ptr)};
 }

@@ -18,10 +18,10 @@ template <typename T> inline cv::Ptr<T> cvd_ml_checked(cv::Ptr<T> p, const std::
 
 /// An optional input: an empty (or null) Mat becomes cv::noArray().
 inline cv::_InputArray cvd_or_noarray(Mat m) {
-    if (m.ptr == nullptr || m.ptr->empty()) {
+    if (m.ptr == nullptr || (*m.ptr)->empty()) {
         return cv::_InputArray();
     }
-    return cv::_InputArray(*m.ptr);
+    return cv::_InputArray(CVDEREF(m));
 }
 
 /// Fails for a model that is not trained. OpenCV does not always check: SVMImpl leaves var_count
@@ -50,17 +50,17 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
 #define CVD_ML_STAT_MODEL_IMPL(NAME, CVTYPE)                                                       \
     CvStatus* cv_ml_##NAME##_create(NAME* rval) {                                                  \
         BEGIN_WRAP                                                                                 \
-        rval->ptr = new cv::Ptr<CVTYPE>(CVTYPE::create());                                         \
+        CVD_SET(rval, new cv::Ptr<CVTYPE>(CVTYPE::create()));                                         \
         END_WRAP                                                                                   \
     }                                                                                              \
     void cv_ml_##NAME##_close(NAME##Ptr self) {                                                    \
-        self->ptr->reset();                                                                        \
+        (*self->ptr)->reset();                                                                        \
         CVD_FREE(self);                                                                            \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_load(const char* filepath, NAME* rval) {                              \
         BEGIN_WRAP                                                                                 \
         auto p = cvd_ml_checked(cv::Algorithm::load<CVTYPE>(filepath), filepath);                  \
-        rval->ptr = new cv::Ptr<CVTYPE>(p);                                                        \
+        CVD_SET(rval, new cv::Ptr<CVTYPE>(p));                                                        \
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_loadFromString(                                                       \
@@ -70,7 +70,7 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         auto p = cvd_ml_checked(                                                                   \
             cv::Algorithm::loadFromString<CVTYPE>(strModel, objname), std::string("string")        \
         );                                                                                         \
-        rval->ptr = new cv::Ptr<CVTYPE>(p);                                                        \
+        CVD_SET(rval, new cv::Ptr<CVTYPE>(p));                                                        \
         END_WRAP                                                                                   \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_save(NAME self, const char* filename) {                               \
