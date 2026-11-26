@@ -14,7 +14,6 @@ CvStatus* cv_xobjdetect_WBDetector_create(PtrWBDetector* rval) {
 }
 
 void cv_xobjdetect_WBDetector_close(PtrWBDetectorPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 

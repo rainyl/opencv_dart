@@ -21,27 +21,27 @@ extension Subdiv2DAsync on Subdiv2D {
   /// Returns the edge destination.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aee192f95bf19c74619641496c457586d
-  Future<(int rval, Point2f dstpt)> edgeDstAsync(int edge) async {
+  Future<(int rval, Point2f dstpt)> edgeDstAsync(int edge, {Duration? timeout}) async {
     final pp = calloc<cvg.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_edgeDst(ref, edge, pp, p, callback), (c) {
       final rval = (p.value, Point2f.fromPointer(pp));
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Returns the edge origin.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a5563e3cae0a9b95df63e72f0c12f9389
-  Future<(int rval, Point2f orgpt)> edgeOrgAsync(int edge) async {
+  Future<(int rval, Point2f orgpt)> edgeOrgAsync(int edge, {Duration? timeout}) async {
     final pp = calloc<cvg.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_edgeOrg(ref, edge, pp, p, callback), (c) {
       final rval = (p.value, Point2f.fromPointer(pp));
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Finds the subdivision vertex closest to the given point.
@@ -52,14 +52,14 @@ extension Subdiv2DAsync on Subdiv2D {
   /// though the facet (located using locate() ) is used as a starting point.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3ec256af000e129e08eb5f269ccdeb0f
-  Future<(int rval, Point2f nearestPt)> findNearestAsync(Point2f pt) async {
+  Future<(int rval, Point2f nearestPt)> findNearestAsync(Point2f pt, {Duration? timeout}) async {
     final pp = calloc<cvg.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_findNearest(ref, pt.ref, pp, p, callback), (c) {
       final rval = (p.value, Point2f.fromPointer(pp));
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Returns one of the edges related to the given edge.
@@ -77,13 +77,13 @@ extension Subdiv2DAsync on Subdiv2D {
   /// - [PREV_AROUND_RIGHT] previous around the right facet (reversed eDnext )
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#af73f08576709bad7a36f8f8e5fc43c84
-  Future<int> getEdgeAsync(int edge, int nextEdgeType) async {
+  Future<int> getEdgeAsync(int edge, int nextEdgeType, {Duration? timeout}) async {
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_getEdge(ref, edge, nextEdgeType, p, callback), (c) {
       final rval = p.value;
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Returns a list of all edges.
@@ -106,11 +106,11 @@ extension Subdiv2DAsync on Subdiv2D {
   /// Returns a list of the leading edge ID connected to each triangle.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a2d02a1d66ef7f8f267beb549cb2823f1
-  Future<VecI32> getLeadingEdgeListAsync() async {
+  Future<VecI32> getLeadingEdgeListAsync({Duration? timeout}) async {
     final pv = VecI32();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_getLeadingEdgeList(ref, pv.ptr, callback), (c) {
       return c.complete(pv);
-    });
+    }, timeout: timeout);
   }
 
   /// Returns a list of all triangles.
@@ -136,20 +136,23 @@ extension Subdiv2DAsync on Subdiv2D {
   /// Returns vertex location from vertex ID.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a5297daca30f90d1e6d0cc5a75ba76351
-  Future<(Point2f rval, int firstEdge)> getVertexAsync(int vertex) async {
+  Future<(Point2f rval, int firstEdge)> getVertexAsync(int vertex, {Duration? timeout}) async {
     final pp = calloc<cvg.CvPoint2f>();
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_getVertex(ref, vertex, p, pp, callback), (c) {
       final rval = (Point2f.fromPointer(pp), p.value);
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Returns a list of all Voronoi facets.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3a9e080423475be056a79da4c04741ea
-  Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(VecI32 idx) async {
+  Future<(VecVecPoint2f facetList, VecPoint2f facetCenters)> getVoronoiFacetListAsync(
+    VecI32 idx, {
+    Duration? timeout,
+  }) async {
     final pf = VecVecPoint2f();
     final pfc = VecPoint2f();
     return cvRunAsync0(
@@ -157,28 +160,29 @@ extension Subdiv2DAsync on Subdiv2D {
       (c) {
         return c.complete((pf, pfc));
       },
+      timeout: timeout,
     );
   }
 
   /// Creates a new empty Delaunay subdivision.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#ae4a3d65e798c46fd6ce64370f24b0287
-  Future<void> initDelaunayAsync(Rect rect) async {
+  Future<void> initDelaunayAsync(Rect rect, {Duration? timeout}) async {
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_initDelaunay(ref, rect.ref, callback), (c) {
       c.complete();
-    });
+    }, timeout: timeout);
   }
 
   /// Insert multiple points into a Delaunay triangulation.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a37223a499032ef57364f1372ad0c9c2e
-  Future<int> insertAsync(Point2f pt) async {
+  Future<int> insertAsync(Point2f pt, {Duration? timeout}) async {
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_insert(ref, pt.ref, p, callback), (c) {
       final rval = p.value;
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Insert a single point into a Delaunay triangulation.
@@ -186,10 +190,10 @@ extension Subdiv2DAsync on Subdiv2D {
   /// The function locates the input point within the subdivision and gives one of the triangle edges or vertices.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a18a6c9999210d769538297d843c613f2
-  Future<void> insertVecAsync(VecPoint2f pv) async {
+  Future<void> insertVecAsync(VecPoint2f pv, {Duration? timeout}) async {
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_insertVec(ref, pv.ref, callback), (c) {
       c.complete();
-    });
+    }, timeout: timeout);
   }
 
   /// Returns the location of a point within a Delaunay triangulation.
@@ -204,7 +208,7 @@ extension Subdiv2DAsync on Subdiv2D {
   ///   - One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error processing mode is selected, [PTLOC_ERROR] is returned.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aec8f1fd5a802f62faa97520b465897d7
-  Future<(int rval, int edge, int vertex)> locateAsync(Point2f pt) async {
+  Future<(int rval, int edge, int vertex)> locateAsync(Point2f pt, {Duration? timeout}) async {
     final pedge = calloc<ffi.Int>();
     final pvertex = calloc<ffi.Int>();
     final prval = calloc<ffi.Int>();
@@ -217,40 +221,41 @@ extension Subdiv2DAsync on Subdiv2D {
         calloc.free(prval);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   /// Returns next edge around the edge origin.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a36ebf478e2546615c2db457106393acb
-  Future<int> nextEdgeAsync(int edge) async {
+  Future<int> nextEdgeAsync(int edge, {Duration? timeout}) async {
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_nextEdge(ref, edge, p, callback), (c) {
       final rval = p.value;
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Returns another edge of the same quad-edge.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aa1179507f651b67c22e06517fbc6a145
-  Future<int> rotateEdgeAsync(int edge, int rotate) async {
+  Future<int> rotateEdgeAsync(int edge, int rotate, {Duration? timeout}) async {
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_rotateEdge(ref, edge, rotate, p, callback), (c) {
       final rval = p.value;
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aabbb10b8d5b0311b7e22040fc0db56b4
-  Future<int> symEdgeAsync(int edge) async {
+  Future<int> symEdgeAsync(int edge, {Duration? timeout}) async {
     final p = calloc<ffi.Int>();
     return cvRunAsync0((callback) => cimgproc.cv_Subdiv2D_symEdge(ref, edge, p, callback), (c) {
       final rval = p.value;
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 }

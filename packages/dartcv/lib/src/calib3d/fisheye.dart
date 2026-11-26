@@ -64,6 +64,7 @@ class Fisheye {
     VecMat? tvecs,
     int flags = 0,
     TermCriteria? criteria,
+    Duration? timeout,
   }) async {
     criteria ??= TermCriteria(TERM_COUNT + TERM_EPS, 100, 2.0e-16);
     rvecs ??= VecMat();
@@ -88,6 +89,7 @@ class Fisheye {
         calloc.free(prval);
         return c.complete((rval, rvecs!, tvecs!));
       },
+      timeout: timeout,
     );
   }
 
@@ -135,6 +137,7 @@ class Fisheye {
     InputOutputArray? Kundistorted,
     OutputArray? distorted,
     double alpha = 0,
+    Duration? timeout,
   }) async {
     distorted ??= Mat.empty();
 
@@ -151,6 +154,7 @@ class Fisheye {
               callback,
             ),
       (c) => c.complete(distorted),
+      timeout: timeout,
     );
   }
 
@@ -254,6 +258,7 @@ class Fisheye {
     int m1type, {
     OutputArray? map1,
     OutputArray? map2,
+    Duration? timeout,
   }) async {
     map1 ??= Mat.empty();
     map2 ??= Mat.empty();
@@ -270,6 +275,7 @@ class Fisheye {
         callback,
       ),
       (c) => c.complete((map1!, map2!)),
+      timeout: timeout,
     );
   }
 
@@ -314,6 +320,7 @@ class Fisheye {
     OutputArray? imagePoints,
     double alpha = 0,
     OutputArray? jacobian,
+    Duration? timeout,
   }) async {
     imagePoints ??= Mat.empty();
     jacobian ??= Mat.empty();
@@ -330,6 +337,7 @@ class Fisheye {
         callback,
       ),
       (c) => c.complete((imagePoints!, jacobian!)),
+      timeout: timeout,
     );
   }
 
@@ -382,6 +390,7 @@ class Fisheye {
     bool useExtrinsicGuess = false,
     int flags = SOLVEPNP_ITERATIVE,
     TermCriteria? criteria,
+    Duration? timeout,
   }) async {
     criteria ??= TermCriteria(TERM_MAX_ITER + TERM_EPS, 10, 1e-8);
     rvec ??= Mat.empty();
@@ -406,6 +415,7 @@ class Fisheye {
         calloc.free(prval);
         return c.complete((rval, rvec!, tvec!));
       },
+      timeout: timeout,
     );
   }
 
@@ -473,6 +483,7 @@ class Fisheye {
     bool useExtrinsicGuess = false,
     int flags = SOLVEPNP_ITERATIVE,
     TermCriteria? criteria,
+    Duration? timeout,
   }) async {
     rvec ??= Mat.empty();
     tvec ??= Mat.empty();
@@ -502,6 +513,7 @@ class Fisheye {
         calloc.free(prval);
         return c.complete((rval, rvec!, tvec!, inliers!));
       },
+      timeout: timeout,
     );
   }
 

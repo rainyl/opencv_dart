@@ -551,6 +551,10 @@ files:
         name: cv_add
       c:@F@cv_addWeighted:
         name: cv_addWeighted
+      c:@F@cv_asyncDrain:
+        name: cv_asyncDrain
+      c:@F@cv_asyncPending:
+        name: cv_asyncPending
       c:@F@cv_batchDistance:
         name: cv_batchDistance
       c:@F@cv_bitwise_and:
@@ -615,6 +619,8 @@ files:
         name: cv_flipND
       c:@F@cv_gemm:
         name: cv_gemm
+      c:@F@cv_getAsyncThreads:
+        name: cv_getAsyncThreads
       c:@F@cv_getNumThreads:
         name: cv_getNumThreads
       c:@F@cv_getOptimalDFTSize:
@@ -731,6 +737,8 @@ files:
         name: cv_rowRange
       c:@F@cv_scaleAdd:
         name: cv_scaleAdd
+      c:@F@cv_setAsyncThreads:
+        name: cv_setAsyncThreads
       c:@F@cv_setIdentity:
         name: cv_setIdentity
       c:@F@cv_setNumThreads:

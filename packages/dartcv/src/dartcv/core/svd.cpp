@@ -7,21 +7,20 @@
 */
 
 #include "dartcv/core/svd.h"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_SVD_Compute(Mat src, Mat w_r, Mat u_r, Mat vt_r, int flags, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::SVD::compute(CVDEREF(src), CVDEREF(w_r), CVDEREF(u_r), CVDEREF(vt_r), flags);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, w_r, u_r, vt_r), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::SVD::compute(CVDEREF(src), CVDEREF(w_r), CVDEREF(u_r), CVDEREF(vt_r), flags);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_SVD_backSubst(Mat w, Mat u, Mat vt, Mat rhs, Mat dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::SVD::backSubst(CVDEREF(w), CVDEREF(u), CVDEREF(vt), CVDEREF(rhs), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(w, u, vt, rhs, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::SVD::backSubst(CVDEREF(w), CVDEREF(u), CVDEREF(vt), CVDEREF(rhs), CVDEREF(dst));
+        END_WRAP
+    });
 }

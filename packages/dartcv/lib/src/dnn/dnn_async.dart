@@ -44,6 +44,7 @@ extension NetAsync on Net {
     String framework,
     Uint8List bufferModel, {
     Uint8List? bufferConfig,
+    Duration? timeout,
   }) async {
     bufferConfig ??= Uint8List(0);
     final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
@@ -57,10 +58,11 @@ extension NetAsync on Net {
         final net = Net.fromPointer(p);
         return c.complete(net);
       },
+      timeout: timeout,
     );
   }
 
-  static Future<Net> fromCaffeAsync(String prototxt, String caffeModel) async {
+  static Future<Net> fromCaffeAsync(String prototxt, String caffeModel, {Duration? timeout}) async {
     final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
     final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
     final p = calloc<cvg.Net>();
@@ -69,10 +71,14 @@ extension NetAsync on Net {
       calloc.free(cCaffe);
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromCaffeBytesAsync(Uint8List bufferProto, Uint8List bufferModel) async {
+  static Future<Net> fromCaffeBytesAsync(
+    Uint8List bufferProto,
+    Uint8List bufferModel, {
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.Net>();
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
@@ -81,29 +87,29 @@ extension NetAsync on Net {
     ) {
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromOnnxAsync(String path) async {
+  static Future<Net> fromOnnxAsync(String path, {Duration? timeout}) async {
     final p = calloc<cvg.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromONNX(cpath, p, callback), (c) {
       calloc.free(cpath);
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromOnnxBytesAsync(Uint8List bufferModel) async {
+  static Future<Net> fromOnnxBytesAsync(Uint8List bufferModel, {Duration? timeout}) async {
     final p = calloc<cvg.Net>();
     final bufM = VecUChar.fromList(bufferModel);
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromONNXBytes(bufM.ref, p, callback), (c) {
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromTensorflowAsync(String path, {String config = ""}) async {
+  static Future<Net> fromTensorflowAsync(String path, {String config = "", Duration? timeout}) async {
     final p = calloc<cvg.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     final cconf = config.toNativeUtf8().cast<ffi.Char>();
@@ -112,10 +118,14 @@ extension NetAsync on Net {
       calloc.free(cconf);
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromTensorflowBytesAsync(Uint8List bufferModel, {Uint8List? bufferConfig}) async {
+  static Future<Net> fromTensorflowBytesAsync(
+    Uint8List bufferModel, {
+    Uint8List? bufferConfig,
+    Duration? timeout,
+  }) async {
     bufferConfig ??= Uint8List(0);
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
@@ -126,29 +136,35 @@ extension NetAsync on Net {
         final net = Net.fromPointer(p);
         return c.complete(net);
       },
+      timeout: timeout,
     );
   }
 
-  static Future<Net> fromTFLiteAsync(String path) async {
+  static Future<Net> fromTFLiteAsync(String path, {Duration? timeout}) async {
     final p = calloc<cvg.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromTFLite(cpath, p, callback), (c) {
       calloc.free(cpath);
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromTFLiteBytesAsync(Uint8List bufferModel) async {
+  static Future<Net> fromTFLiteBytesAsync(Uint8List bufferModel, {Duration? timeout}) async {
     final bufM = VecUChar.fromList(bufferModel);
     final p = calloc<cvg.Net>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_readNetFromTFLiteBytes(bufM.ref, p, callback), (c) {
       final net = Net.fromPointer(p);
       return c.complete(net);
-    });
+    }, timeout: timeout);
   }
 
-  static Future<Net> fromTorchAsync(String path, {bool isBinary = true, bool evaluate = true}) async {
+  static Future<Net> fromTorchAsync(
+    String path, {
+    bool isBinary = true,
+    bool evaluate = true,
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.Net>();
     final cpath = path.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0(
@@ -158,6 +174,7 @@ extension NetAsync on Net {
         final net = Net.fromPointer(p);
         return c.complete(net);
       },
+      timeout: timeout,
     );
   }
 
@@ -166,6 +183,7 @@ extension NetAsync on Net {
     String name = "",
     double scalefactor = 1.0,
     Scalar? mean,
+    Duration? timeout,
   }) async {
     mean ??= Scalar();
     final cname = name.toNativeUtf8();
@@ -175,43 +193,44 @@ extension NetAsync on Net {
         calloc.free(cname);
         c.complete();
       },
+      timeout: timeout,
     );
   }
 
-  Future<Mat> forwardAsync({String outputName = ""}) async {
+  Future<Mat> forwardAsync({String outputName = "", Duration? timeout}) async {
     final m = Mat.empty();
     final cOutName = outputName.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ptr, callback), (c) {
       calloc.free(cOutName);
       return c.complete(m);
-    });
+    }, timeout: timeout);
   }
 
-  Future<VecMat> forwardLayersAsync(List<String> names) async {
+  Future<VecMat> forwardLayersAsync(List<String> names, {Duration? timeout}) async {
     final vecName = names.i8;
     final vecMat = VecMat();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_forwardLayers(ref, vecMat.ptr, vecName.ref, callback), (
       c,
     ) {
       return c.complete(vecMat);
-    });
+    }, timeout: timeout);
   }
 
-  Future<(int, VecF64 layersTimes)> getPerfProfileAsync() async {
+  Future<(int, VecF64 layersTimes)> getPerfProfileAsync({Duration? timeout}) async {
     final p = calloc<ffi.Int64>();
     final p1 = VecF64();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1.ptr, callback), (c) {
       final rval = p.value;
       calloc.free(p);
       return c.complete((rval, p1));
-    });
+    }, timeout: timeout);
   }
 
-  Future<VecI32> getUnconnectedOutLayersAsync() async {
+  Future<VecI32> getUnconnectedOutLayersAsync({Duration? timeout}) async {
     final ids = VecI32();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getUnconnectedOutLayers(ref, ids.ptr, callback), (c) {
       return c.complete(ids);
-    });
+    }, timeout: timeout);
   }
 
   Future<List<String>> getLayerNamesAsync() async {
@@ -223,12 +242,12 @@ extension NetAsync on Net {
     });
   }
 
-  Future<(VecF32, VecI32)> getInputDetailsAsync() async {
+  Future<(VecF32, VecI32)> getInputDetailsAsync({Duration? timeout}) async {
     final sc = VecF32();
     final zp = VecI32();
     return cvRunAsync0((callback) => cdnn.cv_dnn_Net_getInputDetails(ref, sc.ptr, zp.ptr, callback), (c) {
       return c.complete((sc, zp));
-    });
+    }, timeout: timeout);
   }
 }
 
@@ -240,6 +259,7 @@ Future<Mat> blobFromImageAsync(
   bool swapRB = false,
   bool crop = false,
   int ddepth = MatType.CV_32F,
+  Duration? timeout,
 }) async {
   mean ??= Scalar.zeros;
   final blob = Mat.empty();
@@ -258,6 +278,7 @@ Future<Mat> blobFromImageAsync(
     (c) {
       return c.complete(blob);
     },
+    timeout: timeout,
   );
 }
 
@@ -270,6 +291,7 @@ Future<Mat> blobFromImagesAsync(
   bool swapRB = false,
   bool crop = false,
   int ddepth = MatType.CV_32F,
+  Duration? timeout,
 }) async {
   blob ??= Mat.empty();
   mean ??= Scalar.zeros;
@@ -288,23 +310,24 @@ Future<Mat> blobFromImagesAsync(
     (c) {
       return c.complete(blob);
     },
+    timeout: timeout,
   );
 }
 
-Future<VecMat> imagesFromBlobAsync(Mat blob) async {
+Future<VecMat> imagesFromBlobAsync(Mat blob, {Duration? timeout}) async {
   final mats = VecMat();
   return cvRunAsync0((callback) => cdnn.cv_dnn_imagesFromBlob(blob.ref, mats.ptr, callback), (c) {
     return c.complete(mats);
-  });
+  }, timeout: timeout);
 }
 
-Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx) async {
+Future<Mat> getBlobChannelAsync(Mat blob, int imgidx, int chnidx, {Duration? timeout}) async {
   final m = Mat.empty();
   return cvRunAsync0((callback) => cdnn.cv_dnn_getBlobChannel(blob.ref, imgidx, chnidx, m.ptr, callback), (
     c,
   ) {
     return c.complete(m);
-  });
+  }, timeout: timeout);
 }
 
 Future<List<int>> NMSBoxesAsync(

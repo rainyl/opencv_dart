@@ -56,7 +56,6 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
         END_WRAP                                                                                   \
     }                                                                                              \
     void cv_ml_##NAME##_close(NAME##Ptr self) {                                                    \
-        (*self->ptr)->reset();                                                                        \
         CVD_FREE(self);                                                                            \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_load(const char* filepath, NAME* rval) {                              \
@@ -105,44 +104,40 @@ inline void cvd_ml_save(const cv::Algorithm& model, const char* filename) {
     CvStatus* cv_ml_##NAME##_train(                                                                \
         NAME self, TrainData data, int flags, bool* rval, CvCallback_0 callback                    \
     ) {                                                                                            \
-        BEGIN_WRAP                                                                                 \
-        *rval = (CVDEREF(self))->train(CVDEREF(data), flags);                                      \
-        if (callback != nullptr) {                                                                 \
-            callback();                                                                            \
-        }                                                                                          \
-        END_WRAP                                                                                   \
+        return cvd::dispatch(callback, cvd::hold(self, data), [=]() -> CvStatus* {                \
+            BEGIN_WRAP                                                                            \
+            *rval = (CVDEREF(self))->train(CVDEREF(data), flags);                                 \
+            END_WRAP                                                                              \
+        });                                                                                       \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_train_1(                                                              \
         NAME self, Mat samples, int layout, Mat responses, bool* rval, CvCallback_0 callback       \
     ) {                                                                                            \
-        BEGIN_WRAP                                                                                 \
-        *rval = (CVDEREF(self))->train(CVDEREF(samples), layout, CVDEREF(responses));              \
-        if (callback != nullptr) {                                                                 \
-            callback();                                                                            \
-        }                                                                                          \
-        END_WRAP                                                                                   \
+        return cvd::dispatch(callback, cvd::hold(self, samples, responses), [=]() -> CvStatus* {  \
+            BEGIN_WRAP                                                                            \
+            *rval = (CVDEREF(self))->train(CVDEREF(samples), layout, CVDEREF(responses));         \
+            END_WRAP                                                                              \
+        });                                                                                       \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_predict(                                                              \
         NAME self, Mat samples, Mat results, int flags, float* rval, CvCallback_0 callback         \
     ) {                                                                                            \
-        BEGIN_WRAP                                                                                 \
-        cvd_ml_check_trained(*CVDEREF(self));                                                      \
-        *rval = (CVDEREF(self))->predict(CVDEREF(samples), CVDEREF(results), flags);               \
-        if (callback != nullptr) {                                                                 \
-            callback();                                                                            \
-        }                                                                                          \
-        END_WRAP                                                                                   \
+        return cvd::dispatch(callback, cvd::hold(self, samples, results), [=]() -> CvStatus* {    \
+            BEGIN_WRAP                                                                            \
+            cvd_ml_check_trained(*CVDEREF(self));                                                 \
+            *rval = (CVDEREF(self))->predict(CVDEREF(samples), CVDEREF(results), flags);          \
+            END_WRAP                                                                              \
+        });                                                                                       \
     }                                                                                              \
     CvStatus* cv_ml_##NAME##_calcError(                                                            \
         NAME self, TrainData data, bool test, Mat resp, float* rval, CvCallback_0 callback         \
     ) {                                                                                            \
-        BEGIN_WRAP                                                                                 \
-        cvd_ml_check_trained(*CVDEREF(self));                                                      \
-        *rval = (CVDEREF(self))->calcError(CVDEREF(data), test, CVDEREF(resp));                    \
-        if (callback != nullptr) {                                                                 \
-            callback();                                                                            \
-        }                                                                                          \
-        END_WRAP                                                                                   \
+        return cvd::dispatch(callback, cvd::hold(self, data, resp), [=]() -> CvStatus* {          \
+            BEGIN_WRAP                                                                            \
+            cvd_ml_check_trained(*CVDEREF(self));                                                 \
+            *rval = (CVDEREF(self))->calcError(CVDEREF(data), test, CVDEREF(resp));               \
+            END_WRAP                                                                              \
+        });                                                                                       \
     }
 
 /// Defines the functions declared by CVD_ML_TREES_DECL(NAME) (see dartcv/ml/dtrees.h).

@@ -53,15 +53,14 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
   }
 
   /// async version of [loadFontData]
-  Future<void> loadFontDataAsync(String filename, int idx) async {
+  Future<void> loadFontDataAsync(String filename, int idx, {Duration? timeout}) async {
     final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    await cvRunAsync0(
-      (callback) => ccontrib.cv_freetype_FreeType2_loadFontData(ref, cname, idx, callback),
-      (c) {
-        calloc.free(cname);
-        c.complete();
-      },
-    );
+    await cvRunAsync0((callback) => ccontrib.cv_freetype_FreeType2_loadFontData(ref, cname, idx, callback), (
+      c,
+    ) {
+      calloc.free(cname);
+      c.complete();
+    }, timeout: timeout);
   }
 
   /// Load font data.
@@ -88,7 +87,7 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
   }
 
   /// async version of [loadFontBuffer]
-  Future<void> loadFontBufferAsync(Uint8List buffer, int idx) async {
+  Future<void> loadFontBufferAsync(Uint8List buffer, int idx, {Duration? timeout}) async {
     final cbuffer = malloc<ffi.Uint8>(buffer.length);
     cbuffer.asTypedList(buffer.length).setAll(0, buffer);
     await cvRunAsync0(
@@ -103,6 +102,7 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
         malloc.free(cbuffer);
         c.complete();
       },
+      timeout: timeout,
     );
   }
 
@@ -195,6 +195,7 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
     int thickness = 1,
     int lineType = LINE_8,
     bool bottomLeftOrigin = false,
+    Duration? timeout,
   }) async {
     final ctext = text.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0(
@@ -214,6 +215,7 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
         calloc.free(ctext);
         return c.complete();
       },
+      timeout: timeout,
     );
   }
 

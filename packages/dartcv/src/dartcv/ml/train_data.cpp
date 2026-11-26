@@ -43,28 +43,26 @@ CvStatus* cv_ml_TrainData_loadFromCSV(
     TrainData* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto p = cv::ml::TrainData::loadFromCSV(
-        filename,
-        headerLineCount,
-        responseStartIdx,
-        responseEndIdx,
-        varTypeSpec == nullptr ? cv::String() : cv::String(varTypeSpec),
-        delimiter,
-        missch
-    );
-    if (p.empty()) {
-        CV_Error(cv::Error::StsError, std::string("Failed to load train data from ") + filename);
-    }
-    CVD_SET(rval, new cv::Ptr<cv::ml::TrainData>(p));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto p = cv::ml::TrainData::loadFromCSV(
+            filename,
+            headerLineCount,
+            responseStartIdx,
+            responseEndIdx,
+            varTypeSpec == nullptr ? cv::String() : cv::String(varTypeSpec),
+            delimiter,
+            missch
+        );
+        if (p.empty()) {
+            CV_Error(cv::Error::StsError, std::string("Failed to load train data from ") + filename);
+        }
+        CVD_SET(rval, new cv::Ptr<cv::ml::TrainData>(p));
+        END_WRAP
+    });
 }
 
 void cv_ml_TrainData_close(TrainDataPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 

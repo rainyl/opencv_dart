@@ -180,6 +180,7 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     VecF64? width,
     VecF64? prec,
     VecF64? nfa,
+    Duration? timeout,
   }) async {
     lines ??= VecVec4f(); // caller is still responsible for dispose-ing these values
     width ??= VecF64();
@@ -200,6 +201,7 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
         final rval = (lines!, width!, prec!, nfa!);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 

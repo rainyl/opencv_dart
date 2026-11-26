@@ -10,30 +10,6 @@ files:
       CvCallback_1Function:
         name: CvCallback_1Function
         dart-name: DartCvCallback_1Function
-      CvCallback_2Function:
-        name: CvCallback_2Function
-        dart-name: DartCvCallback_2Function
-      CvCallback_3Function:
-        name: CvCallback_3Function
-        dart-name: DartCvCallback_3Function
-      CvCallback_4Function:
-        name: CvCallback_4Function
-        dart-name: DartCvCallback_4Function
-      CvCallback_5Function:
-        name: CvCallback_5Function
-        dart-name: DartCvCallback_5Function
-      CvCallback_6Function:
-        name: CvCallback_6Function
-        dart-name: DartCvCallback_6Function
-      CvCallback_7Function:
-        name: CvCallback_7Function
-        dart-name: DartCvCallback_7Function
-      CvCallback_8Function:
-        name: CvCallback_8Function
-        dart-name: DartCvCallback_8Function
-      CvCallback_9Function:
-        name: CvCallback_9Function
-        dart-name: DartCvCallback_9Function
       c:@S@CvPoint:
         name: CvPoint
       c:@S@CvPoint2d:
@@ -206,22 +182,6 @@ files:
         name: CvCallback_0
       c:types.h@T@CvCallback_1:
         name: CvCallback_1
-      c:types.h@T@CvCallback_2:
-        name: CvCallback_2
-      c:types.h@T@CvCallback_3:
-        name: CvCallback_3
-      c:types.h@T@CvCallback_4:
-        name: CvCallback_4
-      c:types.h@T@CvCallback_5:
-        name: CvCallback_5
-      c:types.h@T@CvCallback_6:
-        name: CvCallback_6
-      c:types.h@T@CvCallback_7:
-        name: CvCallback_7
-      c:types.h@T@CvCallback_8:
-        name: CvCallback_8
-      c:types.h@T@CvCallback_9:
-        name: CvCallback_9
       c:types.h@T@InputOutputArrayPtr:
         name: InputOutputArrayPtr
       c:types.h@T@MatIn:

@@ -41,14 +41,13 @@ CvStatus* cv_dnn_blobFromImage(
     int ddepth,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(size.width, size.height);
-    cv::Scalar cm(mean.val1, mean.val2, mean.val3, mean.val4);
-    cv::dnn::blobFromImage(CVDEREF(image), CVDEREF(blob), scalefactor, sz, cm, swapRB, crop, ddepth);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, blob), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(size.width, size.height);
+        cv::Scalar cm(mean.val1, mean.val2, mean.val3, mean.val4);
+        cv::dnn::blobFromImage(CVDEREF(image), CVDEREF(blob), scalefactor, sz, cm, swapRB, crop, ddepth);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_blobFromImages(
@@ -62,14 +61,13 @@ CvStatus* cv_dnn_blobFromImages(
     int ddepth,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(size.width, size.height);
-    cv::Scalar cm = cv::Scalar(mean.val1, mean.val2, mean.val3, mean.val4);
-    cv::dnn::blobFromImages(CVDEREF(images), CVDEREF(blob), scalefactor, sz, cm, swapRB, crop, ddepth);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(images, blob), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(size.width, size.height);
+        cv::Scalar cm = cv::Scalar(mean.val1, mean.val2, mean.val3, mean.val4);
+        cv::dnn::blobFromImages(CVDEREF(images), CVDEREF(blob), scalefactor, sz, cm, swapRB, crop, ddepth);
+        END_WRAP
+    });
 }
 
 void cv_dnn_enableModelDiagnostics(bool isDiagnosticsMode) {
@@ -93,25 +91,23 @@ CvStatus* cv_dnn_getAvailableTargets(int be, VecI32* rval) {
 }
 
 CvStatus* cv_dnn_imagesFromBlob(Mat blob, VecMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::dnn::imagesFromBlob(CVDEREF(blob), CVDEREF_P(rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(blob), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::dnn::imagesFromBlob(CVDEREF(blob), CVDEREF_P(rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_getBlobChannel(
     Mat blob, int imgidx, int chnidx, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    int w = (*blob.ptr)->size[3];
-    int h = (*blob.ptr)->size[2];
-    CVD_SET(rval, new cv::Mat(h, w, CV_32F, (*blob.ptr)->ptr<float>(imgidx, chnidx)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(blob), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        int w = (*blob.ptr)->size[3];
+        int h = (*blob.ptr)->size[2];
+        CVD_SET(rval, new cv::Mat(h, w, CV_32F, (*blob.ptr)->ptr<float>(imgidx, chnidx)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_getBlobSize(Mat blob, VecI32* rval) {
@@ -129,12 +125,11 @@ CvStatus* cv_dnn_NMSBoxes(
     VecI32* out_indices,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::dnn::NMSBoxes(CVDEREF(bboxes), CVDEREF(scores), score_threshold, nms_threshold, CVDEREF_P(out_indices), 1.f, 0);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(bboxes, scores), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::dnn::NMSBoxes(CVDEREF(bboxes), CVDEREF(scores), score_threshold, nms_threshold, CVDEREF_P(out_indices), 1.f, 0);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_NMSBoxes_1(
@@ -147,12 +142,11 @@ CvStatus* cv_dnn_NMSBoxes_1(
     const int top_k,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::dnn::NMSBoxes(CVDEREF(bboxes), CVDEREF(scores), score_threshold, nms_threshold, CVDEREF_P(indices), eta, top_k);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(bboxes, scores), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::dnn::NMSBoxes(CVDEREF(bboxes), CVDEREF(scores), score_threshold, nms_threshold, CVDEREF_P(indices), eta, top_k);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_forwardAsync(Net net, const char* outputName, AsyncArray* rval) {
@@ -167,116 +161,104 @@ CvStatus* cv_dnn_Net_create(Net* rval) {
     END_WRAP
 }
 CvStatus* cv_dnn_Net_fromNet(Net net, Net* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(CVDEREF(net)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(CVDEREF(net)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNet(
     const char* model, const char* config, const char* framework, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNet(model, config, framework)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNet(model, config, framework)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetBytes(
     const char* framework, VecUChar model, VecUChar config, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNet(framework, CVDEREF(model), CVDEREF(config))));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(model, config), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNet(framework, CVDEREF(model), CVDEREF(config))));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromCaffe(
     const char* prototxt, const char* caffeModel, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromCaffe(prototxt, caffeModel)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromCaffe(prototxt, caffeModel)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromCaffeBytes(
     VecUChar prototxt, VecUChar caffeModel, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromCaffe(CVDEREF(prototxt), CVDEREF(caffeModel))));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(prototxt, caffeModel), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromCaffe(CVDEREF(prototxt), CVDEREF(caffeModel))));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromTensorflow(
     const char* model, const char* config, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTensorflow(model, config)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTensorflow(model, config)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromTensorflowBytes(
     VecUChar model, VecUChar config, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTensorflow(CVDEREF(model), CVDEREF(config))));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(model, config), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTensorflow(CVDEREF(model), CVDEREF(config))));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromTFLite(const char* model, Net* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTFLite(model)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTFLite(model)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromTFLiteBytes(
     VecUChar bufferModel, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTFLite(CVDEREF(bufferModel))));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(bufferModel), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTFLite(CVDEREF(bufferModel))));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromTorch(
     const char* model, bool isBinary, bool evaluate, Net* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTorch(model, isBinary, evaluate)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromTorch(model, isBinary, evaluate)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromONNX(const char* model, Net* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromONNX(model)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromONNX(model)));
+        END_WRAP
+    });
 }
 CvStatus* cv_dnn_Net_readNetFromONNXBytes(VecUChar model, Net* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromONNX(CVDEREF(model))));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(model), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::dnn::Net(cv::dnn::readNetFromONNX(CVDEREF(model))));
+        END_WRAP
+    });
 }
 
 void cv_dnn_Net_close(NetPtr net) {
@@ -297,34 +279,31 @@ CvStatus* cv_dnn_Net_dump(Net net, char** rval) {
 CvStatus* cv_dnn_Net_setInput(
     Net net, Mat blob, const char* name, double scalefactor, Scalar mean, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Scalar _mean(mean.val1, mean.val2, mean.val3, mean.val4);
-    (*net.ptr)->setInput(CVDEREF(blob), name, scalefactor, _mean);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net, blob), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar _mean(mean.val1, mean.val2, mean.val3, mean.val4);
+        (*net.ptr)->setInput(CVDEREF(blob), name, scalefactor, _mean);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_forward(Net net, const char* outputName, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*net.ptr)->forward(outputName)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*net.ptr)->forward(outputName)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_forwardLayers(
     Net net, VecMat* outputBlobs, VecVecChar outBlobNames, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto names = vecvecchar_c2cpp_s(outBlobNames);
-    (*net.ptr)->forward(CVDEREF_P(outputBlobs), names);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net, outBlobNames), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto names = vecvecchar_c2cpp_s(outBlobNames);
+        (*net.ptr)->forward(CVDEREF_P(outputBlobs), names);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_setPreferableBackend(Net net, int backend) {
@@ -342,55 +321,50 @@ CvStatus* cv_dnn_Net_setPreferableTarget(Net net, int target) {
 CvStatus* cv_dnn_Net_getPerfProfile(
     Net net, int64_t* rval, VecF64* layersTimes, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (*net.ptr)->getPerfProfile(CVDEREF_P(layersTimes));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (*net.ptr)->getPerfProfile(CVDEREF_P(layersTimes));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_getUnconnectedOutLayers(Net net, VecI32* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    auto _rval = (*net.ptr)->getUnconnectedOutLayers();
-    CVD_SET(rval, new std::vector<int32_t>(_rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto _rval = (*net.ptr)->getUnconnectedOutLayers();
+        CVD_SET(rval, new std::vector<int32_t>(_rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_getUnconnectedOutLayersNames(
     Net net, CVD_OUT VecVecChar* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto _rval = (*net.ptr)->getUnconnectedOutLayersNames();
-    CVD_SET(rval, vecstr_2_vecvecchar(_rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto _rval = (*net.ptr)->getUnconnectedOutLayersNames();
+        CVD_SET(rval, vecstr_2_vecvecchar(_rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_getLayerNames(Net net, VecVecChar* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    std::vector<cv::String> cstrs = (*net.ptr)->getLayerNames();
-    CVD_SET(rval, vecstr_2_vecvecchar(cstrs));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        std::vector<cv::String> cstrs = (*net.ptr)->getLayerNames();
+        CVD_SET(rval, vecstr_2_vecvecchar(cstrs));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_getInputDetails(
     Net net, VecF32* scales, VecI32* zeropoints, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*net.ptr)->getInputDetails(CVDEREF_P(scales), CVDEREF_P(zeropoints));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(net), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*net.ptr)->getInputDetails(CVDEREF_P(scales), CVDEREF_P(zeropoints));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_dnn_Net_getLayer(Net net, int layerid, Layer* rval) {
@@ -426,6 +400,5 @@ CvStatus* cv_dnn_Layer_getType(Layer layer, char** rval) {
 }
 
 void cv_dnn_Layer_close(LayerPtr layer) {
-    (*layer->ptr)->reset();
     CVD_FREE(layer);
 }

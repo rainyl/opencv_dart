@@ -42,13 +42,13 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   }
 
   /// async version of [compute]
-  Future<Scalar> computeAsync(Mat img) async {
+  Future<Scalar> computeAsync(Mat img, {Duration? timeout}) async {
     final p = calloc<cvg.Scalar>();
     return cvRunAsync0((callback) => ccontrib.cv_quality_QualityBRISQUE_compute(ref, img.ref, p, callback), (
       c,
     ) {
       return c.complete(Scalar.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
   /// static method for computing quality
@@ -65,7 +65,12 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
   }
 
   /// async version of [compute1]
-  static Future<Scalar> compute1Async(String modelFile, String rangeFile, Mat img) async {
+  static Future<Scalar> compute1Async(
+    String modelFile,
+    String rangeFile,
+    Mat img, {
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.Scalar>();
     final cm = modelFile.toNativeUtf8().cast<ffi.Char>();
     final cr = rangeFile.toNativeUtf8().cast<ffi.Char>();
@@ -76,6 +81,7 @@ class QualityBRISQUE extends CvStruct<cvg.QualityBRISQUE> {
         calloc.free(cr);
         return c.complete(Scalar.fromPointer(p));
       },
+      timeout: timeout,
     );
   }
 
@@ -139,11 +145,11 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   }
 
   /// async version of [compute]
-  Future<Scalar> computeAsync(Mat cmp) async {
+  Future<Scalar> computeAsync(Mat cmp, {Duration? timeout}) async {
     final p = calloc<cvg.Scalar>();
     return cvRunAsync0((callback) => ccontrib.cv_quality_QualityGMSD_compute(ref, cmp.ref, p, callback), (c) {
       return c.complete(Scalar.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
   /// static method for computing quality
@@ -159,7 +165,12 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
   }
 
   /// async version of [compute1]
-  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat img, Mat cmp, {Mat? qualityMap}) async {
+  static Future<(Scalar, Mat qualityMap)> compute1Async(
+    Mat img,
+    Mat cmp, {
+    Mat? qualityMap,
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
@@ -168,6 +179,7 @@ class QualityGMSD extends CvStruct<cvg.QualityGMSD> {
       (c) {
         return c.complete((Scalar.fromPointer(p), qualityMap!));
       },
+      timeout: timeout,
     );
   }
 
@@ -209,13 +221,13 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   }
 
   /// async version of [compute]
-  Future<Scalar> computeAsync(Mat cmpImgs) async {
+  Future<Scalar> computeAsync(Mat cmpImgs, {Duration? timeout}) async {
     final p = calloc<cvg.Scalar>();
     return cvRunAsync0((callback) => ccontrib.cv_quality_QualityMSE_compute(ref, cmpImgs.ref, p, callback), (
       c,
     ) {
       return c.complete(Scalar.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
   /// static method for computing quality
@@ -231,7 +243,12 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
   }
 
   /// async version of [compute1]
-  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat img, Mat cmp, {Mat? qualityMap}) async {
+  static Future<(Scalar, Mat qualityMap)> compute1Async(
+    Mat img,
+    Mat cmp, {
+    Mat? qualityMap,
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
@@ -240,6 +257,7 @@ class QualityMSE extends CvStruct<cvg.QualityMSE> {
       (c) {
         return c.complete((Scalar.fromPointer(p), qualityMap!));
       },
+      timeout: timeout,
     );
   }
 
@@ -281,11 +299,11 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
   }
 
   /// async version of [compute]
-  Future<Scalar> computeAsync(Mat cmp) async {
+  Future<Scalar> computeAsync(Mat cmp, {Duration? timeout}) async {
     final p = calloc<cvg.Scalar>();
     return cvRunAsync0((callback) => ccontrib.cv_quality_QualityPSNR_compute(ref, cmp.ref, p, callback), (c) {
       return c.complete(Scalar.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
   /// static method for computing quality
@@ -313,6 +331,7 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
     Mat cmp, {
     Mat? qualityMap,
     double maxPixelValue = 255,
+    Duration? timeout,
   }) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
@@ -328,6 +347,7 @@ class QualityPSNR extends CvStruct<cvg.QualityPSNR> {
       (c) {
         return c.complete((Scalar.fromPointer(p), qualityMap!));
       },
+      timeout: timeout,
     );
   }
 
@@ -373,11 +393,11 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   }
 
   /// async version of [compute]
-  Future<Scalar> computeAsync(Mat cmp) async {
+  Future<Scalar> computeAsync(Mat cmp, {Duration? timeout}) async {
     final p = calloc<cvg.Scalar>();
     return cvRunAsync0((callback) => ccontrib.cv_quality_QualitySSIM_compute(ref, cmp.ref, p, callback), (c) {
       return c.complete(Scalar.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
   /// static method for computing quality
@@ -393,7 +413,12 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
   }
 
   /// async version of [compute1]
-  static Future<(Scalar, Mat qualityMap)> compute1Async(Mat img, Mat cmp, {Mat? qualityMap}) async {
+  static Future<(Scalar, Mat qualityMap)> compute1Async(
+    Mat img,
+    Mat cmp, {
+    Mat? qualityMap,
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.Scalar>();
     qualityMap ??= Mat.empty();
     return cvRunAsync0(
@@ -402,6 +427,7 @@ class QualitySSIM extends CvStruct<cvg.QualitySSIM> {
       (c) {
         return c.complete((Scalar.fromPointer(p), qualityMap!));
       },
+      timeout: timeout,
     );
   }
 

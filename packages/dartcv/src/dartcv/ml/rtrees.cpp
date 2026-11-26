@@ -4,6 +4,7 @@
 
 #include "dartcv/ml/rtrees.h"
 #include "dartcv/ml/stat_model.hpp"
+#include "dartcv/core/handle.hpp"
 
 CVD_ML_STAT_MODEL_IMPL(RTrees, cv::ml::RTrees)
 CVD_ML_TREES_IMPL(RTrees)
@@ -131,12 +132,11 @@ CvStatus* cv_ml_RTrees_setTermCriteria(RTrees self, TermCriteria val) {
 CvStatus* cv_ml_RTrees_getVotes(
     RTrees self, Mat samples, Mat results, int flags, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-    ->getVotes(CVDEREF(samples), CVDEREF(results), flags);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, samples, results), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+        ->getVotes(CVDEREF(samples), CVDEREF(results), flags);
+        END_WRAP
+    });
 }
 double cv_ml_RTrees_getOOBError(RTrees self) {
     return (CVDEREF(self))->getOOBError();

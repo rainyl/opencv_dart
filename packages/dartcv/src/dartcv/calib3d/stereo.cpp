@@ -10,16 +10,14 @@
 CvStatus* cv_StereoBM_create(
     int numDisparities, int blockSize, StereoBM* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Ptr<cv::StereoBM>(cv::StereoBM::create(numDisparities, blockSize)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Ptr<cv::StereoBM>(cv::StereoBM::create(numDisparities, blockSize)));
+        END_WRAP
+    });
 }
 
 void cv_StereoBM_close(StereoBMPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -206,28 +204,26 @@ CvStatus* cv_StereoSGBM_create(
     StereoSGBM* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Ptr<cv::StereoSGBM>(cv::StereoSGBM::create(
-        minDisparity,
-        numDisparities,
-        blockSize,
-        P1,
-        P2,
-        disp12MaxDiff,
-        preFilterCap,
-        uniquenessRatio,
-        speckleWindowSize,
-        speckleRange,
-        mode
-    )));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Ptr<cv::StereoSGBM>(cv::StereoSGBM::create(
+            minDisparity,
+            numDisparities,
+            blockSize,
+            P1,
+            P2,
+            disp12MaxDiff,
+            preFilterCap,
+            uniquenessRatio,
+            speckleWindowSize,
+            speckleRange,
+            mode
+        )));
+        END_WRAP
+    });
 }
 
 void cv_StereoSGBM_close(StereoSGBMPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 

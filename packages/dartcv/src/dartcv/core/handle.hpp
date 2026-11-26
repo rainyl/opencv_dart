@@ -26,6 +26,8 @@
 #include <utility>
 #include <vector>
 
+#include "dartcv/core/async.h"
+
 namespace cvd {
 
 /// How many wrapped C++ objects are alive, across all types.

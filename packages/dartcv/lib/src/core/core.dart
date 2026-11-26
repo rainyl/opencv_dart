@@ -1443,6 +1443,20 @@ void setNumThreads(int n) => ccore.cv_setNumThreads(n);
 /// Get the number of threads for OpenCV.
 int getNumThreads() => ccore.cv_getNumThreads();
 
+/// How many worker threads run the `*Async` work. One by default: a single worker already keeps the
+/// caller's thread free, and OpenCV uses every core inside one call, so more workers only help calls
+/// that block on I/O (a capture, a slow file).
+int getAsyncThreads() => ccore.cv_getAsyncThreads();
+
+/// Sets the worker count, waiting for the queue to drain first.
+void setAsyncThreads(int n) => ccore.cv_setAsyncThreads(n);
+
+/// How many async jobs are queued or running.
+int asyncPending() => ccore.cv_asyncPending();
+
+/// Blocks until no async job is queued or running (tests, shutdown).
+void asyncDrain() => ccore.cv_asyncDrain();
+
 /// Diagnostics: how many wrapped C++ objects are alive right now.
 ///
 /// A handle that outlived its Dart wrapper (a job still in flight, a `VecVecPoint[i]` view) keeps

@@ -417,12 +417,11 @@ CvStatus* cv_aruco_arucoDetector_detectMarkers(
     VecVecPoint2f* out_rejectedCandidates,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detectMarkers(CVDEREF(inputArr), CVDEREF_P(out_markerCorners), CVDEREF_P(out_markerIds), CVDEREF_P(out_rejectedCandidates));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, inputArr), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detectMarkers(CVDEREF(inputArr), CVDEREF_P(out_markerCorners), CVDEREF_P(out_markerIds), CVDEREF_P(out_rejectedCandidates));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_drawDetectedMarkers(
@@ -432,26 +431,24 @@ CvStatus* cv_aruco_drawDetectedMarkers(
     Scalar borderColor,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Scalar _borderColor =
-        cv::Scalar(borderColor.val1, borderColor.val2, borderColor.val3, borderColor.val4);
-    cv::aruco::drawDetectedMarkers(CVDEREF(image), CVDEREF(markerCorners), CVDEREF(markerIds), _borderColor);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, markerCorners, markerIds), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar _borderColor =
+            cv::Scalar(borderColor.val1, borderColor.val2, borderColor.val3, borderColor.val4);
+        cv::aruco::drawDetectedMarkers(CVDEREF(image), CVDEREF(markerCorners), CVDEREF(markerIds), _borderColor);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_generateImageMarker(
     int dictionaryId, int id, int sidePixels, int borderBits, Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictionaryId);
-    cv::aruco::generateImageMarker(dict, id, sidePixels, CVDEREF(dst), borderBits);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::aruco::Dictionary dict = cv::aruco::getPredefinedDictionary(dictionaryId);
+        cv::aruco::generateImageMarker(dict, id, sidePixels, CVDEREF(dst), borderBits);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_charucoBoard_create(CharucoBoard* rval) {
@@ -512,12 +509,11 @@ CvStatus* cv_aruco_charucoBoard_generateImage(
     int borderBits,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->generateImage(cv::Size(outSize.width, outSize.height), CVDEREF(img), marginSize, borderBits);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->generateImage(cv::Size(outSize.width, outSize.height), CVDEREF(img), marginSize, borderBits);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_charucoBoard_getChessboardCorners(CharucoBoard self, VecPoint3f* rval) {
@@ -567,12 +563,11 @@ CvStatus* cv_aruco_charucoBoard_matchImagePoints(
     Mat imgPoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->matchImagePoints(CVDEREF(detectedCharuco), CVDEREF(detectedIds), CVDEREF(objPoints), CVDEREF(imgPoints));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, detectedCharuco, detectedIds, objPoints, imgPoints), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->matchImagePoints(CVDEREF(detectedCharuco), CVDEREF(detectedIds), CVDEREF(objPoints), CVDEREF(imgPoints));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_charucoDetectorParameters_create(CharucoDetectorParams* rval) {
@@ -700,18 +695,17 @@ CvStatus* cv_aruco_charucoDetector_detectBoard(
     VecI32* inout_markerIds,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detectBoard(
-        CVDEREF(image),
-        CVDEREF_P(out_charucoCorners),
-        CVDEREF_P(out_charucoIds),
-        CVDEREF_P(inout_markerCorners),
-        CVDEREF_P(inout_markerIds)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, image), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detectBoard(
+            CVDEREF(image),
+            CVDEREF_P(out_charucoCorners),
+            CVDEREF_P(out_charucoIds),
+            CVDEREF_P(inout_markerCorners),
+            CVDEREF_P(inout_markerIds)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_charucoDetector_detectDiamonds(
@@ -723,18 +717,17 @@ CvStatus* cv_aruco_charucoDetector_detectDiamonds(
     VecI32* inout_markerIds,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detectDiamonds(
-        CVDEREF(image),
-        CVDEREF_P(out_diamondCorners),
-        CVDEREF_P(out_diamondIds),
-        CVDEREF_P(inout_markerCorners),
-        CVDEREF_P(inout_markerIds)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, image), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detectDiamonds(
+            CVDEREF(image),
+            CVDEREF_P(out_diamondCorners),
+            CVDEREF_P(out_diamondIds),
+            CVDEREF_P(inout_markerCorners),
+            CVDEREF_P(inout_markerIds)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_charucoDetector_getBoard(CharucoDetector self, CharucoBoard* rval) {
@@ -802,19 +795,18 @@ CvStatus* cv_aruco_drawDetectedCornersCharuco(
     Scalar cornerColor,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Scalar _cornerColor =
-        cv::Scalar(cornerColor.val1, cornerColor.val2, cornerColor.val3, cornerColor.val4);
-    cv::aruco::drawDetectedCornersCharuco(
-        CVDEREF(image),
-        CVDEREF(charucoCorners),
-        CVDEREF(charucoIds),
-        _cornerColor
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, charucoCorners, charucoIds), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar _cornerColor =
+            cv::Scalar(cornerColor.val1, cornerColor.val2, cornerColor.val3, cornerColor.val4);
+        cv::aruco::drawDetectedCornersCharuco(
+            CVDEREF(image),
+            CVDEREF(charucoCorners),
+            CVDEREF(charucoIds),
+            _cornerColor
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_aruco_estimatePoseCharucoBoard(
@@ -829,20 +821,19 @@ CvStatus* cv_aruco_estimatePoseCharucoBoard(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto boardPtr = cv::makePtr<cv::aruco::CharucoBoard>(CVDEREF(board));
-    *rval = cv::aruco::estimatePoseCharucoBoard(
-        CVDEREF(charucoCorners),
-        CVDEREF(charucoIds),
-        boardPtr,
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        useExtrinsicGuess
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(charucoCorners, charucoIds, board, cameraMatrix, distCoeffs, rvec, tvec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto boardPtr = cv::makePtr<cv::aruco::CharucoBoard>(CVDEREF(board));
+        *rval = cv::aruco::estimatePoseCharucoBoard(
+            CVDEREF(charucoCorners),
+            CVDEREF(charucoIds),
+            boardPtr,
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            useExtrinsicGuess
+        );
+        END_WRAP
+    });
 }

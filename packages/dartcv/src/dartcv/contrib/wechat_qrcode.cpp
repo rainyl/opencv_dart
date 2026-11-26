@@ -22,17 +22,16 @@ CvStatus* cv_wechat_qrcode_WeChatQRCode_create_1(
     WeChatQRCode* qrcode,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(qrcode, new cv::wechat_qrcode::WeChatQRCode(
-        detector_prototxt_path,
-        detector_caffe_model_path,
-        super_resolution_prototxt_path,
-        super_resolution_caffe_model_path
-    ));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(qrcode, new cv::wechat_qrcode::WeChatQRCode(
+            detector_prototxt_path,
+            detector_caffe_model_path,
+            super_resolution_prototxt_path,
+            super_resolution_caffe_model_path
+        ));
+        END_WRAP
+    });
 }
 
 void cv_wechat_qrcode_WeChatQRCode_close(WeChatQRCodePtr self) {
@@ -42,13 +41,12 @@ void cv_wechat_qrcode_WeChatQRCode_close(WeChatQRCodePtr self) {
 CvStatus* cv_wechat_qrcode_WeChatQRCode_detectAndDecode(
     WeChatQRCode self, Mat img, VecMat* out_points, VecVecChar* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto strings = (*self.ptr)->detectAndDecode(CVDEREF(img), CVDEREF_P(out_points));
-    CVD_SET(rval, vecstr_2_vecvecchar(strings));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto strings = (*self.ptr)->detectAndDecode(CVDEREF(img), CVDEREF_P(out_points));
+        CVD_SET(rval, vecstr_2_vecvecchar(strings));
+        END_WRAP
+    });
 }
 
 float cv_wechat_qrcode_WeChatQRCode_getScaleFactor(WeChatQRCode self) {

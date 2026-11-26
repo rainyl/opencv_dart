@@ -22,7 +22,23 @@ If you want to add a new OpenCV API/module:
    - Study the existing code first, especially `packages/dartcv/src/dartcv/core/types.h`, which defines the basic structures.
    - Nearly all C wrappers of C++ classes are structs; wrap a C++ class with `CVD_TYPEDEF`, e.g. `CVD_TYPEDEF(cv::Mat, Mat)`.
    - Every exported function returns a `CvStatus*`; wrap the body in `BEGIN_WRAP`/`END_WRAP` to translate C++ exceptions.
-   - For async APIs, pass a native callback and complete via `cvRunAsync`/`cvRunAsync0`; add a `<module>_async.dart` in `lib/src/<module>/`.
+   - For async APIs, hand the body to `cvd::dispatch`, which runs it on a worker thread and reports
+     back through the callback, or runs it inline when the callback is `nullptr` (the synchronous
+     caller):
+     ```cpp
+     CvStatus* cv_foo(Mat src, Mat dst, CvCallback_0 callback) {
+         return cvd::dispatch(callback, cvd::hold(src, dst), [=]() -> CvStatus* {
+             BEGIN_WRAP
+             ...
+             END_WRAP
+         });
+     }
+     ```
+     `cvd::hold` takes one strong reference per handle argument, so a `dispose()` on the Dart side
+     cannot pull the object out from under the job, and the callback carries the work's `CvStatus*`
+     because the entry point has already returned by the time the work fails. Wrap the Dart side with
+     `cvRunAsync0` in a `<module>_async.dart` under `lib/src/<module>/`, and give the method a
+     `Duration? timeout` parameter.
 3. Register the new `.cpp` files in `packages/dartcv/src/dartcv/CMakeLists.txt` under a `DARTCV_WITH_<MODULE>` guard, declare the module option in `packages/dartcv/src/CMakeLists.txt`, and wire its OpenCV module dependencies in `src/cmake/opencv_options.cmake`.
 4. Register the module in the Dart side so it can be selected at build time:
    - add it to `allowedModules` in `lib/src/hook_helpers/user_defines.dart` and the module maps in `hook/link.dart`,

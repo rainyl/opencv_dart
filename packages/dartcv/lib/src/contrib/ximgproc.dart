@@ -40,6 +40,7 @@ class ximgproc {
     double K,
     int niters, {
     OutputArray? dst,
+    Duration? timeout,
   }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
@@ -47,6 +48,7 @@ class ximgproc {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -81,6 +83,7 @@ class ximgproc {
     int d,
     double threshold, {
     OutputArray? dst,
+    Duration? timeout,
   }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
@@ -88,6 +91,7 @@ class ximgproc {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -134,6 +138,7 @@ class ximgproc {
     double scoreThreshold = 0.7,
     double reliabilityThreshold = 0.5,
     double centerDistanceThreshold = 0.05,
+    Duration? timeout,
   }) async {
     ellipses ??= Mat.empty();
     return cvRunAsync0(
@@ -148,6 +153,7 @@ class ximgproc {
       (c) {
         return c.complete(ellipses);
       },
+      timeout: timeout,
     );
   }
 
@@ -195,6 +201,7 @@ class ximgproc {
     OutputArray? dst,
     int binarizationMethod = BINARIZATION_NIBLACK,
     double r = 128,
+    Duration? timeout,
   }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
@@ -212,6 +219,7 @@ class ximgproc {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -227,11 +235,11 @@ class ximgproc {
   /// Calculates an affine transformation that normalize given image using Pei&Lin Normalization.
   ///
   /// https://docs.opencv.org/4.x/df/d2d/group__ximgproc.html#ga50d064b92f63916f4162474eea22d656
-  static Future<Mat> PeiLinNormalizationAsync(InputArray I, {OutputArray? T}) async {
+  static Future<Mat> PeiLinNormalizationAsync(InputArray I, {OutputArray? T, Duration? timeout}) async {
     T ??= Mat.empty();
     return cvRunAsync0((callback) => ccontrib.cv_ximgproc_PeiLinNormalization(I.ref, T!.ref, callback), (c) {
       return c.complete(T);
-    });
+    }, timeout: timeout);
   }
 
   /// Applies a binary blob thinning operation, to achieve a skeletization of the input image.
@@ -256,6 +264,7 @@ class ximgproc {
     InputArray src, {
     OutputArray? dst,
     int thinningType = THINNING_ZHANGSUEN,
+    Duration? timeout,
   }) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
@@ -263,6 +272,7 @@ class ximgproc {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -775,13 +785,18 @@ class ximgproc_rl {
   ///Creates a run-length encoded image from a vector of runs (column begin, column end, row)
   ///
   ///https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gaa2b3524997874269670f2f63d54d792d
-  static Future<Mat> createRLEImageAsync(VecPoint3i runs, {(int, int) size = (0, 0)}) async {
+  static Future<Mat> createRLEImageAsync(
+    VecPoint3i runs, {
+    (int, int) size = (0, 0),
+    Duration? timeout,
+  }) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_ximgproc_rl_createRLEImage(runs.ref, dst.ref, size.cvdRef, callback),
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -799,7 +814,12 @@ class ximgproc_rl {
   /// Dilates an run-length encoded binary image by using a specific structuring element.
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#gac3de990089892266fa30189edcb6da3c
-  static Future<Mat> dilateAsync(InputArray rlSrc, InputArray rlKernel, {(int, int) anchor = (0, 0)}) async {
+  static Future<Mat> dilateAsync(
+    InputArray rlSrc,
+    InputArray rlKernel, {
+    (int, int) anchor = (0, 0),
+    Duration? timeout,
+  }) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) =>
@@ -807,6 +827,7 @@ class ximgproc_rl {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -841,6 +862,7 @@ class ximgproc_rl {
     InputArray rlKernel, {
     bool bBoundaryOn = true,
     (int, int) anchor = (0, 0),
+    Duration? timeout,
   }) async {
     final dst = Mat.empty();
     return cvRunAsync0(
@@ -855,6 +877,7 @@ class ximgproc_rl {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -870,13 +893,14 @@ class ximgproc_rl {
   /// Returns a run length encoded structuring element of the specified size and shape.
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga8a7c10c524fb2572e2eefe0caf0375fc
-  static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize) async {
+  static Future<Mat> getStructuringElementAsync(int shape, (int, int) ksize, {Duration? timeout}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_ximgproc_rl_getStructuringElement(shape, ksize.cvdRef, dst.ptr, callback),
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -921,6 +945,7 @@ class ximgproc_rl {
     InputArray rlKernel, {
     bool bBoundaryOnForErosion = true,
     (int, int) anchor = (0, 0),
+    Duration? timeout,
   }) async {
     final dst = Mat.empty();
     return cvRunAsync0(
@@ -936,6 +961,7 @@ class ximgproc_rl {
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
@@ -950,12 +976,18 @@ class ximgproc_rl {
   /// Paint run length encoded binary image into an image.
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga7cabc1c2901b8b58082f8febc366638b
-  static Future<Mat> paintAsync(InputOutputArray image, InputArray rlSrc, Scalar value) async {
+  static Future<Mat> paintAsync(
+    InputOutputArray image,
+    InputArray rlSrc,
+    Scalar value, {
+    Duration? timeout,
+  }) async {
     return cvRunAsync0(
       (callback) => ccontrib.cv_ximgproc_rl_paint(image.ref, rlSrc.ref, value.ref, callback),
       (c) {
         return c.complete(image);
       },
+      timeout: timeout,
     );
   }
 
@@ -971,13 +1003,14 @@ class ximgproc_rl {
   /// Applies a fixed-level threshold to each array element.
   ///
   /// https://docs.opencv.org/4.x/df/def/group__ximgproc__run__length__morphology.html#ga6c9167cbfe788a52a07f6dd3ef8ca4d9
-  static Future<Mat> thresholdAsync(InputArray src, double thresh, int type) async {
+  static Future<Mat> thresholdAsync(InputArray src, double thresh, int type, {Duration? timeout}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_ximgproc_rl_threshold(src.ref, dst.ref, thresh, type, callback),
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 }

@@ -14,7 +14,7 @@ import '../package_ffi.dart';
 import './stitching.dart';
 
 extension StitcherAsync on Stitcher {
-  Future<StitcherStatus> estimateTransformAsync(VecMat images, {VecMat? masks}) async {
+  Future<StitcherStatus> estimateTransformAsync(VecMat images, {VecMat? masks, Duration? timeout}) async {
     final rptr = calloc<ffi.Int>();
     masks ??= VecMat.fromList([]);
     return cvRunAsync0(
@@ -24,10 +24,11 @@ extension StitcherAsync on Stitcher {
         calloc.free(rptr);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
-  Future<(StitcherStatus, Mat)> composePanoramaAsync({VecMat? images}) async {
+  Future<(StitcherStatus, Mat)> composePanoramaAsync({VecMat? images, Duration? timeout}) async {
     final rptr = calloc<ffi.Int>();
     final rpano = Mat.empty();
     void completeFunc(Completer c) {
@@ -40,6 +41,7 @@ extension StitcherAsync on Stitcher {
       return cvRunAsync0(
         (callback) => cstitching.cv_Stitcher_composePanorama(ref, rpano.ref, rptr, callback),
         completeFunc,
+        timeout: timeout,
       );
     }
     return cvRunAsync0(
@@ -48,7 +50,7 @@ extension StitcherAsync on Stitcher {
     );
   }
 
-  Future<(StitcherStatus, Mat)> stitchAsync(VecMat images, {VecMat? masks}) async {
+  Future<(StitcherStatus, Mat)> stitchAsync(VecMat images, {VecMat? masks, Duration? timeout}) async {
     final rptr = calloc<ffi.Int>();
     final rpano = Mat.empty();
     void completeFunc(Completer c) {
@@ -61,6 +63,7 @@ extension StitcherAsync on Stitcher {
       return cvRunAsync0(
         (callback) => cstitching.cv_Stitcher_stitch(ref, images.ref, rpano.ref, rptr, callback),
         completeFunc,
+        timeout: timeout,
       );
     }
     return cvRunAsync0(

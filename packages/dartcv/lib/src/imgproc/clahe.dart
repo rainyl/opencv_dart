@@ -52,11 +52,11 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
     return dst;
   }
 
-  Future<Mat> applyAsync(Mat src, {Mat? dst}) async {
+  Future<Mat> applyAsync(Mat src, {Mat? dst, Duration? timeout}) async {
     dst ??= Mat.empty();
     return cvRunAsync0((callback) => cimgproc.cv_CLAHE_apply(ref, src.ref, dst!.ref, callback), (c) {
       return c.complete(dst);
-    });
+    }, timeout: timeout);
   }
 
   double get clipLimit => cimgproc.cv_CLAHE_getClipLimit(ref);

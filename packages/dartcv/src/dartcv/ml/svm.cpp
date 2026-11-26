@@ -4,6 +4,7 @@
 
 #include "dartcv/ml/svm.h"
 #include "dartcv/ml/stat_model.hpp"
+#include "dartcv/core/handle.hpp"
 
 CVD_ML_STAT_MODEL_IMPL(SVM, cv::ml::SVM)
 
@@ -95,12 +96,11 @@ CvStatus* cv_ml_SVM_getUncompressedSupportVectors(SVM self, Mat rval) {
 CvStatus* cv_ml_SVM_getDecisionFunction(
     SVM self, int i, Mat alpha, Mat svidx, double* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (CVDEREF(self))->getDecisionFunction(i, CVDEREF(alpha), CVDEREF(svidx));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, alpha, svidx), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (CVDEREF(self))->getDecisionFunction(i, CVDEREF(alpha), CVDEREF(svidx));
+        END_WRAP
+    });
 }
 CvStatus* cv_ml_SVM_getDefaultGrid(int paramId, MlParamGrid* rval) {
     BEGIN_WRAP
@@ -122,21 +122,20 @@ CvStatus* cv_ml_SVM_trainAuto(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (CVDEREF(self))
-                ->trainAuto(
-                    CVDEREF(data),
-                    kFold,
-                    cvd_param_grid(Cgrid),
-                    cvd_param_grid(gammaGrid),
-                    cvd_param_grid(pGrid),
-                    cvd_param_grid(nuGrid),
-                    cvd_param_grid(coeffGrid),
-                    cvd_param_grid(degreeGrid),
-                    balanced
-                );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, data), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (CVDEREF(self))
+                    ->trainAuto(
+                        CVDEREF(data),
+                        kFold,
+                        cvd_param_grid(Cgrid),
+                        cvd_param_grid(gammaGrid),
+                        cvd_param_grid(pGrid),
+                        cvd_param_grid(nuGrid),
+                        cvd_param_grid(coeffGrid),
+                        cvd_param_grid(degreeGrid),
+                        balanced
+                    );
+        END_WRAP
+    });
 }

@@ -48,7 +48,7 @@ class PHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_pHash_compare(hashOne.ref, hashTwo.ref, p, callback),
@@ -57,17 +57,19 @@ class PHash implements ImgHashBase {
         calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_pHash_compute(inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -99,7 +101,7 @@ class AverageHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_averageHash_compare(hashOne.ref, hashTwo.ref, p, callback),
@@ -108,17 +110,19 @@ class AverageHash implements ImgHashBase {
         calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_averageHash_compute(inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -192,7 +196,7 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_BlockMeanHash_compare(ref, hashOne.ref, hashTwo.ref, p, callback),
@@ -201,17 +205,19 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
         calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_BlockMeanHash_compute(ref, inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 
@@ -256,7 +262,7 @@ class ColorMomentHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_colorMomentHash_compare(hashOne.ref, hashTwo.ref, p, callback),
@@ -265,17 +271,19 @@ class ColorMomentHash implements ImgHashBase {
         calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_colorMomentHash_compute(inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -329,7 +337,7 @@ class MarrHildrethHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) =>
@@ -339,11 +347,12 @@ class MarrHildrethHash implements ImgHashBase {
         calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) =>
@@ -351,6 +360,7 @@ class MarrHildrethHash implements ImgHashBase {
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -404,7 +414,7 @@ class RadialVarianceHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_radialVarianceHash_compare(
@@ -420,11 +430,12 @@ class RadialVarianceHash implements ImgHashBase {
         calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_radialVarianceHash_compute(
@@ -437,6 +448,7 @@ class RadialVarianceHash implements ImgHashBase {
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }

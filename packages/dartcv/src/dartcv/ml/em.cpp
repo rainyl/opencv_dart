@@ -4,6 +4,7 @@
 
 #include "dartcv/ml/em.h"
 #include "dartcv/ml/stat_model.hpp"
+#include "dartcv/core/handle.hpp"
 
 CVD_ML_STAT_MODEL_IMPL(EM, cv::ml::EM)
 
@@ -55,13 +56,12 @@ CvStatus* cv_ml_EM_getCovs(EM self, VecMat* rval) {
     END_WRAP
 }
 CvStatus* cv_ml_EM_predict2(EM self, Mat sample, Mat probs, Vec2d* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    auto v = (CVDEREF(self))->predict2(CVDEREF(sample), CVDEREF(probs));
-    *rval = {v[0], v[1]};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, sample, probs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto v = (CVDEREF(self))->predict2(CVDEREF(sample), CVDEREF(probs));
+        *rval = {v[0], v[1]};
+        END_WRAP
+    });
 }
 CvStatus* cv_ml_EM_trainEM(
     EM self,
@@ -72,14 +72,13 @@ CvStatus* cv_ml_EM_trainEM(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval =
-        (CVDEREF(self))
-            ->trainEM(CVDEREF(samples), CVDEREF(logLikelihoods), CVDEREF(labels), CVDEREF(probs));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, samples, logLikelihoods, labels, probs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval =
+            (CVDEREF(self))
+                ->trainEM(CVDEREF(samples), CVDEREF(logLikelihoods), CVDEREF(labels), CVDEREF(probs));
+        END_WRAP
+    });
 }
 CvStatus* cv_ml_EM_trainE(
     EM self,
@@ -93,23 +92,22 @@ CvStatus* cv_ml_EM_trainE(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::_InputArray covs = (*covs0.ptr).get() == nullptr || (*covs0.ptr)->empty() ? cv::_InputArray()
-                                                                      : cv::_InputArray(CVDEREF(covs0));
-    *rval = (CVDEREF(self))
-                ->trainE(
-                    CVDEREF(samples),
-                    CVDEREF(means0),
-                    covs,
-                    cvd_or_noarray(weights0),
-                    CVDEREF(logLikelihoods),
-                    CVDEREF(labels),
-                    CVDEREF(probs)
-                );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, samples, means0, covs0, weights0, logLikelihoods, labels, probs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::_InputArray covs = (*covs0.ptr).get() == nullptr || (*covs0.ptr)->empty() ? cv::_InputArray()
+                                                                          : cv::_InputArray(CVDEREF(covs0));
+        *rval = (CVDEREF(self))
+                    ->trainE(
+                        CVDEREF(samples),
+                        CVDEREF(means0),
+                        covs,
+                        cvd_or_noarray(weights0),
+                        CVDEREF(logLikelihoods),
+                        CVDEREF(labels),
+                        CVDEREF(probs)
+                    );
+        END_WRAP
+    });
 }
 CvStatus* cv_ml_EM_trainM(
     EM self,
@@ -121,17 +119,16 @@ CvStatus* cv_ml_EM_trainM(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (CVDEREF(self))
-                ->trainM(
-                    CVDEREF(samples),
-                    CVDEREF(probs0),
-                    CVDEREF(logLikelihoods),
-                    CVDEREF(labels),
-                    CVDEREF(probs)
-                );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, samples, probs0, logLikelihoods, labels, probs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (CVDEREF(self))
+                    ->trainM(
+                        CVDEREF(samples),
+                        CVDEREF(probs0),
+                        CVDEREF(logLikelihoods),
+                        CVDEREF(labels),
+                        CVDEREF(probs)
+                    );
+        END_WRAP
+    });
 }

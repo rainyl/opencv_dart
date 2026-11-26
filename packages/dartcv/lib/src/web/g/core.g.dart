@@ -2847,6 +2847,18 @@ ffi.Pointer<CvStatus> cv_addWeighted(
   );
 }
 
+/// @brief Async: block until the queue is empty and no job is running (tests, shutdown).
+void cv_asyncDrain() {
+  $rt.call('cv_asyncDrain', []);
+}
+
+/// @brief Async: jobs queued plus jobs running.
+///
+/// @return int64_t
+int cv_asyncPending() {
+  return $rt.rj($rt.call('cv_asyncPending', []));
+}
+
 ffi.Pointer<CvStatus> cv_batchDistance(
   Mat src1,
   Mat src2,
@@ -3351,6 +3363,17 @@ ffi.Pointer<CvStatus> cv_gemm(
       ]),
     ),
   );
+}
+
+/// @brief Async: how many worker threads run the `*Async` work (default 1).
+///
+/// One worker is enough to keep the caller's thread free, and OpenCV already uses every core inside a
+/// single call, so raising this oversubscribes CPU-bound work. It helps when the calls block on I/O
+/// (a capture, a slow file) instead.
+///
+/// @return int
+int cv_getAsyncThreads() {
+  return $rt.ri($rt.call('cv_getAsyncThreads', []));
 }
 
 int cv_getNumThreads() {
@@ -4151,6 +4174,13 @@ ffi.Pointer<CvStatus> cv_scaleAdd(Mat src1, double alpha, Mat src2, Mat dst, imp
       ]),
     ),
   );
+}
+
+/// @brief Async: set the worker count. Waits for the queue to drain first.
+///
+/// @param n number of threads, at least 1
+void cv_setAsyncThreads(int n) {
+  $rt.call('cv_setAsyncThreads', [$rt.i(n)]);
 }
 
 ffi.Pointer<CvStatus> cv_setIdentity(Mat src, Scalar scalar, imp$1.CvCallback_0 callback) {
@@ -6865,6 +6895,8 @@ class _SymbolAddresses {
       ffi.Pointer.fromAddress($rt.addressOf('cv_UMat_release', 'vi'));
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Bool)>> get cv_ocl_setUseOpenCL =>
       ffi.Pointer.fromAddress($rt.addressOf('cv_ocl_setUseOpenCL', 'vi'));
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int)>> get cv_setAsyncThreads =>
+      ffi.Pointer.fromAddress($rt.addressOf('cv_setAsyncThreads', 'vi'));
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int)>> get cv_setNumThreads =>
       ffi.Pointer.fromAddress($rt.addressOf('cv_setNumThreads', 'vi'));
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ErrorCallback)>> get registerErrorCallback =>

@@ -11,23 +11,21 @@
 CvStatus* cv_ximgproc_anisotropicDiffusion(
     Mat src, CVD_OUT Mat dst, float alpha, float K, int niters, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::anisotropicDiffusion(CVDEREF(src), CVDEREF(dst), alpha, K, niters);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::anisotropicDiffusion(CVDEREF(src), CVDEREF(dst), alpha, K, niters);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_edgePreservingFilter(
     Mat src, CVD_OUT Mat dst, int d, double threshold, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::edgePreservingFilter(CVDEREF(src), CVDEREF(dst), d, threshold);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::edgePreservingFilter(CVDEREF(src), CVDEREF(dst), d, threshold);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_findEllipses(
@@ -38,18 +36,17 @@ CvStatus* cv_ximgproc_findEllipses(
     float centerDistanceThreshold,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::findEllipses(
-        CVDEREF(image),
-        CVDEREF(ellipses),
-        scoreThreshold,
-        reliabilityThreshold,
-        centerDistanceThreshold
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, ellipses), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::findEllipses(
+            CVDEREF(image),
+            CVDEREF(ellipses),
+            scoreThreshold,
+            reliabilityThreshold,
+            centerDistanceThreshold
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_niBlackThreshold(
@@ -63,31 +60,28 @@ CvStatus* cv_ximgproc_niBlackThreshold(
     double r,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::niBlackThreshold(
-        CVDEREF(src), CVDEREF(dst), maxValue, type, blockSize, k, binarizationMethod, r
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::niBlackThreshold(
+            CVDEREF(src), CVDEREF(dst), maxValue, type, blockSize, k, binarizationMethod, r
+        );
+        END_WRAP
+    });
 }
 CvStatus* cv_ximgproc_PeiLinNormalization(Mat I, CVD_OUT Mat dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::ximgproc::PeiLinNormalization(CVDEREF(I), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(I, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::PeiLinNormalization(CVDEREF(I), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_thinning(Mat src, Mat dst, int thinningType, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::ximgproc::thinning(CVDEREF(src), CVDEREF(dst), thinningType);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::thinning(CVDEREF(src), CVDEREF(dst), thinningType);
+        END_WRAP
+    });
 }
 
 // RFFeatureGetter
@@ -98,7 +92,6 @@ CvStatus* cv_ximgproc_RFFeatureGetter_create(CVD_OUT RFFeatureGetter* rval) {
 }
 
 void cv_ximgproc_RFFeatureGetter_close(RFFeatureGetterPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -113,12 +106,11 @@ CvStatus* cv_ximgproc_RFFeatureGetter_getFeatures(
     int gradNum,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->getFeatures(CVDEREF(src), CVDEREF(features), gnrmRad, gsmthRad, shrink, outNum, gradNum);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, features), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->getFeatures(CVDEREF(src), CVDEREF(features), gnrmRad, gsmthRad, shrink, outNum, gradNum);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_RFFeatureGetter_clear(RFFeatureGetter self) {
@@ -152,28 +144,25 @@ CvStatus* cv_ximgproc_StructuredEdgeDetection_create_1(
 }
 
 void cv_ximgproc_StructuredEdgeDetection_close(StructuredEdgeDetectionPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_ximgproc_StructuredEdgeDetection_computeOrientation(
     StructuredEdgeDetection self, Mat src, CVD_OUT Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->computeOrientation(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->computeOrientation(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_StructuredEdgeDetection_detectEdges(
     StructuredEdgeDetection self, Mat src, CVD_OUT Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detectEdges(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detectEdges(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_StructuredEdgeDetection_edgesNms(
@@ -187,14 +176,13 @@ CvStatus* cv_ximgproc_StructuredEdgeDetection_edgesNms(
     bool isParallel,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->edgesNms(
-            CVDEREF(edge_image), CVDEREF(orientation_image), CVDEREF(dst), r, s_, m, isParallel
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, edge_image, orientation_image, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->edgesNms(
+                CVDEREF(edge_image), CVDEREF(orientation_image), CVDEREF(dst), r, s_, m, isParallel
+            );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeBoxes_create(
@@ -231,7 +219,6 @@ CvStatus* cv_ximgproc_EdgeBoxes_create(
 }
 
 void cv_ximgproc_EdgeBoxes_close(EdgeBoxesPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -364,13 +351,12 @@ CvStatus* cv_ximgproc_EdgeBoxes_getBoundingBoxes(
     CVD_OUT VecF32* scores,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (CVDEREF(self))
-        ->getBoundingBoxes(CVDEREF(edge_map), CVDEREF(orientation_map), CVDEREF_P(out_boxes), CVDEREF_P(scores));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, edge_map, orientation_map), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (CVDEREF(self))
+            ->getBoundingBoxes(CVDEREF(edge_map), CVDEREF(orientation_map), CVDEREF_P(out_boxes), CVDEREF_P(scores));
+        END_WRAP
+    });
 }
 
 // GraphSegmentation
@@ -383,7 +369,6 @@ CvStatus* cv_ximgproc_GraphSegmentation_create(
 }
 
 void cv_ximgproc_GraphSegmentation_close(GraphSegmentationPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -402,11 +387,10 @@ double cv_ximgproc_GraphSegmentation_getSigma(GraphSegmentation self) {
 CvStatus* cv_ximgproc_GraphSegmentation_processImage(
     GraphSegmentation self, Mat src, CVD_OUT Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->processImage(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->processImage(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 void cv_ximgproc_GraphSegmentation_setK(GraphSegmentation self, float val) {
@@ -429,185 +413,171 @@ CvStatus* cv_ximgproc_EdgeDrawing_create(EdgeDrawing* rval) {
 }
 
 void cv_ximgproc_EdgeDrawing_close(EdgeDrawingPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_detectEdges(EdgeDrawing self, Mat src, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detectEdges(CVDEREF(src));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detectEdges(CVDEREF(src));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_detectEllipses(
     EdgeDrawing self, Mat ellipses, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detectEllipses(CVDEREF(ellipses));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, ellipses), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detectEllipses(CVDEREF(ellipses));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_detectLines(EdgeDrawing self, Mat lines, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detectLines(CVDEREF(lines));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, lines), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detectLines(CVDEREF(lines));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_getEdgeImage(EdgeDrawing self, Mat dst, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->getEdgeImage(CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->getEdgeImage(CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_getGradientImage(
     EdgeDrawing self, Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->getGradientImage(CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->getGradientImage(CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines(
     EdgeDrawing self, VecI32* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    std::vector<int32_t> _rval = (CVDEREF(self))->getSegmentIndicesOfLines();
-    CVD_SET(rval, new std::vector<int32_t>(_rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        std::vector<int32_t> _rval = (CVDEREF(self))->getSegmentIndicesOfLines();
+        CVD_SET(rval, new std::vector<int32_t>(_rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_getSegments(
     EdgeDrawing self, VecVecPoint* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto _rval = (CVDEREF(self))->getSegments();
-    (*rval->ptr)->reserve(_rval.size());
-    for (auto & i : _rval) {
-        (*rval->ptr)->emplace_back(i);
-    }
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto _rval = (CVDEREF(self))->getSegments();
+        (*rval->ptr)->reserve(_rval.size());
+        for (auto & i : _rval) {
+            (*rval->ptr)->emplace_back(i);
+        }
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_setParams(
     EdgeDrawing self, EdgeDrawingParams params, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::EdgeDrawing::Params _params;
-    _params.AnchorThresholdValue = params.AnchorThresholdValue;
-    _params.EdgeDetectionOperator = params.EdgeDetectionOperator;
-    _params.GradientThresholdValue = params.GradientThresholdValue;
-    _params.LineFitErrorThreshold = params.LineFitErrorThreshold;
-    _params.MaxDistanceBetweenTwoLines = params.MaxDistanceBetweenTwoLines;
-    _params.MaxErrorThreshold = params.MaxErrorThreshold;
-    _params.MinLineLength = params.MinLineLength;
-    _params.MinPathLength = params.MinPathLength;
-    _params.NFAValidation = params.NFAValidation;
-    _params.PFmode = params.PFmode;
-    _params.ScanInterval = params.ScanInterval;
-    _params.Sigma = params.Sigma;
-    _params.SumFlag = params.SumFlag;
-    (CVDEREF(self))->setParams(_params);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::EdgeDrawing::Params _params;
+        _params.AnchorThresholdValue = params.AnchorThresholdValue;
+        _params.EdgeDetectionOperator = params.EdgeDetectionOperator;
+        _params.GradientThresholdValue = params.GradientThresholdValue;
+        _params.LineFitErrorThreshold = params.LineFitErrorThreshold;
+        _params.MaxDistanceBetweenTwoLines = params.MaxDistanceBetweenTwoLines;
+        _params.MaxErrorThreshold = params.MaxErrorThreshold;
+        _params.MinLineLength = params.MinLineLength;
+        _params.MinPathLength = params.MinPathLength;
+        _params.NFAValidation = params.NFAValidation;
+        _params.PFmode = params.PFmode;
+        _params.ScanInterval = params.ScanInterval;
+        _params.Sigma = params.Sigma;
+        _params.SumFlag = params.SumFlag;
+        (CVDEREF(self))->setParams(_params);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_EdgeDrawing_getParams(
     EdgeDrawing self, EdgeDrawingParams* params, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::EdgeDrawing::Params _params = (CVDEREF(self))->params;
-    *params = {
-        _params.AnchorThresholdValue,
-        _params.EdgeDetectionOperator,
-        _params.GradientThresholdValue,
-        _params.LineFitErrorThreshold,
-        _params.MaxDistanceBetweenTwoLines,
-        _params.MaxErrorThreshold,
-        _params.MinLineLength,
-        _params.MinPathLength,
-        _params.NFAValidation,
-        _params.PFmode,
-        _params.ScanInterval,
-        _params.Sigma,
-        _params.SumFlag,
-    };
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::EdgeDrawing::Params _params = (CVDEREF(self))->params;
+        *params = {
+            _params.AnchorThresholdValue,
+            _params.EdgeDetectionOperator,
+            _params.GradientThresholdValue,
+            _params.LineFitErrorThreshold,
+            _params.MaxDistanceBetweenTwoLines,
+            _params.MaxErrorThreshold,
+            _params.MinLineLength,
+            _params.MinPathLength,
+            _params.NFAValidation,
+            _params.PFmode,
+            _params.ScanInterval,
+            _params.Sigma,
+            _params.SumFlag,
+        };
+        END_WRAP
+    });
 }
 
 // Binary morphology on run-length encoded image
 CvStatus* cv_ximgproc_rl_createRLEImage(
     const VecPoint3i runs, Mat res, CvSize size, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::rl::createRLEImage(CVDEREF(runs), CVDEREF(res), cv::Size(size.width, size.height));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(runs, res), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::rl::createRLEImage(CVDEREF(runs), CVDEREF(res), cv::Size(size.width, size.height));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_rl_dilate(
     Mat rlSrc, Mat rlDest, Mat rlKernel, CvPoint anchor, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::rl::dilate(
-        CVDEREF(rlSrc), CVDEREF(rlDest), CVDEREF(rlKernel), cv::Point(anchor.x, anchor.y)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(rlSrc, rlDest, rlKernel), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::rl::dilate(
+            CVDEREF(rlSrc), CVDEREF(rlDest), CVDEREF(rlKernel), cv::Point(anchor.x, anchor.y)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_rl_erode(
     Mat rlSrc, Mat rlDest, Mat rlKernel, bool bBoundaryOn, CvPoint anchor, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::rl::erode(
-        CVDEREF(rlSrc),
-        CVDEREF(rlDest),
-        CVDEREF(rlKernel),
-        bBoundaryOn,
-        cv::Point(anchor.x, anchor.y)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(rlSrc, rlDest, rlKernel), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::rl::erode(
+            CVDEREF(rlSrc),
+            CVDEREF(rlDest),
+            CVDEREF(rlKernel),
+            bBoundaryOn,
+            cv::Point(anchor.x, anchor.y)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_rl_getStructuringElement(
     int shape, CvSize ksize, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Mat _rval =
-        cv::ximgproc::rl::getStructuringElement(shape, cv::Size(ksize.width, ksize.height));
-    CVD_SET(rval, new cv::Mat(_rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Mat _rval =
+            cv::ximgproc::rl::getStructuringElement(shape, cv::Size(ksize.width, ksize.height));
+        CVD_SET(rval, new cv::Mat(_rval));
+        END_WRAP
+    });
 }
 
 bool cv_ximgproc_rl_isRLMorphologyPossible(Mat rlStructuringElement) {
@@ -625,39 +595,36 @@ CvStatus* cv_ximgproc_rl_morphologyEx(
     CvPoint anchor,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::rl::morphologyEx(
-        CVDEREF(rlSrc),
-        CVDEREF(rlDest),
-        op,
-        CVDEREF(rlKernel),
-        bBoundaryOnForErosion,
-        cv::Point(anchor.x, anchor.y)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(rlSrc, rlDest, rlKernel), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::rl::morphologyEx(
+            CVDEREF(rlSrc),
+            CVDEREF(rlDest),
+            op,
+            CVDEREF(rlKernel),
+            bBoundaryOnForErosion,
+            cv::Point(anchor.x, anchor.y)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_rl_paint(Mat image, Mat rlSrc, const Scalar value, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::ximgproc::rl::paint(
-        CVDEREF(image), CVDEREF(rlSrc), cv::Scalar(value.val1, value.val2, value.val3, value.val4)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, rlSrc), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::rl::paint(
+            CVDEREF(image), CVDEREF(rlSrc), cv::Scalar(value.val1, value.val2, value.val3, value.val4)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ximgproc_rl_threshold(
     Mat src, Mat rlDest, double thresh, int type, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::ximgproc::rl::threshold(CVDEREF(src), CVDEREF(rlDest), thresh, type);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, rlDest), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::ximgproc::rl::threshold(CVDEREF(src), CVDEREF(rlDest), thresh, type);
+        END_WRAP
+    });
 }

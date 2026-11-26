@@ -130,10 +130,22 @@ void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) => throwIfFailed(func());
 
 // async runner
 typedef VoidPtr = ffi.Pointer<ffi.Void>;
+
+/// Wraps a native `*Async` entry point into a [Future].
+///
+/// The work runs on a worker thread inside the library and reports through [func]'s callback, which
+/// arrives on this isolate's event loop; [onComplete] turns the wrapper's output into the value. The
+/// callback carries the status of the work, so an error that happens after the C entry point returned
+/// still surfaces as a failed [Future].
+///
+/// [timeout] abandons the wait, not the work: OpenCV has no cancellation point, so the job runs to
+/// completion and still writes its out-parameters. The handles it was given are held by the job, so
+/// abandoning is safe, but the result is not observable through the abandoned [Future].
 Future<T> cvRunAsync0<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
-  void Function(Completer<T> completer) onComplete,
-) async {
+  void Function(Completer<T> completer) onComplete, {
+  Duration? timeout,
+}) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
   var closed = false;
@@ -144,17 +156,33 @@ Future<T> cvRunAsync0<T>(
     }
   }
 
-  void onResponse() {
-    onComplete(completer);
-    close();
+  void onResponse(ffi.Pointer<cvg.CvStatus> status) {
+    try {
+      throwIfFailed(status);
+      if (!completer.isCompleted) onComplete(completer);
+    } catch (e, s) {
+      if (!completer.isCompleted) completer.completeError(e, s);
+    } finally {
+      // Only here is it safe to release the callback: the native side must never invoke it after
+      // close(), which is also why a timeout must not close it early.
+      close();
+    }
   }
 
-  ccallback = ffi.NativeCallable.listener(onResponse);
+  ccallback = ffi.NativeCallable<cvg.CvCallback_0Function>.listener(onResponse);
   try {
     throwIfFailed(func(ccallback.nativeFunction));
   } catch (_) {
     close();
     rethrow;
+  }
+  if (timeout != null) {
+    final timer = Timer(timeout, () {
+      if (!completer.isCompleted) {
+        completer.completeError(TimeoutException('async call timed out after $timeout', timeout));
+      }
+    });
+    return completer.future.whenComplete(timer.cancel);
   }
   return completer.future;
 }
@@ -163,8 +191,9 @@ const cvRunAsync = cvRunAsync0;
 
 Future<T> cvRunAsync1<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
-  void Function(Completer<T> completer, VoidPtr p) onComplete,
-) {
+  void Function(Completer<T> completer, VoidPtr p) onComplete, {
+  Duration? timeout,
+}) {
   final completer = Completer<T>();
   late final ffi.NativeCallable<cvg.CvCallback_1Function> ccallback;
   var closed = false;
@@ -175,133 +204,31 @@ Future<T> cvRunAsync1<T>(
     }
   }
 
-  void onResponse(VoidPtr p) {
-    onComplete(completer, p);
-    close();
-  }
-
-  ccallback = ffi.NativeCallable.listener(onResponse);
-  try {
-    throwIfFailed(func(ccallback.nativeFunction));
-  } catch (_) {
-    close();
-    rethrow;
-  }
-  return completer.future;
-}
-
-Future<T> cvRunAsync2<T>(
-  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_2 callback) func,
-  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1) onComplete,
-) {
-  final completer = Completer<T>();
-  late final ffi.NativeCallable<cvg.CvCallback_2Function> ccallback;
-  var closed = false;
-  void close() {
-    if (!closed) {
-      closed = true;
-      ccallback.close();
+  void onResponse(ffi.Pointer<cvg.CvStatus> status, VoidPtr p) {
+    try {
+      throwIfFailed(status);
+      if (!completer.isCompleted) onComplete(completer, p);
+    } catch (e, s) {
+      if (!completer.isCompleted) completer.completeError(e, s);
+    } finally {
+      close();
     }
   }
 
-  void onResponse(VoidPtr p, VoidPtr p1) {
-    onComplete(completer, p, p1);
-    close();
-  }
-
-  ccallback = ffi.NativeCallable.listener(onResponse);
+  ccallback = ffi.NativeCallable<cvg.CvCallback_1Function>.listener(onResponse);
   try {
     throwIfFailed(func(ccallback.nativeFunction));
   } catch (_) {
     close();
     rethrow;
   }
-  return completer.future;
-}
-
-Future<T> cvRunAsync3<T>(
-  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_3 callback) func,
-  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2) onComplete,
-) {
-  final completer = Completer<T>();
-  late final ffi.NativeCallable<cvg.CvCallback_3Function> ccallback;
-  var closed = false;
-  void close() {
-    if (!closed) {
-      closed = true;
-      ccallback.close();
-    }
-  }
-
-  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2) {
-    onComplete(completer, p, p1, p2);
-    close();
-  }
-
-  ccallback = ffi.NativeCallable.listener(onResponse);
-  try {
-    throwIfFailed(func(ccallback.nativeFunction));
-  } catch (_) {
-    close();
-    rethrow;
-  }
-  return completer.future;
-}
-
-Future<T> cvRunAsync4<T>(
-  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_4 callback) func,
-  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) onComplete,
-) {
-  final completer = Completer<T>();
-  late final ffi.NativeCallable<cvg.CvCallback_4Function> ccallback;
-  var closed = false;
-  void close() {
-    if (!closed) {
-      closed = true;
-      ccallback.close();
-    }
-  }
-
-  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3) {
-    onComplete(completer, p, p1, p2, p3);
-    close();
-  }
-
-  ccallback = ffi.NativeCallable.listener(onResponse);
-  try {
-    throwIfFailed(func(ccallback.nativeFunction));
-  } catch (_) {
-    close();
-    rethrow;
-  }
-  return completer.future;
-}
-
-Future<T> cvRunAsync5<T>(
-  ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_5 callback) func,
-  void Function(Completer<T> completer, VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) onComplete,
-) {
-  final completer = Completer<T>();
-  late final ffi.NativeCallable<cvg.CvCallback_5Function> ccallback;
-  var closed = false;
-  void close() {
-    if (!closed) {
-      closed = true;
-      ccallback.close();
-    }
-  }
-
-  void onResponse(VoidPtr p, VoidPtr p1, VoidPtr p2, VoidPtr p3, VoidPtr p4) {
-    onComplete(completer, p, p1, p2, p3, p4);
-    close();
-  }
-
-  ccallback = ffi.NativeCallable.listener(onResponse);
-  try {
-    throwIfFailed(func(ccallback.nativeFunction));
-  } catch (_) {
-    close();
-    rethrow;
+  if (timeout != null) {
+    final timer = Timer(timeout, () {
+      if (!completer.isCompleted) {
+        completer.completeError(TimeoutException('async call timed out after $timeout', timeout));
+      }
+    });
+    return completer.future.whenComplete(timer.cancel);
   }
   return completer.future;
 }

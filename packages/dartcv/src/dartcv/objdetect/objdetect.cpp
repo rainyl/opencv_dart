@@ -35,12 +35,11 @@ CvStatus* cv_CascadeClassifier_load(CascadeClassifier self, const char* name, in
 CvStatus* cv_CascadeClassifier_detectMultiScale(
     CascadeClassifier self, Mat img, VecRect* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detectMultiScale(CVDEREF(img), CVDEREF_P(rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detectMultiScale(CVDEREF(img), CVDEREF_P(rval));
+        END_WRAP
+    });
 }
 CvStatus* cv_CascadeClassifier_detectMultiScale_1(
     CascadeClassifier self,
@@ -53,14 +52,13 @@ CvStatus* cv_CascadeClassifier_detectMultiScale_1(
     CvSize maxSize,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto minsize = cv::Size(minSize.width, minSize.height);
-    auto maxsize = cv::Size(maxSize.width, maxSize.height);
-    (*self.ptr)->detectMultiScale(CVDEREF(img), CVDEREF_P(objects), scale, minNeighbors, flags, minsize, maxsize);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto minsize = cv::Size(minSize.width, minSize.height);
+        auto maxsize = cv::Size(maxSize.width, maxSize.height);
+        (*self.ptr)->detectMultiScale(CVDEREF(img), CVDEREF_P(objects), scale, minNeighbors, flags, minsize, maxsize);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_CascadeClassifier_detectMultiScale_2(
@@ -75,16 +73,15 @@ CvStatus* cv_CascadeClassifier_detectMultiScale_2(
     CvSize maxSize,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto minsize = cv::Size(minSize.width, minSize.height);
-    auto maxsize = cv::Size(maxSize.width, maxSize.height);
-    (*self.ptr)->detectMultiScale(
-        CVDEREF(img), CVDEREF_P(objects), CVDEREF_P(numDetections), scaleFactor, minNeighbors, flags, minsize, maxsize
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto minsize = cv::Size(minSize.width, minSize.height);
+        auto maxsize = cv::Size(maxSize.width, maxSize.height);
+        (*self.ptr)->detectMultiScale(
+            CVDEREF(img), CVDEREF_P(objects), CVDEREF_P(numDetections), scaleFactor, minNeighbors, flags, minsize, maxsize
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_CascadeClassifier_detectMultiScale_3(
@@ -101,25 +98,24 @@ CvStatus* cv_CascadeClassifier_detectMultiScale_3(
     bool outputRejectLevels,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto minsize = cv::Size(minSize.width, minSize.height);
-    auto maxsize = cv::Size(maxSize.width, maxSize.height);
-    (*self.ptr)->detectMultiScale(
-        CVDEREF(img),
-        CVDEREF_P(objects),
-        CVDEREF_P(rejectLevels),
-        CVDEREF_P(levelWeights),
-        scaleFactor,
-        minNeighbors,
-        flags,
-        minsize,
-        maxsize,
-        outputRejectLevels
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto minsize = cv::Size(minSize.width, minSize.height);
+        auto maxsize = cv::Size(maxSize.width, maxSize.height);
+        (*self.ptr)->detectMultiScale(
+            CVDEREF(img),
+            CVDEREF_P(objects),
+            CVDEREF_P(rejectLevels),
+            CVDEREF_P(levelWeights),
+            scaleFactor,
+            minNeighbors,
+            flags,
+            minsize,
+            maxsize,
+            outputRejectLevels
+        );
+        END_WRAP
+    });
 }
 bool cv_CascadeClassifier_empty(CascadeClassifier self) {
     return (*self.ptr)->empty();
@@ -165,20 +161,19 @@ CvStatus* cv_HOGDescriptor_detect(
     VecPoint* searchLocations,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detect(
-        CVDEREF(img),
-        CVDEREF_P(foundLocations),
-        CVDEREF_P(weights),
-        hitThresh,
-        cv::Point(winStride.width, winStride.height),
-        cv::Point(padding.width, padding.height),
-        CVDEREF_P(searchLocations)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detect(
+            CVDEREF(img),
+            CVDEREF_P(foundLocations),
+            CVDEREF_P(weights),
+            hitThresh,
+            cv::Point(winStride.width, winStride.height),
+            cv::Point(padding.width, padding.height),
+            CVDEREF_P(searchLocations)
+        );
+        END_WRAP
+    });
 }
 CvStatus* cv_HOGDescriptor_detect2(
     HOGDescriptor self,
@@ -190,29 +185,27 @@ CvStatus* cv_HOGDescriptor_detect2(
     VecPoint* searchLocations,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detect(
-        CVDEREF(img),
-        CVDEREF_P(foundLocations),
-        hitThresh,
-        cv::Point(winStride.width, winStride.height),
-        cv::Point(padding.width, padding.height),
-        CVDEREF_P(searchLocations)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detect(
+            CVDEREF(img),
+            CVDEREF_P(foundLocations),
+            hitThresh,
+            cv::Point(winStride.width, winStride.height),
+            cv::Point(padding.width, padding.height),
+            CVDEREF_P(searchLocations)
+        );
+        END_WRAP
+    });
 }
 CvStatus* cv_HOGDescriptor_detectMultiScale(
     HOGDescriptor self, Mat img, VecRect* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->detectMultiScale(CVDEREF(img), CVDEREF_P(rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->detectMultiScale(CVDEREF(img), CVDEREF_P(rval));
+        END_WRAP
+    });
 }
 CvStatus* cv_HOGDescriptor_detectMultiScale_1(
     HOGDescriptor self,
@@ -226,16 +219,15 @@ CvStatus* cv_HOGDescriptor_detectMultiScale_1(
     VecRect* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto winstride = cv::Size(winStride.width, winStride.height);
-    auto pad = cv::Size(padding.width, padding.height);
-    (*self.ptr)->detectMultiScale(
-        CVDEREF(img), CVDEREF_P(rval), hitThresh, winstride, pad, scale, finalThreshold, useMeanshiftGrouping
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto winstride = cv::Size(winStride.width, winStride.height);
+        auto pad = cv::Size(padding.width, padding.height);
+        (*self.ptr)->detectMultiScale(
+            CVDEREF(img), CVDEREF_P(rval), hitThresh, winstride, pad, scale, finalThreshold, useMeanshiftGrouping
+        );
+        END_WRAP
+    });
 }
 CvStatus* cv_HOGDescriptor_getDefaultPeopleDetector(VecF32* rval) {
     BEGIN_WRAP
@@ -256,18 +248,17 @@ CvStatus* cv_HOGDescriptor_compute(
     VecPoint* locations,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->compute(
-        CVDEREF(img),
-        CVDEREF_P(descriptors),
-        cv::Size(winStride.width, winStride.height),
-        cv::Size(padding.width, padding.height),
-        CVDEREF_P(locations)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->compute(
+            CVDEREF(img),
+            CVDEREF_P(descriptors),
+            cv::Size(winStride.width, winStride.height),
+            cv::Size(padding.width, padding.height),
+            CVDEREF_P(locations)
+        );
+        END_WRAP
+    });
 }
 CvStatus* cv_HOGDescriptor_computeGradient(
     HOGDescriptor self,
@@ -278,18 +269,17 @@ CvStatus* cv_HOGDescriptor_computeGradient(
     CvSize paddingBR,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->computeGradient(
-        CVDEREF(img),
-        CVDEREF(grad),
-        CVDEREF(angleOfs),
-        cv::Size(paddingTL.width, paddingTL.height),
-        cv::Size(paddingBR.width, paddingBR.height)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img, grad, angleOfs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->computeGradient(
+            CVDEREF(img),
+            CVDEREF(grad),
+            CVDEREF(angleOfs),
+            cv::Size(paddingTL.width, paddingTL.height),
+            cv::Size(paddingBR.width, paddingBR.height)
+        );
+        END_WRAP
+    });
 }
 // CvStatus *HOGDescriptor_detectMultiScaleROI(HOGDescriptor self, Mat img, VecRect *foundLocations,
 //                                            DetectionROI *locations, int *lenLocations, double
@@ -337,23 +327,21 @@ CvStatus* cv_HOGDescriptor_groupRectangles(
     double eps,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->groupRectangles(CVDEREF_P(rectList), CVDEREF_P(weights), groupThreshold, eps);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->groupRectangles(CVDEREF_P(rectList), CVDEREF_P(weights), groupThreshold, eps);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_groupRectangles(
     VecRect* rects, int groupThreshold, double eps, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::groupRectangles(CVDEREF_P(rects), groupThreshold, eps);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::groupRectangles(CVDEREF_P(rects), groupThreshold, eps);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_QRCodeDetector_create(QRCodeDetector* rval) {
@@ -369,23 +357,21 @@ CvStatus* cv_QRCodeDetector_detectAndDecode(
     char** rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto info = (*self.ptr)->detectAndDecode(CVDEREF(input), CVDEREF_P(points), CVDEREF_P(straight_qrcode));
-    *rval = strdup(info.c_str());
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, input), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto info = (*self.ptr)->detectAndDecode(CVDEREF(input), CVDEREF_P(points), CVDEREF_P(straight_qrcode));
+        *rval = strdup(info.c_str());
+        END_WRAP
+    });
 }
 CvStatus* cv_QRCodeDetector_detect(
     QRCodeDetector self, Mat input, VecPoint* points, bool* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (*self.ptr)->detect(CVDEREF(input), CVDEREF_P(points));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, input), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (*self.ptr)->detect(CVDEREF(input), CVDEREF_P(points));
+        END_WRAP
+    });
 }
 CvStatus* cv_QRCodeDetector_decode(
     QRCodeDetector self,
@@ -395,13 +381,12 @@ CvStatus* cv_QRCodeDetector_decode(
     char** rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto info = (*self.ptr)->detectAndDecode(CVDEREF(input), CVDEREF_P(points), CVDEREF(straight_qrcode));
-    *rval = strdup(info.c_str());
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, input, straight_qrcode), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto info = (*self.ptr)->detectAndDecode(CVDEREF(input), CVDEREF_P(points), CVDEREF(straight_qrcode));
+        *rval = strdup(info.c_str());
+        END_WRAP
+    });
 }
 CvStatus* cv_QRCodeDetector_decodeCurved(
     QRCodeDetector self,
@@ -411,13 +396,12 @@ CvStatus* cv_QRCodeDetector_decodeCurved(
     char** rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto ret = (*self.ptr)->decodeCurved(CVDEREF(img), CVDEREF(points), CVDEREF_P(straight_qrcode));
-    *rval = strdup(ret.c_str());
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img, points), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto ret = (*self.ptr)->decodeCurved(CVDEREF(img), CVDEREF(points), CVDEREF_P(straight_qrcode));
+        *rval = strdup(ret.c_str());
+        END_WRAP
+    });
 }
 CvStatus* cv_QRCodeDetector_detectAndDecodeCurved(
     QRCodeDetector self,
@@ -427,13 +411,12 @@ CvStatus* cv_QRCodeDetector_detectAndDecodeCurved(
     char** rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto ret = (*self.ptr)->detectAndDecodeCurved(CVDEREF(img), CVDEREF_P(points), CVDEREF_P(straight_qrcode));
-    *rval = strdup(ret.c_str());
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto ret = (*self.ptr)->detectAndDecodeCurved(CVDEREF(img), CVDEREF_P(points), CVDEREF_P(straight_qrcode));
+        *rval = strdup(ret.c_str());
+        END_WRAP
+    });
 }
 void cv_QRCodeDetector_close(QRCodeDetectorPtr self) {
     CVD_FREE(self);
@@ -442,12 +425,11 @@ void cv_QRCodeDetector_close(QRCodeDetectorPtr self) {
 CvStatus* cv_QRCodeDetector_detectMulti(
     QRCodeDetector self, Mat input, VecPoint* points, bool* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (*self.ptr)->detectMulti(CVDEREF(input), CVDEREF_P(points));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, input), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (*self.ptr)->detectMulti(CVDEREF(input), CVDEREF_P(points));
+        END_WRAP
+    });
 }
 CvStatus* cv_QRCodeDetector_detectAndDecodeMulti(
     QRCodeDetector self,
@@ -458,14 +440,13 @@ CvStatus* cv_QRCodeDetector_detectAndDecodeMulti(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    std::vector<cv::String> decodedCodes;
-    *rval = (*self.ptr)->detectAndDecodeMulti(CVDEREF(input), decodedCodes, CVDEREF_P(points), CVDEREF_P(straight_code));
-    CVD_SET(decoded, vecstr_2_vecvecchar(decodedCodes));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, input), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        std::vector<cv::String> decodedCodes;
+        *rval = (*self.ptr)->detectAndDecodeMulti(CVDEREF(input), decodedCodes, CVDEREF_P(points), CVDEREF_P(straight_code));
+        CVD_SET(decoded, vecstr_2_vecvecchar(decodedCodes));
+        END_WRAP
+    });
 }
 
 void cv_QRCodeDetector_setEpsX(QRCodeDetector self, double epsX) {
@@ -531,21 +512,19 @@ CvStatus* cv_FaceDetectorYN_create_1(
 }
 
 void cv_FaceDetectorYN_close(FaceDetectorYNPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_FaceDetectorYN_detect(
     FaceDetectorYN self, Mat img, Mat* faces, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Mat _faces;
-    (CVDEREF(self))->detect(CVDEREF(img), _faces);
-    CVD_SET(faces, new cv::Mat(_faces));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Mat _faces;
+        (CVDEREF(self))->detect(CVDEREF(img), _faces);
+        CVD_SET(faces, new cv::Mat(_faces));
+        END_WRAP
+    });
 }
 
 void cv_FaceDetectorYN_setInputSize(FaceDetectorYN self, CvSize input_size) {
@@ -590,38 +569,35 @@ CvStatus* cv_FaceRecognizerSF_create(
     END_WRAP
 }
 void cv_FaceRecognizerSF_close(FaceRecognizerSFPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_FaceRecognizerSF_alignCrop(
     FaceRecognizerSF self, Mat src_img, Mat face_box, Mat* aligned_img, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Mat _align;
-    (CVDEREF(self))->alignCrop(CVDEREF(src_img), CVDEREF(face_box), _align);
-    CVD_SET(aligned_img, new cv::Mat(_align));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src_img, face_box), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Mat _align;
+        (CVDEREF(self))->alignCrop(CVDEREF(src_img), CVDEREF(face_box), _align);
+        CVD_SET(aligned_img, new cv::Mat(_align));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_FaceRecognizerSF_feature(
     FaceRecognizerSF self, Mat aligned_img, bool clone, Mat* face_feature, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Mat _face_feature;
-    (CVDEREF(self))->feature(CVDEREF(aligned_img), _face_feature);
-    if (clone) {
-        CVD_SET(face_feature, new cv::Mat(_face_feature.clone()));
-    } else {
-        CVD_SET(face_feature, new cv::Mat(_face_feature));
-    }
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, aligned_img), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Mat _face_feature;
+        (CVDEREF(self))->feature(CVDEREF(aligned_img), _face_feature);
+        if (clone) {
+            CVD_SET(face_feature, new cv::Mat(_face_feature.clone()));
+        } else {
+            CVD_SET(face_feature, new cv::Mat(_face_feature));
+        }
+        END_WRAP
+    });
 }
 
 CvStatus* cv_FaceRecognizerSF_match(
@@ -632,10 +608,9 @@ CvStatus* cv_FaceRecognizerSF_match(
     double* distance,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *distance = (CVDEREF(self))->match(CVDEREF(face_feature1), CVDEREF(face_feature2), dis_type);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, face_feature1, face_feature2), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *distance = (CVDEREF(self))->match(CVDEREF(face_feature1), CVDEREF(face_feature2), dis_type);
+        END_WRAP
+    });
 }

@@ -14,111 +14,100 @@ CvStatus* cv_Mat_create(Mat* rval) {
 }
 
 CvStatus* cv_Mat_create_1(int rows, int cols, int type, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(rows, cols, type));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(rows, cols, type));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_2(VecI32 sizes, int type, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(sizes), type));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(sizes), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(sizes), type));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_3(VecI32 sizes, int type, Scalar ar, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
-    CVD_SET(rval, new cv::Mat(CVDEREF(sizes), type, c));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(sizes), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar c = cv::Scalar(ar.val1, ar.val2, ar.val3, ar.val4);
+        CVD_SET(rval, new cv::Mat(CVDEREF(sizes), type, c));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_4(VecI32 sizes, int type, void* buf, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(sizes), type, buf));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(sizes), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(sizes), type, buf));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_5(
     const Scalar scalar, int rows, int cols, int type, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Scalar c = cv::Scalar(scalar.val1, scalar.val2, scalar.val3, scalar.val4);
-    CVD_SET(rval, new cv::Mat(rows, cols, type, c));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar c = cv::Scalar(scalar.val1, scalar.val2, scalar.val3, scalar.val4);
+        CVD_SET(rval, new cv::Mat(rows, cols, type, c));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_6(
     int rows, int cols, int type, void* buf, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Mat m = cv::Mat(rows, cols, type);
-    m.create(rows, cols, type);
-    memcpy(m.data, buf, m.total() * m.elemSize());
-    CVD_SET(rval, new cv::Mat(m));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Mat m = cv::Mat(rows, cols, type);
+        m.create(rows, cols, type);
+        memcpy(m.data, buf, m.total() * m.elemSize());
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_6_no_copy(
     int rows, int cols, int type, void* buf, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Mat m = cv::Mat(rows, cols, type, buf);
-    CVD_SET(rval, new cv::Mat(m));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Mat m = cv::Mat(rows, cols, type, buf);
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_7(VecPoint vec, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(vec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
+        END_WRAP
+    });
 }
 CvStatus* cv_Mat_create_8(VecPoint2f vec, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(vec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
+        END_WRAP
+    });
 }
 CvStatus* cv_Mat_create_9(VecPoint3f vec, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(vec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
+        END_WRAP
+    });
 }
 CvStatus* cv_Mat_create_10(VecPoint3i vec, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(vec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(vec), true));
+        END_WRAP
+    });
 }
 
 /**
@@ -127,12 +116,11 @@ CvStatus* cv_Mat_create_10(VecPoint3i vec, Mat* rval, CvCallback_0 callback) {
 CvStatus* cv_Mat_create_11(
     Mat self, int rows, int cols, int type, int prows, int pcols, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(rows, cols, type, (*self.ptr)->ptr(prows, pcols)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(rows, cols, type, (*self.ptr)->ptr(prows, pcols)));
+        END_WRAP
+    });
 }
 
 /*
@@ -141,85 +129,76 @@ CvStatus* cv_Mat_create_11(
 CvStatus* cv_Mat_create_12(
     Mat self, int rowStart, int rowEnd, int colStart, int colEnd, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(self), cv::Range(rowStart, rowEnd), cv::Range(colStart, colEnd)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(self), cv::Range(rowStart, rowEnd), cv::Range(colStart, colEnd)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_create_13(Mat self, CvRect roi, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Rect _roi(roi.x, roi.y, roi.width, roi.height);
-    CVD_SET(rval, new cv::Mat(CVDEREF(self), _roi));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Rect _roi(roi.x, roi.y, roi.width, roi.height);
+        CVD_SET(rval, new cv::Mat(CVDEREF(self), _roi));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_eye(int rows, int cols, int type, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(cv::Mat::eye(rows, cols, type)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(cv::Mat::eye(rows, cols, type)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_zeros(int rows, int cols, int type, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(cv::Mat::zeros(rows, cols, type)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(cv::Mat::zeros(rows, cols, type)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_ones(int rows, int cols, int type, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(cv::Mat::ones(rows, cols, type)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(cv::Mat::ones(rows, cols, type)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toVecPoint(Mat self, VecPoint* vec, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->copyTo(CVDEREF_P(vec));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->copyTo(CVDEREF_P(vec));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toVecPoint2f(Mat self, VecPoint2f* vec, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->copyTo(CVDEREF_P(vec));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->copyTo(CVDEREF_P(vec));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toVecPoint3f(Mat self, VecPoint3f* vec, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->copyTo(CVDEREF_P(vec));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->copyTo(CVDEREF_P(vec));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toVecPoint3i(Mat self, VecPoint3i* vec, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->copyTo(CVDEREF_P(vec));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->copyTo(CVDEREF_P(vec));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toFmtString(
@@ -244,13 +223,11 @@ CvStatus* cv_Mat_toFmtString(
 }
 
 void cv_Mat_close(MatPtr self) {
-    (*self->ptr)->release();
     CVD_FREE(self);
 }
 
 void cv_Mat_closeVoid(void* self) {
     auto p = reinterpret_cast<Mat*>(self);
-    (*p->ptr)->release();
     CVD_FREE(p);
 }
 
@@ -326,52 +303,47 @@ uchar* cv_Mat_data(Mat self) {
 CvStatus* cv_Mat_adjustROI(
     Mat self, int dtop, int dbottom, int dleft, int dright, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->adjustROI(dtop, dbottom, dleft, dright)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->adjustROI(dtop, dbottom, dleft, dright)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_locateROI(Mat self, CvSize* wholeSize, CvPoint* ofs, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Size sz;
-    cv::Point pt;
-    (*self.ptr)->locateROI(sz, pt);
-    *wholeSize = {sz.width, sz.height};
-    *ofs = {pt.x, pt.y};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz;
+        cv::Point pt;
+        (*self.ptr)->locateROI(sz, pt);
+        *wholeSize = {sz.width, sz.height};
+        *ofs = {pt.x, pt.y};
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_clone(Mat self, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->clone()));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->clone()));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_col(Mat self, int x, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->col(x)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->col(x)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_row(Mat self, int y, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->row(y)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->row(y)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_rowRange(Mat self, int start, int end, Mat* rval, CvCallback_0 callback) {
@@ -386,186 +358,168 @@ CvStatus* cv_colRange(Mat self, int start, int end, Mat* rval, CvCallback_0 call
 }
 
 CvStatus* cv_Mat_copyTo(Mat self, Mat dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->copyTo(CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->copyTo(CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_copyTo_1(Mat self, Mat dst, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->copyTo(CVDEREF(dst), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->copyTo(CVDEREF(dst), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_convertTo(Mat self, Mat dst, int type, CvCallback_0 callback) {
-    BEGIN_WRAP
-    (*self.ptr)->convertTo(CVDEREF(dst), type);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->convertTo(CVDEREF(dst), type);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_convertTo_1(
     Mat self, Mat dst, int type, float alpha, float beta, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->convertTo(CVDEREF(dst), type, alpha, beta);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->convertTo(CVDEREF(dst), type, alpha, beta);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_setTo(Mat self, Scalar value, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Scalar c_val(value.val1, value.val2, value.val3, value.val4);
-    (*self.ptr)->setTo(c_val, CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar c_val(value.val1, value.val2, value.val3, value.val4);
+        (*self.ptr)->setTo(c_val, CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toVecUChar(Mat self, VecUChar* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    if ((*self.ptr)->isContinuous()) {
-        CVD_SET(rval, new std::vector<uchar>((*self.ptr)->begin<uchar>(), (*self.ptr)->end<uchar>()));
-    } else {
-        throw cv::Exception(
-            cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
-        );
-    }
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        if ((*self.ptr)->isContinuous()) {
+            CVD_SET(rval, new std::vector<uchar>((*self.ptr)->begin<uchar>(), (*self.ptr)->end<uchar>()));
+        } else {
+            throw cv::Exception(
+                cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+            );
+        }
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_toVecChar(Mat self, VecChar* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    if ((*self.ptr)->isContinuous()) {
-        CVD_SET(rval, new std::vector<char>((*self.ptr)->ptr<char>(), (*self.ptr)->ptr<char>() + (*self.ptr)->step1()));
-    } else {
-        throw cv::Exception(
-            cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
-        );
-    }
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        if ((*self.ptr)->isContinuous()) {
+            CVD_SET(rval, new std::vector<char>((*self.ptr)->ptr<char>(), (*self.ptr)->ptr<char>() + (*self.ptr)->step1()));
+        } else {
+            throw cv::Exception(
+                cv::Error::StsNotImplemented, "Mat is not continuous", __func__, __FILE__, __LINE__
+            );
+        }
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_region(Mat self, CvRect r, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(self), cv::Rect(r.x, r.y, r.width, r.height)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(self), cv::Rect(r.x, r.y, r.width, r.height)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_reshape(Mat self, int cn, int rows, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->reshape(cn, rows)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->reshape(cn, rows)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_reshape_1(Mat self, int cn, VecI32 newshape, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->reshape(cn, CVDEREF(newshape))));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, newshape), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->reshape(cn, CVDEREF(newshape))));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_patchNaNs(Mat self, double val, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::patchNaNs(CVDEREF(self), val);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::patchNaNs(CVDEREF(self), val);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_convertFp16(Mat self, Mat rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::convertFp16(CVDEREF(self), CVDEREF(rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, rval), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::convertFp16(CVDEREF(self), CVDEREF(rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_mean(Mat self, Scalar* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Scalar c = cv::mean(CVDEREF(self));
-    *rval = Scalar{c.val[0], c.val[1], c.val[2], c.val[3]};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar c = cv::mean(CVDEREF(self));
+        *rval = Scalar{c.val[0], c.val[1], c.val[2], c.val[3]};
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_mean_1(Mat self, Mat mask, Scalar* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Scalar c = cv::mean(CVDEREF(self), CVDEREF(mask));
-    *rval = Scalar{c.val[0], c.val[1], c.val[2], c.val[3]};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Scalar c = cv::mean(CVDEREF(self), CVDEREF(mask));
+        *rval = Scalar{c.val[0], c.val[1], c.val[2], c.val[3]};
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_sqrt(Mat self, Mat rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::sqrt(CVDEREF(self), CVDEREF(rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, rval), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::sqrt(CVDEREF(self), CVDEREF(rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_t(Mat self, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->t()));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->t()));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_reinterpret(Mat self, int type, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat((*self.ptr)->reinterpret(type)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat((*self.ptr)->reinterpret(type)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Mat_getUMat(
     Mat self, int accessFlags, int usageFlags, UMat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat((*self.ptr)->getUMat(
-        static_cast<cv::AccessFlag>(accessFlags), static_cast<cv::UMatUsageFlags>(usageFlags)
-    )));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat((*self.ptr)->getUMat(
+            static_cast<cv::AccessFlag>(accessFlags), static_cast<cv::UMatUsageFlags>(usageFlags)
+        )));
+        END_WRAP
+    });
 }
 
 uchar* cv_Mat_ptr_uchar_1(Mat self, int i) {
@@ -1167,111 +1121,99 @@ CvStatus* cv_UMat_create_diag(UMat d, int usageFlags, UMat* rval) {
 }
 
 void cv_UMat_close(UMatPtr self) {
-    (*self->ptr)->release();
     CVD_FREE(self);
 }
 
 CvStatus* cv_UMat_getMat(UMat self, int accessFlags, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::Mat(CVDEREF(self).getMat(static_cast<cv::AccessFlag>(accessFlags))));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(CVDEREF(self).getMat(static_cast<cv::AccessFlag>(accessFlags))));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_row(UMat self, int y, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).row(y)));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).row(y)));
+        END_WRAP
+    });
 }
 CvStatus* cv_UMat_col(UMat self, int x, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).col(x)));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).col(x)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_rowRange(UMat self, int startrow, int endrow, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).rowRange(startrow, endrow)));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).rowRange(startrow, endrow)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_colRange(UMat self, int startcol, int endcol, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).colRange(startcol, endcol)));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).colRange(startcol, endcol)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_diag(UMat self, int d, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).diag(d)));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).diag(d)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_clone(UMat self, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).clone()));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).clone()));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_copyTo(UMat self, UMat dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVDEREF(self).copyTo(CVDEREF(dst));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self).copyTo(CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_copyTo_2(UMat self, UMat mask, UMat dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVDEREF(self).copyTo(CVDEREF(dst), CVDEREF(mask));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mask, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self).copyTo(CVDEREF(dst), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_convertTo(
     UMat self, int rtype, double alpha, double beta, UMat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVDEREF(self).convertTo(CVDEREF(dst), rtype, alpha, beta);
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self).convertTo(CVDEREF(dst), rtype, alpha, beta);
+        END_WRAP
+    });
 }
 
 //! sets some of the matrix elements to s, according to the mask
 // UMat& setTo(InputArray value, InputArray mask=noArray());
 CvStatus* cv_UMat_setTo(UMat self, Scalar scalar, UMat mask, CvCallback_0 callback) {
-    BEGIN_WRAP
-    const auto _scalar = cv::Scalar(scalar.val1, scalar.val2, scalar.val3, scalar.val4);
-    CVDEREF(self).setTo(_scalar, CVDEREF(mask));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        const auto _scalar = cv::Scalar(scalar.val1, scalar.val2, scalar.val3, scalar.val4);
+        CVDEREF(self).setTo(_scalar, CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 //! creates alternative matrix header for the same data, with different
@@ -1279,84 +1221,76 @@ CvStatus* cv_UMat_setTo(UMat self, Scalar scalar, UMat mask, CvCallback_0 callba
 // UMat reshape(int cn, int rows=0) const;
 // UMat reshape(int cn, int newndims, const int* newsz) const;
 CvStatus* cv_UMat_reshape(UMat self, int cn, int rows, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).reshape(cn, rows)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).reshape(cn, rows)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_reshape_2(
     UMat self, int cn, int newndims, const int* newsz, UMat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).reshape(cn, newndims, newsz)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).reshape(cn, newndims, newsz)));
+        END_WRAP
+    });
 }
 
 //! matrix transposition by means of matrix expressions
 // UMat t() const;
 CvStatus* cv_UMat_t(UMat self, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).t()));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).t()));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_inv(UMat self, int method, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).inv(method)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).inv(method)));
+        END_WRAP
+    });
 }
 
 //! per-element matrix multiplication by means of matrix expressions
 // UMat mul(InputArray m, double scale=1) const;
 CvStatus* cv_UMat_mul(UMat self, UMat m, double scale, UMat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    CVD_SET(rval, new cv::UMat(CVDEREF(self).mul(CVDEREF(m), scale)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, m), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::UMat(CVDEREF(self).mul(CVDEREF(m), scale)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_dot(UMat self, UMat m, double* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    rval[0] = CVDEREF(self).dot(CVDEREF(m));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, m), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        rval[0] = CVDEREF(self).dot(CVDEREF(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_UMat_createFunc(
     UMat self, int rows, int cols, int type, int usageFlags, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVDEREF(self).create(rows, cols, type, static_cast<cv::UMatUsageFlags>(usageFlags));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self).create(rows, cols, type, static_cast<cv::UMatUsageFlags>(usageFlags));
+        END_WRAP
+    });
 }
 CvStatus* cv_UMat_createFunc_2(
     UMat self, int ndims, const int* sizes, int type, int usageFlags, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVDEREF(self).create(ndims, sizes, type, static_cast<cv::UMatUsageFlags>(usageFlags));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self).create(ndims, sizes, type, static_cast<cv::UMatUsageFlags>(usageFlags));
+        END_WRAP
+    });
 }
 
 //! decreases reference counter;

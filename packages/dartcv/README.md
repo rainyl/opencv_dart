@@ -109,6 +109,9 @@ void main() {
 
 #### Asynchronous
 
+Every API has an `Async` twin that runs the work on a worker thread, so a heavy call does not block
+the isolate that started it (a Flutter UI thread stays responsive):
+
 ```dart
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'dart:async';
@@ -120,6 +123,24 @@ void main() async {
   await cv.imwriteAsync("test_cvtcolor.png", gray);
 }
 ```
+
+The non-`Async` functions stay synchronous: same thread, same call, they just block.
+
+A few properties are worth knowing:
+
+- One worker runs the jobs, first in first out, so calls that were issued in order also complete in
+  order. `cv.setAsyncThreads(n)` raises the count, which only pays off for work that blocks on I/O (a
+  capture, a slow file): OpenCV already fills every core inside a single call, so more workers
+  oversubscribe CPU-bound work.
+- `cv.asyncPending()` and `cv.asyncDrain()` expose the queue, for tests and shutdown.
+- Each `Async` function takes a `Duration? timeout`. A timeout abandons the *wait*, not the work:
+  OpenCV has no cancellation point, so the job runs to completion and still writes its results. That
+  is safe because the job keeps a reference to every handle it was given, so you may `dispose()` an
+  argument while the call is in flight.
+- An error raised inside the job arrives as a failed `Future`, not as a synchronous throw, because the
+  C entry point has already returned by then.
+- On the web there are no threads (see `tool/web/README.md`): `Async` still returns a `Future`, but the
+  work runs on the calling thread.
 
 #### Machine learning
 

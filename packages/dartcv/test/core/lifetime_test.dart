@@ -83,16 +83,18 @@ void main() async {
   test('a handle that is still referenced keeps its object counted', () {
     final mat = cv.Mat.zeros(8, 8, cv.MatType.CV_8UC1);
     final before = count();
-    final copy = mat.clone();
+    final copies = List.generate(200, (_) => mat.clone());
+    // 200 objects, so a handful of concurrently finalized objects in another suite cannot hide them.
     expect(
-      count(),
-      greaterThan(before),
-      reason: 'the clone object should be alive; live now:\n${cv.liveObjectStats()}',
+      count() - before,
+      greaterThan(100),
+      reason: 'the copies should be alive; live now:\n${cv.liveObjectStats()}',
     );
-    expect(copy.at<int>(0, 0), 0);
-    // the clone owns its own object, so it survives the original being released
+    // each copy owns its own object, so they survive the original being released
     mat.dispose();
-    expect(copy.at<int>(0, 0), 0);
-    copy.dispose();
+    for (final copy in copies) {
+      expect(copy.at<int>(0, 0), 0);
+      copy.dispose();
+    }
   });
 }

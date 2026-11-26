@@ -851,30 +851,27 @@ CvStatus* cv_freetype_FreeType2_create(FreeType2* rval) {
 }
 
 void cv_freetype_FreeType2_close(FreeType2Ptr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_freetype_FreeType2_loadFontData(
     FreeType2 self, const char* fontFileName, int idx, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVDEREF(self)->loadFontData(fontFileName, idx);
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self)->loadFontData(fontFileName, idx);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_freetype_FreeType2_loadFontData_buf(
     FreeType2 self, char* pBuf, size_t bufSize, int idx, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVDEREF(self)->loadFontData(pBuf, bufSize, idx);
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self)->loadFontData(pBuf, bufSize, idx);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_freetype_FreeType2_setSplitNumber(FreeType2 self, int num) {
@@ -895,21 +892,20 @@ CvStatus* cv_freetype_FreeType2_putText(
     bool bottomLeftOrigin,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    CVDEREF(self)->putText(
-        CVDEREF(img),
-        text,
-        cv::Point(org.x, org.y),
-        fontHeight,
-        cv::Scalar(color.val1, color.val2, color.val3),
-        thickness,
-        line_type,
-        bottomLeftOrigin
-    );
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self)->putText(
+            CVDEREF(img),
+            text,
+            cv::Point(org.x, org.y),
+            fontHeight,
+            cv::Scalar(color.val1, color.val2, color.val3),
+            thickness,
+            line_type,
+            bottomLeftOrigin
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_freetype_FreeType2_getTextSize(
@@ -921,11 +917,10 @@ CvStatus* cv_freetype_FreeType2_getTextSize(
     CvSize* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto sz = CVDEREF(self)->getTextSize(text, fontHeight, thickness, baseLine);
-    *rval = {sz.width, sz.height};
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto sz = CVDEREF(self)->getTextSize(text, fontHeight, thickness, baseLine);
+        *rval = {sz.width, sz.height};
+        END_WRAP
+    });
 }

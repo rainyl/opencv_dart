@@ -125,12 +125,9 @@ extern "C" {
     delete value->ptr;  \
     value->ptr = nullptr;
 #else
-// for dart ffi, value should be freed here or a memory leak will occur
-#define CVD_FREE(value)   \
-    delete value->ptr;    \
-    value->ptr = nullptr; \
-    delete value;         \
-    value = nullptr
+// for dart ffi, the wrapper must be freed: `cvd::release` deletes now, or hands the deletion to
+// the end of the queue when a job still holds the handle (see core/async.h)
+#define CVD_FREE(value) ::cvd::release(value)
 #endif
 
 #define CVDEREF(value) (**(value).ptr)
@@ -474,25 +471,11 @@ typedef struct UsacParams {
     int final_polisher_iterations;
 } UsacParams;
 
-typedef void (*CvCallback_0)();
+// Completion callbacks carry the status of the work that ran: with real async the work finishes
+// long after the C entry point returned, so the callback is the only channel left for an error.
+typedef void (*CvCallback_0)(CvStatus *status);
 
-typedef void (*CvCallback_1)(void *);
-
-typedef void (*CvCallback_2)(void *, void *);
-
-typedef void (*CvCallback_3)(void *, void *, void *);
-
-typedef void (*CvCallback_4)(void *, void *, void *, void *);
-
-typedef void (*CvCallback_5)(void *, void *, void *, void *, void *);
-
-typedef void (*CvCallback_6)(void *, void *, void *, void *, void *, void *);
-
-typedef void (*CvCallback_7)(void *, void *, void *, void *, void *, void *, void *);
-
-typedef void (*CvCallback_8)(void *, void *, void *, void *, void *, void *, void *, void *);
-
-typedef void (*CvCallback_9)(void *, void *, void *, void *, void *, void *, void *, void *, void *);
+typedef void (*CvCallback_1)(CvStatus *status, void *p);
 
 CVD_TYPEDEF_STD_VEC(uchar, VecUChar);
 CVD_TYPEDEF_STD_VEC(char, VecChar);

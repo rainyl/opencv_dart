@@ -17,11 +17,12 @@ import 'scalar.dart';
 extension MatAsync on Mat {
   static Future<Mat> emptyAsync() async => Mat.empty();
 
-  static Future<Mat> fromScalarAsync(int rows, int cols, MatType type, Scalar s) async {
+  static Future<Mat> fromScalarAsync(int rows, int cols, MatType type, Scalar s, {Duration? timeout}) async {
     final p = calloc<cvg.Mat>();
     return cvRunAsync0(
       (callback) => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, callback),
       (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
+      timeout: timeout,
     );
   }
 
@@ -63,9 +64,13 @@ extension MatAsync on Mat {
     );
   }
 
-  Future<Mat> cloneAsync() async {
+  Future<Mat> cloneAsync({Duration? timeout}) async {
     final dst = Mat.empty();
-    return cvRunAsync0((callback) => ccore.cv_Mat_clone(ref, dst.ptr, callback), (c) => c.complete(dst));
+    return cvRunAsync0(
+      (callback) => ccore.cv_Mat_clone(ref, dst.ptr, callback),
+      (c) => c.complete(dst),
+      timeout: timeout,
+    );
   }
 
   Future<void> copyToAsync(Mat dst, {Mat? mask}) async => cvRunAsync0(

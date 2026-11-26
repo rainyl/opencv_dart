@@ -63,13 +63,13 @@ Mat imread(String filename, {int flags = IMREAD_COLOR}) {
 }
 
 /// async version of [imread]
-Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
+Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR, Duration? timeout}) async {
   final dst = Mat.empty();
   final cname = filename.toNativeUtf8().cast<ffi.Char>();
   return cvRunAsync0((callback) => cimgcodecs.cv_imread(cname, flags, dst.ptr, callback), (c) {
     calloc.free(cname);
     return c.complete(dst);
-  });
+  }, timeout: timeout);
 }
 
 /// write a Mat to an image file.
@@ -90,7 +90,7 @@ bool imwrite(String filename, InputArray img, {VecI32? params}) {
 }
 
 /// async version of [imwrite]
-Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) async {
+Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params, Duration? timeout}) async {
   final fname = filename.toNativeUtf8().cast<ffi.Char>();
   final p = calloc<ffi.Bool>();
   void completeFunc(Completer<bool> c) {
@@ -100,7 +100,11 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
   }
 
   if (params == null) {
-    return cvRunAsync0((callback) => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, callback), completeFunc);
+    return cvRunAsync0(
+      (callback) => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, callback),
+      completeFunc,
+      timeout: timeout,
+    );
   }
   return cvRunAsync0(
     (callback) => cimgcodecs.cv_imwrite_1(fname.cast(), img.ref, params.ref, p, callback),
@@ -138,7 +142,12 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
 }
 
 /// async version of [imencode]
-Future<(bool, Uint8List)> imencodeAsync(String ext, InputArray img, {VecI32? params}) async {
+Future<(bool, Uint8List)> imencodeAsync(
+  String ext,
+  InputArray img, {
+  VecI32? params,
+  Duration? timeout,
+}) async {
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
@@ -157,6 +166,7 @@ Future<(bool, Uint8List)> imencodeAsync(String ext, InputArray img, {VecI32? par
     return cvRunAsync0(
       (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, callback),
       completeFunc,
+      timeout: timeout,
     );
   }
   return cvRunAsync0(
@@ -166,7 +176,12 @@ Future<(bool, Uint8List)> imencodeAsync(String ext, InputArray img, {VecI32? par
 }
 
 /// Same as [imencodeAsync] but returns [VecUChar]
-Future<(bool, VecUChar)> imencodeVecAsync(String ext, InputArray img, {VecI32? params}) async {
+Future<(bool, VecUChar)> imencodeVecAsync(
+  String ext,
+  InputArray img, {
+  VecI32? params,
+  Duration? timeout,
+}) async {
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
   final cExt = ext.toNativeUtf8().cast<ffi.Char>();
@@ -183,6 +198,7 @@ Future<(bool, VecUChar)> imencodeVecAsync(String ext, InputArray img, {VecI32? p
     return cvRunAsync0(
       (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, callback),
       completeFunc,
+      timeout: timeout,
     );
   }
   return cvRunAsync0(
@@ -219,9 +235,9 @@ Future<Mat> imdecodeAsync(Uint8List buf, int flags, {Mat? dst}) async {
 }
 
 /// Same as [imdecodeAsync] but accepts [VecUChar]
-Future<Mat> imdecodeVecAsync(VecUChar vec, int flags, {Mat? dst}) async {
+Future<Mat> imdecodeVecAsync(VecUChar vec, int flags, {Mat? dst, Duration? timeout}) async {
   dst ??= Mat.empty();
   return cvRunAsync0((callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, callback), (c) {
     return c.complete(dst);
-  });
+  }, timeout: timeout);
 }

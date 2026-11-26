@@ -27,18 +27,16 @@ CvStatus* cv_BackgroundSubtractorMOG2_create_1(
     END_WRAP
 }
 void cv_BackgroundSubtractorMOG2_close(BackgroundSubtractorMOG2Ptr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_BackgroundSubtractorMOG2_apply(
     BackgroundSubtractorMOG2 self, Mat src, Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->apply(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->apply(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_BackgroundSubtractorKNN_create(BackgroundSubtractorKNN* rval) {
@@ -56,18 +54,16 @@ CvStatus* cv_BackgroundSubtractorKNN_create_1(
     END_WRAP
 }
 void cv_BackgroundSubtractorKNN_close(BackgroundSubtractorKNNPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_BackgroundSubtractorKNN_apply(
     BackgroundSubtractorKNN self, Mat src, Mat dst, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->apply(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->apply(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_calcOpticalFlowPyrLK(
@@ -79,14 +75,13 @@ CvStatus* cv_calcOpticalFlowPyrLK(
     VecF32* err,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::calcOpticalFlowPyrLK(
-        CVDEREF(prevImg), CVDEREF(nextImg), CVDEREF(prevPts), CVDEREF_P(nextPts), CVDEREF_P(status), CVDEREF_P(err)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(prevImg, nextImg, prevPts), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::calcOpticalFlowPyrLK(
+            CVDEREF(prevImg), CVDEREF(nextImg), CVDEREF(prevPts), CVDEREF_P(nextPts), CVDEREF_P(status), CVDEREF_P(err)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_calcOpticalFlowPyrLK_1(
@@ -103,25 +98,24 @@ CvStatus* cv_calcOpticalFlowPyrLK_1(
     double minEigThreshold,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-    cv::calcOpticalFlowPyrLK(
-        CVDEREF(prevImg),
-        CVDEREF(nextImg),
-        CVDEREF(prevPts),
-        CVDEREF_P(nextPts),
-        CVDEREF_P(status),
-        CVDEREF_P(err),
-        cv::Size(winSize.width, winSize.height),
-        maxLevel,
-        tc,
-        flags,
-        minEigThreshold
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(prevImg, nextImg, prevPts), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+        cv::calcOpticalFlowPyrLK(
+            CVDEREF(prevImg),
+            CVDEREF(nextImg),
+            CVDEREF(prevPts),
+            CVDEREF_P(nextPts),
+            CVDEREF_P(status),
+            CVDEREF_P(err),
+            cv::Size(winSize.width, winSize.height),
+            maxLevel,
+            tc,
+            flags,
+            minEigThreshold
+        );
+        END_WRAP
+    });
 }
 CvStatus* cv_calcOpticalFlowFarneback(
     Mat prevImg,
@@ -136,23 +130,22 @@ CvStatus* cv_calcOpticalFlowFarneback(
     int flags,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::calcOpticalFlowFarneback(
-        CVDEREF(prevImg),
-        CVDEREF(nextImg),
-        CVDEREF(flow),
-        pyrScale,
-        levels,
-        winsize,
-        iterations,
-        polyN,
-        polySigma,
-        flags
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(prevImg, nextImg, flow), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::calcOpticalFlowFarneback(
+            CVDEREF(prevImg),
+            CVDEREF(nextImg),
+            CVDEREF(flow),
+            pyrScale,
+            levels,
+            winsize,
+            iterations,
+            polyN,
+            polySigma,
+            flags
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findTransformECC(
@@ -166,43 +159,40 @@ CvStatus* cv_findTransformECC(
     double* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-    *rval = cv::findTransformECC(
-        CVDEREF(templateImage),
-        CVDEREF(inputImage),
-        CVDEREF(warpMatrix),
-        motionType,
-        tc,
-        CVDEREF(inputMask),
-        gaussFiltSize
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(templateImage, inputImage, warpMatrix, inputMask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+        *rval = cv::findTransformECC(
+            CVDEREF(templateImage),
+            CVDEREF(inputImage),
+            CVDEREF(warpMatrix),
+            motionType,
+            tc,
+            CVDEREF(inputMask),
+            gaussFiltSize
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_TrackerMIL_init(TrackerMIL self, Mat image, CvRect bbox, CvCallback_0 callback) {
-    BEGIN_WRAP
-    auto rect = cv::Rect(bbox.x, bbox.y, bbox.width, bbox.height);
-    (CVDEREF(self))->init(CVDEREF(image), rect);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, image), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto rect = cv::Rect(bbox.x, bbox.y, bbox.width, bbox.height);
+        (CVDEREF(self))->init(CVDEREF(image), rect);
+        END_WRAP
+    });
 }
 CvStatus* cv_TrackerMIL_update(
     TrackerMIL self, Mat image, CvRect* boundingBox, bool* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Rect bb;
-    *rval = (CVDEREF(self))->update(CVDEREF(image), bb);
-    *boundingBox = {bb.x, bb.y, bb.width, bb.height};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, image), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Rect bb;
+        *rval = (CVDEREF(self))->update(CVDEREF(image), bb);
+        *boundingBox = {bb.x, bb.y, bb.width, bb.height};
+        END_WRAP
+    });
 }
 
 CvStatus* cv_TrackerMIL_create(TrackerMIL* rval) {
@@ -211,7 +201,6 @@ CvStatus* cv_TrackerMIL_create(TrackerMIL* rval) {
     END_WRAP
 }
 void cv_TrackerMIL_close(TrackerMILPtr self) {
-    (*self->ptr)->reset();
     CVD_FREE(self);
 }
 
@@ -229,12 +218,11 @@ void cv_KalmanFilter_close(KalmanFilterPtr self) {
 CvStatus* cv_KalmanFilter_init(
     KalmanFilter self, int dynamParams, int measureParams, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->init(dynamParams, measureParams);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->init(dynamParams, measureParams);
+        END_WRAP
+    });
 }
 CvStatus* cv_KalmanFilter_init_1(
     KalmanFilter self,
@@ -244,43 +232,39 @@ CvStatus* cv_KalmanFilter_init_1(
     int type,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    (*self.ptr)->init(dynamParams, measureParams, controlParams, type);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        (*self.ptr)->init(dynamParams, measureParams, controlParams, type);
+        END_WRAP
+    });
 }
 CvStatus* cv_KalmanFilter_predict(KalmanFilter self, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    auto result = (*self.ptr)->predict();
-    CVD_SET(rval, new cv::Mat(result));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto result = (*self.ptr)->predict();
+        CVD_SET(rval, new cv::Mat(result));
+        END_WRAP
+    });
 }
 CvStatus* cv_KalmanFilter_predict_1(
     KalmanFilter self, Mat control, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto result = (*self.ptr)->predict(CVDEREF(control));
-    CVD_SET(rval, new cv::Mat(result));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, control), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto result = (*self.ptr)->predict(CVDEREF(control));
+        CVD_SET(rval, new cv::Mat(result));
+        END_WRAP
+    });
 }
 CvStatus* cv_KalmanFilter_correct(
     KalmanFilter self, Mat measurement, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto result = (*self.ptr)->correct(CVDEREF(measurement));
-    CVD_SET(rval, new cv::Mat(result));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, measurement), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto result = (*self.ptr)->correct(CVDEREF(measurement));
+        CVD_SET(rval, new cv::Mat(result));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_KalmanFilter_get_statePre(KalmanFilter self, Mat* rval) {

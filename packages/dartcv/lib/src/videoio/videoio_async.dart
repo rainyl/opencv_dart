@@ -17,7 +17,11 @@ extension VideoCaptureAsync on VideoCapture {
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a57c0e81e83e60f36c83027dc2a188e80
-  static Future<VideoCapture> fromFileAsync(String filename, {int apiPreference = CAP_ANY}) async {
+  static Future<VideoCapture> fromFileAsync(
+    String filename, {
+    int apiPreference = CAP_ANY,
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.VideoCapture>();
     final cname = filename.toNativeUtf8().cast<ffi.Char>();
     return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, callback), (
@@ -25,16 +29,20 @@ extension VideoCaptureAsync on VideoCapture {
     ) {
       calloc.free(cname);
       return c.complete(VideoCapture.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
-  static Future<VideoCapture> fromDeviceAsync(int device, {int apiPreference = CAP_ANY}) async {
+  static Future<VideoCapture> fromDeviceAsync(
+    int device, {
+    int apiPreference = CAP_ANY,
+    Duration? timeout,
+  }) async {
     final p = calloc<cvg.VideoCapture>();
     return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, callback), (
       c,
     ) {
       return c.complete(VideoCapture.fromPointer(p));
-    });
+    }, timeout: timeout);
   }
 
   /// Grabs the next frame from video file or capturing device.
@@ -43,14 +51,14 @@ extension VideoCaptureAsync on VideoCapture {
   Future<void> grabAsync() =>
       cvRunAsync0((callback) => cvideoio.cv_VideoCapture_grab(ref, callback), (c) => c.complete());
 
-  Future<(bool, Mat)> readAsync({Mat? m}) async {
+  Future<(bool, Mat)> readAsync({Mat? m, Duration? timeout}) async {
     m ??= Mat.empty();
     final p = calloc<ffi.Bool>();
     return cvRunAsync0((callback) => cvideoio.cv_VideoCapture_read(ref, m!.ref, p, callback), (c) {
       final rval = (p.value, m!);
       calloc.free(p);
       return c.complete(rval);
-    });
+    }, timeout: timeout);
   }
 
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters.
@@ -58,7 +66,7 @@ extension VideoCaptureAsync on VideoCapture {
   /// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
-  Future<bool> openAsync(String uri, {int apiPreference = CAP_ANY}) async {
+  Future<bool> openAsync(String uri, {int apiPreference = CAP_ANY, Duration? timeout}) async {
     final cname = uri.toNativeUtf8().cast<ffi.Char>();
     final success = calloc<ffi.Bool>();
     return cvRunAsync0(
@@ -69,13 +77,14 @@ extension VideoCaptureAsync on VideoCapture {
         calloc.free(success);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
   /// Opens a camera for video capturing with API Preference and parameters.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a10867868137c2d142aac30a0648d00fe
-  Future<bool> openIndexAsync(int index, {int apiPreference = CAP_ANY}) async {
+  Future<bool> openIndexAsync(int index, {int apiPreference = CAP_ANY, Duration? timeout}) async {
     final success = calloc<ffi.Bool>();
     return cvRunAsync0(
       (callback) => cvideoio.cv_VideoCapture_open_3(ref, index, apiPreference, success, callback),
@@ -84,6 +93,7 @@ extension VideoCaptureAsync on VideoCapture {
         calloc.free(success);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 }
@@ -96,6 +106,7 @@ extension VideoWriterAsync on VideoWriter {
     (int, int) frameSize, {
     int? apiPreference,
     bool isColor = true,
+    Duration? timeout,
   }) {
     final p = calloc<cvg.VideoWriter>();
     final cname = filename.toNativeUtf8();
@@ -116,6 +127,7 @@ extension VideoWriterAsync on VideoWriter {
           calloc.free(cname);
           return c.complete(VideoWriter.fromPointer(p));
         },
+        timeout: timeout,
       );
     }
     return cvRunAsync0(
@@ -144,6 +156,7 @@ extension VideoWriterAsync on VideoWriter {
     (int, int) frameSize, {
     int? apiPreference,
     bool isColor = true,
+    Duration? timeout,
   }) {
     final cname = filename.toNativeUtf8();
     final codec_ = VideoWriter.fourcc(codec);
@@ -167,6 +180,7 @@ extension VideoWriterAsync on VideoWriter {
           calloc.free(p);
           c.complete(rval);
         },
+        timeout: timeout,
       );
     }
 
@@ -192,10 +206,11 @@ extension VideoWriterAsync on VideoWriter {
     );
   }
 
-  Future<void> writeAsync(InputArray image) async {
+  Future<void> writeAsync(InputArray image, {Duration? timeout}) async {
     return cvRunAsync0(
       (callback) => cvideoio.cv_VideoWriter_write(ref, image.ref, callback),
       (c) => c.complete(),
+      timeout: timeout,
     );
   }
 }
