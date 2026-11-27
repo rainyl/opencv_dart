@@ -11,20 +11,20 @@ import '../core/point.dart';
 import './photo.dart';
 
 extension MergeMertensAsync on MergeMertens {
-  Future<Mat> processAsync(VecMat src) async {
+  Future<Mat> processAsync(VecMat src, {Duration? timeout}) async {
     final dst = Mat.empty();
     return cvRunAsync0((callback) => cphoto.cv_MergeMertens_process(ref, src.ref, dst.ref, callback), (c) {
       return c.complete(dst);
-    });
+    }, timeout: timeout);
   }
 }
 
 extension AlignMTBAsync on AlignMTB {
-  Future<VecMat> processAsync(VecMat src) async {
+  Future<VecMat> processAsync(VecMat src, {Duration? timeout}) async {
     final dst = VecMat();
     return cvRunAsync0((callback) => cphoto.cv_AlignMTB_process(ref, src.ref, dst.ptr, callback), (c) {
       return c.complete(dst);
-    });
+    }, timeout: timeout);
   }
 }
 
@@ -34,6 +34,7 @@ Future<Mat> colorChangeAsync(
   double redMul = 1.0,
   double greenMul = 1.0,
   double blueMul = 1.0,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -41,16 +42,25 @@ Future<Mat> colorChangeAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
-Future<Mat> seamlessCloneAsync(InputArray src, InputArray dst, InputArray mask, Point p, int flags) async {
+Future<Mat> seamlessCloneAsync(
+  InputArray src,
+  InputArray dst,
+  InputArray mask,
+  Point p,
+  int flags, {
+  Duration? timeout,
+}) async {
   final blend = Mat.empty();
   return cvRunAsync0(
     (callback) => cphoto.cv_seamlessClone(src.ref, dst.ref, mask.ref, p.ref, blend.ref, flags, callback),
     (c) {
       return c.complete(blend);
     },
+    timeout: timeout,
   );
 }
 
@@ -59,6 +69,7 @@ Future<Mat> illuminationChangeAsync(
   InputArray mask, {
   double alpha = 0.2,
   double beta = 0.4,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -66,6 +77,7 @@ Future<Mat> illuminationChangeAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
@@ -75,6 +87,7 @@ Future<Mat> textureFlatteningAsync(
   double lowThreshold = 30,
   double highThreshold = 45,
   int kernelSize = 3,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -90,6 +103,7 @@ Future<Mat> textureFlatteningAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
@@ -98,6 +112,7 @@ Future<Mat> fastNlMeansDenoisingAsync(
   double h = 3,
   int templateWindowSize = 7,
   int searchWindowSize = 21,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -106,6 +121,7 @@ Future<Mat> fastNlMeansDenoisingAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
@@ -115,6 +131,7 @@ Future<Mat> fastNlMeansDenoisingColoredAsync(
   double hColor = 3,
   int templateWindowSize = 7,
   int searchWindowSize = 21,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -130,6 +147,7 @@ Future<Mat> fastNlMeansDenoisingColoredAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
@@ -141,6 +159,7 @@ Future<Mat> fastNlMeansDenoisingColoredMultiAsync(
   double hColor = 3,
   int templateWindowSize = 7,
   int searchWindowSize = 21,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -158,14 +177,20 @@ Future<Mat> fastNlMeansDenoisingColoredMultiAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
-Future<Mat> detailEnhanceAsync(InputArray src, {double sigmaS = 10, double sigmaR = 0.15}) async {
+Future<Mat> detailEnhanceAsync(
+  InputArray src, {
+  double sigmaS = 10,
+  double sigmaR = 0.15,
+  Duration? timeout,
+}) async {
   final dst = Mat.empty();
   return cvRunAsync0((callback) => cphoto.cv_detailEnhance(src.ref, dst.ref, sigmaS, sigmaR, callback), (c) {
     return c.complete(dst);
-  });
+  }, timeout: timeout);
 }
 
 Future<Mat> edgePreservingFilterAsync(
@@ -173,6 +198,7 @@ Future<Mat> edgePreservingFilterAsync(
   int flags = 1,
   double sigmaS = 60,
   double sigmaR = 0.4,
+  Duration? timeout,
 }) async {
   final dst = Mat.empty();
   return cvRunAsync0(
@@ -180,6 +206,7 @@ Future<Mat> edgePreservingFilterAsync(
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }
 
@@ -188,6 +215,7 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
   double sigmaS = 60,
   double sigmaR = 0.07,
   double shadeFactor = 0.02,
+  Duration? timeout,
 }) async {
   final dst1 = Mat.empty();
   final dst2 = Mat.empty();
@@ -196,22 +224,35 @@ Future<(Mat dst1, Mat dst2)> pencilSketchAsync(
     (c) {
       return c.complete((dst1, dst2));
     },
+    timeout: timeout,
   );
 }
 
-Future<Mat> stylizationAsync(InputArray src, {double sigmaS = 60, double sigmaR = 0.45}) async {
+Future<Mat> stylizationAsync(
+  InputArray src, {
+  double sigmaS = 60,
+  double sigmaR = 0.45,
+  Duration? timeout,
+}) async {
   final dst = Mat.empty();
   return cvRunAsync0((callback) => cphoto.cv_stylization(src.ref, dst.ref, sigmaS, sigmaR, callback), (c) {
     return c.complete(dst);
-  });
+  }, timeout: timeout);
 }
 
-Future<Mat> inpaintAsync(InputArray src, InputArray inpaintMask, double inpaintRadius, int flags) async {
+Future<Mat> inpaintAsync(
+  InputArray src,
+  InputArray inpaintMask,
+  double inpaintRadius,
+  int flags, {
+  Duration? timeout,
+}) async {
   final dst = Mat.empty();
   return cvRunAsync0(
     (callback) => cphoto.cv_inpaint(src.ref, inpaintMask.ref, dst.ref, inpaintRadius, flags, callback),
     (c) {
       return c.complete(dst);
     },
+    timeout: timeout,
   );
 }

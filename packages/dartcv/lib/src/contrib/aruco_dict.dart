@@ -92,21 +92,25 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
   }
 
   factory ArucoDictionary.empty() {
-    final p = calloc<cvg.ArucoDictionary>();
-    cvRun(() => ccontrib.cv_aruco_Dictionary_create(p));
-    return ArucoDictionary._(p);
+    return ArucoDictionary._(cvCreate(calloc<cvg.ArucoDictionary>(), ccontrib.cv_aruco_Dictionary_create));
   }
 
   factory ArucoDictionary.fromBytesList(Mat bytesList, int markerSize, {int maxCorr = 0}) {
-    final p = calloc<cvg.ArucoDictionary>();
-    cvRun(() => ccontrib.cv_aruco_Dictionary_create_1(bytesList.ref, markerSize, maxCorr, p));
-    return ArucoDictionary._(p);
+    return ArucoDictionary._(
+      cvCreate(
+        calloc<cvg.ArucoDictionary>(),
+        (p) => ccontrib.cv_aruco_Dictionary_create_1(bytesList.ref, markerSize, maxCorr, p),
+      ),
+    );
   }
 
   factory ArucoDictionary.predefined(PredefinedDictionaryType type) {
-    final p = calloc<cvg.ArucoDictionary>();
-    cvRun(() => ccontrib.cv_aruco_getPredefinedDictionary(type.value, p));
-    return ArucoDictionary._(p);
+    return ArucoDictionary._(
+      cvCreate(
+        calloc<cvg.ArucoDictionary>(),
+        (p) => ccontrib.cv_aruco_getPredefinedDictionary(type.value, p),
+      ),
+    );
   }
 
   Mat generateImageMarker(int id, int sidePixels, {OutputArray? dst, int borderBits = 1}) {
@@ -120,12 +124,21 @@ class ArucoDictionary extends CvStruct<cvg.ArucoDictionary> {
 
   (bool rval, int idx, int rotation) identify(InputArray onlyBits, double maxCorrectionRate) {
     final pIdx = calloc<ffi.Int>();
-    final pRotation = calloc<ffi.Int>();
-    final rval = ccontrib.cv_aruco_Dictionary_identify(ref, onlyBits.ref, pIdx, pRotation, maxCorrectionRate);
-    final ret = (rval, pIdx.value, pRotation.value);
-    calloc.free(pIdx);
-    calloc.free(pRotation);
-    return ret;
+    try {
+      final pRotation = calloc<ffi.Int>();
+      final rval = ccontrib.cv_aruco_Dictionary_identify(
+        ref,
+        onlyBits.ref,
+        pIdx,
+        pRotation,
+        maxCorrectionRate,
+      );
+      final ret = (rval, pIdx.value, pRotation.value);
+      calloc.free(pRotation);
+      return ret;
+    } finally {
+      calloc.free(pIdx);
+    }
   }
 
   Mat get bytesList {

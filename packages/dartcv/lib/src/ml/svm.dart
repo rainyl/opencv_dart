@@ -74,9 +74,7 @@ class SVM extends CvStruct<cml.SVM> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [SVM.load].
   factory SVM.create() {
-    final p = calloc<cml.SVM>();
-    cvRun(() => cml.cv_ml_SVM_create(p));
-    return SVM._(p);
+    return SVM._(cvCreate(calloc<cml.SVM>(), cml.cv_ml_SVM_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -98,16 +96,8 @@ class SVM extends CvStruct<cml.SVM> {
     ),
   );
 
-  factory SVM._make(ffi.Pointer<cml.CvStatus> Function(cml.SVMPtr p) func) {
-    final p = calloc<cml.SVM>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return SVM._(p);
-  }
+  factory SVM._make(ffi.Pointer<cml.CvStatus> Function(cml.SVMPtr p) func) =>
+      SVM._(cvCreate(calloc<cml.SVM>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.SVMPtr>(cml.addresses.cv_ml_SVM_close);
 

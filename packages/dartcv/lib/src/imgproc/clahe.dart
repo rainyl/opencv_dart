@@ -19,11 +19,7 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
     }
   }
   factory CLAHE.fromPointer(cvg.CLAHEPtr ptr) => CLAHE._(ptr);
-  factory CLAHE.empty() {
-    final p = calloc<cvg.CLAHE>();
-    cimgproc.cv_CLAHE_create(p);
-    return CLAHE._(p);
-  }
+  factory CLAHE.empty() => CLAHE._(cvCreate(calloc<cvg.CLAHE>(), cimgproc.cv_CLAHE_create));
 
   factory CLAHE([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) =>
       CLAHE.create(clipLimit, tileGridSize);
@@ -33,13 +29,16 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
   /// For further details, please see:
   /// https:///docs.opencv.org/master/d6/db6/classcv_1_1CLAHE.html
   factory CLAHE.create([double clipLimit = 40, (int width, int height) tileGridSize = (8, 8)]) {
-    final p = calloc<cvg.CLAHE>();
     final size = calloc<cvg.CvSize>()
       ..ref.width = tileGridSize.$1
       ..ref.height = tileGridSize.$2;
-    cimgproc.cv_CLAHE_create_1(clipLimit, size.ref, p);
-    calloc.free(size);
-    return CLAHE._(p);
+    try {
+      return CLAHE._(
+        cvCreate(calloc<cvg.CLAHE>(), (p) => cimgproc.cv_CLAHE_create_1(clipLimit, size.ref, p)),
+      );
+    } finally {
+      calloc.free(size);
+    }
   }
 
   /// Apply CLAHE.
@@ -52,11 +51,11 @@ class CLAHE extends CvStruct<cvg.CLAHE> {
     return dst;
   }
 
-  Future<Mat> applyAsync(Mat src, {Mat? dst}) async {
+  Future<Mat> applyAsync(Mat src, {Mat? dst, Duration? timeout}) async {
     dst ??= Mat.empty();
     return cvRunAsync0((callback) => cimgproc.cv_CLAHE_apply(ref, src.ref, dst!.ref, callback), (c) {
       return c.complete(dst);
-    });
+    }, timeout: timeout);
   }
 
   double get clipLimit => cimgproc.cv_CLAHE_getClipLimit(ref);

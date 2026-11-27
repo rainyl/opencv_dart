@@ -28,8 +28,10 @@ Differences from native:
   browser's garbage collector does not see the wasm heap, so it may collect late.
 - `Mat.data` and other typed-data views point into the wasm heap; growing the heap (any large
   allocation) detaches them, so re-read them after further OpenCV calls instead of keeping them.
-- The `*Async` functions return Futures but run on the calling thread (as on native, where the
-  C side completes the callback before returning). Move heavy work to a Web Worker if needed.
+- The `*Async` functions return Futures but run on the calling thread: the browser has no threads
+  (native platforms get a real worker thread, see `src/dartcv/core/async.h`), and a blocking wasm call
+  also blocks the JavaScript event loop. A timeout therefore cannot abandon the wait early either -
+  it fires as soon as the work returns. Move heavy work to a Web Worker if needed.
 - File paths refer to Emscripten's in-memory file system. Decode browser data with `imdecode`
   instead of `imread`, and load models with the `fromBytes`/buffer variants.
 - `highgui` and `gapi` are not in the web build; their functions throw `UnsupportedError`.
@@ -126,14 +128,21 @@ drops the unused `dart:ffi` import ffigen writes into it, and both platforms imp
 - Doc comments travel with their declaration, so the web bindings document the same API as the
 native ones.
 
+The registration block is not just signatures: for every callback typedef it also records how to
+rebuild a `Pointer` argument with the pointee type the callback declares (e.g.
+`(a) => ffi.Pointer<CvStatus>.fromAddress(a)`). A callback parameter is reified, and dart2js checks it
+on entry to the closure, so the shim cannot hand it its generic `Pointer<Void>` - which is what broke
+every `*Async` call in the browser. Null entries are `Pointer<Void>` parameters, where the generic
+pointer is right.
+
 ## Testing
 
 ```bash
-dart test -p chrome test/web_test.dart
-dart test -p chrome -c dart2wasm test/web_test.dart
+dart test -p chrome test/web/web_test.dart
+dart test -p chrome -c dart2wasm test/web/web_test.dart
 ```
 
-`test/web_test.dart` runs every test file that compiles for the web (all but the ones using
+`test/web/web_test.dart` runs every test file that compiles for the web (all but the ones using
 `dart:io`, highgui and gapi) against `build/web/dartcv.wasm`, after copying the fixtures into the
 in-memory file system.
 

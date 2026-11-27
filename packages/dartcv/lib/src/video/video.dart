@@ -26,18 +26,21 @@ class BackgroundSubtractorMOG2 extends CvStruct<cvg.BackgroundSubtractorMOG2> {
     }
   }
   factory BackgroundSubtractorMOG2.empty() {
-    final p = calloc<cvg.BackgroundSubtractorMOG2>();
-    cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create(p));
-    return BackgroundSubtractorMOG2(p);
+    return BackgroundSubtractorMOG2(
+      cvCreate(calloc<cvg.BackgroundSubtractorMOG2>(), cvideo.cv_BackgroundSubtractorMOG2_create),
+    );
   }
   factory BackgroundSubtractorMOG2.create({
     int history = 500,
     double varThreshold = 16,
     bool detectShadows = true,
   }) {
-    final p = calloc<cvg.BackgroundSubtractorMOG2>();
-    cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p));
-    return BackgroundSubtractorMOG2(p);
+    return BackgroundSubtractorMOG2(
+      cvCreate(
+        calloc<cvg.BackgroundSubtractorMOG2>(),
+        (p) => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p),
+      ),
+    );
   }
 
   Mat apply(Mat src) {
@@ -77,18 +80,21 @@ class BackgroundSubtractorKNN extends CvStruct<cvg.BackgroundSubtractorKNN> {
   }
 
   factory BackgroundSubtractorKNN.empty() {
-    final p = calloc<cvg.BackgroundSubtractorKNN>();
-    cvRun(() => cvideo.cv_BackgroundSubtractorKNN_create(p));
-    return BackgroundSubtractorKNN(p);
+    return BackgroundSubtractorKNN(
+      cvCreate(calloc<cvg.BackgroundSubtractorKNN>(), cvideo.cv_BackgroundSubtractorKNN_create),
+    );
   }
   factory BackgroundSubtractorKNN.create({
     int history = 500,
     double varThreshold = 16,
     bool detectShadows = true,
   }) {
-    final p = calloc<cvg.BackgroundSubtractorKNN>();
-    cvRun(() => cvideo.cv_BackgroundSubtractorKNN_create_1(history, varThreshold, detectShadows, p));
-    return BackgroundSubtractorKNN(p);
+    return BackgroundSubtractorKNN(
+      cvCreate(
+        calloc<cvg.BackgroundSubtractorKNN>(),
+        (p) => cvideo.cv_BackgroundSubtractorKNN_create_1(history, varThreshold, detectShadows, p),
+      ),
+    );
   }
 
   Mat apply(Mat src) {
@@ -113,9 +119,12 @@ BackgroundSubtractorMOG2 createBackgroundSubtractorMOG2({
   double varThreshold = 16,
   bool detectShadows = true,
 }) {
-  final p = calloc<cvg.BackgroundSubtractorMOG2>();
-  cvRun(() => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p));
-  return BackgroundSubtractorMOG2(p);
+  return BackgroundSubtractorMOG2(
+    cvCreate(
+      calloc<cvg.BackgroundSubtractorMOG2>(),
+      (p) => cvideo.cv_BackgroundSubtractorMOG2_create_1(history, varThreshold, detectShadows, p),
+    ),
+  );
 }
 
 /// Apply computes a foreground mask using the current BackgroundSubtractorMOG2.
@@ -210,9 +219,9 @@ Mat calcOpticalFlowFarneback(
   InputArray inputMask,
   int gaussFiltSize,
 ) {
-  final p = calloc<ffi.Double>();
-  cvRun(
-    () => cvideo.cv_findTransformECC(
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => cvideo.cv_findTransformECC(
       templateImage.ref,
       inputImage.ref,
       warpMatrix.ref,
@@ -223,9 +232,8 @@ Mat calcOpticalFlowFarneback(
       p,
       ffi.nullptr,
     ),
+    (p) => (p.value, warpMatrix),
   );
-  final rval = (p.value, warpMatrix);
-  calloc.free(p);
   return rval;
 }
 
@@ -239,9 +247,7 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
     }
   }
   factory TrackerMIL.create() {
-    final p = calloc<cvg.TrackerMIL>();
-    cvRun(() => cvideo.cv_TrackerMIL_create(p));
-    return TrackerMIL(p);
+    return TrackerMIL(cvCreate(calloc<cvg.TrackerMIL>(), cvideo.cv_TrackerMIL_create));
   }
 
   void init(InputArray image, Rect boundingBox) {
@@ -263,11 +269,16 @@ class TrackerMIL extends CvStruct<cvg.TrackerMIL> {
   /// https://docs.opencv.org/4.x/d0/d0a/classcv_1_1Tracker.html#a92d2012f576e6c06eb2e257d110a6529
   (bool, Rect) update(Mat img) {
     final bBox = calloc<cvg.CvRect>();
-    final p = calloc<ffi.Bool>();
-    cvRun(() => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, ffi.nullptr));
-    final rval = (p.value, Rect.fromPointer(bBox));
-    calloc.free(p);
-    return rval;
+    try {
+      return cvOut(
+        calloc<ffi.Bool>(),
+        (p) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, ffi.nullptr),
+        (p) => (p.value, Rect.fromPointer(bBox)),
+      );
+    } catch (_) {
+      calloc.free(bBox);
+      rethrow;
+    }
   }
 
   static final finalizer = OcvFinalizer<cvg.TrackerMILPtr>(cvideo.addresses.cv_TrackerMIL_close);
@@ -301,9 +312,12 @@ class KalmanFilter extends CvStruct<cvg.KalmanFilter> {
     int controlParams = 0,
     int type = MatType.CV_32F,
   }) {
-    final p = calloc<cvg.KalmanFilter>();
-    cvRun(() => cvideo.cv_KalmanFilter_create(dynamParams, measureParams, controlParams, type, p));
-    return KalmanFilter(p);
+    return KalmanFilter(
+      cvCreate(
+        calloc<cvg.KalmanFilter>(),
+        (p) => cvideo.cv_KalmanFilter_create(dynamParams, measureParams, controlParams, type, p),
+      ),
+    );
   }
 
   Mat correct(Mat measurement) {

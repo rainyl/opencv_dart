@@ -42,6 +42,7 @@ extension AKAZEAsync on AKAZE {
     Mat? descriptors,
     VecKeyPoint? keypoints,
     bool useProvidedKeypoints = false,
+    Duration? timeout,
   }) async {
     descriptors ??= Mat.empty();
     keypoints ??= VecKeyPoint();
@@ -58,6 +59,7 @@ extension AKAZEAsync on AKAZE {
       (c) {
         return c.complete((keypoints!, descriptors!));
       },
+      timeout: timeout,
     );
   }
 }
@@ -67,7 +69,7 @@ extension AgastFeatureDetectorAsync on AgastFeatureDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -76,6 +78,7 @@ extension AgastFeatureDetectorAsync on AgastFeatureDetector {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -99,7 +102,7 @@ extension BRISKAsync on BRISK {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -107,6 +110,7 @@ extension BRISKAsync on BRISK {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -120,6 +124,7 @@ extension BRISKAsync on BRISK {
     Mat? descriptors,
     VecKeyPoint? keypoints,
     bool useProvidedKeypoints = false,
+    Duration? timeout,
   }) async {
     descriptors ??= Mat.empty();
     keypoints ??= VecKeyPoint();
@@ -136,6 +141,7 @@ extension BRISKAsync on BRISK {
       (c) {
         return c.complete((keypoints!, descriptors!));
       },
+      timeout: timeout,
     );
   }
 }
@@ -145,7 +151,7 @@ extension FastFeatureDetectorAsync on FastFeatureDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -154,6 +160,7 @@ extension FastFeatureDetectorAsync on FastFeatureDetector {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -177,7 +184,7 @@ extension GFTTDetectorAsync on GFTTDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -185,6 +192,7 @@ extension GFTTDetectorAsync on GFTTDetector {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -208,7 +216,7 @@ extension KAZEAsync on KAZE {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -216,6 +224,7 @@ extension KAZEAsync on KAZE {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -229,6 +238,7 @@ extension KAZEAsync on KAZE {
     Mat? descriptors,
     VecKeyPoint? keypoints,
     bool useProvidedKeypoints = false,
+    Duration? timeout,
   }) async {
     descriptors ??= Mat.empty();
     keypoints ??= VecKeyPoint();
@@ -245,6 +255,7 @@ extension KAZEAsync on KAZE {
       (c) {
         return c.complete((keypoints!, descriptors!));
       },
+      timeout: timeout,
     );
   }
 }
@@ -254,7 +265,7 @@ extension MSERAsync on MSER {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -262,6 +273,7 @@ extension MSERAsync on MSER {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -285,7 +297,7 @@ extension ORBAsync on ORB {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -293,6 +305,7 @@ extension ORBAsync on ORB {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -306,6 +319,7 @@ extension ORBAsync on ORB {
     VecKeyPoint? keypoints,
     Mat? description,
     bool useProvidedKeypoints = false,
+    Duration? timeout,
   }) async {
     keypoints ??= VecKeyPoint();
     description ??= Mat.empty();
@@ -322,6 +336,7 @@ extension ORBAsync on ORB {
       (c) {
         return c.complete((keypoints!, description!));
       },
+      timeout: timeout,
     );
   }
 }
@@ -331,7 +346,7 @@ extension SimpleBlobDetectorAsync on SimpleBlobDetector {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -340,6 +355,7 @@ extension SimpleBlobDetectorAsync on SimpleBlobDetector {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -363,13 +379,14 @@ extension BFMatcherAsync on BFMatcher {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d39/classcv_1_1DescriptorMatcher.html#a0f046f47b68ec7074391e1e85c750cba
-  Future<VecDMatch> matchAsync(Mat query, Mat train) async {
+  Future<VecDMatch> matchAsync(Mat query, Mat train, {Duration? timeout}) async {
     final ret = VecDMatch();
     return cvRunAsync0(
       (callback) => cfeatures2d.cv_BFMatcher_match(ref, query.ref, train.ref, ret.ptr, callback),
       (c) {
         return c.complete(ret);
       },
+      timeout: timeout,
     );
   }
 
@@ -377,13 +394,14 @@ extension BFMatcherAsync on BFMatcher {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
-  Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k) async {
+  Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k, {Duration? timeout}) async {
     final ret = VecVecDMatch();
     return cvRunAsync0(
       (callback) => cfeatures2d.cv_BFMatcher_knnMatch(ref, query.ref, train.ref, k, ret.ptr, callback),
       (c) {
         return c.complete(ret);
       },
+      timeout: timeout,
     );
   }
 }
@@ -393,7 +411,7 @@ extension FlannBasedMatcherAsync on FlannBasedMatcher {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/db/d39/classcv_1_1DescriptorMatcher.html#aa880f9353cdf185ccf3013e08210483a
-  Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k) async {
+  Future<VecVecDMatch> knnMatchAsync(Mat query, Mat train, int k, {Duration? timeout}) async {
     final ret = VecVecDMatch();
     return cvRunAsync0(
       (callback) =>
@@ -401,6 +419,7 @@ extension FlannBasedMatcherAsync on FlannBasedMatcher {
       (c) {
         return c.complete(ret);
       },
+      timeout: timeout,
     );
   }
 }
@@ -410,7 +429,7 @@ extension SIFTAsync on SIFT {
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d0/d13/classcv_1_1Feature2D.html#aa4e9a7082ec61ebc108806704fbd7887
-  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask}) async {
+  Future<VecKeyPoint> detectAsync(Mat src, {VecKeyPoint? keypoints, Mat? mask, Duration? timeout}) async {
     keypoints ??= VecKeyPoint();
     mask ??= Mat.empty();
     return cvRunAsync0(
@@ -418,6 +437,7 @@ extension SIFTAsync on SIFT {
       (c) {
         return c.complete(keypoints);
       },
+      timeout: timeout,
     );
   }
 
@@ -431,6 +451,7 @@ extension SIFTAsync on SIFT {
     Mat? descriptors,
     VecKeyPoint? keypoints,
     bool useProvidedKeypoints = false,
+    Duration? timeout,
   }) async {
     descriptors ??= Mat.empty();
     keypoints ??= VecKeyPoint();
@@ -447,6 +468,7 @@ extension SIFTAsync on SIFT {
       (c) {
         return c.complete((keypoints!, descriptors!));
       },
+      timeout: timeout,
     );
   }
 }
@@ -480,6 +502,7 @@ Future<void> drawMatchesAsync(
   Scalar? singlePointColor,
   VecChar? matchesMask,
   DrawMatchesFlag flags = DrawMatchesFlag.DEFAULT,
+  Duration? timeout,
 }) async {
   matchColor ??= Scalar.all(-1);
   singlePointColor ??= Scalar.all(-1);
@@ -501,5 +524,6 @@ Future<void> drawMatchesAsync(
     (c) {
       c.complete();
     },
+    timeout: timeout,
   );
 }

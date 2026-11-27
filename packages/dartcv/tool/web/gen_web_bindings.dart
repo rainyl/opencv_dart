@@ -507,7 +507,13 @@ class Unit {
     }
     for (final e in typedefs.entries) {
       final cb = w.callbackSig(this, e.value);
-      if (cb != null) b.writeln("  \$rt.registerCallback(${e.key}, '${cb.$1}', '${cb.$2}');");
+      if (cb == null) continue;
+      // A callback parameter is a reified `Pointer<X>` and dart2js checks it on entry to the closure,
+      // so the shim cannot hand it its generic `Pointer<Void>`: register the pointee builders too.
+      final pointers = cb.$3.any((p) => p != null)
+          ? ', <Object? Function(int)?>[${cb.$3.map((p) => p ?? 'null').join(', ')}]'
+          : '';
+      b.writeln("  \$rt.registerCallback(${e.key}, '${cb.$1}', '${cb.$2}'$pointers);");
     }
     b.writeln('}');
     return b.toString();
@@ -731,8 +737,30 @@ class World {
     return '$sb$params';
   }
 
-  /// For a native function typedef (`ffi.X Function(...)`): (wasm signature, argument kinds).
-  (String, String)? callbackSig(Unit u, String alias) {
+  /// The expression that rebuilds `Pointer<X>` (as written in [u]) inside [u]'s own emitted file.
+  ///
+  /// Returns `null` when `X` is `ffi.Void` (the shim's generic pointer already matches) and
+  /// `(null, false)` when `X` cannot be spelled there - another module's type, because the emitted
+  /// files import nothing but the shim. That case is a bug in waiting: the shim would hand the
+  /// closure a `Pointer<Void>`, which dart2js refuses for a reified `Pointer<X>` parameter, so the
+  /// caller reports it instead of letting the browser find out.
+  (String?, bool) pointerBuilder(Unit u, String type) {
+    final t = norm(type);
+    if (!t.startsWith('ffi.Pointer<')) return (null, true);
+    final inner = norm(t.substring('ffi.Pointer<'.length, t.length - 1));
+    if (inner == 'ffi.Void' || inner == 'Void') return (null, true);
+    final visible = inner.startsWith('ffi.')
+        ? inner
+        : (inner.contains('.') || !(u.structs.containsKey(inner) || u.typedefs.containsKey(inner)))
+        ? null
+        : inner;
+    if (visible == null) return (null, false);
+    return ('(a) => ffi.Pointer<$visible>.fromAddress(a)', true);
+  }
+
+  /// For a native function typedef (`ffi.X Function(...)`): (wasm signature, argument kinds, and per
+  /// argument the expression that rebuilds a pointer with the pointee type the callback declares).
+  (String, String, List<String?>)? callbackSig(Unit u, String alias) {
     if (!alias.contains(' Function(') || alias.startsWith('ffi.Pointer<')) return null;
     final (ret, params) = splitFunctionType(alias);
     if (!ret.startsWith('ffi.') && !u.typedefs.containsKey(ret)) return null;
@@ -740,10 +768,12 @@ class World {
       final r = resolve(u, ret);
       if (r.kind == 'S') return null;
       final kinds = StringBuffer();
+      final pointers = <String?>[];
       final sig = StringBuffer(_wasmChar(r.kind));
       for (final p in params) {
         final named = RegExp(r'^(.*[>\w])\s+(\w+)$').firstMatch(p);
-        final t = resolve(u, named != null && _balanced(named.group(1)!) ? named.group(1)! : p);
+        final type = named != null && _balanced(named.group(1)!) ? named.group(1)! : p;
+        final t = resolve(u, type);
         if (t.kind == 'S') return null;
         sig.write(_wasmChar(t.kind));
         kinds.write(switch (t.kind) {
@@ -754,8 +784,21 @@ class World {
           'u' || 'u8' || 'u16' => 'u',
           _ => 'i',
         });
+        if (t.kind == 'p') {
+          final (builder, resolvable) = pointerBuilder(u, type);
+          if (!resolvable) {
+            stderr.writeln(
+              'warning: ${u.name}: callback parameter `$type` has a pointee that is not visible in '
+              '${u.name}.g.dart, so its wasm callback keeps a generic Pointer<Void> and dart2js will '
+              'reject it at runtime; declare the pointee in the module that owns the typedef.',
+            );
+          }
+          pointers.add(builder);
+        } else {
+          pointers.add(null);
+        }
       }
-      return (sig.toString(), kinds.toString());
+      return (sig.toString(), kinds.toString(), pointers);
     } on UnresolvedType {
       return null;
     }

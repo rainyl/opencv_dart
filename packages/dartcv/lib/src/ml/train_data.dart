@@ -43,27 +43,25 @@ class TrainData extends CvStruct<cml.TrainData> {
     final sIdx = sampleIdx ?? empty;
     final weights = sampleWeights ?? empty;
     final types = varType ?? empty;
-    final p = calloc<cml.TrainData>();
     try {
-      cvRun(
-        () => cml.cv_ml_TrainData_create(
-          samples.ref,
-          layout,
-          responses.ref,
-          idx.ref,
-          sIdx.ref,
-          weights.ref,
-          types.ref,
-          p,
+      return TrainData._(
+        cvCreate(
+          calloc<cml.TrainData>(),
+          (p) => cml.cv_ml_TrainData_create(
+            samples.ref,
+            layout,
+            responses.ref,
+            idx.ref,
+            sIdx.ref,
+            weights.ref,
+            types.ref,
+            p,
+          ),
         ),
       );
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
     } finally {
       empty.dispose();
     }
-    return TrainData._(p);
   }
 
   /// Reads the dataset from a .csv file.
@@ -78,11 +76,11 @@ class TrainData extends CvStruct<cml.TrainData> {
     String delimiter = ',',
     String missch = '?',
   }) {
-    final p = calloc<cml.TrainData>();
-    try {
-      using((arena) {
-        cvRun(
-          () => cml.cv_ml_TrainData_loadFromCSV(
+    return TrainData._(
+      using(
+        (arena) => cvCreate(
+          calloc<cml.TrainData>(),
+          (p) => cml.cv_ml_TrainData_loadFromCSV(
             filename.toNativeUtf8(allocator: arena).cast(),
             headerLineCount,
             responseStartIdx,
@@ -93,13 +91,9 @@ class TrainData extends CvStruct<cml.TrainData> {
             p,
             ffi.nullptr,
           ),
-        );
-      });
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return TrainData._(p);
+        ),
+      ),
+    );
   }
 
   /// The code unit of a single-character [value], for the C `char` parameters.

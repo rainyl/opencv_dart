@@ -8,6 +8,7 @@
 #pragma warning(disable : 4996)
 #include <opencv2/imgcodecs.hpp>
 #include "dartcv/calib3d/calib3d.h"
+#include "dartcv/core/handle.hpp"
 
 cv::UsacParams cv_UsacParams_c2cpp(struct UsacParams params) {
     cv::UsacParams _params;
@@ -40,35 +41,33 @@ CvStatus* cv_fisheye_calibrate(
     double* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::fisheye::calibrate(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        cv::Size(imageSize.width, imageSize.height),
-        CVDEREF(k),
-        CVDEREF(d),
-        CVDEREF(rvecs),
-        CVDEREF(tvecs),
-        flags,
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, rvecs, tvecs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::fisheye::calibrate(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            cv::Size(imageSize.width, imageSize.height),
+            CVDEREF(k),
+            CVDEREF(d),
+            CVDEREF(rvecs),
+            CVDEREF(tvecs),
+            flags,
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_distortPoints(
     MatIn undistorted, MatOut distorted, MatIn K, MatIn D, double alpha, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::fisheye::distortPoints(
-        CVDEREF(undistorted), CVDEREF(distorted), CVDEREF(K), CVDEREF(D), alpha
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::fisheye::distortPoints(
+            CVDEREF(undistorted), CVDEREF(distorted), CVDEREF(K), CVDEREF(D), alpha
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_distortPoints_1(
@@ -80,19 +79,18 @@ CvStatus* cv_fisheye_distortPoints_1(
     double alpha,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::fisheye::distortPoints(
-        CVDEREF(undistorted),
-        CVDEREF(distorted),
-        CVDEREF(Kundistorted),
-        CVDEREF(K),
-        CVDEREF(D),
-        alpha
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::fisheye::distortPoints(
+            CVDEREF(undistorted),
+            CVDEREF(distorted),
+            CVDEREF(Kundistorted),
+            CVDEREF(K),
+            CVDEREF(D),
+            alpha
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
@@ -106,16 +104,15 @@ CvStatus* cv_fisheye_estimateNewCameraMatrixForUndistortRectify(
     double fovScale,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size newSz(newSize.width, newSize.height);
-    cv::Size imgSz(imgSize.width, imgSize.height);
-    cv::fisheye::estimateNewCameraMatrixForUndistortRectify(
-        CVDEREF(k), CVDEREF(d), imgSz, CVDEREF(r), CVDEREF(p), balance, newSz, fovScale
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(k, d, r, p), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size newSz(newSize.width, newSize.height);
+        cv::Size imgSz(imgSize.width, imgSize.height);
+        cv::fisheye::estimateNewCameraMatrixForUndistortRectify(
+            CVDEREF(k), CVDEREF(d), imgSz, CVDEREF(r), CVDEREF(p), balance, newSz, fovScale
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_initUndistortRectifyMap(
@@ -129,21 +126,20 @@ CvStatus* cv_fisheye_initUndistortRectifyMap(
     MatOut map2,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::fisheye::initUndistortRectifyMap(
-        CVDEREF(k),
-        CVDEREF(d),
-        CVDEREF(r),
-        CVDEREF(p),
-        cv::Size(imgSize.width, imgSize.height),
-        m1type,
-        CVDEREF(map1),
-        CVDEREF(map2)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::fisheye::initUndistortRectifyMap(
+            CVDEREF(k),
+            CVDEREF(d),
+            CVDEREF(r),
+            CVDEREF(p),
+            cv::Size(imgSize.width, imgSize.height),
+            m1type,
+            CVDEREF(map1),
+            CVDEREF(map2)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_projectPoints(
@@ -157,21 +153,20 @@ CvStatus* cv_fisheye_projectPoints(
     MatOut jacobian,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::fisheye::projectPoints(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        CVDEREF(k),
-        CVDEREF(d),
-        alpha,
-        CVDEREF(jacobian)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::fisheye::projectPoints(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            CVDEREF(k),
+            CVDEREF(d),
+            alpha,
+            CVDEREF(jacobian)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_solvePnP(
@@ -187,22 +182,21 @@ CvStatus* cv_fisheye_solvePnP(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::fisheye::solvePnP(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        useExtrinsicGuess,
-        flags,
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::fisheye::solvePnP(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            useExtrinsicGuess,
+            flags,
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_solvePnPRansac(
@@ -222,64 +216,60 @@ CvStatus* cv_fisheye_solvePnPRansac(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::fisheye::solvePnPRansac(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        useExtrinsicGuess,
-        iterationsCount,
-        reprojectionError,
-        confidence,
-        CVDEREF(inliers),
-        flags,
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::fisheye::solvePnPRansac(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            useExtrinsicGuess,
+            iterationsCount,
+            reprojectionError,
+            confidence,
+            CVDEREF(inliers),
+            flags,
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_undistortImage(
     Mat distorted, Mat undistorted, Mat k, Mat d, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::fisheye::undistortImage(CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(distorted, undistorted, k, d), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::fisheye::undistortImage(CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_undistortImage_1(
     Mat distorted, Mat undistorted, Mat k, Mat d, Mat knew, CvSize size, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(size.width, size.height);
-    cv::fisheye::undistortImage(
-        CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d), CVDEREF(knew), sz
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(distorted, undistorted, k, d, knew), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(size.width, size.height);
+        cv::fisheye::undistortImage(
+            CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d), CVDEREF(knew), sz
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_fisheye_undistortPoints(
     Mat distorted, Mat undistorted, Mat k, Mat d, Mat R, Mat P, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::fisheye::undistortPoints(
-        CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d), CVDEREF(R), CVDEREF(P)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(distorted, undistorted, k, d, R, P), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::fisheye::undistortPoints(
+            CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d), CVDEREF(R), CVDEREF(P)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_calibrateCamera(
@@ -295,23 +285,22 @@ CvStatus* cv_calibrateCamera(
     double* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-    *rval = cv::calibrateCamera(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        cv::Size(imageSize.width, imageSize.height),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvecs),
-        CVDEREF(tvecs),
-        flag,
-        tc
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvecs, tvecs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+        *rval = cv::calibrateCamera(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            cv::Size(imageSize.width, imageSize.height),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvecs),
+            CVDEREF(tvecs),
+            flag,
+            tc
+        );
+        END_WRAP
+    });
 }
 
 bool cv_checkChessboard(Mat img, CvSize size) {
@@ -321,39 +310,35 @@ bool cv_checkChessboard(Mat img, CvSize size) {
 CvStatus* cv_computeCorrespondEpilines(
     MatIn src, int whichImage, MatIn F, MatOut lines, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::computeCorrespondEpilines(CVDEREF(src), whichImage, CVDEREF(F), CVDEREF(lines));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::computeCorrespondEpilines(CVDEREF(src), whichImage, CVDEREF(F), CVDEREF(lines));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_convertPointsFromHomogeneous(MatIn src, MatOut dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::convertPointsFromHomogeneous(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::convertPointsFromHomogeneous(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_convertPointsHomogeneous(MatIn src, MatOut dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::convertPointsHomogeneous(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::convertPointsHomogeneous(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_convertPointsToHomogeneous(MatIn src, MatOut dst, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::convertPointsToHomogeneous(CVDEREF(src), CVDEREF(dst));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::convertPointsToHomogeneous(CVDEREF(src), CVDEREF(dst));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_correctMatches(
@@ -364,23 +349,21 @@ CvStatus* cv_correctMatches(
     MatOut newPoints2,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::correctMatches(
-        CVDEREF(F), CVDEREF(points1), CVDEREF(points2), CVDEREF(newPoints1), CVDEREF(newPoints2)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::correctMatches(
+            CVDEREF(F), CVDEREF(points1), CVDEREF(points2), CVDEREF(newPoints1), CVDEREF(newPoints2)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_decomposeEssentialMat(MatIn E, MatOut R1, MatOut R2, MatOut t, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::decomposeEssentialMat(CVDEREF(E), CVDEREF(R1), CVDEREF(R2), CVDEREF(t));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::decomposeEssentialMat(CVDEREF(E), CVDEREF(R1), CVDEREF(R2), CVDEREF(t));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_decomposeHomographyMat(
@@ -392,14 +375,13 @@ CvStatus* cv_decomposeHomographyMat(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::decomposeHomographyMat(
-        CVDEREF(H), CVDEREF(K), CVDEREF(rotations), CVDEREF(translations), CVDEREF(normals)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(rotations, translations, normals), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::decomposeHomographyMat(
+            CVDEREF(H), CVDEREF(K), CVDEREF(rotations), CVDEREF(translations), CVDEREF(normals)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_decomposeProjectionMatrix(
@@ -413,33 +395,31 @@ CvStatus* cv_decomposeProjectionMatrix(
     MatOut eulerAngles,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::decomposeProjectionMatrix(
-        CVDEREF(projMatrix),
-        CVDEREF(cameraMatrix),
-        CVDEREF(rotMatrix),
-        CVDEREF(transVect),
-        CVDEREF(rotMatrixX),
-        CVDEREF(rotMatrixY),
-        CVDEREF(rotMatrixZ),
-        CVDEREF(eulerAngles)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::decomposeProjectionMatrix(
+            CVDEREF(projMatrix),
+            CVDEREF(cameraMatrix),
+            CVDEREF(rotMatrix),
+            CVDEREF(transVect),
+            CVDEREF(rotMatrixX),
+            CVDEREF(rotMatrixY),
+            CVDEREF(rotMatrixZ),
+            CVDEREF(eulerAngles)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_drawChessboardCorners(
     Mat image, CvSize patternSize, VecPoint2f corners, bool patternWasFound, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(patternSize.width, patternSize.height);
-    cv::drawChessboardCorners(CVDEREF(image), sz, CVDEREF(corners), patternWasFound);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, corners), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(patternSize.width, patternSize.height);
+        cv::drawChessboardCorners(CVDEREF(image), sz, CVDEREF(corners), patternWasFound);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_drawFrameAxes(
@@ -452,31 +432,29 @@ CvStatus* cv_drawFrameAxes(
     int thickness,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::drawFrameAxes(
-        CVDEREF(image),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        length,
-        thickness
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, cameraMatrix, distCoeffs, rvec, tvec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::drawFrameAxes(
+            CVDEREF(image),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            length,
+            thickness
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateAffinePartial2D(
     VecPoint2f from, VecPoint2f to, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::estimateAffinePartial2D(CVDEREF(from), CVDEREF(to)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(from, to), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(cv::estimateAffinePartial2D(CVDEREF(from), CVDEREF(to))));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateAffinePartial2D_1(
@@ -491,31 +469,29 @@ CvStatus* cv_estimateAffinePartial2D_1(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::estimateAffinePartial2D(
-        CVDEREF(from),
-        CVDEREF(to),
-        CVDEREF(inliers),
-        method,
-        ransacReprojThreshold,
-        maxIters,
-        confidence,
-        refineIters
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(from, to, inliers), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::estimateAffinePartial2D(
+            CVDEREF(from),
+            CVDEREF(to),
+            CVDEREF(inliers),
+            method,
+            ransacReprojThreshold,
+            maxIters,
+            confidence,
+            refineIters
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateAffine2D(VecPoint2f from, VecPoint2f to, Mat* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    rval->ptr = new cv::Mat(cv::estimateAffine2D(CVDEREF(from), CVDEREF(to)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(from, to), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(cv::estimateAffine2D(CVDEREF(from), CVDEREF(to))));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateAffine2D_1(
@@ -530,34 +506,31 @@ CvStatus* cv_estimateAffine2D_1(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::estimateAffine2D(
-        CVDEREF(from),
-        CVDEREF(to),
-        CVDEREF(inliers),
-        method,
-        ransacReprojThreshold,
-        maxIters,
-        confidence,
-        refineIters
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(from, to, inliers), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::estimateAffine2D(
+            CVDEREF(from),
+            CVDEREF(to),
+            CVDEREF(inliers),
+            method,
+            ransacReprojThreshold,
+            maxIters,
+            confidence,
+            refineIters
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateAffine3D(
     Mat src, Mat dst, double* scale, bool force_rotation, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    rval->ptr =
-        new cv::Mat(cv::estimateAffine3D(CVDEREF(src), CVDEREF(dst), scale, force_rotation));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Mat(cv::estimateAffine3D(CVDEREF(src), CVDEREF(dst), scale, force_rotation)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateAffine3D_1(
@@ -570,14 +543,13 @@ CvStatus* cv_estimateAffine3D_1(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::estimateAffine3D(
-        CVDEREF(src), CVDEREF(dst), CVDEREF(out), CVDEREF(inliers), ransacThreshold, confidence
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst, out, inliers), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::estimateAffine3D(
+            CVDEREF(src), CVDEREF(dst), CVDEREF(out), CVDEREF(inliers), ransacThreshold, confidence
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateChessboardSharpness(
@@ -590,20 +562,19 @@ CvStatus* cv_estimateChessboardSharpness(
     Scalar* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    const auto m = cv::estimateChessboardSharpness(
-        CVDEREF(image),
-        cv::Size(patternSize.width, patternSize.height),
-        CVDEREF(corners),
-        rise_distance,
-        vertical,
-        CVDEREF(sharpness)
-    );
-    *rval = {m.val[0], m.val[1], m.val[2], m.val[3]};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        const auto m = cv::estimateChessboardSharpness(
+            CVDEREF(image),
+            cv::Size(patternSize.width, patternSize.height),
+            CVDEREF(corners),
+            rise_distance,
+            vertical,
+            CVDEREF(sharpness)
+        );
+        *rval = {m.val[0], m.val[1], m.val[2], m.val[3]};
+        END_WRAP
+    });
 }
 
 CvStatus* cv_estimateTranslation3D(
@@ -616,14 +587,13 @@ CvStatus* cv_estimateTranslation3D(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::estimateTranslation3D(
-        CVDEREF(src), CVDEREF(dst), CVDEREF(out), CVDEREF(inliers), ransacThreshold, confidence
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::estimateTranslation3D(
+            CVDEREF(src), CVDEREF(dst), CVDEREF(out), CVDEREF(inliers), ransacThreshold, confidence
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_filterHomographyDecompByVisibleRefpoints(
@@ -635,19 +605,18 @@ CvStatus* cv_filterHomographyDecompByVisibleRefpoints(
     MatIn pointsMask,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::filterHomographyDecompByVisibleRefpoints(
-        CVDEREF(rotations),
-        CVDEREF(normals),
-        CVDEREF(beforePoints),
-        CVDEREF(afterPoints),
-        CVDEREF(possibleSolutions),
-        CVDEREF(pointsMask)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(rotations, normals), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::filterHomographyDecompByVisibleRefpoints(
+            CVDEREF(rotations),
+            CVDEREF(normals),
+            CVDEREF(beforePoints),
+            CVDEREF(afterPoints),
+            CVDEREF(possibleSolutions),
+            CVDEREF(pointsMask)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_filterSpeckles(
@@ -658,37 +627,34 @@ CvStatus* cv_filterSpeckles(
     MatInOut buf,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::filterSpeckles(CVDEREF(img), newVal, maxSpeckleSize, maxDiff, CVDEREF(buf));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::filterSpeckles(CVDEREF(img), newVal, maxSpeckleSize, maxDiff, CVDEREF(buf));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_find4QuadCornerSubpix(
     MatIn img, MatInOut corners, CvSize region_size, bool* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::find4QuadCornerSubpix(
-        CVDEREF(img), CVDEREF(corners), cv::Size(region_size.width, region_size.height)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::find4QuadCornerSubpix(
+            CVDEREF(img), CVDEREF(corners), cv::Size(region_size.width, region_size.height)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findChessboardCorners(
     Mat image, CvSize patternSize, VecPoint2f* corners, int flags, bool* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(patternSize.width, patternSize.height);
-    *rval = cv::findChessboardCorners(CVDEREF(image), sz, CVDEREF_P(corners), flags);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(patternSize.width, patternSize.height);
+        *rval = cv::findChessboardCorners(CVDEREF(image), sz, CVDEREF_P(corners), flags);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findChessboardCornersSB(
@@ -699,13 +665,12 @@ CvStatus* cv_findChessboardCornersSB(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(patternSize.width, patternSize.height);
-    *rval = cv::findChessboardCornersSB(CVDEREF(image), sz, CVDEREF_P(out_corners), flags);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(patternSize.width, patternSize.height);
+        *rval = cv::findChessboardCornersSB(CVDEREF(image), sz, CVDEREF_P(out_corners), flags);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findChessboardCornersSB_1(
@@ -717,27 +682,25 @@ CvStatus* cv_findChessboardCornersSB_1(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(patternSize.width, patternSize.height);
-    *rval = cv::findChessboardCornersSB(
-        CVDEREF(image), sz, CVDEREF_P(out_corners), flags, CVDEREF(meta)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(image, meta), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(patternSize.width, patternSize.height);
+        *rval = cv::findChessboardCornersSB(
+            CVDEREF(image), sz, CVDEREF_P(out_corners), flags, CVDEREF(meta)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findCirclesGrid(
     MatIn image, CvSize patternSize, MatOut centers, int flags, bool* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(patternSize.width, patternSize.height);
-    *rval = cv::findCirclesGrid(CVDEREF(image), sz, CVDEREF(centers), flags);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(patternSize.width, patternSize.height);
+        *rval = cv::findCirclesGrid(CVDEREF(image), sz, CVDEREF(centers), flags);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findEssentialMat(
@@ -753,23 +716,22 @@ CvStatus* cv_findEssentialMat(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findEssentialMat(
-        CVDEREF(points1),
-        CVDEREF(points2),
-        focal,
-        cv::Point2d(pp.x, pp.y),
-        method,
-        prob,
-        threshold,
-        maxIters,
-        CVDEREF(mask)
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findEssentialMat(
+            CVDEREF(points1),
+            CVDEREF(points2),
+            focal,
+            cv::Point2d(pp.x, pp.y),
+            method,
+            prob,
+            threshold,
+            maxIters,
+            CVDEREF(mask)
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findEssentialMat_1(
@@ -784,22 +746,21 @@ CvStatus* cv_findEssentialMat_1(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findEssentialMat(
-        CVDEREF(points1),
-        CVDEREF(points2),
-        CVDEREF(cameraMatrix),
-        method,
-        prob,
-        threshold,
-        maxIters,
-        CVDEREF(mask)
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findEssentialMat(
+            CVDEREF(points1),
+            CVDEREF(points2),
+            CVDEREF(cameraMatrix),
+            method,
+            prob,
+            threshold,
+            maxIters,
+            CVDEREF(mask)
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findFundamentalMat(
@@ -813,35 +774,33 @@ CvStatus* cv_findFundamentalMat(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findFundamentalMat(
-        CVDEREF(points1),
-        CVDEREF(points2),
-        method,
-        ransacReprojThreshold,
-        confidence,
-        maxIters,
-        CVDEREF(mask)
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findFundamentalMat(
+            CVDEREF(points1),
+            CVDEREF(points2),
+            method,
+            ransacReprojThreshold,
+            confidence,
+            maxIters,
+            CVDEREF(mask)
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findFundamentalMat_1(
     MatIn points1, MatIn points2, MatOut mask, UsacParams params, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findFundamentalMat(
-        CVDEREF(points1), CVDEREF(points2), CVDEREF(mask), cv_UsacParams_c2cpp(params)
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findFundamentalMat(
+            CVDEREF(points1), CVDEREF(points2), CVDEREF(mask), cv_UsacParams_c2cpp(params)
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findFundamentalMat_2(
@@ -854,15 +813,14 @@ CvStatus* cv_findFundamentalMat_2(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findFundamentalMat(
-        CVDEREF(points1), CVDEREF(points2), CVDEREF(mask), method, ransacReprojThreshold, confidence
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findFundamentalMat(
+            CVDEREF(points1), CVDEREF(points2), CVDEREF(mask), method, ransacReprojThreshold, confidence
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findHomography(
@@ -876,21 +834,20 @@ CvStatus* cv_findHomography(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findHomography(
-        CVDEREF(src),
-        CVDEREF(dst),
-        method,
-        ransacReprojThreshold,
-        CVDEREF(mask),
-        maxIters,
-        confidence
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findHomography(
+            CVDEREF(src),
+            CVDEREF(dst),
+            method,
+            ransacReprojThreshold,
+            CVDEREF(mask),
+            maxIters,
+            confidence
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_findHomography_1(
@@ -901,28 +858,25 @@ CvStatus* cv_findHomography_1(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto m = cv::findHomography(
-        CVDEREF(srcPoints), CVDEREF(dstPoints), CVDEREF(mask), cv_UsacParams_c2cpp(params)
-    );
-    rval->ptr = new cv::Mat(m);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto m = cv::findHomography(
+            CVDEREF(srcPoints), CVDEREF(dstPoints), CVDEREF(mask), cv_UsacParams_c2cpp(params)
+        );
+        CVD_SET(rval, new cv::Mat(m));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_getDefaultNewCameraMatrix(
     Mat cameraMatrix, CvSize size, bool centerPrincipalPoint, Mat* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(size.width, size.height);
-    rval->ptr =
-        new cv::Mat(cv::getDefaultNewCameraMatrix(CVDEREF(cameraMatrix), sz, centerPrincipalPoint));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(cameraMatrix), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(size.width, size.height);
+        CVD_SET(rval, new cv::Mat(cv::getDefaultNewCameraMatrix(CVDEREF(cameraMatrix), sz, centerPrincipalPoint)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_getOptimalNewCameraMatrix(
@@ -936,22 +890,21 @@ CvStatus* cv_getOptimalNewCameraMatrix(
     Mat* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Size sz(size.width, size.height);
-    cv::Size newSize(newImgSize.width, newImgSize.height);
-    cv::Rect rect(validPixROI->x, validPixROI->y, validPixROI->width, validPixROI->height);
-    auto mat = cv::getOptimalNewCameraMatrix(
-        CVDEREF(cameraMatrix), CVDEREF(distCoeffs), sz, alpha, newSize, &rect, centerPrincipalPoint
-    );
-    validPixROI->x = rect.x;
-    validPixROI->y = rect.y;
-    validPixROI->width = rect.width;
-    validPixROI->height = rect.height;
-    rval->ptr = new cv::Mat(mat);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(cameraMatrix, distCoeffs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Size sz(size.width, size.height);
+        cv::Size newSize(newImgSize.width, newImgSize.height);
+        cv::Rect rect(validPixROI->x, validPixROI->y, validPixROI->width, validPixROI->height);
+        auto mat = cv::getOptimalNewCameraMatrix(
+            CVDEREF(cameraMatrix), CVDEREF(distCoeffs), sz, alpha, newSize, &rect, centerPrincipalPoint
+        );
+        validPixROI->x = rect.x;
+        validPixROI->y = rect.y;
+        validPixROI->width = rect.width;
+        validPixROI->height = rect.height;
+        CVD_SET(rval, new cv::Mat(mat));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_initUndistortRectifyMap(
@@ -965,21 +918,20 @@ CvStatus* cv_initUndistortRectifyMap(
     Mat map2,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::initUndistortRectifyMap(
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(r),
-        CVDEREF(newCameraMatrix),
-        cv::Size(size.width, size.height),
-        m1type,
-        CVDEREF(map1),
-        CVDEREF(map2)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(cameraMatrix, distCoeffs, r, newCameraMatrix, map1, map2), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::initUndistortRectifyMap(
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(r),
+            CVDEREF(newCameraMatrix),
+            cv::Size(size.width, size.height),
+            m1type,
+            CVDEREF(map1),
+            CVDEREF(map2)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_initWideAngleProjMap(
@@ -995,31 +947,29 @@ CvStatus* cv_initWideAngleProjMap(
     float* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::initWideAngleProjMap(
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        cv::Size(size.width, size.height),
-        destImageWidth,
-        m1type,
-        CVDEREF(map1),
-        CVDEREF(map2),
-        projType,
-        alpha
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::initWideAngleProjMap(
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            cv::Size(size.width, size.height),
+            destImageWidth,
+            m1type,
+            CVDEREF(map1),
+            CVDEREF(map2),
+            projType,
+            alpha
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_matMulDeriv(MatIn A, MatIn B, MatOut dABdA, MatOut dABdB, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::matMulDeriv(CVDEREF(A), CVDEREF(B), CVDEREF(dABdA), CVDEREF(dABdB));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::matMulDeriv(CVDEREF(A), CVDEREF(B), CVDEREF(dABdA), CVDEREF(dABdB));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_projectPoints(
@@ -1033,21 +983,20 @@ CvStatus* cv_projectPoints(
     double aspectRatio,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::projectPoints(
-        CVDEREF(objectPoints),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(imagePoints),
-        CVDEREF(jacobian),
-        aspectRatio
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::projectPoints(
+            CVDEREF(objectPoints),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(imagePoints),
+            CVDEREF(jacobian),
+            aspectRatio
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_recoverPose(
@@ -1063,22 +1012,21 @@ CvStatus* cv_recoverPose(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::recoverPose(
-        CVDEREF(E),
-        CVDEREF(points1),
-        CVDEREF(points2),
-        CVDEREF(cameraMatrix),
-        CVDEREF(R),
-        CVDEREF(t),
-        distanceThresh,
-        CVDEREF(mask),
-        CVDEREF(triangulatedPoints)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::recoverPose(
+            CVDEREF(E),
+            CVDEREF(points1),
+            CVDEREF(points2),
+            CVDEREF(cameraMatrix),
+            CVDEREF(R),
+            CVDEREF(t),
+            distanceThresh,
+            CVDEREF(mask),
+            CVDEREF(triangulatedPoints)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_recoverPose_1(
@@ -1093,21 +1041,20 @@ CvStatus* cv_recoverPose_1(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::recoverPose(
-        CVDEREF(E),
-        CVDEREF(points1),
-        CVDEREF(points2),
-        CVDEREF(R),
-        CVDEREF(t),
-        focal,
-        cv::Point2d(pp.x, pp.y),
-        CVDEREF(mask)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::recoverPose(
+            CVDEREF(E),
+            CVDEREF(points1),
+            CVDEREF(points2),
+            CVDEREF(R),
+            CVDEREF(t),
+            focal,
+            cv::Point2d(pp.x, pp.y),
+            CVDEREF(mask)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_reprojectImageTo3D(
@@ -1118,23 +1065,21 @@ CvStatus* cv_reprojectImageTo3D(
     int ddepth,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::reprojectImageTo3D(
-        CVDEREF(disparity), CVDEREF(_3dImage), CVDEREF(Q), handleMissingValues, ddepth
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::reprojectImageTo3D(
+            CVDEREF(disparity), CVDEREF(_3dImage), CVDEREF(Q), handleMissingValues, ddepth
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Rodrigues(MatIn src, MatOut dst, MatOut jacobian, CvCallback_0 callback) {
-    BEGIN_WRAP
-    cv::Rodrigues(CVDEREF(src), CVDEREF(dst), CVDEREF(jacobian));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Rodrigues(CVDEREF(src), CVDEREF(dst), CVDEREF(jacobian));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_RQDecomp3x3(
@@ -1147,14 +1092,13 @@ CvStatus* cv_RQDecomp3x3(
     Vec3d* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::RQDecomp3x3(
-        CVDEREF(src), CVDEREF(mtxR), CVDEREF(mtxQ), CVDEREF(Qx), CVDEREF(Qy), CVDEREF(Qz)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::RQDecomp3x3(
+            CVDEREF(src), CVDEREF(mtxR), CVDEREF(mtxQ), CVDEREF(Qx), CVDEREF(Qy), CVDEREF(Qz)
+        );
+        END_WRAP
+    });
 }
 
 double cv_sampsonDistance(MatIn pt1, MatIn pt2, MatIn F) {
@@ -1172,20 +1116,19 @@ CvStatus* cv_solveP3P(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::solveP3P(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF_P(rvecs),
-        CVDEREF_P(tvecs),
-        flags
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::solveP3P(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF_P(rvecs),
+            CVDEREF_P(tvecs),
+            flags
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_solvePnP(
@@ -1200,21 +1143,20 @@ CvStatus* cv_solvePnP(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::solvePnP(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        useExtrinsicGuess,
-        flags
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::solvePnP(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            useExtrinsicGuess,
+            flags
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_solvePnPGeneric(
@@ -1232,24 +1174,23 @@ CvStatus* cv_solvePnPGeneric(
     int* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::solvePnPGeneric(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF_P(rvecs),
-        CVDEREF_P(tvecs),
-        useExtrinsicGuess,
-        static_cast<cv::SolvePnPMethod>(flags),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        CVDEREF(reprojectionError)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec, reprojectionError), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::solvePnPGeneric(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF_P(rvecs),
+            CVDEREF_P(tvecs),
+            useExtrinsicGuess,
+            static_cast<cv::SolvePnPMethod>(flags),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            CVDEREF(reprojectionError)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_solvePnPRansac(
@@ -1268,25 +1209,24 @@ CvStatus* cv_solvePnPRansac(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::solvePnPRansac(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        useExtrinsicGuess,
-        iterationsCount,
-        reprojectionError,
-        confidence,
-        CVDEREF(inliers),
-        flags
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec, inliers), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::solvePnPRansac(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            useExtrinsicGuess,
+            iterationsCount,
+            reprojectionError,
+            confidence,
+            CVDEREF(inliers),
+            flags
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_solvePnPRansac_1(
@@ -1301,21 +1241,20 @@ CvStatus* cv_solvePnPRansac_1(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::solvePnPRansac(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        CVDEREF(inliers),
-        cv_UsacParams_c2cpp(params)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec, inliers), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::solvePnPRansac(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            CVDEREF(inliers),
+            cv_UsacParams_c2cpp(params)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_solvePnPRefineLM(
@@ -1328,20 +1267,19 @@ CvStatus* cv_solvePnPRefineLM(
     struct TermCriteria criteria,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::solvePnPRefineLM(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::solvePnPRefineLM(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_solvePnPRefineVVS(
@@ -1355,21 +1293,20 @@ CvStatus* cv_solvePnPRefineVVS(
     double VVSlambda,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::solvePnPRefineVVS(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(rvec),
-        CVDEREF(tvec),
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon),
-        VVSlambda
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints, cameraMatrix, distCoeffs, rvec, tvec), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::solvePnPRefineVVS(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(rvec),
+            CVDEREF(tvec),
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon),
+            VVSlambda
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_stereoCalibrate(
@@ -1393,30 +1330,29 @@ CvStatus* cv_stereoCalibrate(
     double* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::stereoCalibrate(
-        CVDEREF(objectPoints),
-        CVDEREF(imagePoints1),
-        CVDEREF(imagePoints2),
-        CVDEREF(cameraMatrix1),
-        CVDEREF(distCoeffs1),
-        CVDEREF(cameraMatrix2),
-        CVDEREF(distCoeffs2),
-        cv::Size(imageSize.width, imageSize.height),
-        CVDEREF(R),
-        CVDEREF(T),
-        CVDEREF(E),
-        CVDEREF(F),
-        CVDEREF(rvecs),
-        CVDEREF(tvecs),
-        CVDEREF(perViewErrors),
-        flags,
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(objectPoints, imagePoints1, imagePoints2, rvecs, tvecs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::stereoCalibrate(
+            CVDEREF(objectPoints),
+            CVDEREF(imagePoints1),
+            CVDEREF(imagePoints2),
+            CVDEREF(cameraMatrix1),
+            CVDEREF(distCoeffs1),
+            CVDEREF(cameraMatrix2),
+            CVDEREF(distCoeffs2),
+            cv::Size(imageSize.width, imageSize.height),
+            CVDEREF(R),
+            CVDEREF(T),
+            CVDEREF(E),
+            CVDEREF(F),
+            CVDEREF(rvecs),
+            CVDEREF(tvecs),
+            CVDEREF(perViewErrors),
+            flags,
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_stereoRectify(
@@ -1439,44 +1375,43 @@ CvStatus* cv_stereoRectify(
     struct CvRect* validPixROI2,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::Rect _validPixROI1;
-    cv::Rect _validPixROI2;
-    cv::stereoRectify(
-        CVDEREF(cameraMatrix1),
-        CVDEREF(distCoeffs1),
-        CVDEREF(cameraMatrix2),
-        CVDEREF(distCoeffs2),
-        cv::Size(imageSize.width, imageSize.height),
-        CVDEREF(R),
-        CVDEREF(T),
-        CVDEREF(R1),
-        CVDEREF(R2),
-        CVDEREF(P1),
-        CVDEREF(P2),
-        CVDEREF(Q),
-        flags,
-        alpha,
-        cv::Size(newImageSize.width, newImageSize.height),
-        &_validPixROI1,
-        &_validPixROI2
-    );
-    if (validPixROI1 != nullptr) {
-        validPixROI1->x = _validPixROI1.x;
-        validPixROI1->y = _validPixROI1.y;
-        validPixROI1->width = _validPixROI1.width;
-        validPixROI1->height = _validPixROI1.height;
-    }
-    if (validPixROI2 != nullptr) {
-        validPixROI2->x = _validPixROI2.x;
-        validPixROI2->y = _validPixROI2.y;
-        validPixROI2->width = _validPixROI2.width;
-        validPixROI2->height = _validPixROI2.height;
-    }
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::Rect _validPixROI1;
+        cv::Rect _validPixROI2;
+        cv::stereoRectify(
+            CVDEREF(cameraMatrix1),
+            CVDEREF(distCoeffs1),
+            CVDEREF(cameraMatrix2),
+            CVDEREF(distCoeffs2),
+            cv::Size(imageSize.width, imageSize.height),
+            CVDEREF(R),
+            CVDEREF(T),
+            CVDEREF(R1),
+            CVDEREF(R2),
+            CVDEREF(P1),
+            CVDEREF(P2),
+            CVDEREF(Q),
+            flags,
+            alpha,
+            cv::Size(newImageSize.width, newImageSize.height),
+            &_validPixROI1,
+            &_validPixROI2
+        );
+        if (validPixROI1 != nullptr) {
+            validPixROI1->x = _validPixROI1.x;
+            validPixROI1->y = _validPixROI1.y;
+            validPixROI1->width = _validPixROI1.width;
+            validPixROI1->height = _validPixROI1.height;
+        }
+        if (validPixROI2 != nullptr) {
+            validPixROI2->x = _validPixROI2.x;
+            validPixROI2->y = _validPixROI2.y;
+            validPixROI2->width = _validPixROI2.width;
+            validPixROI2->height = _validPixROI2.height;
+        }
+        END_WRAP
+    });
 }
 
 CvStatus* cv_stereoRectifyUncalibrated(
@@ -1490,20 +1425,19 @@ CvStatus* cv_stereoRectifyUncalibrated(
     bool* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = cv::stereoRectifyUncalibrated(
-        CVDEREF(points1),
-        CVDEREF(points2),
-        CVDEREF(F),
-        cv::Size(imgSize.width, imgSize.height),
-        CVDEREF(H1),
-        CVDEREF(H2),
-        threshold
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = cv::stereoRectifyUncalibrated(
+            CVDEREF(points1),
+            CVDEREF(points2),
+            CVDEREF(F),
+            cv::Size(imgSize.width, imgSize.height),
+            CVDEREF(H1),
+            CVDEREF(H2),
+            threshold
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_triangulatePoints(
@@ -1514,35 +1448,33 @@ CvStatus* cv_triangulatePoints(
     MatOut points4D,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::triangulatePoints(
-        CVDEREF(projMatr1),
-        CVDEREF(projMatr2),
-        CVDEREF(projPoints1),
-        CVDEREF(projPoints2),
-        CVDEREF(points4D)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::triangulatePoints(
+            CVDEREF(projMatr1),
+            CVDEREF(projMatr2),
+            CVDEREF(projPoints1),
+            CVDEREF(projPoints2),
+            CVDEREF(points4D)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_undistort(
     Mat src, Mat dst, Mat cameraMatrix, Mat distCoeffs, Mat newCameraMatrix, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::undistort(
-        CVDEREF(src),
-        CVDEREF(dst),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        CVDEREF(newCameraMatrix)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst, cameraMatrix, distCoeffs, newCameraMatrix), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::undistort(
+            CVDEREF(src),
+            CVDEREF(dst),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            CVDEREF(newCameraMatrix)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_undistortImagePoints(
@@ -1553,18 +1485,17 @@ CvStatus* cv_undistortImagePoints(
     struct TermCriteria criteria,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::undistortImagePoints(
-        CVDEREF(src),
-        CVDEREF(dst),
-        CVDEREF(cameraMatrix),
-        CVDEREF(distCoeffs),
-        cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, dst, cameraMatrix, distCoeffs), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::undistortImagePoints(
+            CVDEREF(src),
+            CVDEREF(dst),
+            CVDEREF(cameraMatrix),
+            CVDEREF(distCoeffs),
+            cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_undistortPoints(
@@ -1577,15 +1508,14 @@ CvStatus* cv_undistortPoints(
     TermCriteria criteria,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
-    cv::undistortPoints(
-        CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d), CVDEREF(r), CVDEREF(p), tc
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(distorted, undistorted, k, d, r, p), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto tc = cv::TermCriteria(criteria.type, criteria.maxCount, criteria.epsilon);
+        cv::undistortPoints(
+            CVDEREF(distorted), CVDEREF(undistorted), CVDEREF(k), CVDEREF(d), CVDEREF(r), CVDEREF(p), tc
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_validateDisparity(
@@ -1596,12 +1526,11 @@ CvStatus* cv_validateDisparity(
     int disp12MaxDisp,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    cv::validateDisparity(
-        CVDEREF(disparity), CVDEREF(cost), minDisparity, numberOfDisparities, disp12MaxDisp
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(disparity, cost), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        cv::validateDisparity(
+            CVDEREF(disparity), CVDEREF(cost), minDisparity, numberOfDisparities, disp12MaxDisp
+        );
+        END_WRAP
+    });
 }

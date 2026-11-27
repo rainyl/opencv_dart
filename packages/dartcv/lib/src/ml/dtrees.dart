@@ -29,9 +29,7 @@ class DTrees extends CvStruct<cml.DTrees> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [DTrees.load].
   factory DTrees.create() {
-    final p = calloc<cml.DTrees>();
-    cvRun(() => cml.cv_ml_DTrees_create(p));
-    return DTrees._(p);
+    return DTrees._(cvCreate(calloc<cml.DTrees>(), cml.cv_ml_DTrees_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -53,16 +51,8 @@ class DTrees extends CvStruct<cml.DTrees> {
     ),
   );
 
-  factory DTrees._make(ffi.Pointer<cml.CvStatus> Function(cml.DTreesPtr p) func) {
-    final p = calloc<cml.DTrees>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return DTrees._(p);
-  }
+  factory DTrees._make(ffi.Pointer<cml.CvStatus> Function(cml.DTreesPtr p) func) =>
+      DTrees._(cvCreate(calloc<cml.DTrees>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.DTreesPtr>(cml.addresses.cv_ml_DTrees_close);
 

@@ -30,9 +30,7 @@ class EM extends CvStruct<cml.EM> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [EM.load].
   factory EM.create() {
-    final p = calloc<cml.EM>();
-    cvRun(() => cml.cv_ml_EM_create(p));
-    return EM._(p);
+    return EM._(cvCreate(calloc<cml.EM>(), cml.cv_ml_EM_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -54,16 +52,8 @@ class EM extends CvStruct<cml.EM> {
     ),
   );
 
-  factory EM._make(ffi.Pointer<cml.CvStatus> Function(cml.EMPtr p) func) {
-    final p = calloc<cml.EM>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return EM._(p);
-  }
+  factory EM._make(ffi.Pointer<cml.CvStatus> Function(cml.EMPtr p) func) =>
+      EM._(cvCreate(calloc<cml.EM>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.EMPtr>(cml.addresses.cv_ml_EM_close);
 

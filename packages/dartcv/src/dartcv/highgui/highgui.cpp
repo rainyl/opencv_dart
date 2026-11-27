@@ -7,6 +7,7 @@
 */
 #include "dartcv/highgui/highgui.h"
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 char* cv_currentUIFramework(void) {
     return strdup(cv::currentUIFramework().c_str());
@@ -38,6 +39,7 @@ CvStatus* cv_destroyWindow(const char* winname) {
 }
 
 CvStatus* cv_imshow(const char* winname, Mat mat) {
+    CVD_CHECK(mat);
     BEGIN_WRAP
     cv::imshow(winname, CVDEREF(mat));
     END_WRAP
@@ -94,6 +96,7 @@ CvStatus* cv_selectROI(
     bool printNotice,
     CvRect* rval
 ) {
+    CVD_CHECK(img);
     BEGIN_WRAP
     auto rect = cv::selectROI(winname, CVDEREF(img), showCrosshair, fromCenter, printNotice);
     *rval = {rect.x, rect.y, rect.width, rect.height};
@@ -103,6 +106,7 @@ CvStatus* cv_selectROI(
 CvStatus* cv_selectROI_1(
     Mat img, bool showCrosshair, bool fromCenter, bool printNotice, CvRect* rval
 ) {
+    CVD_CHECK(img);
     BEGIN_WRAP
     auto rect = cv::selectROI(CVDEREF(img), showCrosshair, fromCenter, printNotice);
     *rval = {rect.x, rect.y, rect.width, rect.height};
@@ -117,6 +121,7 @@ CvStatus* cv_selectROIs(
     bool fromCenter,
     bool printNotice
 ) {
+    CVD_CHECK(img);
     BEGIN_WRAP
     cv::selectROIs(winname, CVDEREF(img), CVDEREF_P(rval), showCrosshair, fromCenter, printNotice);
     END_WRAP

@@ -1,0 +1,6 @@
+# Tags the suites use. `no-local-files` marks the tests that need a model file which is not in the
+# repository (CI downloads `models.zip` from the `dnn_test_files` release, see AGENTS.md); declaring
+# it here keeps `dart test` from warning about an unknown tag and lets `-x`/`-t` select them.
+tags:
+  no-local-files:
+  skip-workflow:

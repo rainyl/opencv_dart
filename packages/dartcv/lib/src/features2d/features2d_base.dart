@@ -35,15 +35,15 @@ abstract class Feature2D<T extends ffi.Struct> extends CvStruct<T> {
 class FlannIndexParams extends CvStruct<cvg.FlannIndexParams> {
   FlannIndexParams.fromPointer(cvg.FlannIndexParamsPtr ptr, [bool attach = true]) : super.fromPointer(ptr) {
     if (attach) {
-      finalizer.attach(this, ptr.cast());
+      // `detach: this` is what `freeNative` detaches: without it `dispose()` frees the native
+      // object and the finalizer frees it a second time when the wrapper is collected.
+      finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
-  factory FlannIndexParams.empty() {
-    final p = calloc<cvg.FlannIndexParams>();
-    cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
-    return FlannIndexParams.fromPointer(p);
-  }
+  factory FlannIndexParams.empty() => FlannIndexParams.fromPointer(
+    cvCreate(calloc<cvg.FlannIndexParams>(), cfeatures2d.cv_flann_IndexParams_create),
+  );
 
   factory FlannIndexParams.fromMap(Map<String, dynamic> map) {
     final params = FlannIndexParams.empty();
@@ -242,9 +242,13 @@ class FlannSearchParams extends FlannIndexParams {
     bool sorted = true,
     bool exploreAllTrees = false,
   }) {
-    final p = calloc<cvg.FlannIndexParams>();
-    cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
-    final params = FlannSearchParams.fromPointer(p, checks, eps, sorted, exploreAllTrees);
+    final params = FlannSearchParams.fromPointer(
+      cvCreate(calloc<cvg.FlannIndexParams>(), cfeatures2d.cv_flann_IndexParams_create),
+      checks,
+      eps,
+      sorted,
+      exploreAllTrees,
+    );
 
     params.setInt('checks', checks);
     params.setDouble('eps', eps);
@@ -300,9 +304,9 @@ class FlannKDTreeIndexParams extends FlannIndexParams {
   FlannKDTreeIndexParams.fromPointer(super.ptr, [super.attach = true]) : super.fromPointer();
 
   factory FlannKDTreeIndexParams({int trees = 4}) {
-    final p = calloc<cvg.FlannIndexParams>();
-    cvRun(() => cfeatures2d.cv_flann_IndexParams_create(p));
-    final params = FlannKDTreeIndexParams.fromPointer(p);
+    final params = FlannKDTreeIndexParams.fromPointer(
+      cvCreate(calloc<cvg.FlannIndexParams>(), cfeatures2d.cv_flann_IndexParams_create),
+    );
 
     params.setAlgorithm(cvg.FlannAlgorithm.FLANN_INDEX_KDTREE);
     params.setInt('trees', trees);
@@ -327,11 +331,9 @@ class SimpleBlobDetectorParams extends CvStruct<cvg.SimpleBlobDetectorParams> {
     }
   }
 
-  factory SimpleBlobDetectorParams.empty() {
-    final p = calloc<cvg.SimpleBlobDetectorParams>();
-    cvRun(() => cfeatures2d.cv_SimpleBlobDetectorParams_create(p));
-    return SimpleBlobDetectorParams._(p);
-  }
+  factory SimpleBlobDetectorParams.empty() => SimpleBlobDetectorParams._(
+    cvCreate(calloc<cvg.SimpleBlobDetectorParams>(), cfeatures2d.cv_SimpleBlobDetectorParams_create),
+  );
 
   factory SimpleBlobDetectorParams({
     int? blobColor,

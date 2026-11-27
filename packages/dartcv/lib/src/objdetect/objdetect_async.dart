@@ -50,6 +50,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
     int flags = 0,
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
+    Duration? timeout,
   }) {
     final ret = VecRect();
     final pnums = VecI32();
@@ -69,6 +70,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
       (c) {
         return c.complete((ret, pnums));
       },
+      timeout: timeout,
     );
   }
 
@@ -80,6 +82,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
     (int, int) minSize = (0, 0),
     (int, int) maxSize = (0, 0),
     bool outputRejectLevels = false,
+    Duration? timeout,
   }) {
     final objects = VecRect();
     final rejectLevels = VecI32();
@@ -102,6 +105,7 @@ extension CascadeClassifierAsync on CascadeClassifier {
       (c) {
         return c.complete((objects, rejectLevels, levelWeights));
       },
+      timeout: timeout,
     );
   }
 }
@@ -111,6 +115,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
     Mat img, {
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
+    Duration? timeout,
   }) {
     final descriptors = VecF32();
     final locations = VecPoint();
@@ -127,6 +132,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       (c) {
         return c.complete((descriptors, locations));
       },
+      timeout: timeout,
     );
   }
 
@@ -136,6 +142,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
     InputOutputArray angleOfs, {
     (int, int) paddingTL = (0, 0),
     (int, int) paddingBR = (0, 0),
+    Duration? timeout,
   }) {
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_computeGradient(
@@ -150,6 +157,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       (c) {
         return c.complete();
       },
+      timeout: timeout,
     );
   }
 
@@ -158,6 +166,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
     double hitThreshold = 0,
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
+    Duration? timeout,
   }) {
     final foundLocations = VecPoint();
     final searchLocations = VecPoint();
@@ -177,6 +186,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       (c) {
         return c.complete((foundLocations, weights, searchLocations));
       },
+      timeout: timeout,
     );
   }
 
@@ -185,6 +195,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
     double hitThreshold = 0,
     (int, int) winStride = (0, 0),
     (int, int) padding = (0, 0),
+    Duration? timeout,
   }) {
     final foundLocations = VecPoint();
     final searchLocations = VecPoint();
@@ -202,6 +213,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       (c) {
         return c.complete((foundLocations, searchLocations));
       },
+      timeout: timeout,
     );
   }
 
@@ -214,6 +226,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
     double scale = 1.05,
     double groupThreshold = 2.0,
     bool useMeanshiftGrouping = false,
+    Duration? timeout,
   }) {
     final rects = VecRect();
     return cvRunAsync0(
@@ -232,6 +245,7 @@ extension HOGDescriptorAsync on HOGDescriptor {
       (c) {
         return c.complete(rects);
       },
+      timeout: timeout,
     );
   }
 
@@ -239,8 +253,9 @@ extension HOGDescriptorAsync on HOGDescriptor {
     VecRect rectList,
     VecF64 weights,
     int groupThreshold,
-    double eps,
-  ) {
+    double eps, {
+    Duration? timeout,
+  }) {
     return cvRunAsync0(
       (callback) => cobjdetect.cv_HOGDescriptor_groupRectangles(
         ref,
@@ -253,16 +268,22 @@ extension HOGDescriptorAsync on HOGDescriptor {
       (c) {
         return c.complete((rectList, weights));
       },
+      timeout: timeout,
     );
   }
 }
 
-Future<VecRect> groupRectanglesAsync(VecRect rects, int groupThreshold, double eps) async {
+Future<VecRect> groupRectanglesAsync(
+  VecRect rects,
+  int groupThreshold,
+  double eps, {
+  Duration? timeout,
+}) async {
   return cvRunAsync0((callback) => cobjdetect.cv_groupRectangles(rects.ptr, groupThreshold, eps, callback), (
     c,
   ) {
     return c.complete(rects);
-  });
+  }, timeout: timeout);
 }
 
 extension QRCodeDetectorAsync on QRCodeDetector {
@@ -270,6 +291,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     InputArray img,
     VecPoint points, {
     OutputArray? straightQRcode,
+    Duration? timeout,
   }) {
     straightQRcode ??= Mat.empty();
     final v = calloc<ffi.Pointer<ffi.Char>>();
@@ -284,9 +306,12 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
+        return c.complete((ss, straightQRcode!));
+      },
+      timeout: timeout,
+      release: () {
         calloc.free(v.value);
         calloc.free(v);
-        return c.complete((ss, straightQRcode!));
       },
     );
   }
@@ -295,6 +320,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     InputArray img, {
     VecPoint? points,
     Mat? straightQRcode,
+    Duration? timeout,
   }) {
     points ??= VecPoint();
     straightQRcode ??= Mat.empty();
@@ -310,9 +336,12 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
+        return c.complete((ss, points!, straightQRcode!));
+      },
+      timeout: timeout,
+      release: () {
         calloc.free(v.value);
         calloc.free(v);
-        return c.complete((ss, points!, straightQRcode!));
       },
     );
   }
@@ -321,6 +350,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     InputArray img, {
     VecPoint? points,
     OutputArray? straightCode,
+    Duration? timeout,
   }) {
     straightCode ??= Mat.empty();
     final points = VecPoint();
@@ -336,25 +366,31 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final s = v.value.cast<Utf8>().toDartString();
-        if (v.value != ffi.nullptr) {
-          calloc.free(v.value);
-        }
-        calloc.free(v);
         return c.complete((s, points, straightCode!));
+      },
+      timeout: timeout,
+      release: () {
+        calloc.free(v.value);
+        calloc.free(v);
       },
     );
   }
 
-  Future<(bool ret, VecPoint points)> detectAsync(InputArray input, {VecPoint? points}) async {
+  Future<(bool ret, VecPoint points)> detectAsync(
+    InputArray input, {
+    VecPoint? points,
+    Duration? timeout,
+  }) async {
     final pts = VecPoint();
     final ret = calloc<ffi.Bool>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, pts.ptr, ret, callback),
       (c) {
         final rval = (ret.value, pts);
-        calloc.free(ret);
         return c.complete(rval);
       },
+      release: () => calloc.free(ret),
+      timeout: timeout,
     );
   }
 
@@ -362,6 +398,7 @@ extension QRCodeDetectorAsync on QRCodeDetector {
     InputArray img, {
     VecPoint? points,
     Mat? straightCode,
+    Duration? timeout,
   }) {
     points ??= VecPoint();
     final ret = calloc<ffi.Pointer<ffi.Char>>();
@@ -371,23 +408,31 @@ extension QRCodeDetectorAsync on QRCodeDetector {
           cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, points!.ptr, straightCode!.ref, ret, callback),
       (c) {
         final info = ret.value.cast<Utf8>().toDartString();
+        return c.complete((info, points, straightCode));
+      },
+      timeout: timeout,
+      release: () {
         calloc.free(ret.value);
         calloc.free(ret);
-        return c.complete((info, points, straightCode));
       },
     );
   }
 
-  Future<(bool ret, VecPoint points)> detectMultiAsync(InputArray img, {VecPoint? points}) async {
+  Future<(bool ret, VecPoint points)> detectMultiAsync(
+    InputArray img, {
+    VecPoint? points,
+    Duration? timeout,
+  }) async {
     points ??= VecPoint();
     final ret = calloc<ffi.Bool>();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, points!.ptr, ret, callback),
       (c) {
         final rval = (ret.value, points!);
-        calloc.free(ret);
         return c.complete(rval);
       },
+      release: () => calloc.free(ret),
+      timeout: timeout,
     );
   }
 
@@ -408,43 +453,46 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ret = (rval.value, info.asStringList(), points, codes);
-        calloc.free(rval);
         info.dispose();
         return c.complete(ret);
       },
+
+      release: () => calloc.free(rval),
     );
   }
 }
 
 extension FaceDetectorYNAsync on FaceDetectorYN {
-  Future<Mat> detectAsync(Mat image) async {
+  Future<Mat> detectAsync(Mat image, {Duration? timeout}) async {
     final ret = Mat.empty();
     return cvRunAsync0((callback) => cobjdetect.cv_FaceDetectorYN_detect(ref, image.ref, ret.ptr, callback), (
       c,
     ) {
       return c.complete(ret);
-    });
+    }, timeout: timeout);
   }
 }
 
 extension FaceRecognizerSFAsync on FaceRecognizerSF {
-  Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox) async {
+  Future<Mat> alignCropAsync(Mat srcImg, Mat faceBox, {Duration? timeout}) async {
     final ret = Mat.empty();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceRecognizerSF_alignCrop(ref, srcImg.ref, faceBox.ref, ret.ptr, callback),
       (c) {
         return c.complete(ret);
       },
+      timeout: timeout,
     );
   }
 
-  Future<Mat> featureAsync(Mat alignedImg, {bool clone = false}) async {
+  Future<Mat> featureAsync(Mat alignedImg, {bool clone = false, Duration? timeout}) async {
     final ret = Mat.empty();
     return cvRunAsync0(
       (callback) => cobjdetect.cv_FaceRecognizerSF_feature(ref, alignedImg.ref, clone, ret.ptr, callback),
       (c) {
         return c.complete(ret);
       },
+      timeout: timeout,
     );
   }
 
@@ -452,6 +500,7 @@ extension FaceRecognizerSFAsync on FaceRecognizerSF {
     Mat faceFeature1,
     Mat faceFeature2, {
     int disType = FaceRecognizerSF.FR_COSINE,
+    Duration? timeout,
   }) async {
     final distance = calloc<ffi.Double>();
     return cvRunAsync0(
@@ -465,9 +514,10 @@ extension FaceRecognizerSFAsync on FaceRecognizerSF {
       ),
       (c) {
         final rval = distance.value;
-        calloc.free(distance);
         return c.complete(rval);
       },
+      release: () => calloc.free(distance),
+      timeout: timeout,
     );
   }
 }

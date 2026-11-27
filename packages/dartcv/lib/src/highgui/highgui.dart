@@ -40,15 +40,17 @@ int waitKeyEx(int delay) => chighgui.cv_waitKeyEx(delay);
 /// For further details, please see:
 /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga5afdf8410934fd099df85c75b2e0888b
 void namedWindow(String winName, [int flags = 0]) {
-  final cname = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_namedWindow(cname, flags));
-  calloc.free(cname);
+  return using((arena) {
+    final cname = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_namedWindow(cname, flags));
+  });
 }
 
 void destroyWindow(String winName) {
-  final cname = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_destroyWindow(cname));
-  calloc.free(cname);
+  return using((arena) {
+    final cname = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_destroyWindow(cname));
+  });
 }
 
 /// destroy all windows.
@@ -63,31 +65,37 @@ void destroyAllWindows() {
 /// For further details, please see:
 /// http://docs.opencv.org/master/d7/dfc/group__highgui.html#ga453d42fe4cb60e5723281a89973ee563
 void imshow(String winName, Mat img) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_imshow(cWinName, img.ref));
-  calloc.free(cWinName);
+  return using((arena) {
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_imshow(cWinName, img.ref));
+  });
 }
 
-Rect getWindowImageRect(String winName) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<cvg.CvRect>();
-  cvRun(() => chighgui.cv_getWindowImageRect(cWinName, p));
-  calloc.free(cWinName);
-  return Rect.fromPointer(p);
-}
+Rect getWindowImageRect(String winName) => using(
+  (arena) => Rect.fromPointer(
+    cvCreate(
+      calloc<cvg.CvRect>(),
+      (p) => chighgui.cv_getWindowImageRect(winName.toNativeUtf8(allocator: arena).cast<ffi.Char>(), p),
+    ),
+  ),
+);
 
 /// [getWindowProperty] returns properties of a window.
 ///
 /// For further details, please see:
 /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#gaaf9504b8f9cf19024d9d44a14e461656
 double getWindowProperty(String winName, WindowPropertyFlags flag) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<ffi.Double>();
-  cvRun(() => chighgui.cv_getWindowProperty(cWinName, flag.value, p));
-  final rval = p.value;
-  calloc.free(p);
-  calloc.free(cWinName);
-  return rval;
+  return using((arena) {
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final p = calloc<ffi.Double>();
+    try {
+      cvRun(() => chighgui.cv_getWindowProperty(cWinName, flag.value, p));
+      final rval = p.value;
+      return rval;
+    } finally {
+      calloc.free(p);
+    }
+  });
 }
 
 /// [setWindowProperty] changes parameters of a window dynamically.
@@ -95,9 +103,10 @@ double getWindowProperty(String winName, WindowPropertyFlags flag) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga66e4a6db4d4e06148bcdfe0d70a5df27
 void setWindowProperty(String winName, WindowPropertyFlags flag, double value) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_setWindowProperty(cWinName, flag.value, value));
-  calloc.free(cWinName);
+  return using((arena) {
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_setWindowProperty(cWinName, flag.value, value));
+  });
 }
 
 /// SetWindowTitle updates window title.
@@ -105,11 +114,11 @@ void setWindowProperty(String winName, WindowPropertyFlags flag, double value) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga56f8849295fd10d0c319724ddb773d96
 void setWindowTitle(String winName, String title) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  final ctitle = title.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_setWindowTitle(cWinName, ctitle));
-  calloc.free(ctitle);
-  calloc.free(cWinName);
+  return using((arena) {
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final ctitle = title.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_setWindowTitle(cWinName, ctitle));
+  });
 }
 
 /// MoveWindow moves window to the specified position.
@@ -117,9 +126,10 @@ void setWindowTitle(String winName, String title) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga8d86b207f7211250dbe6e28f76307ffb
 void moveWindow(String winName, int x, int y) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_moveWindow(cWinName, x, y));
-  calloc.free(cWinName);
+  return using((arena) {
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_moveWindow(cWinName, x, y));
+  });
 }
 
 /// ResizeWindow resizes window to the specified size.
@@ -127,9 +137,10 @@ void moveWindow(String winName, int x, int y) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d7/dfc/group__highgui.html#ga9e80e080f7ef33f897e415358aee7f7e
 void resizeWindow(String winName, int width, int height) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_resizeWindow(cWinName, width, height));
-  calloc.free(cWinName);
+  return using((arena) {
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_resizeWindow(cWinName, width, height));
+  });
 }
 
 /// SelectROI selects a Region Of Interest (ROI) on the given image.
@@ -148,11 +159,21 @@ Rect selectROI(
   bool fromCenter = false,
   bool printNotice = true,
 }) {
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<cvg.CvRect>();
-  cvRun(() => chighgui.cv_selectROI(cWinName, img.ref, showCrosshair, fromCenter, printNotice, p));
-  calloc.free(cWinName);
-  return Rect.fromPointer(p);
+  return using(
+    (arena) => Rect.fromPointer(
+      cvCreate(
+        calloc<cvg.CvRect>(),
+        (p) => chighgui.cv_selectROI(
+          winName.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          img.ref,
+          showCrosshair,
+          fromCenter,
+          printNotice,
+          p,
+        ),
+      ),
+    ),
+  );
 }
 
 /// SelectROIs selects multiple Regions Of Interest (ROI) on the given image.
@@ -171,11 +192,12 @@ VecRect selectROIs(
   bool fromCenter = false,
   bool printNotice = true,
 }) {
-  final p = VecRect();
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_selectROIs(cWinName, img.ref, p.ptr, showCrosshair, fromCenter, printNotice));
-  calloc.free(cWinName);
-  return p;
+  return using((arena) {
+    final p = VecRect();
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_selectROIs(cWinName, img.ref, p.ptr, showCrosshair, fromCenter, printNotice));
+    return p;
+  });
 }
 
 // https://stackoverflow.com/a/48055987/18539998
@@ -190,61 +212,64 @@ void createTrackbar(
   int maxval, {
   cvg.Dartcv_TrackbarCallbackFunction? onChange,
 }) {
-  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
-  final cWinName = winName.toNativeUtf8().cast<ffi.Char>();
-  if (onChange == null) {
-    cvRun(() => chighgui.cv_createTrackbar(cTrackName, cWinName, maxval));
-  } else {
-    final funcPointer = ffi.NativeCallable<cvg.cv_TrackbarCallbackFunction>.isolateLocal(onChange);
-    cvRun(
-      () => chighgui.cv_createTrackbar_1(
-        cTrackName,
-        cWinName,
-        ffi.nullptr,
-        maxval,
-        funcPointer.nativeFunction,
-        ffi.nullptr,
-      ),
-    );
-  }
-  calloc.free(cTrackName);
-  calloc.free(cWinName);
+  return using((arena) {
+    final cTrackName = trackbarName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final cWinName = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    if (onChange == null) {
+      cvRun(() => chighgui.cv_createTrackbar(cTrackName, cWinName, maxval));
+    } else {
+      final funcPointer = ffi.NativeCallable<cvg.cv_TrackbarCallbackFunction>.isolateLocal(onChange);
+      cvRun(
+        () => chighgui.cv_createTrackbar_1(
+          cTrackName,
+          cWinName,
+          ffi.nullptr,
+          maxval,
+          funcPointer.nativeFunction,
+          ffi.nullptr,
+        ),
+      );
+    }
+  });
 }
 
 int getTrackbarPos(String trackbarName, String winName) {
-  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
-  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<ffi.Int>();
-  cvRun(() => chighgui.cv_getTrackbarPos(cTrackName, cwinname, p));
-  final rval = p.value;
-  calloc.free(p);
-  calloc.free(cTrackName);
-  calloc.free(cwinname);
-  return rval;
+  return using((arena) {
+    final cTrackName = trackbarName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final cwinname = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final p = calloc<ffi.Int>();
+    try {
+      cvRun(() => chighgui.cv_getTrackbarPos(cTrackName, cwinname, p));
+      final rval = p.value;
+      return rval;
+    } finally {
+      calloc.free(p);
+    }
+  });
 }
 
 void setTrackbarPos(String trackbarName, String winName, int pos) {
-  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
-  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_setTrackbarPos(cTrackName, cwinname, pos));
-  calloc.free(cTrackName);
-  calloc.free(cwinname);
+  return using((arena) {
+    final cTrackName = trackbarName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final cwinname = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_setTrackbarPos(cTrackName, cwinname, pos));
+  });
 }
 
 void setTrackbarMin(String trackbarName, String winName, int minval) {
-  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
-  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_setTrackbarMin(cTrackName, cwinname, minval));
-  calloc.free(cTrackName);
-  calloc.free(cwinname);
+  return using((arena) {
+    final cTrackName = trackbarName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final cwinname = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_setTrackbarMin(cTrackName, cwinname, minval));
+  });
 }
 
 void setTrackbarMax(String trackbarName, String winName, int maxval) {
-  final cTrackName = trackbarName.toNativeUtf8().cast<ffi.Char>();
-  final cwinname = winName.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => chighgui.cv_setTrackbarMax(cTrackName, cwinname, maxval));
-  calloc.free(cTrackName);
-  calloc.free(cwinname);
+  return using((arena) {
+    final cTrackName = trackbarName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final cwinname = winName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => chighgui.cv_setTrackbarMax(cTrackName, cwinname, maxval));
+  });
 }
 
 enum WindowFlag {

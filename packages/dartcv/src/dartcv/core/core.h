@@ -256,6 +256,55 @@ double_t cv_getTickFrequency(void);
 void cv_setNumThreads(int n);
 int cv_getNumThreads(void);
 
+/**
+ * @brief Diagnostics: how many wrapped C++ objects are alive right now.
+ *
+ * A handle that a live object outlived (a job still in flight, a `VecVecPoint[i]` view) keeps its
+ * object counted, so this is the number of objects, not of Dart wrappers. Tests use it to assert
+ * that disposing and finalizing released everything.
+ *
+ * @return int64_t
+ */
+int64_t cv_live_object_count(void);
+
+/**
+ * @brief Async: how many worker threads run the `*Async` work (default 1).
+ *
+ * One worker is enough to keep the caller's thread free, and OpenCV already uses every core inside a
+ * single call, so raising this oversubscribes CPU-bound work. It helps when the calls block on I/O
+ * (a capture, a slow file) instead.
+ *
+ * @return int
+ */
+int cv_getAsyncThreads(void);
+
+/**
+ * @brief Async: set the worker count. Waits for the queue to drain first.
+ *
+ * @param n number of threads, at least 1
+ */
+void cv_setAsyncThreads(int n);
+
+/**
+ * @brief Async: jobs queued plus jobs running.
+ *
+ * @return int64_t
+ */
+int64_t cv_asyncPending(void);
+
+/**
+ * @brief Async: block until the queue is empty and no job is running (tests, shutdown).
+ */
+void cv_asyncDrain(void);
+
+/**
+ * @brief Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+ *
+ * @param out VecChar*
+ * @return CvStatus
+ */
+CvStatus* cv_live_object_stats(VecChar* out);
+
 // OpenCL functions
 bool cv_ocl_haveAmdBlas();
 bool cv_ocl_haveAmdFft();

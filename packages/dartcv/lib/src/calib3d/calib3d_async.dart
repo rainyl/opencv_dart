@@ -35,6 +35,7 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
   Mat? tvecs,
   int flags = 0,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+  Duration? timeout,
 }) async {
   rvecs ??= Mat.empty();
   tvecs ??= Mat.empty();
@@ -56,9 +57,10 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
     ),
     (c) {
       final rmsErr = cRmsErr.value;
-      calloc.free(cRmsErr);
       return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs!, tvecs!));
     },
+    release: () => calloc.free(cRmsErr),
+    timeout: timeout,
   );
 }
 
@@ -70,22 +72,25 @@ Future<Mat> computeCorrespondEpilinesAsync(
   int whichImage,
   InputArray F, {
   OutputArray? lines,
+  Duration? timeout,
 }) async {
   lines ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_computeCorrespondEpilines(points.ref, whichImage, F.ref, lines!.ref, callback),
     (c) => c.complete(lines!),
+    timeout: timeout,
   );
 }
 
 /// Converts points from homogeneous to Euclidean space.
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gac42edda3a3a0f717979589fcd6ac0035
-Future<Mat> convertPointsFromHomogeneousAsync(InputArray src, {OutputArray? dst}) async {
+Future<Mat> convertPointsFromHomogeneousAsync(InputArray src, {OutputArray? dst, Duration? timeout}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_convertPointsFromHomogeneous(src.ref, dst!.ref, callback),
     (c) => c.complete(dst),
+    timeout: timeout,
   );
 }
 
@@ -94,11 +99,12 @@ Future<Mat> convertPointsFromHomogeneousAsync(InputArray src, {OutputArray? dst}
 /// `void cv::convertPointsToHomogeneous (InputArray src, OutputArray dst);`
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga13159f129eec8a7d9bd8501f012d5543
-Future<Mat> convertPointsToHomogeneousAsync(InputArray src, {OutputArray? dst}) async {
+Future<Mat> convertPointsToHomogeneousAsync(InputArray src, {OutputArray? dst, Duration? timeout}) async {
   dst ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_convertPointsToHomogeneous(src.ref, dst!.ref, callback),
     (c) => c.complete(dst),
+    timeout: timeout,
   );
 }
 
@@ -113,6 +119,7 @@ Future<(Mat newPoints1, Mat newPoints2)> correctMatchesAsync(
   InputArray points2, {
   OutputArray? newPoints1,
   OutputArray? newPoints2,
+  Duration? timeout,
 }) async {
   newPoints1 ??= Mat.empty();
   newPoints2 ??= Mat.empty();
@@ -126,6 +133,7 @@ Future<(Mat newPoints1, Mat newPoints2)> correctMatchesAsync(
       callback,
     ),
     (c) => c.complete((newPoints1!, newPoints2!)),
+    timeout: timeout,
   );
 }
 
@@ -139,6 +147,7 @@ Future<(Mat r1, Mat r2, Mat t)> decomposeEssentialMatAsync(
   OutputArray? R1,
   OutputArray? R2,
   OutputArray? t,
+  Duration? timeout,
 }) async {
   R1 ??= Mat.empty();
   R2 ??= Mat.empty();
@@ -146,6 +155,7 @@ Future<(Mat r1, Mat r2, Mat t)> decomposeEssentialMatAsync(
   return cvRunAsync0(
     (callback) => ccalib3d.cv_decomposeEssentialMat(E.ref, R1!.ref, R2!.ref, t!.ref, callback),
     (c) => c.complete((R1!, R2!, t!)),
+    timeout: timeout,
   );
 }
 
@@ -160,6 +170,7 @@ Future<(int rval, VecMat rotations, VecMat translations, VecMat normals)> decomp
   VecMat? rotations,
   VecMat? translations,
   VecMat? normals,
+  Duration? timeout,
 }) async {
   rotations ??= VecMat();
   translations ??= VecMat();
@@ -177,9 +188,10 @@ Future<(int rval, VecMat rotations, VecMat translations, VecMat normals)> decomp
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rotations!, translations!, normals!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -197,6 +209,7 @@ Future<(Mat cameraMatrix, Mat rotMatrix, Mat transVect)> decomposeProjectionMatr
   OutputArray? rotMatrixY,
   OutputArray? rotMatrixZ,
   OutputArray? eulerAngles,
+  Duration? timeout,
 }) async {
   cameraMatrix ??= Mat.empty();
   rotMatrix ??= Mat.empty();
@@ -220,6 +233,7 @@ Future<(Mat cameraMatrix, Mat rotMatrix, Mat transVect)> decomposeProjectionMatr
     (c) {
       return c.complete((cameraMatrix!, rotMatrix!, transVect!));
     },
+    timeout: timeout,
   );
 }
 
@@ -231,8 +245,9 @@ Future<Mat> drawChessboardCornersAsync(
   InputOutputArray image,
   (int, int) patternSize,
   VecPoint2f corners,
-  bool patternWasFound,
-) async {
+  bool patternWasFound, {
+  Duration? timeout,
+}) {
   return cvRunAsync0(
     (callback) => ccalib3d.cv_drawChessboardCorners(
       image.ref,
@@ -242,6 +257,7 @@ Future<Mat> drawChessboardCornersAsync(
       callback,
     ),
     (c) => c.complete(image),
+    timeout: timeout,
   );
 }
 
@@ -257,7 +273,8 @@ Future<void> drawFrameAxesAsync(
   Mat tvec,
   double length, {
   int thickness = 3,
-}) async {
+  Duration? timeout,
+}) {
   return cvRunAsync0(
     (callback) => ccalib3d.cv_drawFrameAxes(
       image.ref,
@@ -270,6 +287,7 @@ Future<void> drawFrameAxesAsync(
       callback,
     ),
     (c) => c.complete(),
+    timeout: timeout,
   );
 }
 
@@ -287,6 +305,7 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
   double confidence = 0.99,
   int refineIters = 10,
   OutputArray? inliers,
+  Duration? timeout,
 }) async {
   inliers ??= Mat.empty();
   final rval = Mat.empty();
@@ -304,6 +323,7 @@ Future<(Mat, Mat inliers)> estimateAffinePartial2DAsync(
       callback,
     ),
     (c) => c.complete((rval, inliers!)),
+    timeout: timeout,
   );
 }
 
@@ -320,6 +340,7 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
   double confidence = 0.99,
   int refineIters = 10,
   OutputArray? inliers,
+  Duration? timeout,
 }) async {
   inliers ??= Mat.empty();
   final rval = Mat.empty();
@@ -337,6 +358,7 @@ Future<(Mat, Mat inliers)> estimateAffine2DAsync(
       callback,
     ),
     (c) => c.complete((rval, inliers!)),
+    timeout: timeout,
   );
 }
 
@@ -350,6 +372,7 @@ Future<(int rval, Mat, Mat inliers)> estimateAffine3DAsync(
   Mat? inliers,
   double ransacThreshold = 3,
   double confidence = 0.99,
+  Duration? timeout,
 }) async {
   out ??= Mat.empty();
   inliers ??= Mat.empty();
@@ -367,9 +390,10 @@ Future<(int rval, Mat, Mat inliers)> estimateAffine3DAsync(
     ),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete((rval, out!, inliers!));
     },
+    release: () => calloc.free(p),
+    timeout: timeout,
   );
 }
 
@@ -385,6 +409,7 @@ Future<Scalar> estimateChessboardSharpnessAsync(
   double riseDistance = 0.8,
   bool vertical = false,
   OutputArray? sharpness,
+  Duration? timeout,
 }) async {
   sharpness ??= Mat.empty();
   final prval = calloc<cvg.Scalar>();
@@ -400,6 +425,8 @@ Future<Scalar> estimateChessboardSharpnessAsync(
       callback,
     ),
     (c) => c.complete(Scalar.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -415,6 +442,7 @@ Future<(int rval, Mat out, Mat inliers)> estimateTranslation3DAsync(
   OutputArray? inliers,
   double ransacThreshold = 3,
   double confidence = 0.99,
+  Duration? timeout,
 }) async {
   out ??= Mat.empty();
   inliers ??= Mat.empty();
@@ -432,9 +460,10 @@ Future<(int rval, Mat out, Mat inliers)> estimateTranslation3DAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, out!, inliers!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -450,6 +479,7 @@ Future<Mat> filterHomographyDecompByVisibleRefpointsAsync(
   InputArray afterPoints, {
   OutputArray? possibleSolutions,
   InputArray? pointsMask,
+  Duration? timeout,
 }) async {
   possibleSolutions ??= Mat.empty();
   pointsMask ??= Mat.empty();
@@ -464,6 +494,7 @@ Future<Mat> filterHomographyDecompByVisibleRefpointsAsync(
       callback,
     ),
     (c) => c.complete(possibleSolutions!),
+    timeout: timeout,
   );
 }
 
@@ -478,11 +509,13 @@ Future<void> filterSpecklesAsync(
   int maxSpeckleSize,
   double maxDiff, {
   OutputArray? buf,
+  Duration? timeout,
 }) async {
   buf ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_filterSpeckles(img.ref, newVal, maxSpeckleSize, maxDiff, buf!.ref, callback),
     (c) => c.complete(),
+    timeout: timeout,
   );
 }
 
@@ -494,16 +527,18 @@ Future<void> filterSpecklesAsync(
 Future<bool> find4QuadCornerSubpixAsync(
   InputArray img,
   InputOutputArray corners,
-  (int, int) regionSize,
-) async {
+  (int, int) regionSize, {
+  Duration? timeout,
+}) async {
   final prval = calloc<ffi.Bool>();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, callback),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete(rval);
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -516,6 +551,7 @@ Future<(bool success, VecPoint2f corners)> findChessboardCornersAsync(
   (int, int) patternSize, {
   VecPoint2f? corners,
   int flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE,
+  Duration? timeout,
 }) async {
   corners ??= VecPoint2f();
   final r = calloc<ffi.Bool>();
@@ -524,9 +560,10 @@ Future<(bool success, VecPoint2f corners)> findChessboardCornersAsync(
         ccalib3d.cv_findChessboardCorners(image.ref, patternSize.cvdRef, corners!.ptr, flags, r, callback),
     (c) {
       final rval = r.value;
-      calloc.free(r);
       return c.complete((rval, corners!));
     },
+    release: () => calloc.free(r),
+    timeout: timeout,
   );
 }
 
@@ -537,6 +574,7 @@ Future<(bool, VecPoint2f corners)> findChessboardCornersSBAsync(
   (int, int) patternSize,
   int flags, {
   VecPoint2f? corners,
+  Duration? timeout,
 }) async {
   corners ??= VecPoint2f();
   final b = calloc<ffi.Bool>();
@@ -545,9 +583,10 @@ Future<(bool, VecPoint2f corners)> findChessboardCornersSBAsync(
         ccalib3d.cv_findChessboardCornersSB(image.ref, patternSize.cvdRef, corners!.ptr, flags, b, callback),
     (c) {
       final rval = b.value;
-      calloc.free(b);
       return c.complete((rval, corners!));
     },
+    release: () => calloc.free(b),
+    timeout: timeout,
   );
 }
 
@@ -559,6 +598,7 @@ Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsyn
   int flags, {
   VecPoint2f? corners,
   OutputArray? meta,
+  Duration? timeout,
 }) async {
   corners ??= VecPoint2f();
   meta ??= Mat.empty();
@@ -575,9 +615,10 @@ Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsyn
     ),
     (c) {
       final rval = b.value;
-      calloc.free(b);
       return c.complete((rval, corners!, meta!));
     },
+    release: () => calloc.free(b),
+    timeout: timeout,
   );
 }
 
@@ -591,6 +632,7 @@ Future<(bool, Mat)> findCirclesGridAsync(
   Size patternSize, {
   int flags = CALIB_CB_SYMMETRIC_GRID,
   OutputArray? centers,
+  Duration? timeout,
 }) async {
   centers ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
@@ -599,9 +641,10 @@ Future<(bool, Mat)> findCirclesGridAsync(
         ccalib3d.cv_findCirclesGrid(image.ref, patternSize.ref, centers!.ref, flags, prval, callback),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, centers!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -620,6 +663,7 @@ Future<Mat> findEssentialMatAsync(
   double threshold = 1.0,
   int maxIters = 1000,
   OutputArray? mask,
+  Duration? timeout,
 }) async {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
@@ -639,6 +683,8 @@ Future<Mat> findEssentialMatAsync(
       callback,
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -656,6 +702,7 @@ Future<Mat> findEssentialMatCameraMatrixAsync(
   double threshold = 1.0,
   int maxIters = 1000,
   OutputArray? mask,
+  Duration? timeout,
 }) {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
@@ -673,6 +720,8 @@ Future<Mat> findEssentialMatCameraMatrixAsync(
       callback,
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -689,6 +738,7 @@ Future<Mat> findFundamentalMatAsync(
   double confidence = 0.99,
   int maxIters = 1000,
   OutputArray? mask,
+  Duration? timeout,
 }) async {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
@@ -705,6 +755,8 @@ Future<Mat> findFundamentalMatAsync(
       callback,
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -718,6 +770,7 @@ Future<Mat> findFundamentalMatUsacAsync(
   InputArray points2,
   UsacParams params, {
   OutputArray? mask,
+  Duration? timeout,
 }) async {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
@@ -725,6 +778,8 @@ Future<Mat> findFundamentalMatUsacAsync(
     (callback) =>
         ccalib3d.cv_findFundamentalMat_1(points1.ref, points2.ref, mask!.ref, params.ref, prval, callback),
     (c) => c.complete(Mat.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -740,6 +795,7 @@ Future<(Mat, Mat)> findHomographyAsync(
   OutputArray? mask,
   int maxIters = 2000,
   double confidence = 0.995,
+  Duration? timeout,
 }) async {
   mask ??= Mat.empty();
   final mat = Mat.empty();
@@ -756,6 +812,7 @@ Future<(Mat, Mat)> findHomographyAsync(
       callback,
     ),
     (c) => c.complete((mat, mask!)),
+    timeout: timeout,
   );
 }
 
@@ -769,6 +826,7 @@ Future<Mat> findHomographyUsacAsync(
   InputArray dstPoints,
   UsacParams params, {
   OutputArray? mask,
+  Duration? timeout,
 }) async {
   mask ??= Mat.empty();
   final prval = calloc<cvg.Mat>();
@@ -776,6 +834,8 @@ Future<Mat> findHomographyUsacAsync(
     (callback) =>
         ccalib3d.cv_findHomography_1(srcPoints.ref, dstPoints.ref, mask!.ref, params.ref, prval, callback),
     (c) => c.complete(Mat.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -789,6 +849,7 @@ Future<Mat> getDefaultNewCameraMatrixAsync(
   InputArray cameraMatrix, {
   Size? imgsize,
   bool centerPrincipalPoint = false,
+  Duration? timeout,
 }) async {
   final prval = calloc<cvg.Mat>();
   imgsize ??= Size(0, 0);
@@ -801,6 +862,8 @@ Future<Mat> getDefaultNewCameraMatrixAsync(
       callback,
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -879,6 +942,7 @@ Future<(double rval, Mat map1, Mat map2)> initWideAngleProjMapAsync(
   OutputArray? map2,
   int projType = PROJ_SPHERICAL_EQRECT,
   double alpha = 0,
+  Duration? timeout,
 }) async {
   map1 ??= Mat.empty();
   map2 ??= Mat.empty();
@@ -899,9 +963,10 @@ Future<(double rval, Mat map1, Mat map2)> initWideAngleProjMapAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, map1!, map2!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -913,12 +978,14 @@ Future<(Mat dABdA, Mat dABdB)> matMulDerivAsync(
   InputArray B, {
   OutputArray? dABdA,
   OutputArray? dABdB,
+  Duration? timeout,
 }) async {
   dABdA ??= Mat.empty();
   dABdB ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_matMulDeriv(A.ref, B.ref, dABdA!.ref, dABdB!.ref, callback),
     (c) => c.complete((dABdA!, dABdB!)),
+    timeout: timeout,
   );
 }
 
@@ -934,6 +1001,7 @@ Future<(Mat imagePoints, Mat jacobian)> projectPointsAsync(
   OutputArray? imagePoints,
   OutputArray? jacobian,
   double aspectRatio = 0,
+  Duration? timeout,
 }) async {
   imagePoints ??= Mat.empty();
   jacobian ??= Mat.empty();
@@ -950,6 +1018,7 @@ Future<(Mat imagePoints, Mat jacobian)> projectPointsAsync(
       callback,
     ),
     (c) => c.complete((imagePoints!, jacobian!)),
+    timeout: timeout,
   );
 }
 
@@ -967,6 +1036,7 @@ Future<(int rval, Mat R, Mat t)> recoverPoseAsync(
   double focal = 1,
   Point2d? pp,
   InputOutputArray? mask,
+  Duration? timeout,
 }) async {
   R ??= Mat.empty();
   t ??= Mat.empty();
@@ -988,9 +1058,10 @@ Future<(int rval, Mat R, Mat t)> recoverPoseAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, R!, t!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1009,6 +1080,7 @@ Future<(int rval, Mat R, Mat t, Mat triangulatedPoints)> recoverPoseCameraMatrix
   double distanceThresh = 1,
   InputOutputArray? mask,
   OutputArray? triangulatedPoints,
+  Duration? timeout,
 }) async {
   R ??= Mat.empty();
   t ??= Mat.empty();
@@ -1031,9 +1103,10 @@ Future<(int rval, Mat R, Mat t, Mat triangulatedPoints)> recoverPoseCameraMatrix
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, R!, t!, triangulatedPoints!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1042,12 +1115,18 @@ Future<(int rval, Mat R, Mat t, Mat triangulatedPoints)> recoverPoseCameraMatrix
 /// void cv::Rodrigues (InputArray src, OutputArray dst, OutputArray jacobian=noArray())
 ///
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga61585db663d9da06b68e70cfbf6a1eac
-Future<Mat> RodriguesAsync(InputArray src, {OutputArray? dst, OutputArray? jacobian}) async {
+Future<Mat> RodriguesAsync(
+  InputArray src, {
+  OutputArray? dst,
+  OutputArray? jacobian,
+  Duration? timeout,
+}) async {
   dst ??= Mat.empty();
   jacobian ??= Mat.empty();
   return cvRunAsync0(
     (callback) => ccalib3d.cv_Rodrigues(src.ref, dst!.ref, jacobian!.ref, callback),
     (c) => c.complete(dst!),
+    timeout: timeout,
   );
 }
 
@@ -1063,6 +1142,7 @@ Future<(Vec3d rval, Mat mtxR, Mat mtxQ)> RQDecomp3x3Async(
   OutputArray? Qx,
   OutputArray? Qy,
   OutputArray? Qz,
+  Duration? timeout,
 }) async {
   mtxR ??= Mat.empty();
   mtxQ ??= Mat.empty();
@@ -1074,6 +1154,8 @@ Future<(Vec3d rval, Mat mtxR, Mat mtxQ)> RQDecomp3x3Async(
     (callback) =>
         ccalib3d.cv_RQDecomp3x3(src.ref, mtxR!.ref, mtxQ!.ref, Qx!.ref, Qy!.ref, Qz!.ref, prval, callback),
     (c) => c.complete((Vec3d.fromPointer(prval), mtxR!, mtxQ!)),
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -1088,6 +1170,7 @@ Future<(int rval, VecMat rvecs, VecMat tvecs)> solveP3PAsync(
   int flags, {
   VecMat? rvecs,
   VecMat? tvecs,
+  Duration? timeout,
 }) async {
   rvecs ??= VecMat();
   tvecs ??= VecMat();
@@ -1106,9 +1189,10 @@ Future<(int rval, VecMat rvecs, VecMat tvecs)> solveP3PAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvecs!, tvecs!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1124,6 +1208,7 @@ Future<(bool rval, Mat rvec, Mat tvec)> solvePnPAsync(
   OutputArray? tvec,
   bool useExtrinsicGuess = false,
   int flags = SOLVEPNP_ITERATIVE,
+  Duration? timeout,
 }) async {
   rvec ??= Mat.empty();
   tvec ??= Mat.empty();
@@ -1143,9 +1228,10 @@ Future<(bool rval, Mat rvec, Mat tvec)> solvePnPAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvec!, tvec!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1164,6 +1250,7 @@ Future<(int rval, VecMat rvecs, VecMat tvecs, Mat reprojectionError)> solvePnPGe
   InputArray? rvec,
   InputArray? tvec,
   OutputArray? reprojectionError,
+  Duration? timeout,
 }) async {
   rvecs ??= VecMat();
   tvecs ??= VecMat();
@@ -1189,9 +1276,10 @@ Future<(int rval, VecMat rvecs, VecMat tvecs, Mat reprojectionError)> solvePnPGe
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvecs!, tvecs!, reprojectionError!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1211,6 +1299,7 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacAsync(
   double confidence = 0.99,
   OutputArray? inliers,
   int flags = SOLVEPNP_ITERATIVE,
+  Duration? timeout,
 }) async {
   rvec ??= Mat.empty();
   tvec ??= Mat.empty();
@@ -1235,9 +1324,10 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvec!, tvec!, inliers!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1253,6 +1343,7 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacUsacAsync(
   OutputArray? tvec,
   OutputArray? inliers,
   UsacParams? params,
+  Duration? timeout,
 }) async {
   rvec ??= Mat.empty();
   tvec ??= Mat.empty();
@@ -1274,9 +1365,10 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacUsacAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvec!, tvec!, inliers!));
     },
+    release: () => calloc.free(prval),
+    timeout: timeout,
   );
 }
 
@@ -1293,6 +1385,7 @@ Future<void> solvePnPRefineLMAsync(
   InputOutputArray rvec,
   InputOutputArray tvec, {
   TermCriteria? criteria,
+  Duration? timeout,
 }) async {
   // in opencv, this is TermCriteria(TermCriteria::EPS+TermCriteria::COUNT, 20, FLT_EPSILON)
   // FLT_EPSILON depends on the platform, here we use 1e-7 to simplify this.
@@ -1310,6 +1403,7 @@ Future<void> solvePnPRefineLMAsync(
       callback,
     ),
     (c) => c.complete(),
+    timeout: timeout,
   );
 }
 
@@ -1327,6 +1421,7 @@ Future<void> solvePnPRefineVVSAsync(
   InputOutputArray tvec, {
   TermCriteria? criteria,
   double VVSlambda = 1.0,
+  Duration? timeout,
 }) async {
   criteria ??= TermCriteria(TERM_EPS + TERM_COUNT, 20, 1e-7);
   return cvRunAsync0(
@@ -1342,6 +1437,7 @@ Future<void> solvePnPRefineVVSAsync(
       callback,
     ),
     (c) => c.complete(),
+    timeout: timeout,
   );
 }
 
@@ -1356,6 +1452,7 @@ Future<Mat> triangulatePointsAsync(
   InputArray projPoints1,
   InputArray projPoints2, {
   OutputArray? points4D,
+  Duration? timeout,
 }) async {
   points4D ??= Mat.empty();
   return cvRunAsync0(
@@ -1368,6 +1465,7 @@ Future<Mat> triangulatePointsAsync(
       callback,
     ),
     (c) => c.complete(points4D!),
+    timeout: timeout,
   );
 }
 
@@ -1383,6 +1481,7 @@ Future<Mat> undistortAsync(
   InputArray distCoeffs, {
   OutputArray? dst,
   InputArray? newCameraMatrix,
+  Duration? timeout,
 }) async {
   dst ??= Mat.empty();
   newCameraMatrix ??= Mat.empty();
@@ -1396,6 +1495,7 @@ Future<Mat> undistortAsync(
       callback,
     ),
     (c) => c.complete(dst!),
+    timeout: timeout,
   );
 }
 
@@ -1408,6 +1508,7 @@ Future<Mat> undistortImagePointsAsync(
   InputArray distCoeffs, {
   OutputArray? dst,
   TermCriteria? criteria,
+  Duration? timeout,
 }) async {
   dst ??= Mat.empty();
   criteria ??= TermCriteria(TERM_MAX_ITER + TERM_EPS, 5, 0.01);
@@ -1421,6 +1522,7 @@ Future<Mat> undistortImagePointsAsync(
       callback,
     ),
     (c) => c.complete(dst!),
+    timeout: timeout,
   );
 }
 
@@ -1436,6 +1538,7 @@ Future<Mat> undistortPointsAsync(
   InputArray? R,
   InputArray? P,
   (int type, int count, double eps) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
+  Duration? timeout,
 }) async {
   R ??= Mat.empty();
   P ??= Mat.empty();
@@ -1453,6 +1556,7 @@ Future<Mat> undistortPointsAsync(
       callback,
     ),
     (c) => c.complete(dst!),
+    timeout: timeout,
   );
 }
 
@@ -1467,7 +1571,7 @@ Future<Mat> undistortPointsAsync(
 //   int minDisparity,
 //   int numberOfDisparities, {
 //   int disp12MaxDisp = 1,
-// }) async {
+//, Duration? timeout}) async {
 //   return cvRunAsync0(
 //     (callback) => ccalib3d.cv_validateDisparity(
 //       disparity.ref,
@@ -1478,5 +1582,5 @@ Future<Mat> undistortPointsAsync(
 //       callback,
 //     ),
 //     (c) => c.complete(),
-//   );
+//   , timeout: timeout);
 // }

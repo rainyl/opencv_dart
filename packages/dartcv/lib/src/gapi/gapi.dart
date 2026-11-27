@@ -18,13 +18,9 @@ import 'gmat.dart';
 import 'gscalar.dart';
 
 GMat addMat(GMat a, GMat b, {int ddepth = -1}) {
-  final p = calloc<cvg.GMat>();
-  cvRun(() => cvg.gapi_add(a.ref, b.ref, ddepth, p));
-  return GMat.fromPointer(p);
+  return GMat.fromPointer(cvCreate(calloc<cvg.GMat>(), (p) => cvg.gapi_add(a.ref, b.ref, ddepth, p)));
 }
 
 GMat addC(GMat a, GScalar b, {int ddepth = -1}) {
-  final p = calloc<cvg.GMat>();
-  cvRun(() => cvg.gapi_addC(a.ref, b.ref, ddepth, p));
-  return GMat.fromPointer(p);
+  return GMat.fromPointer(cvCreate(calloc<cvg.GMat>(), (p) => cvg.gapi_addC(a.ref, b.ref, ddepth, p)));
 }

@@ -2847,6 +2847,18 @@ ffi.Pointer<CvStatus> cv_addWeighted(
   );
 }
 
+/// @brief Async: block until the queue is empty and no job is running (tests, shutdown).
+void cv_asyncDrain() {
+  $rt.call('cv_asyncDrain', []);
+}
+
+/// @brief Async: jobs queued plus jobs running.
+///
+/// @return int64_t
+int cv_asyncPending() {
+  return $rt.rj($rt.call('cv_asyncPending', []));
+}
+
 ffi.Pointer<CvStatus> cv_batchDistance(
   Mat src1,
   Mat src2,
@@ -3353,6 +3365,17 @@ ffi.Pointer<CvStatus> cv_gemm(
   );
 }
 
+/// @brief Async: how many worker threads run the `*Async` work (default 1).
+///
+/// One worker is enough to keep the caller's thread free, and OpenCV already uses every core inside a
+/// single call, so raising this oversubscribes CPU-bound work. It helps when the calls block on I/O
+/// (a capture, a slow file) instead.
+///
+/// @return int
+int cv_getAsyncThreads() {
+  return $rt.ri($rt.call('cv_getAsyncThreads', []));
+}
+
 int cv_getNumThreads() {
   return $rt.ri($rt.call('cv_getNumThreads', []));
 }
@@ -3559,6 +3582,25 @@ ffi.Pointer<CvStatus> cv_kmeans_points(
   } finally {
     $rt.releaseScratch($t3, 16);
   }
+}
+
+/// @brief Diagnostics: how many wrapped C++ objects are alive right now.
+///
+/// A handle that a live object outlived (a job still in flight, a `VecVecPoint[i]` view) keeps its
+/// object counted, so this is the number of objects, not of Dart wrappers. Tests use it to assert
+/// that disposing and finalizing released everything.
+///
+/// @return int64_t
+int cv_live_object_count() {
+  return $rt.rj($rt.call('cv_live_object_count', []));
+}
+
+/// @brief Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+///
+/// @param out VecChar*
+/// @return CvStatus
+ffi.Pointer<CvStatus> cv_live_object_stats(ffi.Pointer<VecChar> out) {
+  return ffi.Pointer<CvStatus>.fromAddress($rt.ru($rt.call('cv_live_object_stats', [$rt.i(out.address)])));
 }
 
 ffi.Pointer<CvStatus> cv_log(Mat src, Mat dst, imp$1.CvCallback_0 callback) {
@@ -4132,6 +4174,13 @@ ffi.Pointer<CvStatus> cv_scaleAdd(Mat src1, double alpha, Mat src2, Mat dst, imp
       ]),
     ),
   );
+}
+
+/// @brief Async: set the worker count. Waits for the queue to drain first.
+///
+/// @param n number of threads, at least 1
+void cv_setAsyncThreads(int n) {
+  $rt.call('cv_setAsyncThreads', [$rt.i(n)]);
 }
 
 ffi.Pointer<CvStatus> cv_setIdentity(Mat src, Scalar scalar, imp$1.CvCallback_0 callback) {
@@ -6846,6 +6895,8 @@ class _SymbolAddresses {
       ffi.Pointer.fromAddress($rt.addressOf('cv_UMat_release', 'vi'));
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Bool)>> get cv_ocl_setUseOpenCL =>
       ffi.Pointer.fromAddress($rt.addressOf('cv_ocl_setUseOpenCL', 'vi'));
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int)>> get cv_setAsyncThreads =>
+      ffi.Pointer.fromAddress($rt.addressOf('cv_setAsyncThreads', 'vi'));
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int)>> get cv_setNumThreads =>
       ffi.Pointer.fromAddress($rt.addressOf('cv_setNumThreads', 'vi'));
   ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ErrorCallback)>> get registerErrorCallback =>
@@ -7062,7 +7113,29 @@ class _SymbolAddresses {
 }
 
 void $registerTypes() {
-  $rt.registerCallback(ErrorCallbackFunction, 'viiiiii', 'ipppip');
-  $rt.registerCallback(LogCallbackExFunction, 'viiiiiiiiii', 'ipupuipupu');
-  $rt.registerCallback(LogCallbackFunction, 'viii', 'ipu');
+  $rt.registerCallback(ErrorCallbackFunction, 'viiiiii', 'ipppip', <Object? Function(int)?>[
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    null,
+  ]);
+  $rt.registerCallback(LogCallbackExFunction, 'viiiiiiiiii', 'ipupuipupu', <Object? Function(int)?>[
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+  ]);
+  $rt.registerCallback(LogCallbackFunction, 'viii', 'ipu', <Object? Function(int)?>[
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+  ]);
 }

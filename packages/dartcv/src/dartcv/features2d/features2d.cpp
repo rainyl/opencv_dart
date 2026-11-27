@@ -11,10 +11,11 @@
 #include <opencv2/features2d.hpp>
 #include "dartcv/core/vec.hpp"
 #include "dartcv/features2d/utils.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_AKAZE_create(AKAZE* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::AKAZE>(cv::AKAZE::create());
+    CVD_SET(rval, new cv::Ptr<cv::AKAZE>(cv::AKAZE::create()));
     END_WRAP
 }
 
@@ -30,7 +31,7 @@ CvStatus* cv_AKAZE_create_1(
     AKAZE* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::AKAZE>(cv::AKAZE::create(
+    CVD_SET(rval, new cv::Ptr<cv::AKAZE>(cv::AKAZE::create(
         static_cast<cv::AKAZE::DescriptorType>(descriptor_type),
         descriptor_size,
         descriptor_channels,
@@ -39,21 +40,19 @@ CvStatus* cv_AKAZE_create_1(
         nOctaveLayers,
         static_cast<cv::KAZE::DiffusivityType>(diffusivity),
         max_points
-    ));
+    )));
     END_WRAP
 }
 
 void cv_AKAZE_close(AKAZEPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_AKAZE_detect(AKAZE self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_AKAZE_detectAndCompute(
@@ -65,15 +64,14 @@ CvStatus* cv_AKAZE_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
 
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+        END_WRAP
+    });
 }
 
 bool cv_AKAZE_empty(AKAZE self) {
@@ -150,7 +148,7 @@ void cv_AKAZE_setThreshold(AKAZE self, double threshold) {
 
 CvStatus* cv_AgastFeatureDetector_create(AgastFeatureDetector* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create());
+    CVD_SET(rval, new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create()));
     END_WRAP
 }
 
@@ -158,25 +156,23 @@ CvStatus* cv_AgastFeatureDetector_create_1(
     int threshold, bool nonmaxSuppression, int type, AgastFeatureDetector* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create(
+    CVD_SET(rval, new cv::Ptr<cv::AgastFeatureDetector>(cv::AgastFeatureDetector::create(
         threshold, nonmaxSuppression, static_cast<cv::AgastFeatureDetector::DetectorType>(type)
-    ));
+    )));
     END_WRAP
 }
 
 void cv_AgastFeatureDetector_close(AgastFeatureDetectorPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_AgastFeatureDetector_detect(
     AgastFeatureDetector self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 // detectAndCompute (InputArray image, InputArray mask, std::vector< KeyPoint > &keypoints, OutputArray descriptors, bool useProvidedKeypoints=false)
@@ -189,15 +185,14 @@ CvStatus* cv_AgastFeatureDetector_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
 
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+        END_WRAP
+    });
 }
 
 bool cv_AgastFeatureDetector_empty(AgastFeatureDetector self) {
@@ -235,17 +230,18 @@ void cv_AgastFeatureDetector_setType(AgastFeatureDetector self, int type) {
 
 CvStatus* cv_BRISK_create(BRISK* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::BRISK>(cv::BRISK::create());
+    CVD_SET(rval, new cv::Ptr<cv::BRISK>(cv::BRISK::create()));
     END_WRAP
 }
 
 CvStatus* cv_BRISK_create_1(
     VecF32 radiusList, VecI32 numberList, float dMax, float dMin, VecI32 indexChange, BRISK* rval
 ) {
+    CVD_CHECK(radiusList, numberList, indexChange);
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::BRISK>(cv::BRISK::create(
+    CVD_SET(rval, new cv::Ptr<cv::BRISK>(cv::BRISK::create(
         CVDEREF(radiusList), CVDEREF(numberList), dMax, dMin, CVDEREF(indexChange)
-    ));
+    )));
     END_WRAP
 }
 
@@ -259,30 +255,29 @@ CvStatus* cv_BRISK_create_2(
     VecI32 indexChange,
     BRISK* rval
 ) {
+    CVD_CHECK(radiusList, numberList, indexChange);
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::BRISK>(cv::BRISK::create(
+    CVD_SET(rval, new cv::Ptr<cv::BRISK>(cv::BRISK::create(
         thresh, octaves, CVDEREF(radiusList), CVDEREF(numberList), dMax, dMin, CVDEREF(indexChange)
-    ));
+    )));
     END_WRAP
 }
 
 CvStatus* cv_BRISK_create_3(int thresh, int octaves, float patternScale, BRISK* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::BRISK>(cv::BRISK::create(thresh, octaves, patternScale));
+    CVD_SET(rval, new cv::Ptr<cv::BRISK>(cv::BRISK::create(thresh, octaves, patternScale)));
     END_WRAP
 }
 
 void cv_BRISK_close(BRISKPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_BRISK_detect(BRISK self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_BRISK_detectAndCompute(
@@ -294,14 +289,13 @@ CvStatus* cv_BRISK_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 bool cv_BRISK_empty(BRISK self) {
@@ -332,7 +326,7 @@ void cv_BRISK_setThreshold(BRISK self, int threshold) {
 
 CvStatus* cv_FastFeatureDetector_create(FastFeatureDetector* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::FastFeatureDetector>(cv::FastFeatureDetector::create());
+    CVD_SET(rval, new cv::Ptr<cv::FastFeatureDetector>(cv::FastFeatureDetector::create()));
     END_WRAP
 }
 
@@ -341,25 +335,23 @@ CvStatus* cv_FastFeatureDetector_create_1(
 ) {
     BEGIN_WRAP
     auto type_ = static_cast<cv::FastFeatureDetector::DetectorType>(type);
-    rval->ptr = new cv::Ptr<cv::FastFeatureDetector>(
+    CVD_SET(rval, new cv::Ptr<cv::FastFeatureDetector>(
         cv::FastFeatureDetector::create(threshold, nonmaxSuppression, type_)
-    );
+    ));
     END_WRAP
 }
 
 void cv_FastFeatureDetector_close(FastFeatureDetectorPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_FastFeatureDetector_detect(
     FastFeatureDetector self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_FastFeatureDetector_detectAndCompute(
@@ -371,14 +363,13 @@ CvStatus* cv_FastFeatureDetector_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 bool cv_FastFeatureDetector_empty(FastFeatureDetector self) {
@@ -415,7 +406,7 @@ void cv_FastFeatureDetector_setType(FastFeatureDetector self, int type) {
 
 CvStatus* cv_GFTTDetector_create(GFTTDetector* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create());
+    CVD_SET(rval, new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create()));
     END_WRAP
 }
 
@@ -430,9 +421,9 @@ CvStatus* cv_GFTTDetector_create_1(
     GFTTDetector* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create(
+    CVD_SET(rval, new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create(
         maxCorners, qualityLevel, minDistance, blockSize, gradiantSize, useHarrisDetector, k
-    ));
+    )));
     END_WRAP
 }
 
@@ -446,25 +437,23 @@ CvStatus* cv_GFTTDetector_create_2(
     GFTTDetector* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create(
+    CVD_SET(rval, new cv::Ptr<cv::GFTTDetector>(cv::GFTTDetector::create(
         maxCorners, qualityLevel, minDistance, blockSize, useHarrisDetector, k
-    ));
+    )));
     END_WRAP
 }
 
 void cv_GFTTDetector_close(GFTTDetectorPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_GFTTDetector_detect(
     GFTTDetector self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_GFTTDetector_detectAndCompute(
@@ -476,14 +465,13 @@ CvStatus* cv_GFTTDetector_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(descriptors), useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, descriptors), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(descriptors), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 bool cv_GFTTDetector_empty(GFTTDetector self) {
@@ -538,7 +526,7 @@ void cv_GFTTDetector_setQualityLevel(GFTTDetector self, double qlevel) {
 
 CvStatus* cv_KAZE_create(KAZE* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::KAZE>(cv::KAZE::create());
+    CVD_SET(rval, new cv::Ptr<cv::KAZE>(cv::KAZE::create()));
     END_WRAP
 }
 
@@ -552,28 +540,26 @@ CvStatus* cv_KAZE_create_1(
     KAZE* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::KAZE>(cv::KAZE::create(
+    CVD_SET(rval, new cv::Ptr<cv::KAZE>(cv::KAZE::create(
         extended,
         upright,
         threshold,
         nOctaves,
         nOctaveLayers,
         static_cast<cv::KAZE::DiffusivityType>(diffusivity)
-    ));
+    )));
     END_WRAP
 }
 
 void cv_KAZE_close(KAZEPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_KAZE_detect(KAZE self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_KAZE_detectAndCompute(
@@ -585,14 +571,13 @@ CvStatus* cv_KAZE_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 bool cv_KAZE_empty(KAZE self) {
@@ -653,7 +638,7 @@ void cv_KAZE_setUpright(KAZE self, bool upright) {
 
 CvStatus* cv_MSER_create(MSER* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::MSER>(cv::MSER::create());
+    CVD_SET(rval, new cv::Ptr<cv::MSER>(cv::MSER::create()));
     END_WRAP
 }
 
@@ -670,7 +655,7 @@ CvStatus* cv_MSER_create_1(
     MSER* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::MSER>(cv::MSER::create(
+    CVD_SET(rval, new cv::Ptr<cv::MSER>(cv::MSER::create(
         delta,
         min_area,
         max_area,
@@ -680,21 +665,19 @@ CvStatus* cv_MSER_create_1(
         area_threshold,
         min_margin,
         edge_blur_size
-    ));
+    )));
     END_WRAP
 }
 
 void cv_MSER_close(MSERPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_MSER_detect(MSER self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_MSER_detectAndCompute(
@@ -706,24 +689,22 @@ CvStatus* cv_MSER_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_MSER_detectRegions(
     MSER self, Mat image, VecVecPoint* rval, VecRect* bboxes, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detectRegions(CVDEREF(image), CVDEREF_P(rval), CVDEREF_P(bboxes));
-    if (callback) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, image), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detectRegions(CVDEREF(image), CVDEREF_P(rval), CVDEREF_P(bboxes));
+        END_WRAP
+    });
 }
 
 bool cv_MSER_empty(MSER self) {
@@ -796,7 +777,7 @@ void cv_MSER_setPass2Only(MSER self, bool f) {
 
 CvStatus* cv_ORB_create(ORB* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::ORB>(cv::ORB::create());
+    CVD_SET(rval, new cv::Ptr<cv::ORB>(cv::ORB::create()));
     END_WRAP
 }
 
@@ -814,7 +795,7 @@ CvStatus* cv_ORB_create_1(
 ) {
     BEGIN_WRAP
     auto type = static_cast<cv::ORB::ScoreType>(scoreType);
-    rval->ptr = new cv::Ptr<cv::ORB>(cv::ORB::create(
+    CVD_SET(rval, new cv::Ptr<cv::ORB>(cv::ORB::create(
         nfeatures,
         scaleFactor,
         nlevels,
@@ -824,21 +805,20 @@ CvStatus* cv_ORB_create_1(
         type,
         patchSize,
         fastThreshold
-    ));
+    )));
     END_WRAP
 }
 
 void cv_ORB_close(ORBPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_ORB_detect(ORB self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP(*self.ptr)->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVDEREF(self).get()->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_ORB_detectAndCompute(
@@ -850,18 +830,17 @@ CvStatus* cv_ORB_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src),
-            CVDEREF(mask),
-            CVDEREF_P(out_keypoints),
-            CVDEREF(desc),
-            useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src),
+                CVDEREF(mask),
+                CVDEREF_P(out_keypoints),
+                CVDEREF(desc),
+                useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 bool cv_ORB_empty(ORB self) {
@@ -928,7 +907,7 @@ void cv_ORB_setWTA_K(ORB self, int wta_k) {
 
 CvStatus* cv_SimpleBlobDetector_create(SimpleBlobDetector* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create());
+    CVD_SET(rval, new cv::Ptr<cv::SimpleBlobDetector>(cv::SimpleBlobDetector::create()));
     END_WRAP
 }
 
@@ -936,25 +915,23 @@ CvStatus* cv_SimpleBlobDetector_create_1(
     SimpleBlobDetectorParams params, SimpleBlobDetector* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::SimpleBlobDetector>(
+    CVD_SET(rval, new cv::Ptr<cv::SimpleBlobDetector>(
         cv::SimpleBlobDetector::create(SimpleBlobDetectorParams_c2cpp(params))
-    );
+    ));
     END_WRAP
 }
 
 void cv_SimpleBlobDetector_close(SimpleBlobDetectorPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_SimpleBlobDetector_detect(
     SimpleBlobDetector self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_SimpleBlobDetector_detectAndCompute(
@@ -966,14 +943,13 @@ CvStatus* cv_SimpleBlobDetector_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 bool cv_SimpleBlobDetector_empty(SimpleBlobDetector self) {
@@ -981,7 +957,7 @@ bool cv_SimpleBlobDetector_empty(SimpleBlobDetector self) {
 }
 
 VecVecPoint* cv_SimpleBlobDetector_getBlobContours(SimpleBlobDetector self) {
-    return new VecVecPoint{new std::vector<std::vector<cv::Point>>(CVDEREF(self)->getBlobContours())};
+    return new VecVecPoint{CVD_MAKE(std::vector<std::vector<cv::Point>>, CVDEREF(self)->getBlobContours())};
 }
 
 char* cv_SimpleBlobDetector_getDefaultName(SimpleBlobDetector self) {
@@ -990,7 +966,7 @@ char* cv_SimpleBlobDetector_getDefaultName(SimpleBlobDetector self) {
 
 SimpleBlobDetectorParams* cv_SimpleBlobDetector_getParams(SimpleBlobDetector self) {
     auto params = CVDEREF(self)->getParams();
-    return new SimpleBlobDetectorParams{SimpleBlobDetectorParams_cpp2c(params)};
+    return cvd::alloc_pod(SimpleBlobDetectorParams{SimpleBlobDetectorParams_cpp2c(params)});
 }
 
 void cv_SimpleBlobDetector_setParams(SimpleBlobDetector self, SimpleBlobDetectorParams params) {
@@ -1005,49 +981,45 @@ CvStatus* cv_SimpleBlobDetectorParams_create(SimpleBlobDetectorParams* rval) {
 
 CvStatus* cv_BFMatcher_create(BFMatcher* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create());
+    CVD_SET(rval, new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create()));
     END_WRAP
 }
 
 CvStatus* cv_BFMatcher_create_1(int normType, bool crossCheck, BFMatcher* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create(normType, crossCheck));
+    CVD_SET(rval, new cv::Ptr<cv::BFMatcher>(cv::BFMatcher::create(normType, crossCheck)));
     END_WRAP
 }
 
 void cv_BFMatcher_close(BFMatcherPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_BFMatcher_match(
     BFMatcher self, Mat query, Mat train, VecDMatch* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->match(CVDEREF(query), CVDEREF(train), CVDEREF_P(rval));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, query, train), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->match(CVDEREF(query), CVDEREF(train), CVDEREF_P(rval));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_BFMatcher_knnMatch(
     BFMatcher self, Mat query, Mat train, int k, VecVecDMatch* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->knnMatch(CVDEREF(query), CVDEREF(train), CVDEREF_P(rval), k);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, query, train), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->knnMatch(CVDEREF(query), CVDEREF(train), CVDEREF_P(rval), k);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_flann_IndexParams_create(FlannIndexParams* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::flann::IndexParams>(new cv::flann::IndexParams());
+    CVD_SET(rval, new cv::Ptr<cv::flann::IndexParams>(new cv::flann::IndexParams()));
     END_WRAP
 }
 
 void cv_flann_IndexParams_close(FlannIndexParamsPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
@@ -1113,13 +1085,13 @@ void cv_flann_IndexParams_getAll(
     std::vector<cv::String> strValues_cpp;
     (CVDEREF(self))->getAll(names_cpp, types_cpp, strValues_cpp, CVDEREF_P(numValues));
 
-    names->ptr = vecstr_2_vecvecchar(names_cpp);
-    strValues->ptr = vecstr_2_vecvecchar(strValues_cpp);
+    CVD_SET(names, vecstr_2_vecvecchar(names_cpp));
+    CVD_SET(strValues, vecstr_2_vecvecchar(strValues_cpp));
 
-    types->ptr->clear();
-    types->ptr->reserve(types_cpp.size());
+    (*types->ptr)->clear();
+    (*types->ptr)->reserve(types_cpp.size());
     for (const auto& type : types_cpp) {
-        types->ptr->push_back(static_cast<int>(type));
+        (*types->ptr)->push_back(static_cast<int>(type));
     }
 }
 
@@ -1129,13 +1101,14 @@ void* cv_flann_IndexParams_params_ptr(FlannIndexParams self) {
 
 CvStatus* cv_FlannBasedMatcher_create(FlannBasedMatcher* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::FlannBasedMatcher>(cv::FlannBasedMatcher::create());
+    CVD_SET(rval, new cv::Ptr<cv::FlannBasedMatcher>(cv::FlannBasedMatcher::create()));
     END_WRAP
 }
 
 CvStatus* cv_FlannBasedMatcher_create_1(
     FlannBasedMatcher* rval, FlannIndexParams indexParams, FlannIndexParams searchParams
 ) {
+    CVD_CHECK(indexParams, searchParams);
     BEGIN_WRAP
     int checks = (CVDEREF(searchParams))->getInt("checks", 32);
     float eps = (CVDEREF(searchParams))->getDouble("eps", 0.0);
@@ -1145,44 +1118,41 @@ CvStatus* cv_FlannBasedMatcher_create_1(
     auto _searchParams =
         cv::makePtr<cv::flann::SearchParams>(checks, eps, sorted, explore_all_trees);
 
-    rval->ptr = new cv::Ptr<cv::FlannBasedMatcher>(
+    CVD_SET(rval, new cv::Ptr<cv::FlannBasedMatcher>(
         cv::makePtr<cv::FlannBasedMatcher>(CVDEREF(indexParams), _searchParams)
-    );
+    ));
     END_WRAP
 }
 
 void cv_FlannBasedMatcher_close(FlannBasedMatcherPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_FlannBasedMatcher_knnMatch(
     FlannBasedMatcher self, Mat query, Mat train, int k, VecVecDMatch* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))->knnMatch(CVDEREF(query), CVDEREF(train), CVDEREF_P(rval), k);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, query, train), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->knnMatch(CVDEREF(query), CVDEREF(train), CVDEREF_P(rval), k);
+        END_WRAP
+    });
 }
 
 CvStatus* cv_drawKeyPoints(
     Mat src, VecKeyPoint kp, Mat dst, const Scalar color, int flags, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto color_ = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
-    cv::drawKeypoints(
-        CVDEREF(src), CVDEREF(kp), CVDEREF(dst), color_, static_cast<cv::DrawMatchesFlags>(flags)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(src, kp, dst), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto color_ = cv::Scalar(color.val1, color.val2, color.val3, color.val4);
+        cv::drawKeypoints(
+            CVDEREF(src), CVDEREF(kp), CVDEREF(dst), color_, static_cast<cv::DrawMatchesFlags>(flags)
+        );
+        END_WRAP
+    });
 }
 
 CvStatus* cv_SIFT_create(SIFT* rval) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::SIFT>(cv::SIFT::create());
+    CVD_SET(rval, new cv::Ptr<cv::SIFT>(cv::SIFT::create()));
     END_WRAP
 }
 
@@ -1197,7 +1167,7 @@ CvStatus* cv_SIFT_create_1(
     SIFT* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::SIFT>(cv::SIFT::create(
+    CVD_SET(rval, new cv::Ptr<cv::SIFT>(cv::SIFT::create(
         nfeatures,
         nOctaveLayers,
         contrastThreshold,
@@ -1205,7 +1175,7 @@ CvStatus* cv_SIFT_create_1(
         sigma,
         descriptorType,
         enable_precise_upscale
-    ));
+    )));
     END_WRAP
 }
 
@@ -1219,23 +1189,21 @@ CvStatus* cv_SIFT_create_2(
     SIFT* rval
 ) {
     BEGIN_WRAP
-    rval->ptr = new cv::Ptr<cv::SIFT>(cv::SIFT::create(
+    CVD_SET(rval, new cv::Ptr<cv::SIFT>(cv::SIFT::create(
         nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma, enable_precise_upscale
-    ));
+    )));
     END_WRAP
 }
 
 void cv_SIFT_close(SIFTPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
 CvStatus* cv_SIFT_detect(SIFT self, Mat src, VecKeyPoint* rval, Mat mask, CvCallback_0 callback) {
-    BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))->detect(CVDEREF(src), CVDEREF_P(rval), CVDEREF(mask));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_SIFT_detectAndCompute(
@@ -1247,14 +1215,13 @@ CvStatus* cv_SIFT_detectAndCompute(
     bool useProvidedKeypoints,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP(CVDEREF(self))
-        ->detectAndCompute(
-            CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
-        );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, src, mask, desc), [=]() -> CvStatus* {
+        BEGIN_WRAP(CVDEREF(self))
+            ->detectAndCompute(
+                CVDEREF(src), CVDEREF(mask), CVDEREF_P(rval), CVDEREF(desc), useProvidedKeypoints
+            );
+        END_WRAP
+    });
 }
 
 double cv_SIFT_getContrastThreshold(SIFT self) {
@@ -1307,24 +1274,23 @@ CvStatus* cv_drawMatches(
     int flags,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto mColor =
-        cv::Scalar(matchesColor.val1, matchesColor.val2, matchesColor.val3, matchesColor.val4);
-    auto pColor = cv::Scalar(pointColor.val1, pointColor.val2, pointColor.val3, pointColor.val4);
-    cv::drawMatches(
-        CVDEREF(img1),
-        CVDEREF(kp1),
-        CVDEREF(img2),
-        CVDEREF(kp2),
-        CVDEREF(matches1to2),
-        CVDEREF(outImg),
-        mColor,
-        pColor,
-        CVDEREF(matchesMask),
-        static_cast<cv::DrawMatchesFlags>(flags)
-    );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(img1, kp1, img2, kp2, matches1to2, outImg, matchesMask), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto mColor =
+            cv::Scalar(matchesColor.val1, matchesColor.val2, matchesColor.val3, matchesColor.val4);
+        auto pColor = cv::Scalar(pointColor.val1, pointColor.val2, pointColor.val3, pointColor.val4);
+        cv::drawMatches(
+            CVDEREF(img1),
+            CVDEREF(kp1),
+            CVDEREF(img2),
+            CVDEREF(kp2),
+            CVDEREF(matches1to2),
+            CVDEREF(outImg),
+            mColor,
+            pColor,
+            CVDEREF(matchesMask),
+            static_cast<cv::DrawMatchesFlags>(flags)
+        );
+        END_WRAP
+    });
 }

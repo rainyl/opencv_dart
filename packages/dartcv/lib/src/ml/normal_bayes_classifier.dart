@@ -29,9 +29,9 @@ class NormalBayesClassifier extends CvStruct<cml.NormalBayesClassifier> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [NormalBayesClassifier.load].
   factory NormalBayesClassifier.create() {
-    final p = calloc<cml.NormalBayesClassifier>();
-    cvRun(() => cml.cv_ml_NormalBayesClassifier_create(p));
-    return NormalBayesClassifier._(p);
+    return NormalBayesClassifier._(
+      cvCreate(calloc<cml.NormalBayesClassifier>(), cml.cv_ml_NormalBayesClassifier_create),
+    );
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -57,16 +57,7 @@ class NormalBayesClassifier extends CvStruct<cml.NormalBayesClassifier> {
 
   factory NormalBayesClassifier._make(
     ffi.Pointer<cml.CvStatus> Function(cml.NormalBayesClassifierPtr p) func,
-  ) {
-    final p = calloc<cml.NormalBayesClassifier>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return NormalBayesClassifier._(p);
-  }
+  ) => NormalBayesClassifier._(cvCreate(calloc<cml.NormalBayesClassifier>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.NormalBayesClassifierPtr>(
     cml.addresses.cv_ml_NormalBayesClassifier_close,

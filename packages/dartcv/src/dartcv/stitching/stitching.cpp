@@ -6,16 +6,16 @@
 #include "dartcv/stitching/stitching.h"
 #include <vector>
 #include "dartcv/core/vec.hpp"
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_Stitcher_create(int mode, Stitcher* rval) {
     BEGIN_WRAP
     const auto ptr = cv::Stitcher::create(static_cast<cv::Stitcher::Mode>(mode));
-    rval->ptr = new cv::Ptr<cv::Stitcher>(ptr);
+    CVD_SET(rval, new cv::Ptr<cv::Stitcher>(ptr));
     END_WRAP
 }
 
 void cv_Stitcher_close(StitcherPtr stitcher) {
-    stitcher->ptr->reset();
     CVD_FREE(stitcher);
 }
 
@@ -71,64 +71,58 @@ void cv_Stitcher_set_waveCorrectKind(Stitcher self, int val) {
 CvStatus* cv_Stitcher_estimateTransform(
     Stitcher self, VecMat mats, VecMat masks, int* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    if (!masks.ptr->empty()) {
-        *rval = static_cast<int>((CVDEREF(self))->estimateTransform(CVDEREF(mats), CVDEREF(masks)));
-    } else {
-        *rval = static_cast<int>((CVDEREF(self))->estimateTransform(CVDEREF(mats)));
-    }
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mats, masks), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        if (!(*masks.ptr)->empty()) {
+            *rval = static_cast<int>((CVDEREF(self))->estimateTransform(CVDEREF(mats), CVDEREF(masks)));
+        } else {
+            *rval = static_cast<int>((CVDEREF(self))->estimateTransform(CVDEREF(mats)));
+        }
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Stitcher_composePanorama(Stitcher self, Mat rpano, int* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    *rval = static_cast<int>((CVDEREF(self))->composePanorama(CVDEREF(rpano)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, rpano), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = static_cast<int>((CVDEREF(self))->composePanorama(CVDEREF(rpano)));
+        END_WRAP
+    });
 }
 CvStatus* cv_Stitcher_composePanorama_1(
     Stitcher self, VecMat mats, Mat rpano, int* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = static_cast<int>((CVDEREF(self))->composePanorama(CVDEREF(mats), CVDEREF(rpano)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mats, rpano), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = static_cast<int>((CVDEREF(self))->composePanorama(CVDEREF(mats), CVDEREF(rpano)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Stitcher_stitch(
     Stitcher self, VecMat mats, Mat rpano, int* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = static_cast<int>((CVDEREF(self))->stitch(CVDEREF(mats), CVDEREF(rpano)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mats, rpano), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = static_cast<int>((CVDEREF(self))->stitch(CVDEREF(mats), CVDEREF(rpano)));
+        END_WRAP
+    });
 }
 CvStatus* cv_Stitcher_stitch_1(
     Stitcher self, VecMat mats, VecMat masks, Mat rpano, int* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = static_cast<int>((CVDEREF(self))->stitch(CVDEREF(mats), CVDEREF(masks), CVDEREF(rpano)));
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, mats, masks, rpano), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = static_cast<int>((CVDEREF(self))->stitch(CVDEREF(mats), CVDEREF(masks), CVDEREF(rpano)));
+        END_WRAP
+    });
 }
 
 CvStatus* cv_Stitcher_component(Stitcher self, VecI32* rval, CvCallback_0 callback) {
-    BEGIN_WRAP
-    std::vector<int> _rval = (CVDEREF(self))->component();
-    *rval = {new std::vector<int32_t>(_rval)};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        std::vector<int> _rval = (CVDEREF(self))->component();
+        CVD_SET(rval, new std::vector<int32_t>(_rval));
+        END_WRAP
+    });
 }

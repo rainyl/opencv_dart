@@ -19,20 +19,22 @@ import '../package_ffi.dart';
 ///
 /// https://docs.opencv.org/4.10.0/d4/da8/group__imgcodecs.html#ga65d3569d8845d1210e1aeab8c199031c
 bool haveImageReader(String filename) {
-  final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  final rval = cimgcodecs.cv_haveImageReader(cname);
-  calloc.free(cname);
-  return rval;
+  return using((arena) {
+    final cname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final rval = cimgcodecs.cv_haveImageReader(cname);
+    return rval;
+  });
 }
 
 /// Returns true if an image with the specified filename can be encoded by OpenCV.
 ///
 /// https://docs.opencv.org/4.10.0/d4/da8/group__imgcodecs.html#gac4fa9c4c32b58c55059752c0490d3f20
 bool haveImageWriter(String filename) {
-  final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  final rval = cimgcodecs.cv_haveImageWriter(cname);
-  calloc.free(cname);
-  return rval;
+  return using((arena) {
+    final cname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final rval = cimgcodecs.cv_haveImageWriter(cname);
+    return rval;
+  });
 }
 
 /// Returns the number of images inside the give file.
@@ -41,10 +43,11 @@ bool haveImageWriter(String filename) {
 ///
 /// https://docs.opencv.org/4.10.0/d4/da8/group__imgcodecs.html#ga02237b2aad2d4ae41c9489a83781f202
 int imcount(String filename, {int flags = IMREAD_ANYCOLOR}) {
-  final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  final rval = cimgcodecs.cv_imcount(cname, flags);
-  calloc.free(cname);
-  return rval;
+  return using((arena) {
+    final cname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final rval = cimgcodecs.cv_imcount(cname, flags);
+    return rval;
+  });
 }
 
 /// read an image from a file into a Mat.
@@ -55,21 +58,29 @@ int imcount(String filename, {int flags = IMREAD_ANYCOLOR}) {
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56
 Mat imread(String filename, {int flags = IMREAD_COLOR}) {
-  final dst = Mat.empty();
-  final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => cimgcodecs.cv_imread(cname, flags, dst.ptr, ffi.nullptr));
-  calloc.free(cname);
-  return dst;
+  return using((arena) {
+    final dst = Mat.empty();
+    final cname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(() => cimgcodecs.cv_imread(cname, flags, dst.ptr, ffi.nullptr));
+    return dst;
+  });
 }
 
 /// async version of [imread]
-Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
+Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR, Duration? timeout}) {
   final dst = Mat.empty();
-  final cname = filename.toNativeUtf8().cast<ffi.Char>();
-  return cvRunAsync0((callback) => cimgcodecs.cv_imread(cname, flags, dst.ptr, callback), (c) {
-    calloc.free(cname);
-    return c.complete(dst);
-  });
+  final arena = Arena();
+  return cvRunAsync0(
+    (callback) => cimgcodecs.cv_imread(
+      filename.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+      flags,
+      dst.ptr,
+      callback,
+    ),
+    (c) => c.complete(dst),
+    timeout: timeout,
+    release: arena.releaseAll,
+  );
 }
 
 /// write a Mat to an image file.
@@ -77,34 +88,51 @@ Future<Mat> imreadAsync(String filename, {int flags = IMREAD_COLOR}) async {
 /// For further details, please see:
 /// http://docs.opencv.org/master/d4/da8/group__imgcodecs.html#gabbc7ef1aa2edfaa87772f1202d67e0ce
 bool imwrite(String filename, InputArray img, {VecI32? params}) {
-  final fname = filename.toNativeUtf8().cast<ffi.Char>();
-  final p = calloc<ffi.Bool>();
-  if (params == null) {
-    cvRun(() => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, ffi.nullptr));
-  } else {
-    cvRun(() => cimgcodecs.cv_imwrite_1(fname.cast(), img.ref, params.ref, p, ffi.nullptr));
-  }
-  final rval = p.value;
-  calloc.free(p);
-  return rval;
+  return using((arena) {
+    final fname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    final p = calloc<ffi.Bool>();
+    try {
+      if (params == null) {
+        cvRun(() => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, ffi.nullptr));
+      } else {
+        cvRun(() => cimgcodecs.cv_imwrite_1(fname.cast(), img.ref, params.ref, p, ffi.nullptr));
+      }
+      final rval = p.value;
+      return rval;
+    } finally {
+      calloc.free(p);
+    }
+  });
 }
 
 /// async version of [imwrite]
-Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) async {
-  final fname = filename.toNativeUtf8().cast<ffi.Char>();
+Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params, Duration? timeout}) {
+  // The name and the `bool` out-parameter are freed by `release`: a job that fails never runs the
+  // completion closure, and freeing them before this call returns would race the worker.
+  final arena = Arena();
+  final fname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
   final p = calloc<ffi.Bool>();
-  void completeFunc(Completer<bool> c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }
+  void completeFunc(Completer<bool> c) => c.complete(p.value);
 
   if (params == null) {
-    return cvRunAsync0((callback) => cimgcodecs.cv_imwrite(fname.cast(), img.ref, p, callback), completeFunc);
+    return cvRunAsync0(
+      (callback) => cimgcodecs.cv_imwrite(fname, img.ref, p, callback),
+      completeFunc,
+      timeout: timeout,
+      release: () {
+        calloc.free(p);
+        arena.releaseAll();
+      },
+    );
   }
   return cvRunAsync0(
-    (callback) => cimgcodecs.cv_imwrite_1(fname.cast(), img.ref, params.ref, p, callback),
+    (callback) => cimgcodecs.cv_imwrite_1(fname, img.ref, params.ref, p, callback),
     completeFunc,
+    timeout: timeout,
+    release: () {
+      calloc.free(p);
+      arena.releaseAll();
+    },
   );
 }
 
@@ -125,69 +153,97 @@ Future<bool> imwriteAsync(String filename, InputArray img, {VecI32? params}) asy
 (bool, VecUChar) imencodeVec(String ext, InputArray img, {VecI32? params}) {
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
-  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
+  try {
+    return using((arena) {
+      final cExt = ext.toNativeUtf8(allocator: arena).cast<ffi.Char>();
 
-  params == null
-      ? cvRun(() => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, ffi.nullptr))
-      : cvRun(() => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, ffi.nullptr));
-  final success = pSuccess.value;
-  calloc.free(cExt);
-  calloc.free(pSuccess);
+      params == null
+          ? cvRun(() => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, ffi.nullptr))
+          : cvRun(
+              () => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, ffi.nullptr),
+            );
+      final success = pSuccess.value;
 
-  return (success, buffer);
+      return (success, buffer);
+    });
+  } finally {
+    calloc.free(pSuccess);
+  }
 }
 
 /// async version of [imencode]
-Future<(bool, Uint8List)> imencodeAsync(String ext, InputArray img, {VecI32? params}) async {
+Future<(bool, Uint8List)> imencodeAsync(
+  String ext,
+  InputArray img, {
+  VecI32? params,
+  Duration? timeout,
+}) {
+  final arena = Arena();
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
-  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
+  final cExt = ext.toNativeUtf8(allocator: arena).cast<ffi.Char>();
 
   void completeFunc(Completer<(bool, Uint8List)> c) {
     final success = pSuccess.value;
-    calloc.free(cExt);
-    calloc.free(pSuccess);
-
     final u8List = buffer.toU8List(); // will copy data
-    buffer.dispose();
     return c.complete((success, u8List));
+  }
+
+  void freeArgs() {
+    calloc.free(pSuccess);
+    arena.releaseAll();
+    buffer.dispose();
   }
 
   if (params == null) {
     return cvRunAsync0(
       (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, callback),
       completeFunc,
+      timeout: timeout,
+      release: freeArgs,
     );
   }
   return cvRunAsync0(
     (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, callback),
     completeFunc,
+    timeout: timeout,
+    release: freeArgs,
   );
 }
 
 /// Same as [imencodeAsync] but returns [VecUChar]
-Future<(bool, VecUChar)> imencodeVecAsync(String ext, InputArray img, {VecI32? params}) async {
+Future<(bool, VecUChar)> imencodeVecAsync(
+  String ext,
+  InputArray img, {
+  VecI32? params,
+  Duration? timeout,
+}) {
+  final arena = Arena();
   final buffer = VecUChar();
   final pSuccess = calloc<ffi.Bool>();
-  final cExt = ext.toNativeUtf8().cast<ffi.Char>();
+  // `buffer` is the result here, so only the name and the `bool` are released.
+  final cExt = ext.toNativeUtf8(allocator: arena).cast<ffi.Char>();
 
-  void completeFunc(Completer<(bool, VecUChar)> c) {
-    final success = pSuccess.value;
-    calloc.free(cExt);
+  void completeFunc(Completer<(bool, VecUChar)> c) => c.complete((pSuccess.value, buffer));
+
+  void freeArgs() {
     calloc.free(pSuccess);
-
-    return c.complete((success, buffer));
+    arena.releaseAll();
   }
 
   if (params == null) {
     return cvRunAsync0(
       (callback) => cimgcodecs.cv_imencode(cExt, img.ref, pSuccess, buffer.ptr, callback),
       completeFunc,
+      timeout: timeout,
+      release: freeArgs,
     );
   }
   return cvRunAsync0(
     (callback) => cimgcodecs.cv_imencode_1(cExt, img.ref, params.ref, pSuccess, buffer.ptr, callback),
     completeFunc,
+    timeout: timeout,
+    release: freeArgs,
   );
 }
 
@@ -219,9 +275,9 @@ Future<Mat> imdecodeAsync(Uint8List buf, int flags, {Mat? dst}) async {
 }
 
 /// Same as [imdecodeAsync] but accepts [VecUChar]
-Future<Mat> imdecodeVecAsync(VecUChar vec, int flags, {Mat? dst}) async {
+Future<Mat> imdecodeVecAsync(VecUChar vec, int flags, {Mat? dst, Duration? timeout}) async {
   dst ??= Mat.empty();
   return cvRunAsync0((callback) => cimgcodecs.cv_imdecode(vec.ref, flags, dst!.ptr, callback), (c) {
     return c.complete(dst);
-  });
+  }, timeout: timeout);
 }

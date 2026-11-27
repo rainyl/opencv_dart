@@ -236,16 +236,15 @@ class VecPoint extends Vec<cvg.VecPoint, Point> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecPointPtr>(ccore.addresses.std_VecPoint_free);
-  static final viewFinalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   /// Wraps a *view* of an inner vector owned by a parent container
-  /// (e.g. `VecVecPoint[i]`). The pointed-to `std::vector` is NOT owned here:
-  /// mutations propagate to the parent, [dispose] is a safe no-op, and the
-  /// handle itself is freed by the GC via [viewFinalizer].
+  /// (e.g. `VecVecVecPoint[i]`). The pointed-to `std::vector` is NOT owned here
+  /// (mutations propagate to the parent, [dispose] is a no-op for them), but the handle
+  /// shares the parent's control block: it keeps the parent alive, and it is released by
+  /// the ordinary finalizer.
   factory VecPoint._view(cvg.VecPointPtr ptr) {
-    final v = VecPoint.fromPointer(ptr, attach: false);
+    final v = VecPoint.fromPointer(ptr);
     v._owned = false;
-    VecPoint.viewFinalizer.attach(v, ptr.cast<ffi.Void>(), detach: v);
     return v;
   }
 
@@ -351,16 +350,15 @@ class VecPoint2f extends Vec<cvg.VecPoint2f, Point2f> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecPoint2fPtr>(ccore.addresses.std_VecPoint2f_free);
-  static final viewFinalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   /// Wraps a *view* of an inner vector owned by a parent container
-  /// (e.g. `VecVecPoint2f[i]`). The pointed-to `std::vector` is NOT owned here:
-  /// mutations propagate to the parent, [dispose] is a safe no-op, and the
-  /// handle itself is freed by the GC via [viewFinalizer].
+  /// (e.g. `VecVecVecPoint2f[i]`). The pointed-to `std::vector` is NOT owned here
+  /// (mutations propagate to the parent, [dispose] is a no-op for them), but the handle
+  /// shares the parent's control block: it keeps the parent alive, and it is released by
+  /// the ordinary finalizer.
   factory VecPoint2f._view(cvg.VecPoint2fPtr ptr) {
-    final v = VecPoint2f.fromPointer(ptr, attach: false);
+    final v = VecPoint2f.fromPointer(ptr);
     v._owned = false;
-    VecPoint2f.viewFinalizer.attach(v, ptr.cast<ffi.Void>(), detach: v);
     return v;
   }
 
@@ -466,16 +464,15 @@ class VecPoint3f extends Vec<cvg.VecPoint3f, Point3f> {
   }
 
   static final finalizer = OcvFinalizer<cvg.VecPoint3fPtr>(ccore.addresses.std_VecPoint3f_free);
-  static final viewFinalizer = ffi.NativeFinalizer(calloc.nativeFree);
 
   /// Wraps a *view* of an inner vector owned by a parent container
-  /// (e.g. `VecVecPoint3f[i]`). The pointed-to `std::vector` is NOT owned here:
-  /// mutations propagate to the parent, [dispose] is a safe no-op, and the
-  /// handle itself is freed by the GC via [viewFinalizer].
+  /// (e.g. `VecVecVecPoint3f[i]`). The pointed-to `std::vector` is NOT owned here
+  /// (mutations propagate to the parent, [dispose] is a no-op for them), but the handle
+  /// shares the parent's control block: it keeps the parent alive, and it is released by
+  /// the ordinary finalizer.
   factory VecPoint3f._view(cvg.VecPoint3fPtr ptr) {
-    final v = VecPoint3f.fromPointer(ptr, attach: false);
+    final v = VecPoint3f.fromPointer(ptr);
     v._owned = false;
-    VecPoint3f.viewFinalizer.attach(v, ptr.cast<ffi.Void>(), detach: v);
     return v;
   }
 

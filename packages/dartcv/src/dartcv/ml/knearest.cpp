@@ -4,6 +4,7 @@
 
 #include "dartcv/ml/knearest.h"
 #include "dartcv/ml/stat_model.hpp"
+#include "dartcv/core/handle.hpp"
 
 CVD_ML_STAT_MODEL_IMPL(KNearest, cv::ml::KNearest)
 
@@ -42,13 +43,12 @@ CvStatus* cv_ml_KNearest_findNearest(
     float* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = (CVDEREF(self))
-                ->findNearest(
-                    CVDEREF(samples), k, CVDEREF(results), CVDEREF(neighborResponses), CVDEREF(dist)
-                );
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(self, samples, results, neighborResponses, dist), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        *rval = (CVDEREF(self))
+                    ->findNearest(
+                        CVDEREF(samples), k, CVDEREF(results), CVDEREF(neighborResponses), CVDEREF(dist)
+                    );
+        END_WRAP
+    });
 }

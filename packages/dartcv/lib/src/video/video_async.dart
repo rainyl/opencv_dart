@@ -20,25 +20,27 @@ import '../package_ffi.dart';
 import 'video.dart';
 
 extension BackgroundSubtractorMOG2Async on BackgroundSubtractorMOG2 {
-  Future<Mat> applyAsync(Mat src) async {
+  Future<Mat> applyAsync(Mat src, {Duration? timeout}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) => cvideo.cv_BackgroundSubtractorMOG2_apply(ref, src.ref, dst.ref, callback),
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 }
 
 extension BackgroundSubtractorKNNAsync on BackgroundSubtractorKNN {
-  Future<Mat> applyAsync(Mat src) async {
+  Future<Mat> applyAsync(Mat src, {Duration? timeout}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) => cvideo.cv_BackgroundSubtractorKNN_apply(ref, src.ref, dst.ref, callback),
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 }
@@ -63,8 +65,9 @@ Future<Mat> calcOpticalFlowFarnebackAsync(
   int iterations,
   int polyN,
   double polySigma,
-  int flags,
-) async {
+  int flags, {
+  Duration? timeout,
+}) async {
   return cvRunAsync0(
     (callback) => cvideo.cv_calcOpticalFlowFarneback(
       prev.ref,
@@ -82,6 +85,7 @@ Future<Mat> calcOpticalFlowFarnebackAsync(
     (c) {
       return c.complete(flow);
     },
+    timeout: timeout,
   );
 }
 
@@ -102,6 +106,7 @@ Future<(VecPoint2f nextPts, VecUChar status, VecF32 error)> calcOpticalFlowPyrLK
   (int, int, double) criteria = (TERM_COUNT + TERM_EPS, 30, 1e-4),
   int flags = 0,
   double minEigThreshold = 1e-4,
+  Duration? timeout,
 }) {
   status ??= VecUChar();
   err ??= VecF32();
@@ -123,6 +128,7 @@ Future<(VecPoint2f nextPts, VecUChar status, VecF32 error)> calcOpticalFlowPyrLK
     (c) {
       return c.complete((nextPts, status!, err!));
     },
+    timeout: timeout,
   );
 }
 
@@ -137,8 +143,9 @@ Future<(double ret, Mat warpMatrix)> findTransformECCAsync(
   int motionType,
   (int, int, double) criteria,
   InputArray inputMask,
-  int gaussFiltSize,
-) {
+  int gaussFiltSize, {
+  Duration? timeout,
+}) {
   final p = calloc<ffi.Double>();
   return cvRunAsync0(
     (callback) => cvideo.cv_findTransformECC(
@@ -154,9 +161,10 @@ Future<(double ret, Mat warpMatrix)> findTransformECCAsync(
     ),
     (c) {
       final rval = (p.value, warpMatrix);
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
+    timeout: timeout,
   );
 }
 
@@ -164,7 +172,7 @@ Future<(double ret, Mat warpMatrix)> findTransformECCAsync(
 ///
 /// see: https://docs.opencv.org/master/d0/d0a/classcv_1_1Tracker.html
 extension TrackerMILAsync on TrackerMIL {
-  Future<void> initAsync(InputArray image, Rect boundingBox) async {
+  Future<void> initAsync(InputArray image, Rect boundingBox, {Duration? timeout}) async {
     cvAssert(boundingBox.x >= 0, "boundingBox.x must be >= 0");
     cvAssert(boundingBox.y >= 0, "boundingBox.y must be >= 0");
     cvAssert(
@@ -180,19 +188,24 @@ extension TrackerMILAsync on TrackerMIL {
       c,
     ) {
       c.complete();
-    });
+    }, timeout: timeout);
   }
 
   /// Update the tracker, find the new most likely bounding box for the target.
   /// https://docs.opencv.org/4.x/d0/d0a/classcv_1_1Tracker.html#a92d2012f576e6c06eb2e257d110a6529
-  Future<(bool, Rect)> updateAsync(Mat img) async {
+  Future<(bool, Rect)> updateAsync(Mat img, {Duration? timeout}) async {
     final bBox = calloc<cvg.CvRect>();
     final p = calloc<ffi.Bool>();
-    return cvRunAsync0((callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback), (c) {
-      final rval = (p.value, Rect.fromPointer(bBox));
-      calloc.free(p);
-      return c.complete(rval);
-    });
+    return cvRunAsync0(
+      (callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback),
+      (c) {
+        final rval = (p.value, Rect.fromPointer(bBox));
+        return c.complete(rval);
+      },
+      timeout: timeout,
+      release: () => calloc.free(p),
+      releaseOnFailure: () => calloc.free(bBox),
+    );
   }
 }
 
@@ -203,22 +216,23 @@ extension TrackerMILAsync on TrackerMIL {
 /// For further details, please see:
 /// https://docs.opencv.org/4.6.0/dd/d6a/classcv_1_1KalmanFilter.html
 extension KalmanFilterAsync on KalmanFilter {
-  Future<Mat> correctAsync(Mat measurement) async {
+  Future<Mat> correctAsync(Mat measurement, {Duration? timeout}) async {
     final dst = Mat.empty();
     return cvRunAsync0(
       (callback) => cvideo.cv_KalmanFilter_correct(ref, measurement.ref, dst.ptr, callback),
       (c) {
         return c.complete(dst);
       },
+      timeout: timeout,
     );
   }
 
-  Future<Mat> predictAsync({Mat? control}) async {
+  Future<Mat> predictAsync({Mat? control, Duration? timeout}) async {
     final dst = Mat.empty();
     if (control == null) {
       return cvRunAsync0((callback) => cvideo.cv_KalmanFilter_predict(ref, dst.ptr, callback), (c) {
         return c.complete(dst);
-      });
+      }, timeout: timeout);
     }
     return cvRunAsync0((callback) => cvideo.cv_KalmanFilter_predict_1(ref, control.ref, dst.ptr, callback), (
       c,
@@ -232,13 +246,15 @@ extension KalmanFilterAsync on KalmanFilter {
     int measureParams, {
     int controlParams = 0,
     int type = MatType.CV_32F,
-  }) async {
+    Duration? timeout,
+  }) {
     return cvRunAsync0(
       (callback) =>
           cvideo.cv_KalmanFilter_init_1(ref, dynamParams, measureParams, controlParams, type, callback),
       (c) {
         c.complete();
       },
+      timeout: timeout,
     );
   }
 }

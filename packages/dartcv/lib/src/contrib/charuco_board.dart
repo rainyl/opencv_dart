@@ -26,9 +26,7 @@ class CharucoBoard extends CvStruct<cvg.CharucoBoard> {
       CharucoBoard._(ptr, attach);
 
   factory CharucoBoard.empty() {
-    final p = calloc<cvg.CharucoBoard>();
-    cvRun(() => ccontrib.cv_aruco_charucoBoard_create(p));
-    return CharucoBoard._(p);
+    return CharucoBoard._(cvCreate(calloc<cvg.CharucoBoard>(), ccontrib.cv_aruco_charucoBoard_create));
   }
 
   factory CharucoBoard.create(
@@ -38,22 +36,33 @@ class CharucoBoard extends CvStruct<cvg.CharucoBoard> {
     ArucoDictionary dictionary, {
     VecI32? ids,
   }) {
-    final p = calloc<cvg.CharucoBoard>();
+    // `sz` is freed on the error path too, so a failed create cannot leave it to the GC.
     final sz = size.cvd;
-    cvRun(
-      () => ids == null
-          ? ccontrib.cv_aruco_charucoBoard_create_1(sz.ref, squareLength, markerLength, dictionary.ref, p)
-          : ccontrib.cv_aruco_charucoBoard_create_2(
-              sz.ref,
-              squareLength,
-              markerLength,
-              dictionary.ref,
-              ids.ref,
-              p,
-            ),
-    );
-    sz.dispose();
-    return CharucoBoard._(p);
+    try {
+      return CharucoBoard._(
+        cvCreate(
+          calloc<cvg.CharucoBoard>(),
+          (p) => ids == null
+              ? ccontrib.cv_aruco_charucoBoard_create_1(
+                  sz.ref,
+                  squareLength,
+                  markerLength,
+                  dictionary.ref,
+                  p,
+                )
+              : ccontrib.cv_aruco_charucoBoard_create_2(
+                  sz.ref,
+                  squareLength,
+                  markerLength,
+                  dictionary.ref,
+                  ids.ref,
+                  p,
+                ),
+        ),
+      );
+    } finally {
+      sz.dispose();
+    }
   }
 
   @override

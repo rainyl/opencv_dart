@@ -20,12 +20,7 @@ class AsyncArray extends CvStruct<cvg.AsyncArray> {
 
   factory AsyncArray.fromPointer(cvg.AsyncArrayPtr ptr, [bool attach = true]) => AsyncArray._(ptr, attach);
 
-  factory AsyncArray.empty() {
-    final p = calloc<cvg.AsyncArray>();
-    cvRun(() => cdnn.cv_dnn_AsyncArray_new(p));
-    final arr = AsyncArray._(p);
-    return arr;
-  }
+  factory AsyncArray.empty() => AsyncArray._(cvCreate(calloc<cvg.AsyncArray>(), cdnn.cv_dnn_AsyncArray_new));
 
   static final finalizer = OcvFinalizer<cvg.AsyncArrayPtr>(cdnn.addresses.cv_dnn_AsyncArray_close);
 

@@ -21,162 +21,15 @@ typedef Contours3f = VecVecPoint3f;
 
 typedef CvCallback_0 = ffi.Pointer<ffi.NativeFunction<CvCallback_0Function>>;
 
-typedef CvCallback_0Function = ffi.Void Function();
+typedef CvCallback_0Function = ffi.Void Function(ffi.Pointer<CvStatus> status);
 
-typedef DartCvCallback_0Function = void Function();
+typedef DartCvCallback_0Function = void Function(ffi.Pointer<CvStatus> status);
 
 typedef CvCallback_1 = ffi.Pointer<ffi.NativeFunction<CvCallback_1Function>>;
 
-typedef CvCallback_1Function = ffi.Void Function(ffi.Pointer<ffi.Void>);
+typedef CvCallback_1Function = ffi.Void Function(ffi.Pointer<CvStatus> status, ffi.Pointer<ffi.Void> p);
 
-typedef DartCvCallback_1Function = void Function(ffi.Pointer<ffi.Void>);
-
-typedef CvCallback_2 = ffi.Pointer<ffi.NativeFunction<CvCallback_2Function>>;
-
-typedef CvCallback_2Function = ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-
-typedef DartCvCallback_2Function = void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-
-typedef CvCallback_3 = ffi.Pointer<ffi.NativeFunction<CvCallback_3Function>>;
-
-typedef CvCallback_3Function =
-    ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-
-typedef DartCvCallback_3Function =
-    void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-
-typedef CvCallback_4 = ffi.Pointer<ffi.NativeFunction<CvCallback_4Function>>;
-
-typedef CvCallback_4Function =
-    ffi.Void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef DartCvCallback_4Function =
-    void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
-
-typedef CvCallback_5 = ffi.Pointer<ffi.NativeFunction<CvCallback_5Function>>;
-
-typedef CvCallback_5Function =
-    ffi.Void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef DartCvCallback_5Function =
-    void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef CvCallback_6 = ffi.Pointer<ffi.NativeFunction<CvCallback_6Function>>;
-
-typedef CvCallback_6Function =
-    ffi.Void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef DartCvCallback_6Function =
-    void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef CvCallback_7 = ffi.Pointer<ffi.NativeFunction<CvCallback_7Function>>;
-
-typedef CvCallback_7Function =
-    ffi.Void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef DartCvCallback_7Function =
-    void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef CvCallback_8 = ffi.Pointer<ffi.NativeFunction<CvCallback_8Function>>;
-
-typedef CvCallback_8Function =
-    ffi.Void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef DartCvCallback_8Function =
-    void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef CvCallback_9 = ffi.Pointer<ffi.NativeFunction<CvCallback_9Function>>;
-
-typedef CvCallback_9Function =
-    ffi.Void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
-
-typedef DartCvCallback_9Function =
-    void Function(
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-      ffi.Pointer<ffi.Void>,
-    );
+typedef DartCvCallback_1Function = void Function(ffi.Pointer<CvStatus> status, ffi.Pointer<ffi.Void> p);
 
 typedef InputOutputArrayPtr = ffi.Pointer<InputOutputArray>;
 
@@ -1658,14 +1511,11 @@ void $registerTypes() {
   ffi.$registerStruct<VecVecPoint2f>(4, 4, VecVecPoint2f.$view);
   ffi.$registerStruct<VecVecPoint3f>(4, 4, VecVecPoint3f.$view);
   ffi.$registerStruct<VecVecPoint3i>(4, 4, VecVecPoint3i.$view);
-  $rt.registerCallback(CvCallback_0Function, 'v', '');
-  $rt.registerCallback(CvCallback_1Function, 'vi', 'p');
-  $rt.registerCallback(CvCallback_2Function, 'vii', 'pp');
-  $rt.registerCallback(CvCallback_3Function, 'viii', 'ppp');
-  $rt.registerCallback(CvCallback_4Function, 'viiii', 'pppp');
-  $rt.registerCallback(CvCallback_5Function, 'viiiii', 'ppppp');
-  $rt.registerCallback(CvCallback_6Function, 'viiiiii', 'pppppp');
-  $rt.registerCallback(CvCallback_7Function, 'viiiiiii', 'ppppppp');
-  $rt.registerCallback(CvCallback_8Function, 'viiiiiiii', 'pppppppp');
-  $rt.registerCallback(CvCallback_9Function, 'viiiiiiiii', 'ppppppppp');
+  $rt.registerCallback(CvCallback_0Function, 'vi', 'p', <Object? Function(int)?>[
+    (a) => ffi.Pointer<CvStatus>.fromAddress(a),
+  ]);
+  $rt.registerCallback(CvCallback_1Function, 'vii', 'pp', <Object? Function(int)?>[
+    (a) => ffi.Pointer<CvStatus>.fromAddress(a),
+    null,
+  ]);
 }

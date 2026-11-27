@@ -583,14 +583,17 @@ final class NativeCallable<T extends Function> {
   NativeCallable._(Function callback, bool async) {
     final sig = rt.callbackSignatures[T];
     if (sig == null) throw UnsupportedError('dartcv web: no wasm signature registered for $T');
-    final (wasmSig, kinds) = sig;
+    final (wasmSig, kinds, pointerArgs) = sig;
     JSAny? invoke(List<JSAny?> raw) {
       // `close()` frees the table entry, as dart:ffi frees the trampoline; a late call from C is a
       // bug on either platform, so fail loudly instead of running the Dart callback again.
       if (_closed) {
         throw StateError('dartcv web: callback invoked after close() ($T)');
       }
-      final args = [for (var k = 0; k < kinds.length; k++) _fromJs(kinds[k], raw[k])];
+      final args = [
+        for (var k = 0; k < kinds.length; k++)
+          _fromJs(kinds[k], raw[k], pointerArgs == null ? null : pointerArgs[k]),
+      ];
       if (async) {
         scheduleMicrotask(() => Function.apply(callback, args));
         return null;
@@ -619,8 +622,14 @@ final class NativeCallable<T extends Function> {
   }
 }
 
-Object? _fromJs(String kind, JSAny? v) => switch (kind) {
-  'p' => Pointer<Void>.fromAddress((v! as JSNumber).toDartInt & 0xFFFFFFFF),
+/// Rebuilds one wasm callback argument. A pointer goes through [toPointer] when the generated bindings
+/// know the pointee type the callback declares (`Pointer<CvStatus>`); a callback whose parameter is a
+/// plain `Pointer<Void>` gets the generic one, which is what dart:ffi would hand it as well.
+Object? _fromJs(String kind, JSAny? v, [Object? Function(int)? toPointer]) => switch (kind) {
+  'p' =>
+    toPointer != null
+        ? toPointer((v! as JSNumber).toDartInt & 0xFFFFFFFF)
+        : Pointer<Void>.fromAddress((v! as JSNumber).toDartInt & 0xFFFFFFFF),
   'i' => (v! as JSNumber).toDartInt,
   'u' => (v! as JSNumber).toDartInt & 0xFFFFFFFF,
   'b' => (v! as JSNumber).toDartInt != 0,

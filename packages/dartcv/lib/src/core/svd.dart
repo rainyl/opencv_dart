@@ -32,6 +32,7 @@ class SVD {
     Mat? u,
     Mat? vt,
     int flags = 0,
+    Duration? timeout,
   }) async {
     w ??= Mat.empty();
     u ??= Mat.empty();
@@ -39,6 +40,7 @@ class SVD {
     return cvRunAsync0(
       (callback) => ccore.cv_SVD_Compute(src.ref, w!.ref, u!.ref, vt!.ref, flags, callback),
       (c) => c.complete((w!, u!, vt!)),
+      timeout: timeout,
     );
   }
 
@@ -48,11 +50,12 @@ class SVD {
     return dst;
   }
 
-  static Future<Mat> backSubstAsync(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst}) async {
+  static Future<Mat> backSubstAsync(Mat w, Mat u, Mat vt, Mat rhs, {Mat? dst, Duration? timeout}) async {
     dst ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccore.cv_SVD_backSubst(w.ref, u.ref, vt.ref, rhs.ref, dst!.ref, callback),
       (c) => c.complete(dst),
+      timeout: timeout,
     );
   }
 }

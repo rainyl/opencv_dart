@@ -6,6 +6,7 @@
 #include "dartcv/ml/stat_model.hpp"
 #include <string>
 #include <vector>
+#include "dartcv/core/handle.hpp"
 
 CvStatus* cv_ml_TrainData_create(
     Mat samples,
@@ -17,6 +18,7 @@ CvStatus* cv_ml_TrainData_create(
     Mat varType,
     TrainData* rval
 ) {
+    CVD_CHECK(samples, responses, varIdx, sampleIdx, sampleWeights, varType);
     BEGIN_WRAP
     auto p = cv::ml::TrainData::create(
         CVDEREF(samples),
@@ -27,7 +29,7 @@ CvStatus* cv_ml_TrainData_create(
         cvd_or_noarray(sampleWeights),
         cvd_or_noarray(varType)
     );
-    rval->ptr = new cv::Ptr<cv::ml::TrainData>(p);
+    CVD_SET(rval, new cv::Ptr<cv::ml::TrainData>(p));
     END_WRAP
 }
 
@@ -42,28 +44,26 @@ CvStatus* cv_ml_TrainData_loadFromCSV(
     TrainData* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    auto p = cv::ml::TrainData::loadFromCSV(
-        filename,
-        headerLineCount,
-        responseStartIdx,
-        responseEndIdx,
-        varTypeSpec == nullptr ? cv::String() : cv::String(varTypeSpec),
-        delimiter,
-        missch
-    );
-    if (p.empty()) {
-        CV_Error(cv::Error::StsError, std::string("Failed to load train data from ") + filename);
-    }
-    rval->ptr = new cv::Ptr<cv::ml::TrainData>(p);
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        auto p = cv::ml::TrainData::loadFromCSV(
+            filename,
+            headerLineCount,
+            responseStartIdx,
+            responseEndIdx,
+            varTypeSpec == nullptr ? cv::String() : cv::String(varTypeSpec),
+            delimiter,
+            missch
+        );
+        if (p.empty()) {
+            CV_Error(cv::Error::StsError, std::string("Failed to load train data from ") + filename);
+        }
+        CVD_SET(rval, new cv::Ptr<cv::ml::TrainData>(p));
+        END_WRAP
+    });
 }
 
 void cv_ml_TrainData_close(TrainDataPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
@@ -89,6 +89,7 @@ int cv_ml_TrainData_getResponseType(TrainData self) {
     return (CVDEREF(self))->getResponseType();
 }
 CvStatus* cv_ml_TrainData_getCatCount(TrainData self, int vi, int* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     *rval = (CVDEREF(self))->getCatCount(vi);
     END_WRAP
@@ -128,16 +129,18 @@ CVD_TRAINDATA_MAT_GETTER(getTestSamples)
 CvStatus* cv_ml_TrainData_getTrainSamples(
     TrainData self, int layout, bool compressSamples, bool compressVars, Mat rval
 ) {
+    CVD_CHECK(self, rval);
     BEGIN_WRAP
     CVDEREF(rval) = (CVDEREF(self))->getTrainSamples(layout, compressSamples, compressVars);
     END_WRAP
 }
 
 CvStatus* cv_ml_TrainData_getNames(TrainData self, VecVecChar* rval) {
+    CVD_CHECK(self);
     BEGIN_WRAP
     std::vector<cv::String> names;
     (CVDEREF(self))->getNames(names);
-    // fill the caller-owned vector in place, replacing rval->ptr would leak it
+    // fill the caller-owned vector in place: replacing the vector would leak it
     auto& out = CVDEREF_P(rval);
     out.clear();
     for (const auto& name : names) {
@@ -147,16 +150,19 @@ CvStatus* cv_ml_TrainData_getNames(TrainData self, VecVecChar* rval) {
 }
 
 CvStatus* cv_ml_TrainData_setTrainTestSplit(TrainData self, int count, bool shuffle) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setTrainTestSplit(count, shuffle);
     END_WRAP
 }
 CvStatus* cv_ml_TrainData_setTrainTestSplitRatio(TrainData self, double ratio, bool shuffle) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->setTrainTestSplitRatio(ratio, shuffle);
     END_WRAP
 }
 CvStatus* cv_ml_TrainData_shuffleTrainTest(TrainData self) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))
     ->shuffleTrainTest();
     END_WRAP
@@ -166,11 +172,13 @@ float cv_ml_TrainData_missingValue(void) {
     return cv::ml::TrainData::missingValue();
 }
 CvStatus* cv_ml_TrainData_getSubVector(Mat vec, Mat idx, Mat rval) {
+    CVD_CHECK(vec, idx, rval);
     BEGIN_WRAP
     CVDEREF(rval) = cv::ml::TrainData::getSubVector(CVDEREF(vec), CVDEREF(idx));
     END_WRAP
 }
 CvStatus* cv_ml_TrainData_getSubMatrix(Mat matrix, Mat idx, int layout, Mat rval) {
+    CVD_CHECK(matrix, idx, rval);
     BEGIN_WRAP
     CVDEREF(rval) = cv::ml::TrainData::getSubMatrix(CVDEREF(matrix), CVDEREF(idx), layout);
     END_WRAP

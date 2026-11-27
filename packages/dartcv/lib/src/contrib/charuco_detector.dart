@@ -28,9 +28,9 @@ class ArucoRefineParameters extends CvStruct<cvg.ArucoRefineParams> {
       ArucoRefineParameters._(ptr, attach);
 
   factory ArucoRefineParameters.empty() {
-    final p = calloc<cvg.ArucoRefineParams>();
-    cvRun(() => ccontrib.cv_aruco_refineParameters_create(p));
-    return ArucoRefineParameters._(p);
+    return ArucoRefineParameters._(
+      cvCreate(calloc<cvg.ArucoRefineParams>(), ccontrib.cv_aruco_refineParameters_create),
+    );
   }
 
   factory ArucoRefineParameters.create({
@@ -38,12 +38,17 @@ class ArucoRefineParameters extends CvStruct<cvg.ArucoRefineParams> {
     double errorCorrectionRate = 3.0,
     bool checkAllOrders = true,
   }) {
-    final p = calloc<cvg.ArucoRefineParams>();
-    cvRun(
-      () =>
-          ccontrib.cv_aruco_refineParameters_create_1(minRepDistance, errorCorrectionRate, checkAllOrders, p),
+    return ArucoRefineParameters._(
+      cvCreate(
+        calloc<cvg.ArucoRefineParams>(),
+        (p) => ccontrib.cv_aruco_refineParameters_create_1(
+          minRepDistance,
+          errorCorrectionRate,
+          checkAllOrders,
+          p,
+        ),
+      ),
     );
-    return ArucoRefineParameters._(p);
   }
 
   @override
@@ -84,9 +89,9 @@ class CharucoDetectorParameters extends CvStruct<cvg.CharucoDetectorParams> {
       CharucoDetectorParameters._(ptr, attach);
 
   factory CharucoDetectorParameters.empty() {
-    final p = calloc<cvg.CharucoDetectorParams>();
-    cvRun(() => ccontrib.cv_aruco_charucoDetectorParameters_create(p));
-    return CharucoDetectorParameters._(p);
+    return CharucoDetectorParameters._(
+      cvCreate(calloc<cvg.CharucoDetectorParams>(), ccontrib.cv_aruco_charucoDetectorParameters_create),
+    );
   }
 
   @override
@@ -144,9 +149,12 @@ class CharucoDetector extends CvStruct<cvg.CharucoDetector> {
       CharucoDetector._(ptr, attach);
 
   factory CharucoDetector.fromBoard(CharucoBoard board) {
-    final p = calloc<cvg.CharucoDetector>();
-    cvRun(() => ccontrib.cv_aruco_charucoDetector_create_1(board.ref, p));
-    return CharucoDetector._(p);
+    return CharucoDetector._(
+      cvCreate(
+        calloc<cvg.CharucoDetector>(),
+        (p) => ccontrib.cv_aruco_charucoDetector_create_1(board.ref, p),
+      ),
+    );
   }
 
   factory CharucoDetector.create(
@@ -155,7 +163,6 @@ class CharucoDetector extends CvStruct<cvg.CharucoDetector> {
     ArucoDetectorParameters? detectorParameters,
     ArucoRefineParameters? refineParameters,
   }) {
-    final p = calloc<cvg.CharucoDetector>();
     final ownedCharucoParameters = charucoParameters == null ? CharucoDetectorParameters.empty() : null;
     final ownedDetectorParameters = refineParameters != null && detectorParameters == null
         ? ArucoDetectorParameters.empty()
@@ -163,38 +170,42 @@ class CharucoDetector extends CvStruct<cvg.CharucoDetector> {
     final charucoParams = charucoParameters ?? ownedCharucoParameters!;
     final detectorParams = detectorParameters ?? ownedDetectorParameters;
     try {
-      cvRun(() {
-        if (refineParameters != null) {
-          return ccontrib.cv_aruco_charucoDetector_create_4(
-            board.ref,
-            charucoParams.ref,
-            detectorParams!.ref,
-            refineParameters.ref,
-            p,
-          );
-        }
-        if (detectorParams != null) {
-          return ccontrib.cv_aruco_charucoDetector_create_3(
-            board.ref,
-            charucoParams.ref,
-            detectorParams.ref,
-            p,
-          );
-        }
-        if (charucoParameters != null) {
-          return ccontrib.cv_aruco_charucoDetector_create_2(
-            board.ref,
-            charucoParams.ref,
-            p,
-          );
-        }
-        return ccontrib.cv_aruco_charucoDetector_create_1(board.ref, p);
-      });
+      return CharucoDetector._(
+        cvCreate(
+          calloc<cvg.CharucoDetector>(),
+          (p) {
+            if (refineParameters != null) {
+              return ccontrib.cv_aruco_charucoDetector_create_4(
+                board.ref,
+                charucoParams.ref,
+                detectorParams!.ref,
+                refineParameters.ref,
+                p,
+              );
+            }
+            if (detectorParams != null) {
+              return ccontrib.cv_aruco_charucoDetector_create_3(
+                board.ref,
+                charucoParams.ref,
+                detectorParams.ref,
+                p,
+              );
+            }
+            if (charucoParameters != null) {
+              return ccontrib.cv_aruco_charucoDetector_create_2(
+                board.ref,
+                charucoParams.ref,
+                p,
+              );
+            }
+            return ccontrib.cv_aruco_charucoDetector_create_1(board.ref, p);
+          },
+        ),
+      );
     } finally {
       ownedDetectorParameters?.dispose();
       ownedCharucoParameters?.dispose();
     }
-    return CharucoDetector._(p);
   }
 
   @override
@@ -253,35 +264,44 @@ class CharucoDetector extends CvStruct<cvg.CharucoDetector> {
   }
 
   CharucoBoard get board {
-    final out = calloc<cvg.CharucoBoard>();
-    cvRun(() => ccontrib.cv_aruco_charucoDetector_getBoard(ref, out));
-    return CharucoBoard.fromPointer(out);
+    return CharucoBoard.fromPointer(
+      cvCreate(calloc<cvg.CharucoBoard>(), (out) => ccontrib.cv_aruco_charucoDetector_getBoard(ref, out)),
+    );
   }
 
   set board(CharucoBoard value) => ccontrib.cv_aruco_charucoDetector_setBoard(ref, value.ref);
 
   CharucoDetectorParameters get charucoParameters {
-    final out = calloc<cvg.CharucoDetectorParams>();
-    cvRun(() => ccontrib.cv_aruco_charucoDetector_getCharucoParameters(ref, out));
-    return CharucoDetectorParameters.fromPointer(out);
+    return CharucoDetectorParameters.fromPointer(
+      cvCreate(
+        calloc<cvg.CharucoDetectorParams>(),
+        (out) => ccontrib.cv_aruco_charucoDetector_getCharucoParameters(ref, out),
+      ),
+    );
   }
 
   set charucoParameters(CharucoDetectorParameters value) =>
       ccontrib.cv_aruco_charucoDetector_setCharucoParameters(ref, value.ref);
 
   ArucoDetectorParameters get detectorParameters {
-    final out = calloc<cvg.ArucoDetectorParams>();
-    cvRun(() => ccontrib.cv_aruco_charucoDetector_getDetectorParameters(ref, out));
-    return ArucoDetectorParameters.fromPointer(out);
+    return ArucoDetectorParameters.fromPointer(
+      cvCreate(
+        calloc<cvg.ArucoDetectorParams>(),
+        (out) => ccontrib.cv_aruco_charucoDetector_getDetectorParameters(ref, out),
+      ),
+    );
   }
 
   set detectorParameters(ArucoDetectorParameters value) =>
       ccontrib.cv_aruco_charucoDetector_setDetectorParameters(ref, value.ref);
 
   ArucoRefineParameters get refineParameters {
-    final out = calloc<cvg.ArucoRefineParams>();
-    cvRun(() => ccontrib.cv_aruco_charucoDetector_getRefineParameters(ref, out));
-    return ArucoRefineParameters.fromPointer(out);
+    return ArucoRefineParameters.fromPointer(
+      cvCreate(
+        calloc<cvg.ArucoRefineParams>(),
+        (out) => ccontrib.cv_aruco_charucoDetector_getRefineParameters(ref, out),
+      ),
+    );
   }
 
   set refineParameters(ArucoRefineParameters value) =>
@@ -322,23 +342,26 @@ void drawDetectedCornersCharuco(
   bool useExtrinsicGuess = false,
 }) {
   final pb = calloc<ffi.Bool>();
-  rvec ??= Mat.empty();
-  tvec ??= Mat.empty();
-  cvRun(
-    () => ccontrib.cv_aruco_estimatePoseCharucoBoard(
-      charucoCorners.ref,
-      charucoIds.ref,
-      board.ref,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvec!.ref,
-      tvec!.ref,
-      useExtrinsicGuess,
-      pb,
-      ffi.nullptr,
-    ),
-  );
-  final rval = pb.value;
-  calloc.free(pb);
-  return (rval, rvec, tvec);
+  try {
+    rvec ??= Mat.empty();
+    tvec ??= Mat.empty();
+    cvRun(
+      () => ccontrib.cv_aruco_estimatePoseCharucoBoard(
+        charucoCorners.ref,
+        charucoIds.ref,
+        board.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        useExtrinsicGuess,
+        pb,
+        ffi.nullptr,
+      ),
+    );
+    final rval = pb.value;
+    return (rval, rvec, tvec);
+  } finally {
+    calloc.free(pb);
+  }
 }

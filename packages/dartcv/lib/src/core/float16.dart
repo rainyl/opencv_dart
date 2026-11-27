@@ -76,24 +76,27 @@ int float16Inv(double x) {
   final in_ = calloc<cvg.Cv32suf_C>()..ref.f = x;
   final sign = calloc<ffi.UnsignedInt>()..value = in_.ref.u & 0x80000000;
   final w = calloc<ffi.UnsignedInt>();
-  in_.ref.u ^= sign.value;
-  if (in_.ref.u > 0x47800000) {
-    w.value = in_.ref.u > 0x7f800000 ? 0x7e00 : 0x7c00;
-  } else {
-    if (in_.ref.u < 0x38800000) {
-      in_.ref.f += 0.5;
-      w.value = in_.ref.u - 0x3f000000;
+  try {
+    in_.ref.u ^= sign.value;
+    if (in_.ref.u > 0x47800000) {
+      w.value = in_.ref.u > 0x7f800000 ? 0x7e00 : 0x7c00;
     } else {
-      final t = calloc<ffi.UnsignedInt>()..value = in_.ref.u + 0xc8000fff;
-      w.value = (t.value + ((in_.ref.u >> 13) & 1)) >> 13;
-      calloc.free(t);
+      if (in_.ref.u < 0x38800000) {
+        in_.ref.f += 0.5;
+        w.value = in_.ref.u - 0x3f000000;
+      } else {
+        final t = calloc<ffi.UnsignedInt>()..value = in_.ref.u + 0xc8000fff;
+        w.value = (t.value + ((in_.ref.u >> 13) & 1)) >> 13;
+        calloc.free(t);
+      }
     }
+    final rval = w.value | (sign.value >> 16);
+    calloc.free(in_);
+    calloc.free(sign);
+    return rval;
+  } finally {
+    calloc.free(w);
   }
-  final rval = w.value | (sign.value >> 16);
-  calloc.free(in_);
-  calloc.free(sign);
-  calloc.free(w);
-  return rval;
 }
 
 extension PointerUint16Extension on ffi.Pointer<ffi.Uint16> {

@@ -24,11 +24,9 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
 
   factory LineSegmentDetector.fromPointer(cvg.LineSegmentDetectorPtr ptr) => LineSegmentDetector._(ptr);
 
-  factory LineSegmentDetector.empty() {
-    final p = calloc<cvg.LineSegmentDetector>();
-    cimgproc.cv_LineSegmentDetector_create(p);
-    return LineSegmentDetector._(p);
-  }
+  factory LineSegmentDetector.empty() => LineSegmentDetector._(
+    cvCreate(calloc<cvg.LineSegmentDetector>(), cimgproc.cv_LineSegmentDetector_create),
+  );
 
   /// Creates a smart pointer to a [LineSegmentDetector] object and initializes it.
   ///
@@ -92,19 +90,22 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     double densityTh = 0.7,
     int nBins = 1024,
   }) {
-    final p = calloc<cvg.LineSegmentDetector>();
-    cimgproc.cv_LineSegmentDetector_create1(
-      refine,
-      scale,
-      sigmaScale,
-      quant,
-      angTh,
-      logEps,
-      densityTh,
-      nBins,
-      p,
+    return LineSegmentDetector._(
+      cvCreate(
+        calloc<cvg.LineSegmentDetector>(),
+        (p) => cimgproc.cv_LineSegmentDetector_create1(
+          refine,
+          scale,
+          sigmaScale,
+          quant,
+          angTh,
+          logEps,
+          densityTh,
+          nBins,
+          p,
+        ),
+      ),
     );
-    return LineSegmentDetector._(p);
   }
 
   static final finalizer = OcvFinalizer<cvg.LineSegmentDetectorPtr>(
@@ -180,6 +181,7 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     VecF64? width,
     VecF64? prec,
     VecF64? nfa,
+    Duration? timeout,
   }) async {
     lines ??= VecVec4f(); // caller is still responsible for dispose-ing these values
     width ??= VecF64();
@@ -200,6 +202,7 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
         final rval = (lines!, width!, prec!, nfa!);
         return c.complete(rval);
       },
+      timeout: timeout,
     );
   }
 
@@ -233,21 +236,24 @@ class LineSegmentDetector extends CvStruct<cvg.LineSegmentDetector> {
     imageOut ??= Mat.empty();
     final sz = size.toSize();
     final prval = calloc<ffi.Int>();
-    cvRun(
-      () => cimgproc.cv_LineSegmentDetector_compareSegments(
-        ref,
-        sz.ref,
-        lines1.ref,
-        lines2.ref,
-        imageOut!.ref,
-        prval,
-        ffi.nullptr,
-      ),
-    );
-    final rval = (prval.value, imageOut);
-    calloc.free(prval);
-    sz.dispose();
-    return rval;
+    try {
+      cvRun(
+        () => cimgproc.cv_LineSegmentDetector_compareSegments(
+          ref,
+          sz.ref,
+          lines1.ref,
+          lines2.ref,
+          imageOut!.ref,
+          prval,
+          ffi.nullptr,
+        ),
+      );
+      final rval = (prval.value, imageOut);
+      sz.dispose();
+      return rval;
+    } finally {
+      calloc.free(prval);
+    }
   }
 
   @override

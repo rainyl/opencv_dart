@@ -14,21 +14,11 @@ class Rng extends CvStruct<cvg.RNG> {
     if (attach) finalizer.attach(this, ptr.cast(), detach: this);
   }
 
-  factory Rng() {
-    final p = calloc<cvg.RNG>();
-    cvRun(() => ccore.cv_RNG_create(p));
-    final rng = Rng._(p);
-    return rng;
-  }
+  factory Rng() => Rng._(cvCreate(calloc<cvg.RNG>(), ccore.cv_RNG_create));
 
   factory Rng.fromTheRng(cvg.RNGPtr p) => Rng._(p);
 
-  factory Rng.fromSeed(int seed) {
-    final p = calloc<cvg.RNG>();
-    cvRun(() => ccore.cv_RNG_create_1(seed, p));
-    final rng = Rng._(p);
-    return rng;
-  }
+  factory Rng.fromSeed(int seed) => Rng._(cvCreate(calloc<cvg.RNG>(), (p) => ccore.cv_RNG_create_1(seed, p)));
 
   static final finalizer = OcvFinalizer<cvg.RNGPtr>(ccore.addresses.cv_RNG_close);
 

@@ -18,7 +18,12 @@ import 'charuco_detector.dart';
 
 extension CharucoDetectorAsync on CharucoDetector {
   Future<(VecPoint2f charucoCorners, VecI32 charucoIds, VecVecPoint2f markerCorners, VecI32 markerIds)>
-  detectBoardAsync(InputArray image, {VecVecPoint2f? markerCorners, VecI32? markerIds}) async {
+  detectBoardAsync(
+    InputArray image, {
+    VecVecPoint2f? markerCorners,
+    VecI32? markerIds,
+    Duration? timeout,
+  }) async {
     final charucoCorners = VecPoint2f();
     final charucoIds = VecI32();
     markerCorners ??= VecVecPoint2f();
@@ -34,11 +39,17 @@ extension CharucoDetectorAsync on CharucoDetector {
         callback,
       ),
       (c) => c.complete((charucoCorners, charucoIds, markerCorners!, markerIds!)),
+      timeout: timeout,
     );
   }
 
   Future<(VecVecPoint2f diamondCorners, VecVec4i diamondIds, VecVecPoint2f markerCorners, VecI32 markerIds)>
-  detectDiamondsAsync(InputArray image, {VecVecPoint2f? markerCorners, VecI32? markerIds}) async {
+  detectDiamondsAsync(
+    InputArray image, {
+    VecVecPoint2f? markerCorners,
+    VecI32? markerIds,
+    Duration? timeout,
+  }) async {
     final diamondCorners = VecVecPoint2f();
     final diamondIds = VecVec4i();
     markerCorners ??= VecVecPoint2f();
@@ -54,6 +65,7 @@ extension CharucoDetectorAsync on CharucoDetector {
         callback,
       ),
       (c) => c.complete((diamondCorners, diamondIds, markerCorners!, markerIds!)),
+      timeout: timeout,
     );
   }
 }
@@ -63,6 +75,7 @@ Future<void> drawDetectedCornersCharucoAsync(
   VecPoint2f charucoCorners, [
   VecI32? charucoIds,
   Scalar? cornerColor,
+  Duration? timeout,
 ]) async {
   final ids = charucoIds ?? VecI32();
   final disposeIds = charucoIds == null;
@@ -76,6 +89,7 @@ Future<void> drawDetectedCornersCharucoAsync(
       callback,
     ),
     (c) => c.complete(),
+    timeout: timeout,
   );
   if (disposeIds) ids.dispose();
 }
@@ -89,6 +103,7 @@ Future<(bool rval, Mat rvec, Mat tvec)> estimatePoseCharucoBoardAsync(
   Mat? rvec,
   Mat? tvec,
   bool useExtrinsicGuess = false,
+  Duration? timeout,
 }) async {
   rvec ??= Mat.empty();
   tvec ??= Mat.empty();
@@ -108,8 +123,9 @@ Future<(bool rval, Mat rvec, Mat tvec)> estimatePoseCharucoBoardAsync(
     ),
     (c) {
       final rval = pb.value;
-      calloc.free(pb);
       c.complete((rval, rvec!, tvec!));
     },
+    release: () => calloc.free(pb),
+    timeout: timeout,
   );
 }

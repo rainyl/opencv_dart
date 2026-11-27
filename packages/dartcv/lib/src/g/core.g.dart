@@ -2400,6 +2400,18 @@ external ffi.Pointer<CvStatus> cv_addWeighted(
   imp$1.CvCallback_0 callback,
 );
 
+/// @brief Async: block until the queue is empty and no job is running (tests, shutdown).
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function()>()
+external void cv_asyncDrain();
+
+/// @brief Async: jobs queued plus jobs running.
+///
+/// @return int64_t
+@meta.RecordUse()
+@ffi.Native<ffi.Int64 Function()>()
+external int cv_asyncPending();
+
 @meta.RecordUse()
 @ffi.Native<
   ffi.Pointer<CvStatus> Function(
@@ -2754,6 +2766,17 @@ external ffi.Pointer<CvStatus> cv_gemm(
   imp$1.CvCallback_0 callback,
 );
 
+/// @brief Async: how many worker threads run the `*Async` work (default 1).
+///
+/// One worker is enough to keep the caller's thread free, and OpenCV already uses every core inside a
+/// single call, so raising this oversubscribes CPU-bound work. It helps when the calls block on I/O
+/// (a capture, a slow file) instead.
+///
+/// @return int
+@meta.RecordUse()
+@ffi.Native<ffi.Int Function()>()
+external int cv_getAsyncThreads();
+
 @meta.RecordUse()
 @ffi.Native<ffi.Int Function()>()
 external int cv_getNumThreads();
@@ -2898,6 +2921,27 @@ external ffi.Pointer<CvStatus> cv_kmeans_points(
   Mat centers,
   ffi.Pointer<ffi.Double> rval,
   imp$1.CvCallback_0 callback,
+);
+
+/// @brief Diagnostics: how many wrapped C++ objects are alive right now.
+///
+/// A handle that a live object outlived (a job still in flight, a `VecVecPoint[i]` view) keeps its
+/// object counted, so this is the number of objects, not of Dart wrappers. Tests use it to assert
+/// that disposing and finalizing released everything.
+///
+/// @return int64_t
+@meta.RecordUse()
+@ffi.Native<ffi.Int64 Function()>()
+external int cv_live_object_count();
+
+/// @brief Diagnostics: `"<type>=<count>\n"` for every type holding live objects, sorted.
+///
+/// @param out VecChar*
+/// @return CvStatus
+@meta.RecordUse()
+@ffi.Native<ffi.Pointer<CvStatus> Function(ffi.Pointer<VecChar>)>()
+external ffi.Pointer<CvStatus> cv_live_object_stats(
+  ffi.Pointer<VecChar> out,
 );
 
 @meta.RecordUse()
@@ -3297,6 +3341,15 @@ external ffi.Pointer<CvStatus> cv_scaleAdd(
   Mat src2,
   Mat dst,
   imp$1.CvCallback_0 callback,
+);
+
+/// @brief Async: set the worker count. Waits for the queue to drain first.
+///
+/// @param n number of threads, at least 1
+@meta.RecordUse()
+@ffi.Native<ffi.Void Function(ffi.Int)>()
+external void cv_setAsyncThreads(
+  int n,
 );
 
 @meta.RecordUse()

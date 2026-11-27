@@ -29,31 +29,39 @@ class CascadeClassifier extends CvStruct<cvg.CascadeClassifier> {
       CascadeClassifier._(ptr, attach);
 
   factory CascadeClassifier.empty() {
-    final p = calloc<cvg.CascadeClassifier>();
-    cvRun(() => cobjdetect.cv_CascadeClassifier_create(p));
-    return CascadeClassifier._(p);
+    return CascadeClassifier._(
+      cvCreate(calloc<cvg.CascadeClassifier>(), cobjdetect.cv_CascadeClassifier_create),
+    );
   }
 
-  factory CascadeClassifier.fromFile(String filename) {
-    final p = calloc<cvg.CascadeClassifier>();
-    final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cobjdetect.cv_CascadeClassifier_create_1(cp, p));
-    calloc.free(cp);
-    return CascadeClassifier._(p);
-  }
+  factory CascadeClassifier.fromFile(String filename) => using(
+    (arena) => CascadeClassifier._(
+      cvCreate(
+        calloc<cvg.CascadeClassifier>(),
+        (p) => cobjdetect.cv_CascadeClassifier_create_1(
+          filename.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+        ),
+      ),
+    ),
+  );
 
   /// Load cascade classifier from a file.
   ///
   /// For further details, please see:
   /// http://docs.opencv.org/master/d1/de5/classcv_1_1CascadeClassifier.html#a1a5884c8cc749422f9eb77c2471958bc
   bool load(String name) {
-    final cname = name.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cobjdetect.cv_CascadeClassifier_load(ref, cname, p));
-    final rval = p.value != 0;
-    calloc.free(p);
-    calloc.free(cname);
-    return rval;
+    return using((arena) {
+      final cname = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<ffi.Int>();
+      try {
+        cvRun(() => cobjdetect.cv_CascadeClassifier_load(ref, cname, p));
+        final rval = p.value != 0;
+        return rval;
+      } finally {
+        calloc.free(p);
+      }
+    });
   }
 
   /// DetectMultiScale detects objects of different sizes in the input Mat image.
@@ -184,9 +192,7 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
       HOGDescriptor._(ptr, attach);
 
   factory HOGDescriptor.empty() {
-    final p = calloc<cvg.HOGDescriptor>();
-    cvRun(() => cobjdetect.cv_HOGDescriptor_create(p));
-    return HOGDescriptor._(p);
+    return HOGDescriptor._(cvCreate(calloc<cvg.HOGDescriptor>(), cobjdetect.cv_HOGDescriptor_create));
   }
 
   /// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
@@ -194,13 +200,17 @@ class HOGDescriptor extends CvStruct<cvg.HOGDescriptor> {
   /// Creates the HOG descriptor and detector and loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file.
   ///
   /// https://docs.opencv.org/4.x/d5/d33/structcv_1_1HOGDescriptor.html#a32a635936edaed1b2789caf3dcb09b6e
-  factory HOGDescriptor.fromFile(String filename) {
-    final p = calloc<cvg.HOGDescriptor>();
-    final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cobjdetect.cv_HOGDescriptor_create_1(cp, p));
-    calloc.free(cp);
-    return HOGDescriptor._(p);
-  }
+  factory HOGDescriptor.fromFile(String filename) => using(
+    (arena) => HOGDescriptor._(
+      cvCreate(
+        calloc<cvg.HOGDescriptor>(),
+        (p) => cobjdetect.cv_HOGDescriptor_create_1(
+          filename.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+        ),
+      ),
+    ),
+  );
 
   bool load(String name) {
     return using<bool>((arena) {
@@ -430,9 +440,7 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
       QRCodeDetector._(ptr, attach);
 
   factory QRCodeDetector.empty() {
-    final p = calloc<cvg.QRCodeDetector>();
-    cvRun(() => cobjdetect.cv_QRCodeDetector_create(p));
-    return QRCodeDetector._(p);
+    return QRCodeDetector._(cvCreate(calloc<cvg.QRCodeDetector>(), cobjdetect.cv_QRCodeDetector_create));
   }
 
   /// Decodes QR code on a curved surface in image once it's found by the detect() method.
@@ -446,9 +454,9 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     OutputArray? straightQRcode,
   }) {
     straightQRcode ??= Mat.empty();
-    final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(
-      () => cobjdetect.cv_QRCodeDetector_decodeCurved(
+    final ss = cvOut(
+      calloc<ffi.Pointer<ffi.Char>>(),
+      (v) => cobjdetect.cv_QRCodeDetector_decodeCurved(
         ref,
         img.ref,
         points.ref,
@@ -456,10 +464,13 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
         v,
         ffi.nullptr,
       ),
+      (v) {
+        // The string lives outside the out-parameter block: copy it, then free it.
+        final ss = v.value.cast<Utf8>().toDartString();
+        calloc.free(v.value);
+        return ss;
+      },
     );
-    final ss = v.value.cast<Utf8>().toDartString();
-    calloc.free(v.value);
-    calloc.free(v);
     return (ss, straightQRcode);
   }
 
@@ -473,9 +484,9 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }) {
     points ??= VecPoint();
     straightQRcode ??= Mat.empty();
-    final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(
-      () => cobjdetect.cv_QRCodeDetector_detectAndDecodeCurved(
+    final ss = cvOut(
+      calloc<ffi.Pointer<ffi.Char>>(),
+      (v) => cobjdetect.cv_QRCodeDetector_detectAndDecodeCurved(
         ref,
         img.ref,
         points!.ptr,
@@ -483,10 +494,13 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
         v,
         ffi.nullptr,
       ),
+      (v) {
+        // The string lives outside the out-parameter block: copy it, then free it.
+        final ss = v.value.cast<Utf8>().toDartString();
+        calloc.free(v.value);
+        return ss;
+      },
     );
-    final ss = v.value.cast<Utf8>().toDartString();
-    calloc.free(v.value);
-    calloc.free(v);
     return (ss, points, straightQRcode);
   }
 
@@ -502,9 +516,9 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   }) {
     straightCode ??= Mat.empty();
     final points = VecPoint();
-    final v = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(
-      () => cobjdetect.cv_QRCodeDetector_detectAndDecode(
+    final s = cvOut(
+      calloc<ffi.Pointer<ffi.Char>>(),
+      (v) => cobjdetect.cv_QRCodeDetector_detectAndDecode(
         ref,
         img.ref,
         points.ptr,
@@ -512,12 +526,14 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
         v,
         ffi.nullptr,
       ),
+      (v) {
+        if (v.value == ffi.nullptr) return '';
+        // The string lives outside the out-parameter block: copy it, then free it.
+        final s = v.value.cast<Utf8>().toDartString();
+        calloc.free(v.value);
+        return s;
+      },
     );
-    final s = v == ffi.nullptr ? "" : v.value.cast<Utf8>().toDartString();
-    if (v.value != ffi.nullptr) {
-      calloc.free(v.value);
-    }
-    calloc.free(v);
     return (s, points, straightCode);
   }
 
@@ -528,10 +544,13 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   (bool ret, VecPoint points) detect(InputArray input, {VecPoint? points}) {
     points ??= VecPoint();
     final ret = calloc<ffi.Bool>();
-    cvRun(() => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, points!.ptr, ret, ffi.nullptr));
-    final rval = (ret.value, points);
-    calloc.free(ret);
-    return rval;
+    try {
+      cvRun(() => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, points!.ptr, ret, ffi.nullptr));
+      final rval = (ret.value, points);
+      return rval;
+    } finally {
+      calloc.free(ret);
+    }
   }
 
   /// Decode decodes QR code in image once it's found by the detect() method. Returns UTF8-encoded output string or empty string if the code cannot be decoded.
@@ -544,15 +563,24 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     Mat? straightCode,
   }) {
     points ??= VecPoint();
-    final ret = calloc<ffi.Pointer<ffi.Char>>();
     straightCode ??= Mat.empty();
-    cvRun(
-      () =>
-          cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, points!.ptr, straightCode!.ref, ret, ffi.nullptr),
+    final info = cvOut(
+      calloc<ffi.Pointer<ffi.Char>>(),
+      (ret) => cobjdetect.cv_QRCodeDetector_decode(
+        ref,
+        img.ref,
+        points!.ptr,
+        straightCode!.ref,
+        ret,
+        ffi.nullptr,
+      ),
+      (ret) {
+        // The string lives outside the out-parameter block: copy it, then free it.
+        final info = ret.value.cast<Utf8>().toDartString();
+        calloc.free(ret.value);
+        return info;
+      },
     );
-    final info = ret.value.cast<Utf8>().toDartString();
-    calloc.free(ret.value);
-    calloc.free(ret);
     return (info, points, straightCode);
   }
 
@@ -566,10 +594,13 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
   (bool, VecPoint points) detectMulti(InputArray img, {VecPoint? points}) {
     points ??= VecPoint();
     final ret = calloc<ffi.Bool>();
-    cvRun(() => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, points!.ptr, ret, ffi.nullptr));
-    final rval = (ret.value, points);
-    calloc.free(ret);
-    return rval;
+    try {
+      cvRun(() => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, points!.ptr, ret, ffi.nullptr));
+      final rval = (ret.value, points);
+      return rval;
+    } finally {
+      calloc.free(ret);
+    }
   }
 
   /// Detects QR codes in image, finds the quadrangles containing the codes, and decodes the QRCodes to strings.
@@ -584,21 +615,24 @@ class QRCodeDetector extends CvStruct<cvg.QRCodeDetector> {
     final points = VecPoint();
     final codes = VecMat();
     final rval = calloc<ffi.Bool>();
-    cvRun(
-      () => cobjdetect.cv_QRCodeDetector_detectAndDecodeMulti(
-        ref,
-        img.ref,
-        info.ptr,
-        points.ptr,
-        codes.ptr,
-        rval,
-        ffi.nullptr,
-      ),
-    );
-    final ret = (rval.value, info.asStringList(), points, codes);
-    info.dispose();
-    calloc.free(rval);
-    return ret;
+    try {
+      cvRun(
+        () => cobjdetect.cv_QRCodeDetector_detectAndDecodeMulti(
+          ref,
+          img.ref,
+          info.ptr,
+          points.ptr,
+          codes.ptr,
+          rval,
+          ffi.nullptr,
+        ),
+      );
+      final ret = (rval.value, info.asStringList(), points, codes);
+      info.dispose();
+      return ret;
+    } finally {
+      calloc.free(rval);
+    }
   }
 
   void setEpsX(double epsX) => cobjdetect.cv_QRCodeDetector_setEpsX(ref, epsX);
@@ -660,27 +694,24 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     int topK = 5000,
     int backendId = 0,
     int targetId = 0,
-  }) {
-    final p = calloc<cvg.FaceDetectorYN>();
-    final cModel = model.toNativeUtf8().cast<ffi.Char>();
-    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(
-      () => cobjdetect.cv_FaceDetectorYN_create(
-        cModel,
-        cConfig,
-        inputSize.cvdRef,
-        scoreThreshold,
-        nmsThreshold,
-        topK,
-        backendId,
-        targetId,
-        p,
+  }) => using(
+    (arena) => FaceDetectorYN._(
+      cvCreate(
+        calloc<cvg.FaceDetectorYN>(),
+        (p) => cobjdetect.cv_FaceDetectorYN_create(
+          model.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          config.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          inputSize.cvdRef,
+          scoreThreshold,
+          nmsThreshold,
+          topK,
+          backendId,
+          targetId,
+          p,
+        ),
       ),
-    );
-    calloc.free(cModel);
-    calloc.free(cConfig);
-    return FaceDetectorYN._(p);
-  }
+    ),
+  );
 
   /// Creates an instance of face detector class with given parameters.
   ///
@@ -714,28 +745,32 @@ class FaceDetectorYN extends CvStruct<cvg.FaceDetectorYN> {
     int backendId = 0,
     int targetId = 0,
   }) {
-    final p = calloc<cvg.FaceDetectorYN>();
-    final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    cvRun(
-      () => cobjdetect.cv_FaceDetectorYN_create_1(
-        cFramework,
-        bufM.ref,
-        bufC.ref,
-        inputSize.cvdRef,
-        scoreThreshold,
-        nmsThreshold,
-        topK,
-        backendId,
-        targetId,
-        p,
-      ),
-    );
-    calloc.free(cFramework);
-    bufM.dispose();
-    bufC.dispose();
-    return FaceDetectorYN._(p);
+    try {
+      return using(
+        (arena) => FaceDetectorYN._(
+          cvCreate(
+            calloc<cvg.FaceDetectorYN>(),
+            (p) => cobjdetect.cv_FaceDetectorYN_create_1(
+              framework.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+              bufM.ref,
+              bufC.ref,
+              inputSize.cvdRef,
+              scoreThreshold,
+              nmsThreshold,
+              topK,
+              backendId,
+              targetId,
+              p,
+            ),
+          ),
+        ),
+      );
+    } finally {
+      bufM.dispose();
+      bufC.dispose();
+    }
   }
 
   /// https://docs.opencv.org/4.x/df/d20/classcv_1_1FaceDetectorYN.html#a68b6fb9bffbed0f3d5c104996113f247
@@ -842,15 +877,21 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   /// [targetId]	the id of target device
   ///
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a04df90b0cd7d26d350acd92621a35743
-  factory FaceRecognizerSF.fromFile(String model, String config, {int backendId = 0, int targetId = 0}) {
-    final p = calloc<cvg.FaceRecognizerSF>();
-    final cModel = model.toNativeUtf8().cast<ffi.Char>();
-    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cobjdetect.cv_FaceRecognizerSF_create(cModel, cConfig, backendId, targetId, p));
-    calloc.free(cModel);
-    calloc.free(cConfig);
-    return FaceRecognizerSF._(p);
-  }
+  factory FaceRecognizerSF.fromFile(String model, String config, {int backendId = 0, int targetId = 0}) =>
+      using(
+        (arena) => FaceRecognizerSF._(
+          cvCreate(
+            calloc<cvg.FaceRecognizerSF>(),
+            (p) => cobjdetect.cv_FaceRecognizerSF_create(
+              model.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+              config.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+              backendId,
+              targetId,
+              p,
+            ),
+          ),
+        ),
+      );
 
   /// Aligns detected face with the source input image and crops it.
   ///
@@ -887,19 +928,22 @@ class FaceRecognizerSF extends CvStruct<cvg.FaceRecognizerSF> {
   /// https://docs.opencv.org/4.x/da/d09/classcv_1_1FaceRecognizerSF.html#a2f0362ca1e64320a1f3ba7e1386d0219
   double match(Mat faceFeature1, Mat faceFeature2, {int disType = FR_COSINE}) {
     final distance = calloc<ffi.Double>();
-    cvRun(
-      () => cobjdetect.cv_FaceRecognizerSF_match(
-        ref,
-        faceFeature1.ref,
-        faceFeature2.ref,
-        disType,
-        distance,
-        ffi.nullptr,
-      ),
-    );
-    final rval = distance.value;
-    calloc.free(distance);
-    return rval;
+    try {
+      cvRun(
+        () => cobjdetect.cv_FaceRecognizerSF_match(
+          ref,
+          faceFeature1.ref,
+          faceFeature2.ref,
+          disType,
+          distance,
+          ffi.nullptr,
+        ),
+      );
+      final rval = distance.value;
+      return rval;
+    } finally {
+      calloc.free(distance);
+    }
   }
 
   @override

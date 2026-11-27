@@ -4,21 +4,20 @@
 //
 
 #include "stereo.h"
+#include "dartcv/core/handle.hpp"
 
 // StereoBM
 CvStatus* cv_StereoBM_create(
     int numDisparities, int blockSize, StereoBM* rval, CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::StereoBM>(cv::StereoBM::create(numDisparities, blockSize))};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Ptr<cv::StereoBM>(cv::StereoBM::create(numDisparities, blockSize)));
+        END_WRAP
+    });
 }
 
 void cv_StereoBM_close(StereoBMPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
@@ -44,14 +43,14 @@ int cv_StereoBM_getPreFilterType(StereoBM self) {
 // virtual Rect  getROI1 () const =0
 CvRect* cv_StereoBM_getROI1(StereoBM self) {
     auto rect = (CVDEREF(self))->getROI1();
-    return new CvRect{rect.x, rect.y, rect.width, rect.height};
+    return cvd::alloc_pod(CvRect{rect.x, rect.y, rect.width, rect.height});
 }
 
 // Gets the current Region of Interest (ROI) for the right image.
 // virtual Rect  getROI2 () const =0
 CvRect* cv_StereoBM_getROI2(StereoBM self) {
     auto rect = (CVDEREF(self))->getROI2();
-    return new CvRect{rect.x, rect.y, rect.width, rect.height};
+    return cvd::alloc_pod(CvRect{rect.x, rect.y, rect.width, rect.height});
 }
 
 // Gets the current size of the smaller block used for texture check.
@@ -125,6 +124,7 @@ void cv_StereoBM_setUniquenessRatio(StereoBM self, int uniquenessRatio) {
 // Computes disparity map for the specified stereo pair.
 // virtual void  compute (InputArray left, InputArray right, OutputArray disparity)=0
 CvStatus* cv_StereoBM_compute(StereoBM self, MatIn left, MatIn right, MatOut disparity) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))->compute(CVDEREF(left), CVDEREF(right), CVDEREF(disparity));
     END_WRAP
 }
@@ -205,28 +205,26 @@ CvStatus* cv_StereoSGBM_create(
     StereoSGBM* rval,
     CvCallback_0 callback
 ) {
-    BEGIN_WRAP
-    *rval = {new cv::Ptr<cv::StereoSGBM>(cv::StereoSGBM::create(
-        minDisparity,
-        numDisparities,
-        blockSize,
-        P1,
-        P2,
-        disp12MaxDiff,
-        preFilterCap,
-        uniquenessRatio,
-        speckleWindowSize,
-        speckleRange,
-        mode
-    ))};
-    if (callback != nullptr) {
-        callback();
-    }
-    END_WRAP
+    return cvd::dispatch(callback, cvd::hold(), [=]() -> CvStatus* {
+        BEGIN_WRAP
+        CVD_SET(rval, new cv::Ptr<cv::StereoSGBM>(cv::StereoSGBM::create(
+            minDisparity,
+            numDisparities,
+            blockSize,
+            P1,
+            P2,
+            disp12MaxDiff,
+            preFilterCap,
+            uniquenessRatio,
+            speckleWindowSize,
+            speckleRange,
+            mode
+        )));
+        END_WRAP
+    });
 }
 
 void cv_StereoSGBM_close(StereoSGBMPtr self) {
-    self->ptr->reset();
     CVD_FREE(self);
 }
 
@@ -283,6 +281,7 @@ void cv_StereoSGBM_setUniquenessRatio(StereoSGBM self, int uniquenessRatio) {
 // Computes disparity map for the specified stereo pair.
 // virtual void compute (InputArray left, InputArray right, OutputArray disparity)=0
 CvStatus* cv_StereoSGBM_compute(StereoSGBM self, MatIn left, MatIn right, MatOut disparity) {
+    CVD_CHECK(self);
     BEGIN_WRAP(CVDEREF(self))->compute(CVDEREF(left), CVDEREF(right), CVDEREF(disparity));
     END_WRAP
 }

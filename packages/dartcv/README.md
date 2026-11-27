@@ -109,6 +109,9 @@ void main() {
 
 #### Asynchronous
 
+Every API has an `Async` twin that runs the work on a worker thread, so a heavy call does not block
+the isolate that started it (a Flutter UI thread stays responsive):
+
 ```dart
 import 'package:dartcv4/dartcv.dart' as cv;
 import 'dart:async';
@@ -120,6 +123,41 @@ void main() async {
   await cv.imwriteAsync("test_cvtcolor.png", gray);
 }
 ```
+
+The non-`Async` functions stay synchronous: same thread, same call, they just block.
+
+A few properties are worth knowing:
+
+- One worker runs the jobs, first in first out, so calls that were issued in order also complete in
+  order. `cv.setAsyncThreads(n)` raises the count, which only pays off for work that blocks on I/O (a
+  capture, a slow file): OpenCV already fills every core inside a single call, so more workers
+  oversubscribe CPU-bound work.
+- `cv.asyncPending()` and `cv.asyncDrain()` expose the queue, for tests and shutdown.
+- Each `Async` function takes a `Duration? timeout`. A timeout abandons the *wait*, not the work:
+  OpenCV has no cancellation point, so the job runs to completion and still writes the output
+  arguments it was given. It throws an `AsyncTimeoutException`, which tells you exactly that and
+  hands back `completion`, the moment those arguments stop changing:
+
+  ```dart
+  try {
+    await cv.gaussianBlurAsync(src, (31, 31), 0, dst: dst, timeout: const Duration(seconds: 2));
+  } on cv.AsyncTimeoutException catch (e) {
+    await e.completion; // dst is final here
+  }
+  ```
+
+  The job keeps a reference to every handle it was given, so disposing an argument while the call is
+  in flight is safe, and using it *synchronously* meanwhile is refused. If you pass no output
+  argument (`dst` defaults to a new matrix) the abandoned result belongs to nobody, so nothing you
+  hold changes.
+- An error raised inside the job arrives as a failed `Future`, not as a synchronous throw, because the
+  C entry point has already returned by then.
+- Only the `Async` calls are ordered with respect to each other. A synchronous call runs immediately,
+  so using an object that an in-flight `Async` call is working on would be a data race; it is refused
+  with a `CvException` instead ("a synchronous call used an object that an async call is still working
+  on"). Await the `Future` first, or pick one style per object.
+- On the web there are no threads (see `tool/web/README.md`): `Async` still returns a `Future`, but the
+  work runs on the calling thread.
 
 #### Machine learning
 
@@ -271,7 +309,7 @@ Neither option changes anything for projects that do not set them.
 - [ ] documentation
 - [x] modify C wrapper to catch exceptions
 - [x] Native Assets
-- [x] async?
+- [x] async? (real worker thread on native, `*Async` + `Duration? timeout`)
 - [x] more/full test coverage
 - [x] directly include opencv source code, refactor cmakelists.txt
 

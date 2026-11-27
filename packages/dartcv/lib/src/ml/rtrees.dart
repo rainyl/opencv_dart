@@ -32,9 +32,7 @@ class RTrees extends CvStruct<cml.RTrees> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [RTrees.load].
   factory RTrees.create() {
-    final p = calloc<cml.RTrees>();
-    cvRun(() => cml.cv_ml_RTrees_create(p));
-    return RTrees._(p);
+    return RTrees._(cvCreate(calloc<cml.RTrees>(), cml.cv_ml_RTrees_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -56,16 +54,8 @@ class RTrees extends CvStruct<cml.RTrees> {
     ),
   );
 
-  factory RTrees._make(ffi.Pointer<cml.CvStatus> Function(cml.RTreesPtr p) func) {
-    final p = calloc<cml.RTrees>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return RTrees._(p);
-  }
+  factory RTrees._make(ffi.Pointer<cml.CvStatus> Function(cml.RTreesPtr p) func) =>
+      RTrees._(cvCreate(calloc<cml.RTrees>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.RTreesPtr>(cml.addresses.cv_ml_RTrees_close);
 

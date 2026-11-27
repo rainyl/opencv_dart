@@ -35,9 +35,9 @@ class LogisticRegression extends CvStruct<cml.LogisticRegression> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [LogisticRegression.load].
   factory LogisticRegression.create() {
-    final p = calloc<cml.LogisticRegression>();
-    cvRun(() => cml.cv_ml_LogisticRegression_create(p));
-    return LogisticRegression._(p);
+    return LogisticRegression._(
+      cvCreate(calloc<cml.LogisticRegression>(), cml.cv_ml_LogisticRegression_create),
+    );
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -61,16 +61,8 @@ class LogisticRegression extends CvStruct<cml.LogisticRegression> {
     ),
   );
 
-  factory LogisticRegression._make(ffi.Pointer<cml.CvStatus> Function(cml.LogisticRegressionPtr p) func) {
-    final p = calloc<cml.LogisticRegression>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return LogisticRegression._(p);
-  }
+  factory LogisticRegression._make(ffi.Pointer<cml.CvStatus> Function(cml.LogisticRegressionPtr p) func) =>
+      LogisticRegression._(cvCreate(calloc<cml.LogisticRegression>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.LogisticRegressionPtr>(
     cml.addresses.cv_ml_LogisticRegression_close,

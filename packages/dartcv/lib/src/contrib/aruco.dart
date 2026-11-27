@@ -25,15 +25,16 @@ class ArucoDetector extends CvStruct<cvg.ArucoDetector> {
       ArucoDetector._(ptr, attach);
 
   factory ArucoDetector.empty() {
-    final p = calloc<cvg.ArucoDetector>();
-    cvRun(() => ccontrib.cv_aruco_arucoDetector_create(p));
-    return ArucoDetector._(p);
+    return ArucoDetector._(cvCreate(calloc<cvg.ArucoDetector>(), ccontrib.cv_aruco_arucoDetector_create));
   }
 
   factory ArucoDetector.create(ArucoDictionary dictionary, ArucoDetectorParameters parameters) {
-    final p = calloc<cvg.ArucoDetector>();
-    cvRun(() => ccontrib.cv_aruco_arucoDetector_create_1(dictionary.ref, parameters.ref, p));
-    return ArucoDetector.fromPointer(p);
+    return ArucoDetector.fromPointer(
+      cvCreate(
+        calloc<cvg.ArucoDetector>(),
+        (p) => ccontrib.cv_aruco_arucoDetector_create_1(dictionary.ref, parameters.ref, p),
+      ),
+    );
   }
 
   @override
@@ -113,9 +114,9 @@ class ArucoDetectorParameters extends CvStruct<cvg.ArucoDetectorParams> {
       ArucoDetectorParameters._(ptr, attach);
 
   factory ArucoDetectorParameters.empty() {
-    final p = calloc<cvg.ArucoDetectorParams>();
-    cvRun(() => ccontrib.cv_aruco_detectorParameters_create(p));
-    return ArucoDetectorParameters._(p);
+    return ArucoDetectorParameters._(
+      cvCreate(calloc<cvg.ArucoDetectorParams>(), ccontrib.cv_aruco_detectorParameters_create),
+    );
   }
 
   @override

@@ -35,9 +35,7 @@ class AKAZE extends Feature2D<cvg.AKAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d8/d30/classcv_1_1AKAZE.html
   factory AKAZE.empty() {
-    final p = calloc<cvg.AKAZE>();
-    cvRun(() => cfeatures2d.cv_AKAZE_create(p));
-    return AKAZE._(p);
+    return AKAZE._(cvCreate(calloc<cvg.AKAZE>(), cfeatures2d.cv_AKAZE_create));
   }
 
   /// The AKAZE constructor.
@@ -53,21 +51,22 @@ class AKAZE extends Feature2D<cvg.AKAZE> {
     KAZEDiffusivityType diffusivity = KAZEDiffusivityType.DIFF_PM_G2,
     int maxPoints = -1,
   }) {
-    final p = calloc<cvg.AKAZE>();
-    cvRun(
-      () => cfeatures2d.cv_AKAZE_create_1(
-        descriptorType.value,
-        descriptorSize,
-        descriptorChannels,
-        threshold,
-        nOctaves,
-        nOctaveLayers,
-        diffusivity.value,
-        maxPoints,
-        p,
+    return AKAZE._(
+      cvCreate(
+        calloc<cvg.AKAZE>(),
+        (p) => cfeatures2d.cv_AKAZE_create_1(
+          descriptorType.value,
+          descriptorSize,
+          descriptorChannels,
+          threshold,
+          nOctaves,
+          nOctaveLayers,
+          diffusivity.value,
+          maxPoints,
+          p,
+        ),
       ),
     );
-    return AKAZE._(p);
   }
 
   /// Detect keypoints in an image using AKAZE.
@@ -174,9 +173,9 @@ class AgastFeatureDetector extends Feature2D<cvg.AgastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d7/d19/classcv_1_1AgastFeatureDetector.html
   factory AgastFeatureDetector.empty() {
-    final p = calloc<cvg.AgastFeatureDetector>();
-    cvRun(() => cfeatures2d.cv_AgastFeatureDetector_create(p));
-    return AgastFeatureDetector._(p);
+    return AgastFeatureDetector._(
+      cvCreate(calloc<cvg.AgastFeatureDetector>(), cfeatures2d.cv_AgastFeatureDetector_create),
+    );
   }
 
   /// create (int threshold=10, bool nonmaxSuppression=true, AgastFeatureDetector::DetectorType type=AgastFeatureDetector::OAST_9_16)
@@ -187,9 +186,12 @@ class AgastFeatureDetector extends Feature2D<cvg.AgastFeatureDetector> {
     bool nonmaxSuppression = true,
     AgastDetectorType type = AgastDetectorType.OAST_9_16,
   }) {
-    final p = calloc<cvg.AgastFeatureDetector>();
-    cvRun(() => cfeatures2d.cv_AgastFeatureDetector_create_1(threshold, nonmaxSuppression, type.value, p));
-    return AgastFeatureDetector._(p);
+    return AgastFeatureDetector._(
+      cvCreate(
+        calloc<cvg.AgastFeatureDetector>(),
+        (p) => cfeatures2d.cv_AgastFeatureDetector_create_1(threshold, nonmaxSuppression, type.value, p),
+      ),
+    );
   }
 
   /// Detect keypoints in an image using AgastFeatureDetector.
@@ -265,9 +267,7 @@ class BRISK extends Feature2D<cvg.BRISK> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html
   factory BRISK.empty() {
-    final p = calloc<cvg.BRISK>();
-    cvRun(() => cfeatures2d.cv_BRISK_create(p));
-    return BRISK._(p);
+    return BRISK._(cvCreate(calloc<cvg.BRISK>(), cfeatures2d.cv_BRISK_create));
   }
 
   /// The BRISK constructor
@@ -281,9 +281,9 @@ class BRISK extends Feature2D<cvg.BRISK> {
   ///```
   /// https://docs.opencv.org/4.x/de/dbf/classcv_1_1BRISK.html#ad3b513ded80119670e5efa90a31705ac
   factory BRISK.create({int thresh = 30, int octaves = 3, double patternScale = 1.0}) {
-    final p = calloc<cvg.BRISK>();
-    cvRun(() => cfeatures2d.cv_BRISK_create_3(thresh, octaves, patternScale, p));
-    return BRISK._(p);
+    return BRISK._(
+      cvCreate(calloc<cvg.BRISK>(), (p) => cfeatures2d.cv_BRISK_create_3(thresh, octaves, patternScale, p)),
+    );
   }
 
   /// The BRISK constructor for a custom pattern
@@ -307,17 +307,28 @@ class BRISK extends Feature2D<cvg.BRISK> {
     double dMin = 8.2,
     List<int>? indexChange,
   }) {
-    final p = calloc<cvg.BRISK>();
     final radiusList_ = radiusList.f32;
     final numberList_ = numberList.i32;
     final indexChange_ = indexChange?.i32 ?? VecI32();
-    cvRun(
-      () => cfeatures2d.cv_BRISK_create_1(radiusList_.ref, numberList_.ref, dMax, dMin, indexChange_.ref, p),
-    );
-    radiusList_.dispose();
-    numberList_.dispose();
-    indexChange_.dispose();
-    return BRISK._(p);
+    try {
+      return BRISK._(
+        cvCreate(
+          calloc<cvg.BRISK>(),
+          (p) => cfeatures2d.cv_BRISK_create_1(
+            radiusList_.ref,
+            numberList_.ref,
+            dMax,
+            dMin,
+            indexChange_.ref,
+            p,
+          ),
+        ),
+      );
+    } finally {
+      radiusList_.dispose();
+      numberList_.dispose();
+      indexChange_.dispose();
+    }
   }
 
   /// The BRISK constructor for a custom pattern, detection threshold and octaves
@@ -345,26 +356,30 @@ class BRISK extends Feature2D<cvg.BRISK> {
     double dMin = 8.2,
     List<int>? indexChange,
   }) {
-    final p = calloc<cvg.BRISK>();
     final radiusList_ = radiusList.f32;
     final numberList_ = numberList.i32;
     final indexChange_ = indexChange?.i32 ?? VecI32();
-    cvRun(
-      () => cfeatures2d.cv_BRISK_create_2(
-        thresh,
-        octaves,
-        radiusList_.ref,
-        numberList_.ref,
-        dMax,
-        dMin,
-        indexChange_.ref,
-        p,
-      ),
-    );
-    radiusList_.dispose();
-    numberList_.dispose();
-    indexChange_.dispose();
-    return BRISK._(p);
+    try {
+      return BRISK._(
+        cvCreate(
+          calloc<cvg.BRISK>(),
+          (p) => cfeatures2d.cv_BRISK_create_2(
+            thresh,
+            octaves,
+            radiusList_.ref,
+            numberList_.ref,
+            dMax,
+            dMin,
+            indexChange_.ref,
+            p,
+          ),
+        ),
+      );
+    } finally {
+      radiusList_.dispose();
+      numberList_.dispose();
+      indexChange_.dispose();
+    }
   }
 
   /// Detect keypoints in an image using BRISK.
@@ -458,9 +473,9 @@ class FastFeatureDetector extends Feature2D<cvg.FastFeatureDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/df/d74/classcv_1_1FastFeatureDetector.html
   factory FastFeatureDetector.empty() {
-    final p = calloc<cvg.FastFeatureDetector>();
-    cvRun(() => cfeatures2d.cv_FastFeatureDetector_create(p));
-    return FastFeatureDetector._(p);
+    return FastFeatureDetector._(
+      cvCreate(calloc<cvg.FastFeatureDetector>(), cfeatures2d.cv_FastFeatureDetector_create),
+    );
   }
 
   /// returns a new FastFeatureDetector algorithm with parameters
@@ -472,9 +487,12 @@ class FastFeatureDetector extends Feature2D<cvg.FastFeatureDetector> {
     bool nonmaxSuppression = true,
     FastFeatureDetectorType type = FastFeatureDetectorType.TYPE_9_16,
   }) {
-    final p = calloc<cvg.FastFeatureDetector>();
-    cvRun(() => cfeatures2d.cv_FastFeatureDetector_create_1(threshold, nonmaxSuppression, type.value, p));
-    return FastFeatureDetector._(p);
+    return FastFeatureDetector._(
+      cvCreate(
+        calloc<cvg.FastFeatureDetector>(),
+        (p) => cfeatures2d.cv_FastFeatureDetector_create_1(threshold, nonmaxSuppression, type.value, p),
+      ),
+    );
   }
 
   /// Detect keypoints in an image using FastFeatureDetector.
@@ -552,9 +570,7 @@ class GFTTDetector extends Feature2D<cvg.GFTTDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/df/d21/classcv_1_1GFTTDetector.html
   factory GFTTDetector.empty() {
-    final p = calloc<cvg.GFTTDetector>();
-    cvRun(() => cfeatures2d.cv_GFTTDetector_create(p));
-    return GFTTDetector._(p);
+    return GFTTDetector._(cvCreate(calloc<cvg.GFTTDetector>(), cfeatures2d.cv_GFTTDetector_create));
   }
 
   /// ```c++
@@ -569,19 +585,20 @@ class GFTTDetector extends Feature2D<cvg.GFTTDetector> {
     bool useHarrisDetector = false,
     double k = 0.04,
   }) {
-    final p = calloc<cvg.GFTTDetector>();
-    cvRun(
-      () => cfeatures2d.cv_GFTTDetector_create_2(
-        maxFeatures,
-        qualityLevel,
-        minDistance,
-        blockSize,
-        useHarrisDetector,
-        k,
-        p,
+    return GFTTDetector._(
+      cvCreate(
+        calloc<cvg.GFTTDetector>(),
+        (p) => cfeatures2d.cv_GFTTDetector_create_2(
+          maxFeatures,
+          qualityLevel,
+          minDistance,
+          blockSize,
+          useHarrisDetector,
+          k,
+          p,
+        ),
       ),
     );
-    return GFTTDetector._(p);
   }
 
   /// ```c++
@@ -597,20 +614,21 @@ class GFTTDetector extends Feature2D<cvg.GFTTDetector> {
     bool useHarrisDetector = false,
     double k = 0.04,
   }) {
-    final p = calloc<cvg.GFTTDetector>();
-    cvRun(
-      () => cfeatures2d.cv_GFTTDetector_create_1(
-        maxCorners,
-        qualityLevel,
-        minDistance,
-        blockSize,
-        gradiantSize,
-        useHarrisDetector,
-        k,
-        p,
+    return GFTTDetector._(
+      cvCreate(
+        calloc<cvg.GFTTDetector>(),
+        (p) => cfeatures2d.cv_GFTTDetector_create_1(
+          maxCorners,
+          qualityLevel,
+          minDistance,
+          blockSize,
+          gradiantSize,
+          useHarrisDetector,
+          k,
+          p,
+        ),
       ),
     );
-    return GFTTDetector._(p);
   }
 
   /// Detect keypoints in an image using GFTTDetector.
@@ -694,9 +712,7 @@ class KAZE extends Feature2D<cvg.KAZE> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory KAZE.empty() {
-    final p = calloc<cvg.KAZE>();
-    cvRun(() => cfeatures2d.cv_KAZE_create(p));
-    return KAZE._(p);
+    return KAZE._(cvCreate(calloc<cvg.KAZE>(), cfeatures2d.cv_KAZE_create));
   }
 
   //// The KAZE constructor
@@ -723,19 +739,20 @@ class KAZE extends Feature2D<cvg.KAZE> {
     int nOctaveLayers = 4,
     KAZEDiffusivityType diffusivity = KAZEDiffusivityType.DIFF_PM_G2,
   }) {
-    final p = calloc<cvg.KAZE>();
-    cvRun(
-      () => cfeatures2d.cv_KAZE_create_1(
-        extended,
-        upright,
-        threshold,
-        nOctaves,
-        nOctaveLayers,
-        diffusivity.value,
-        p,
+    return KAZE._(
+      cvCreate(
+        calloc<cvg.KAZE>(),
+        (p) => cfeatures2d.cv_KAZE_create_1(
+          extended,
+          upright,
+          threshold,
+          nOctaves,
+          nOctaveLayers,
+          diffusivity.value,
+          p,
+        ),
       ),
     );
-    return KAZE._(p);
   }
 
   /// Detect keypoints in an image using KAZE.
@@ -834,9 +851,7 @@ class MSER extends Feature2D<cvg.MSER> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory MSER.empty() {
-    final p = calloc<cvg.MSER>();
-    cvRun(() => cfeatures2d.cv_MSER_create(p));
-    return MSER._(p);
+    return MSER._(cvCreate(calloc<cvg.MSER>(), cfeatures2d.cv_MSER_create));
   }
 
   /// Full constructor for %MSER detector
@@ -868,22 +883,23 @@ class MSER extends Feature2D<cvg.MSER> {
     double minMargin = 0.003,
     int edgeBlurSize = 5,
   }) {
-    final p = calloc<cvg.MSER>();
-    cvRun(
-      () => cfeatures2d.cv_MSER_create_1(
-        delta,
-        minArea,
-        maxArea,
-        maxVariation,
-        minDiversity,
-        maxEvolution,
-        areaThreshold,
-        minMargin,
-        edgeBlurSize,
-        p,
+    return MSER._(
+      cvCreate(
+        calloc<cvg.MSER>(),
+        (p) => cfeatures2d.cv_MSER_create_1(
+          delta,
+          minArea,
+          maxArea,
+          maxVariation,
+          minDiversity,
+          maxEvolution,
+          areaThreshold,
+          minMargin,
+          edgeBlurSize,
+          p,
+        ),
       ),
     );
-    return MSER._(p);
   }
 
   /// Detect keypoints in an image using MSER.
@@ -976,9 +992,7 @@ class ORB extends Feature2D<cvg.ORB> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory ORB.empty() {
-    final p = calloc<cvg.ORB>();
-    cvRun(() => cfeatures2d.cv_ORB_create(p));
-    return ORB._(p);
+    return ORB._(cvCreate(calloc<cvg.ORB>(), cfeatures2d.cv_ORB_create));
   }
 
   /// returns a new ORB algorithm with parameters
@@ -996,22 +1010,23 @@ class ORB extends Feature2D<cvg.ORB> {
     int patchSize = 31,
     int fastThreshold = 20,
   }) {
-    final p = calloc<cvg.ORB>();
-    cvRun(
-      () => cfeatures2d.cv_ORB_create_1(
-        nFeatures,
-        scaleFactor,
-        nLevels,
-        edgeThreshold,
-        firstLevel,
-        WTA_K,
-        scoreType.value,
-        patchSize,
-        fastThreshold,
-        p,
+    return ORB._(
+      cvCreate(
+        calloc<cvg.ORB>(),
+        (p) => cfeatures2d.cv_ORB_create_1(
+          nFeatures,
+          scaleFactor,
+          nLevels,
+          edgeThreshold,
+          firstLevel,
+          WTA_K,
+          scoreType.value,
+          patchSize,
+          fastThreshold,
+          p,
+        ),
       ),
     );
-    return ORB._(p);
   }
 
   /// Detect keypoints in an image using ORB.
@@ -1120,15 +1135,18 @@ class SimpleBlobDetector extends Feature2D<cvg.SimpleBlobDetector> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d61/classcv_1_1KAZE.html
   factory SimpleBlobDetector.empty() {
-    final p = calloc<cvg.SimpleBlobDetector>();
-    cvRun(() => cfeatures2d.cv_SimpleBlobDetector_create(p));
-    return SimpleBlobDetector._(p);
+    return SimpleBlobDetector._(
+      cvCreate(calloc<cvg.SimpleBlobDetector>(), cfeatures2d.cv_SimpleBlobDetector_create),
+    );
   }
 
   factory SimpleBlobDetector.create(SimpleBlobDetectorParams params) {
-    final p = calloc<cvg.SimpleBlobDetector>();
-    cvRun(() => cfeatures2d.cv_SimpleBlobDetector_create_1(params.ref, p));
-    return SimpleBlobDetector._(p);
+    return SimpleBlobDetector._(
+      cvCreate(
+        calloc<cvg.SimpleBlobDetector>(),
+        (p) => cfeatures2d.cv_SimpleBlobDetector_create_1(params.ref, p),
+      ),
+    );
   }
 
   /// Detect keypoints in an image using SimpleBlobDetector.
@@ -1202,18 +1220,16 @@ class BFMatcher extends CvStruct<cvg.BFMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html
   factory BFMatcher.empty() {
-    final p = calloc<cvg.BFMatcher>();
-    cvRun(() => cfeatures2d.cv_BFMatcher_create(p));
-    return BFMatcher._(p);
+    return BFMatcher._(cvCreate(calloc<cvg.BFMatcher>(), cfeatures2d.cv_BFMatcher_create));
   }
 
   /// Brute-force matcher create method.
   ///
   /// https://docs.opencv.org/4.x/d3/da1/classcv_1_1BFMatcher.html#a02ef4d594b33d091767cbfe442aefb8a
   factory BFMatcher.create({int type = NORM_L2, bool crossCheck = false}) {
-    final p = calloc<cvg.BFMatcher>();
-    cvRun(() => cfeatures2d.cv_BFMatcher_create_1(type, crossCheck, p));
-    return BFMatcher._(p);
+    return BFMatcher._(
+      cvCreate(calloc<cvg.BFMatcher>(), (p) => cfeatures2d.cv_BFMatcher_create_1(type, crossCheck, p)),
+    );
   }
 
   /// Match Finds the best match for each descriptor from a query set.
@@ -1268,9 +1284,9 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/dc/de2/classcv_1_1FlannBasedMatcher.html
   factory FlannBasedMatcher.empty() {
-    final p = calloc<cvg.FlannBasedMatcher>();
-    cvRun(() => cfeatures2d.cv_FlannBasedMatcher_create(p));
-    return FlannBasedMatcher._(p);
+    return FlannBasedMatcher._(
+      cvCreate(calloc<cvg.FlannBasedMatcher>(), cfeatures2d.cv_FlannBasedMatcher_create),
+    );
   }
 
   /// https://docs.opencv.org/4.x/dc/de2/classcv_1_1FlannBasedMatcher.html#ab9114a6471e364ad221f89068ca21382
@@ -1282,9 +1298,12 @@ class FlannBasedMatcher extends CvStruct<cvg.FlannBasedMatcher> {
     indexParams ??= FlannKDTreeIndexParams();
     searchParams ??= FlannSearchParams();
 
-    final p = calloc<cvg.FlannBasedMatcher>();
-    cvRun(() => cfeatures2d.cv_FlannBasedMatcher_create_1(p, indexParams!.ref, searchParams!.ref));
-    return FlannBasedMatcher._(p);
+    return FlannBasedMatcher._(
+      cvCreate(
+        calloc<cvg.FlannBasedMatcher>(),
+        (p) => cfeatures2d.cv_FlannBasedMatcher_create_1(p, indexParams!.ref, searchParams!.ref),
+      ),
+    );
   }
 
   /// KnnMatch Finds the k best matches for each descriptor from a query set.
@@ -1332,9 +1351,7 @@ class SIFT extends Feature2D<cvg.SIFT> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/d7/d60/classcv_1_1SIFT.html
   factory SIFT.empty() {
-    final p = calloc<cvg.SIFT>();
-    cvRun(() => cfeatures2d.cv_SIFT_create(p));
-    return SIFT._(p);
+    return SIFT._(cvCreate(calloc<cvg.SIFT>(), cfeatures2d.cv_SIFT_create));
   }
 
   /// Create SIFT with specified descriptorType.
@@ -1380,30 +1397,31 @@ class SIFT extends Feature2D<cvg.SIFT> {
     int? descriptorType,
     bool enable_precise_upscale = false,
   }) {
-    final p = calloc<cvg.SIFT>();
-    cvRun(
-      () => descriptorType == null
-          ? cfeatures2d.cv_SIFT_create_2(
-              nfeatures,
-              nOctaveLayers,
-              contrastThreshold,
-              edgeThreshold,
-              sigma,
-              enable_precise_upscale,
-              p,
-            )
-          : cfeatures2d.cv_SIFT_create_1(
-              nfeatures,
-              nOctaveLayers,
-              contrastThreshold,
-              edgeThreshold,
-              sigma,
-              descriptorType,
-              enable_precise_upscale,
-              p,
-            ),
+    return SIFT._(
+      cvCreate(
+        calloc<cvg.SIFT>(),
+        (p) => descriptorType == null
+            ? cfeatures2d.cv_SIFT_create_2(
+                nfeatures,
+                nOctaveLayers,
+                contrastThreshold,
+                edgeThreshold,
+                sigma,
+                enable_precise_upscale,
+                p,
+              )
+            : cfeatures2d.cv_SIFT_create_1(
+                nfeatures,
+                nOctaveLayers,
+                contrastThreshold,
+                edgeThreshold,
+                sigma,
+                descriptorType,
+                enable_precise_upscale,
+                p,
+              ),
+      ),
     );
-    return SIFT._(p);
   }
 
   /// Detect keypoints in an image using SIFT.

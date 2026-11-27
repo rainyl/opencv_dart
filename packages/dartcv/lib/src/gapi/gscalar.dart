@@ -18,26 +18,26 @@ import '../package_ffi.dart';
 class GScalar extends CvStruct<cvg.GScalar> {
   GScalar.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast());
+      // `detach: this` is what `freeNative` detaches: without it `dispose()` frees the native
+      // object and the finalizer frees it a second time when the wrapper is collected.
+      finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   factory GScalar.empty() {
-    final p = calloc<cvg.GScalar>();
-    cvRun(() => cvg.gapi_GScalar_New_Empty(p));
-    return GScalar.fromPointer(p);
+    return GScalar.fromPointer(cvCreate(calloc<cvg.GScalar>(), cvg.gapi_GScalar_New_Empty));
   }
 
   factory GScalar.fromScalar(Scalar s) {
-    final p = calloc<cvg.GScalar>();
-    cvRun(() => cvg.gapi_GScalar_New_FromScalar(s.ref, p));
-    return GScalar.fromPointer(p);
+    return GScalar.fromPointer(
+      cvCreate(calloc<cvg.GScalar>(), (p) => cvg.gapi_GScalar_New_FromScalar(s.ref, p)),
+    );
   }
 
   factory GScalar(double value) {
-    final p = calloc<cvg.GScalar>();
-    cvRun(() => cvg.gapi_GScalar_New_FromDouble(value, p));
-    return GScalar.fromPointer(p);
+    return GScalar.fromPointer(
+      cvCreate(calloc<cvg.GScalar>(), (p) => cvg.gapi_GScalar_New_FromDouble(value, p)),
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.GScalarPtr>(cvg.addresses.gapi_GScalar_Close);

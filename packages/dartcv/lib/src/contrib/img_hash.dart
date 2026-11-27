@@ -29,10 +29,11 @@ class PHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo) {
-    final p = calloc<ffi.Double>();
-    cvRun(() => ccontrib.cv_img_hash_pHash_compare(hashOne.ref, hashTwo.ref, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccontrib.cv_img_hash_pHash_compare(hashOne.ref, hashTwo.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -48,26 +49,28 @@ class PHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_pHash_compare(hashOne.ref, hashTwo.ref, p, callback),
       (c) {
         final rval = p.value;
-        calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
+      release: () => calloc.free(p),
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_pHash_compute(inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -80,10 +83,11 @@ class AverageHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo) {
-    final p = calloc<ffi.Double>();
-    cvRun(() => ccontrib.cv_img_hash_averageHash_compare(hashOne.ref, hashTwo.ref, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccontrib.cv_img_hash_averageHash_compare(hashOne.ref, hashTwo.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -99,26 +103,28 @@ class AverageHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_averageHash_compare(hashOne.ref, hashTwo.ref, p, callback),
       (c) {
         final rval = p.value;
-        calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
+      release: () => calloc.free(p),
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_averageHash_compute(inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -148,9 +154,13 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   factory BlockMeanHash({int mode = BLOCK_MEAN_HASH_MODE_0}) {
-    final p = calloc<cvg.BlockMeanHash>();
-    cvRun(() => ccontrib.cv_img_hash_BlockMeanHash_create(mode, p, ffi.nullptr));
-    return BlockMeanHash._(p, mode);
+    return BlockMeanHash._(
+      cvCreate(
+        calloc<cvg.BlockMeanHash>(),
+        (p) => ccontrib.cv_img_hash_BlockMeanHash_create(mode, p, ffi.nullptr),
+      ),
+      mode,
+    );
   }
 
   int _mode;
@@ -166,10 +176,11 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo) {
-    final p = calloc<ffi.Double>();
-    cvRun(() => ccontrib.cv_img_hash_BlockMeanHash_compare(ref, hashOne.ref, hashTwo.ref, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccontrib.cv_img_hash_BlockMeanHash_compare(ref, hashOne.ref, hashTwo.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -192,26 +203,28 @@ class BlockMeanHash extends CvStruct<cvg.BlockMeanHash> implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_BlockMeanHash_compare(ref, hashOne.ref, hashTwo.ref, p, callback),
       (c) {
         final rval = p.value;
-        calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
+      release: () => calloc.free(p),
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_BlockMeanHash_compute(ref, inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 
@@ -237,10 +250,11 @@ class ColorMomentHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo) {
-    final p = calloc<ffi.Double>();
-    cvRun(() => ccontrib.cv_img_hash_colorMomentHash_compare(hashOne.ref, hashTwo.ref, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccontrib.cv_img_hash_colorMomentHash_compare(hashOne.ref, hashTwo.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -256,26 +270,28 @@ class ColorMomentHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_colorMomentHash_compare(hashOne.ref, hashTwo.ref, p, callback),
       (c) {
         final rval = p.value;
-        calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
+      release: () => calloc.free(p),
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_colorMomentHash_compute(inputArr.ref, outputArr!.ref, callback),
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -293,9 +309,9 @@ class MarrHildrethHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo) {
-    final p = calloc<ffi.Double>();
-    cvRun(
-      () => ccontrib.cv_img_hash_marrHildrethHash_compare(
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccontrib.cv_img_hash_marrHildrethHash_compare(
         hashOne.ref,
         hashTwo.ref,
         alpha,
@@ -303,9 +319,8 @@ class MarrHildrethHash implements ImgHashBase {
         p,
         ffi.nullptr,
       ),
+      (p) => p.value,
     );
-    final rval = p.value;
-    calloc.free(p);
     return rval;
   }
 
@@ -329,21 +344,28 @@ class MarrHildrethHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
-      (callback) =>
-          ccontrib.cv_img_hash_marrHildrethHash_compare(hashOne.ref, hashTwo.ref, alpha, scale, p, callback),
+      (callback) => ccontrib.cv_img_hash_marrHildrethHash_compare(
+        hashOne.ref,
+        hashTwo.ref,
+        alpha,
+        scale,
+        p,
+        callback,
+      ),
       (c) {
         final rval = p.value;
-        calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
+      release: () => calloc.free(p),
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) =>
@@ -351,6 +373,7 @@ class MarrHildrethHash implements ImgHashBase {
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }
@@ -368,9 +391,9 @@ class RadialVarianceHash implements ImgHashBase {
   /// https://docs.opencv.org/master/de/d29/classcv_1_1img__hash_1_1ImgHashBase.html#a444a3e9ec792cf029385809393f84ad5
   @override
   double compare(InputArray hashOne, InputArray hashTwo) {
-    final p = calloc<ffi.Double>();
-    cvRun(
-      () => ccontrib.cv_img_hash_radialVarianceHash_compare(
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccontrib.cv_img_hash_radialVarianceHash_compare(
         hashOne.ref,
         hashTwo.ref,
         sigma,
@@ -378,9 +401,8 @@ class RadialVarianceHash implements ImgHashBase {
         p,
         ffi.nullptr,
       ),
+      (p) => p.value,
     );
-    final rval = p.value;
-    calloc.free(p);
     return rval;
   }
 
@@ -404,7 +426,7 @@ class RadialVarianceHash implements ImgHashBase {
   }
 
   @override
-  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo) async {
+  Future<double> compareAsync(InputArray hashOne, InputArray hashTwo, {Duration? timeout}) async {
     final p = calloc<ffi.Double>();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_radialVarianceHash_compare(
@@ -417,14 +439,15 @@ class RadialVarianceHash implements ImgHashBase {
       ),
       (c) {
         final rval = p.value;
-        calloc.free(p);
         return c.complete(rval);
       },
+      timeout: timeout,
+      release: () => calloc.free(p),
     );
   }
 
   @override
-  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr]) async {
+  Future<Mat> computeAsync(InputArray inputArr, [OutputArray? outputArr, Duration? timeout]) async {
     outputArr ??= Mat.empty();
     return cvRunAsync0(
       (callback) => ccontrib.cv_img_hash_radialVarianceHash_compute(
@@ -437,6 +460,7 @@ class RadialVarianceHash implements ImgHashBase {
       (c) {
         return c.complete(outputArr);
       },
+      timeout: timeout,
     );
   }
 }

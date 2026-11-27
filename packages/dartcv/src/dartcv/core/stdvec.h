@@ -13,52 +13,51 @@
 #ifdef __cplusplus
 extern "C" {
 
-#define CVD_STD_VEC_FUNC_IMPL(TYPE, ELEM)                                  \
-    CVD_STD_VEC_FUNC_IMPL_COMMON(TYPE);                                    \
-    TYPE* std_##TYPE##_new(size_t length) {                                \
-        return new TYPE{new std::vector<ELEM>(length)};                    \
-    }                                                                      \
-    TYPE* std_##TYPE##_new_1(size_t length, ELEM val) {                    \
-        return new TYPE{new std::vector<ELEM>(length, val)};               \
-    }                                                                      \
-    TYPE* std_##TYPE##_new_2(size_t length, ELEM* val_ptr) {               \
-        return new TYPE{new std::vector<ELEM>(val_ptr, val_ptr + length)}; \
-    }                                                                      \
-    void std_##TYPE##_push_back(TYPE* self, ELEM val) {                    \
-        self->ptr->push_back(val);                                         \
-    }                                                                      \
-    ELEM std_##TYPE##_get(TYPE* self, size_t index) {                      \
-        return self->ptr->at(index);                                       \
-    }                                                                      \
-    void std_##TYPE##_set(TYPE* self, size_t index, ELEM val) {            \
-        self->ptr->at(index) = val;                                        \
-    }                                                                      \
-    ELEM* std_##TYPE##_data(TYPE* self) {                                  \
-        return self->ptr->data();                                          \
+#define CVD_STD_VEC_FUNC_IMPL(TYPE, ELEM)                                        \
+    CVD_STD_VEC_FUNC_IMPL_COMMON(TYPE);                                          \
+    TYPE* std_##TYPE##_new(size_t length) {                                      \
+        return new TYPE{CVD_MAKE(std::vector<ELEM>, length)};                    \
+    }                                                                            \
+    TYPE* std_##TYPE##_new_1(size_t length, ELEM val) {                          \
+        return new TYPE{CVD_MAKE(std::vector<ELEM>, length, val)};               \
+    }                                                                            \
+    TYPE* std_##TYPE##_new_2(size_t length, ELEM* val_ptr) {                     \
+        return new TYPE{CVD_MAKE(std::vector<ELEM>, val_ptr, val_ptr + length)}; \
+    }                                                                            \
+    void std_##TYPE##_push_back(TYPE* self, ELEM val) {                          \
+        (*self->ptr)->push_back(val);                                            \
+    }                                                                            \
+    ELEM std_##TYPE##_get(TYPE* self, size_t index) {                            \
+        return (*self->ptr)->at(index);                                          \
+    }                                                                            \
+    void std_##TYPE##_set(TYPE* self, size_t index, ELEM val) {                  \
+        (*self->ptr)->at(index) = val;                                           \
+    }                                                                            \
+    ELEM* std_##TYPE##_data(TYPE* self) {                                        \
+        return (*self->ptr)->data();                                             \
     }
-
-#define CVD_STD_VEC_FUNC_IMPL_COMMON(TYPE)                                           \
-    void std_##TYPE##_free(TYPE##Ptr self) {                                         \
-        delete self->ptr;                                                            \
-        delete self;                                                                 \
-    }                                                                                \
-    size_t std_##TYPE##_length(TYPE* self) {                                         \
-        return self->ptr->size();                                                    \
-    }                                                                                \
-    void std_##TYPE##_resize(TYPE* self, size_t new_len) {                           \
-        self->ptr->resize(new_len);                                                  \
-    }                                                                                \
-    void std_##TYPE##_reserve(TYPE* self, size_t new_len) {                          \
-        self->ptr->reserve(new_len);                                                 \
-    }                                                                                \
-    void std_##TYPE##_clear(TYPE* self) {                                            \
-        self->ptr->clear();                                                          \
-    }                                                                                \
-    void std_##TYPE##_shrink_to_fit(TYPE* self) {                                    \
-        self->ptr->shrink_to_fit();                                                  \
-    }                                                                                \
-    void std_##TYPE##_extend(TYPE* self, TYPE* other) {                              \
-        self->ptr->insert(self->ptr->end(), other->ptr->begin(), other->ptr->end()); \
+#define CVD_STD_VEC_FUNC_IMPL_COMMON(TYPE)                                                       \
+    void std_##TYPE##_free(TYPE##Ptr self) {                                                     \
+        delete self->ptr;                                                                        \
+        delete self;                                                                             \
+    }                                                                                            \
+    size_t std_##TYPE##_length(TYPE* self) {                                                     \
+        return (*self->ptr)->size();                                                             \
+    }                                                                                            \
+    void std_##TYPE##_resize(TYPE* self, size_t new_len) {                                       \
+        (*self->ptr)->resize(new_len);                                                           \
+    }                                                                                            \
+    void std_##TYPE##_reserve(TYPE* self, size_t new_len) {                                      \
+        (*self->ptr)->reserve(new_len);                                                          \
+    }                                                                                            \
+    void std_##TYPE##_clear(TYPE* self) {                                                        \
+        (*self->ptr)->clear();                                                                   \
+    }                                                                                            \
+    void std_##TYPE##_shrink_to_fit(TYPE* self) {                                                \
+        (*self->ptr)->shrink_to_fit();                                                           \
+    }                                                                                            \
+    void std_##TYPE##_extend(TYPE* self, TYPE* other) {                                          \
+        (*self->ptr)->insert((*self->ptr)->end(), (*other->ptr)->begin(), (*other->ptr)->end()); \
     }
 #endif
 

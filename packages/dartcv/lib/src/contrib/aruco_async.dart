@@ -14,7 +14,10 @@ import 'aruco.dart';
 import 'aruco_dict.dart';
 
 extension ArucoDetectorAsync on ArucoDetector {
-  Future<(VecVecPoint2f, VecI32, VecVecPoint2f)> detectMarkersAsync(InputArray image) async {
+  Future<(VecVecPoint2f, VecI32, VecVecPoint2f)> detectMarkersAsync(
+    InputArray image, {
+    Duration? timeout,
+  }) async {
     final corners = VecVecPoint2f();
     final rejected = VecVecPoint2f();
     final ids = VecI32();
@@ -30,6 +33,7 @@ extension ArucoDetectorAsync on ArucoDetector {
       (c) {
         return c.complete((corners, ids, rejected));
       },
+      timeout: timeout,
     );
   }
 }
@@ -38,8 +42,9 @@ Future<void> arucoDrawDetectedMarkersAsync(
   Mat img,
   VecVecPoint2f markerCorners,
   VecI32 markerIds,
-  Scalar borderColor,
-) async {
+  Scalar borderColor, {
+  Duration? timeout,
+}) {
   return cvRunAsync0(
     (callback) => ccontrib.cv_aruco_drawDetectedMarkers(
       img.ref,
@@ -49,6 +54,7 @@ Future<void> arucoDrawDetectedMarkersAsync(
       callback,
     ),
     (c) => c.complete(),
+    timeout: timeout,
   );
 }
 
@@ -58,6 +64,7 @@ Future<Mat> arucoGenerateImageMarkerAsync(
   int sidePixels,
   int borderBits, [
   Mat? outImg,
+  Duration? timeout,
 ]) async {
   outImg ??= Mat.empty();
   return cvRunAsync0(
@@ -72,5 +79,6 @@ Future<Mat> arucoGenerateImageMarkerAsync(
     (c) {
       c.complete(outImg);
     },
+    timeout: timeout,
   );
 }
