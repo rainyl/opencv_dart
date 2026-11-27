@@ -43,14 +43,14 @@ int cv_StereoBM_getPreFilterType(StereoBM self) {
 // virtual Rect  getROI1 () const =0
 CvRect* cv_StereoBM_getROI1(StereoBM self) {
     auto rect = (CVDEREF(self))->getROI1();
-    return new CvRect{rect.x, rect.y, rect.width, rect.height};
+    return cvd::alloc_pod(CvRect{rect.x, rect.y, rect.width, rect.height});
 }
 
 // Gets the current Region of Interest (ROI) for the right image.
 // virtual Rect  getROI2 () const =0
 CvRect* cv_StereoBM_getROI2(StereoBM self) {
     auto rect = (CVDEREF(self))->getROI2();
-    return new CvRect{rect.x, rect.y, rect.width, rect.height};
+    return cvd::alloc_pod(CvRect{rect.x, rect.y, rect.width, rect.height});
 }
 
 // Gets the current size of the smaller block used for texture check.

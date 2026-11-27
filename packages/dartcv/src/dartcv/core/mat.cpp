@@ -668,93 +668,93 @@ void cv_Mat_set_f64_3(Mat self, int i0, int i1, int i2, double_t val) {
 
 Vec2b* cv_Mat_get_Vec2b(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec2b>(i0, i1);
-    return new Vec2b{v.val[0], v.val[1]};
+    return cvd::alloc_pod(Vec2b{v.val[0], v.val[1]});
 }
 Vec3b* cv_Mat_get_Vec3b(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec3b>(i0, i1);
-    return new Vec3b{v.val[0], v.val[1], v.val[2]};
+    return cvd::alloc_pod(Vec3b{v.val[0], v.val[1], v.val[2]});
 }
 Vec4b* cv_Mat_get_Vec4b(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec4b>(i0, i1);
-    return new Vec4b{v.val[0], v.val[1], v.val[2], v.val[3]};
+    return cvd::alloc_pod(Vec4b{v.val[0], v.val[1], v.val[2], v.val[3]});
 }
 Vec2s* cv_Mat_get_Vec2s(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec2s>(i0, i1);
-    return new Vec2s{v.val[0], v.val[1]};
+    return cvd::alloc_pod(Vec2s{v.val[0], v.val[1]});
 }
 Vec3s* cv_Mat_get_Vec3s(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec3s>(i0, i1);
-    return new Vec3s{v.val[0], v.val[1], v.val[2]};
+    return cvd::alloc_pod(Vec3s{v.val[0], v.val[1], v.val[2]});
 }
 Vec4s* cv_Mat_get_Vec4s(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec4s>(i0, i1);
-    return new Vec4s{v.val[0], v.val[1], v.val[2], v.val[3]};
+    return cvd::alloc_pod(Vec4s{v.val[0], v.val[1], v.val[2], v.val[3]});
 }
 Vec2w* cv_Mat_get_Vec2w(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec2w>(i0, i1);
-    return new Vec2w{v.val[0], v.val[1]};
+    return cvd::alloc_pod(Vec2w{v.val[0], v.val[1]});
 }
 Vec3w* cv_Mat_get_Vec3w(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec3w>(i0, i1);
-    return new Vec3w{v.val[0], v.val[1], v.val[2]};
+    return cvd::alloc_pod(Vec3w{v.val[0], v.val[1], v.val[2]});
 }
 Vec4w* cv_Mat_get_Vec4w(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec4w>(i0, i1);
-    return new Vec4w{v.val[0], v.val[1], v.val[2], v.val[3]};
+    return cvd::alloc_pod(Vec4w{v.val[0], v.val[1], v.val[2], v.val[3]});
 }
 Vec2i* cv_Mat_get_Vec2i(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec2i>(i0, i1);
-    return new Vec2i{v.val[0], v.val[1]};
+    return cvd::alloc_pod(Vec2i{v.val[0], v.val[1]});
 }
 Vec3i* cv_Mat_get_Vec3i(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec3i>(i0, i1);
-    return new Vec3i{v.val[0], v.val[1], v.val[2]};
+    return cvd::alloc_pod(Vec3i{v.val[0], v.val[1], v.val[2]});
 }
 Vec4i* cv_Mat_get_Vec4i(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec4i>(i0, i1);
-    return new Vec4i{v.val[0], v.val[1], v.val[2], v.val[3]};
+    return cvd::alloc_pod(Vec4i{v.val[0], v.val[1], v.val[2], v.val[3]});
 }
 Vec6i* cv_Mat_get_Vec6i(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec6i>(i0, i1);
-    return new Vec6i{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
+    return cvd::alloc_pod(Vec6i{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]});
 }
 Vec8i* cv_Mat_get_Vec8i(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec8i>(i0, i1);
-    return new Vec8i{
+    return cvd::alloc_pod(Vec8i{
         v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5], v.val[6], v.val[7]
-    };
+    });
 }
 Vec2f* cv_Mat_get_Vec2f(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec2f>(i0, i1);
-    return new Vec2f{v.val[0], v.val[1]};
+    return cvd::alloc_pod(Vec2f{v.val[0], v.val[1]});
 }
 Vec3f* cv_Mat_get_Vec3f(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec3f>(i0, i1);
-    return new Vec3f{v.val[0], v.val[1], v.val[2]};
+    return cvd::alloc_pod(Vec3f{v.val[0], v.val[1], v.val[2]});
 }
 Vec4f* cv_Mat_get_Vec4f(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec4f>(i0, i1);
-    return new Vec4f{v.val[0], v.val[1], v.val[2], v.val[3]};
+    return cvd::alloc_pod(Vec4f{v.val[0], v.val[1], v.val[2], v.val[3]});
 }
 Vec6f* cv_Mat_get_Vec6f(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec6f>(i0, i1);
-    return new Vec6f{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
+    return cvd::alloc_pod(Vec6f{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]});
 }
 Vec2d* cv_Mat_get_Vec2d(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec2d>(i0, i1);
-    return new Vec2d{v.val[0], v.val[1]};
+    return cvd::alloc_pod(Vec2d{v.val[0], v.val[1]});
 }
 Vec3d* cv_Mat_get_Vec3d(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec3d>(i0, i1);
-    return new Vec3d{v.val[0], v.val[1], v.val[2]};
+    return cvd::alloc_pod(Vec3d{v.val[0], v.val[1], v.val[2]});
 }
 Vec4d* cv_Mat_get_Vec4d(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec4d>(i0, i1);
-    return new Vec4d{v.val[0], v.val[1], v.val[2], v.val[3]};
+    return cvd::alloc_pod(Vec4d{v.val[0], v.val[1], v.val[2], v.val[3]});
 }
 Vec6d* cv_Mat_get_Vec6d(Mat self, int i0, int i1) {
     auto v = (*self.ptr)->at<cv::Vec6d>(i0, i1);
-    return new Vec6d{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]};
+    return cvd::alloc_pod(Vec6d{v.val[0], v.val[1], v.val[2], v.val[3], v.val[4], v.val[5]});
 }
 
 void cv_Mat_set_Vec2b(Mat self, int i0, int i1, Vec2b val) {

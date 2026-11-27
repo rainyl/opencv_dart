@@ -1805,7 +1805,7 @@ void cv_CLAHE_setClipLimit(CLAHE self, double clipLimit) {
 
 CvSize* cv_CLAHE_getTilesGridSize(CLAHE self) {
     cv::Size sz = (CVDEREF(self))->getTilesGridSize();
-    return new CvSize{sz.width, sz.height};
+    return cvd::alloc_pod(CvSize{sz.width, sz.height});
 }
 
 void cv_CLAHE_setTilesGridSize(CLAHE self, CvSize size) {

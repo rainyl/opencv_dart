@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Rainyl. All rights reserved. Use of this source code is governed by a
+// Copyright (c) 2026, Rainyl. All rights reserved. Use of this source code is governed by a
 // Apache 2.0 license that can be found in the LICENSE file.
 
 // Cross-cutting async semantics: the `*Async` APIs must not run on the caller's thread, must report
@@ -36,15 +36,16 @@ void main() async {
   cv.Mat small() => cv.Mat.fromScalar(64, 64, cv.MatType.CV_8UC1, cv.Scalar.all(7));
 
   test('the call returns immediately and the event loop keeps running', () async {
-    final src = source();
+    final src = cv.Mat.zeros(2400, 2400, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
-    await cv.gaussianBlurAsync(src, (5, 5), 0, dst: dst); // warm up
+    await cv.gaussianBlurAsync(src, (11, 11), 0, dst: dst); // warm up
 
     var ticks = 0;
     final timer = Timer.periodic(const Duration(milliseconds: 1), (_) => ticks++);
     final watch = Stopwatch()..start();
-    final pending = cv.gaussianBlurAsync(src, (31, 31), 0, dst: dst);
+    final pending = cv.gaussianBlurAsync(src, (51, 51), 0, dst: dst);
     final callCost = watch.elapsed;
+    final pendingWhileRunning = cv.asyncPending();
     await pending;
     timer.cancel();
 
@@ -55,6 +56,7 @@ void main() async {
           'the work ran on the caller thread (${callCost.inMilliseconds} ms before the Future '
           'was even returned)',
     );
+    expect(pendingWhileRunning, 1, reason: 'the job was not handed to the pool');
     expect(ticks, greaterThan(0), reason: 'the event loop was blocked for the whole computation');
     await waitUntilIdle();
     expect(cv.asyncPending(), 0);

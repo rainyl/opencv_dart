@@ -17,6 +17,7 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cstdlib>
 #include <cstdint>
 #include <memory>
 #include <mutex>
@@ -96,6 +97,36 @@ void set(H* holder, T* raw) {
 template <typename T, typename... Args>
 std::shared_ptr<T>* make(Args&&... args) {
     return adopt<T>(new T(std::forward<Args>(args)...));
+}
+
+/// Allocator contract: a wrapper struct is allocated by whoever hands it out - Dart's `calloc` for
+/// every `X()` constructor and out-parameter, [alloc_handle]/[alloc_pod] for the few C functions that
+/// return one - and is always released with `free`. Only the holder (`std::shared_ptr<T>*`) is a
+/// `new`/`delete`, so the two sides never disagree about the allocator the way `delete` on a
+/// `calloc`'d struct did.
+template <typename H, typename T>
+H* alloc_handle(T* raw) {
+    auto* handle = static_cast<H*>(std::calloc(1, sizeof(H)));
+    if (handle == nullptr) {
+        delete raw;
+        throw std::bad_alloc();
+    }
+    try {
+        handle->ptr = adopt(raw);
+    } catch (...) {
+        std::free(handle);
+        throw;
+    }
+    return handle;
+}
+
+/// Same for the plain structs Dart frees with `calloc.nativeFree` (`CvPoint`, `Vec2b`, ...).
+template <typename T>
+T* alloc_pod(T value) {
+    auto* pod = static_cast<T*>(std::calloc(1, sizeof(T)));
+    if (pod == nullptr) throw std::bad_alloc();
+    *pod = value;
+    return pod;
 }
 
 }  // namespace cvd

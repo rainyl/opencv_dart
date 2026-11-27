@@ -26,6 +26,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <deque>
 #include <functional>
@@ -402,7 +403,9 @@ void release(H* value) {
     auto* self = value;
     auto deleter = [self]() {
         delete self->ptr;
-        delete self;
+        // The struct comes from Dart's `calloc` (or `cvd::alloc_handle`), never from `new`: freeing
+        // it with `delete` was an allocator mismatch.
+        std::free(self);
     };
     if (detail::holds().busy_jobs.load(std::memory_order_acquire) > 0 &&
         detail::holder_in_use(static_cast<void*>(value->ptr))) {

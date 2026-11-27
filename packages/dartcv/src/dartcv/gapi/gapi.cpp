@@ -21,11 +21,7 @@ CvStatus *gapi_GMat_New_FromMat(Mat mat, GMat *rval)
   END_WRAP
 }
 
-void gapi_GMat_Close(GMatPtr mat)
-{
-  delete mat->ptr;
-  mat->ptr = nullptr;
-}
+void gapi_GMat_Close(GMatPtr mat) { CVD_FREE(mat); }
 
 CvStatus *gapi_GScalar_New_Empty(GScalar *rval)
 {
@@ -45,11 +41,7 @@ CvStatus *gapi_GScalar_New_FromDouble(double v0, GScalar *rval)
   CVD_SET(rval, new cv::GScalar(cv::Scalar(v0)));
   END_WRAP
 }
-void gapi_GScalar_Close(GScalarPtr scalar)
-{
-  delete scalar->ptr;
-  scalar->ptr = nullptr;
-}
+void gapi_GScalar_Close(GScalarPtr scalar) { CVD_FREE(scalar); }
 
 CvStatus *gapi_GComputation_New(GMat in, GMat out, GComputation *rval)
 {
@@ -91,7 +83,7 @@ CvStatus *gapi_GComputation_apply(GComputation self, Mat in,
   BEGIN_WRAP
   cv::Mat _out;
   (CVDEREF(self)).apply(CVDEREF(in), _out);
-  callback(new Mat{CVD_MAKE(cv::Mat, _out)});
+  callback(cvd::alloc_handle<Mat>(new cv::Mat(_out)));
   END_WRAP
 }
 

@@ -101,15 +101,17 @@ Mat std_VecMat_get(VecMat* self, size_t index) {
     return Mat{CVD_MAKE(cv::Mat, (*self->ptr)->at(index))};
 }
 Mat* std_VecMat_get_p(VecMat* self, int index) {
-    return new Mat{CVD_MAKE(cv::Mat, (*self->ptr)->at(index))};
+    return cvd::alloc_handle<Mat>(new cv::Mat((*self->ptr)->at(index)));
 }
 void std_VecMat_set(VecMat* self, size_t index, Mat val) {
     (*self->ptr)->at(index) = CVDEREF(val);
 }
 Mat* std_VecMat_data(VecMat* self) {
     const auto pdata = (*self->ptr)->data();
-    Mat* ptr = new Mat[(*self->ptr)->size()];
-    for (int i = 0; i < (*self->ptr)->size(); ++i) {
+    const auto length = (*self->ptr)->size();
+    // calloc, like every other struct the Dart side frees: `delete[]` and `free` do not mix.
+    auto* ptr = static_cast<Mat*>(std::calloc(length, sizeof(Mat)));
+    for (size_t i = 0; i < length; ++i) {
         ptr[i] = Mat{CVD_MAKE(cv::Mat, pdata[i])};
     }
     return ptr;
@@ -140,7 +142,7 @@ CvPoint std_VecPoint_get(VecPoint* self, size_t index) {
     return {p.x, p.y};
 }
 CvPoint* std_VecPoint_get_p(VecPoint* self, int index) {
-    return new CvPoint{(*self->ptr)->at(index).x, (*self->ptr)->at(index).y};
+    return cvd::alloc_pod(CvPoint{(*self->ptr)->at(index).x, (*self->ptr)->at(index).y});
 }
 
 void std_VecPoint_set(VecPoint* self, size_t index, CvPoint val) {
@@ -180,7 +182,7 @@ CvPoint2f std_VecPoint2f_get(VecPoint2f* self, size_t index) {
     return {p.x, p.y};
 }
 CvPoint2f* std_VecPoint2f_get_p(VecPoint2f* self, int index) {
-    return new CvPoint2f{(*self->ptr)->at(index).x, (*self->ptr)->at(index).y};
+    return cvd::alloc_pod(CvPoint2f{(*self->ptr)->at(index).x, (*self->ptr)->at(index).y});
 }
 
 void std_VecPoint2f_set(VecPoint2f* self, size_t index, CvPoint2f val) {
@@ -220,7 +222,7 @@ CvPoint3f std_VecPoint3f_get(VecPoint3f* self, size_t index) {
     return {p.x, p.y, p.z};
 }
 CvPoint3f* std_VecPoint3f_get_p(VecPoint3f* self, int index) {
-    return new CvPoint3f{(*self->ptr)->at(index).x, (*self->ptr)->at(index).y, (*self->ptr)->at(index).z};
+    return cvd::alloc_pod(CvPoint3f{(*self->ptr)->at(index).x, (*self->ptr)->at(index).y, (*self->ptr)->at(index).z});
 }
 
 void std_VecPoint3f_set(VecPoint3f* self, size_t index, CvPoint3f val) {
@@ -262,7 +264,7 @@ CvPoint3i std_VecPoint3i_get(VecPoint3i* self, size_t index) {
 }
 CvPoint3i* std_VecPoint3i_get_p(VecPoint3i* self, int index) {
     auto p = (*self->ptr)->at(index);
-    return new CvPoint3i{p.x, p.y, p.z};
+    return cvd::alloc_pod(CvPoint3i{p.x, p.y, p.z});
 }
 
 void std_VecPoint3i_set(VecPoint3i* self, size_t index, CvPoint3i val) {
@@ -303,7 +305,7 @@ CvRect std_VecRect_get(VecRect* self, size_t index) {
 }
 CvRect* std_VecRect_get_p(VecRect* self, int index) {
     auto val = (*self->ptr)->at(index);
-    return new CvRect{val.x, val.y, val.width, val.height};
+    return cvd::alloc_pod(CvRect{val.x, val.y, val.width, val.height});
 }
 
 void std_VecRect_set(VecRect* self, size_t index, CvRect val) {
@@ -344,7 +346,7 @@ CvRect2f std_VecRect2f_get(VecRect2f* self, size_t index) {
 }
 CvRect2f* std_VecRect2f_get_p(VecRect2f* self, int index) {
     auto r = (*self->ptr)->at(index);
-    return new CvRect2f{r.x, r.y, r.width, r.height};
+    return cvd::alloc_pod(CvRect2f{r.x, r.y, r.width, r.height});
 }
 
 void std_VecRect2f_set(VecRect2f* self, size_t index, CvRect2f val) {
@@ -400,7 +402,7 @@ RotatedRect std_VecRotatedRect_get(VecRotatedRect* self, size_t index) {
 }
 RotatedRect* std_VecRotatedRect_get_p(VecRotatedRect* self, int index) {
     auto r = (*self->ptr)->at(index);
-    return new RotatedRect{{r.center.x, r.center.y}, {r.size.width, r.size.height}, r.angle};
+    return cvd::alloc_pod(RotatedRect{{r.center.x, r.center.y}, {r.size.width, r.size.height}, r.angle});
 }
 
 void std_VecRotatedRect_set(VecRotatedRect* self, size_t index, RotatedRect val) {
@@ -466,7 +468,7 @@ KeyPoint std_VecKeyPoint_get(VecKeyPoint* self, size_t index) {
 }
 KeyPoint* std_VecKeyPoint_get_p(VecKeyPoint* self, int index) {
     auto p = (*self->ptr)->at(index);
-    return new KeyPoint{
+    return cvd::alloc_pod(KeyPoint{
         .x = p.pt.x,
         .y = p.pt.y,
         .size = p.size,
@@ -474,7 +476,7 @@ KeyPoint* std_VecKeyPoint_get_p(VecKeyPoint* self, int index) {
         .response = p.response,
         .octave = p.octave,
         .classID = p.class_id
-    };
+    });
 }
 
 void std_VecKeyPoint_set(VecKeyPoint* self, size_t index, KeyPoint val) {
@@ -530,9 +532,9 @@ DMatch std_VecDMatch_get(VecDMatch* self, size_t index) {
 }
 DMatch* std_VecDMatch_get_p(VecDMatch* self, int index) {
     auto d = (*self->ptr)->at(index);
-    return new DMatch{
+    return cvd::alloc_pod(DMatch{
         .queryIdx = d.queryIdx, .trainIdx = d.trainIdx, .imgIdx = d.imgIdx, .distance = d.distance
-    };
+    });
 }
 
 void std_VecDMatch_set(VecDMatch* self, size_t index, DMatch val) {
@@ -573,7 +575,7 @@ Vec4i std_VecVec4i_get(VecVec4i* self, size_t index) {
 }
 Vec4i* std_VecVec4i_get_p(VecVec4i* self, int index) {
     auto v = (*self->ptr)->at(index);
-    return new Vec4i{v[0], v[1], v[2], v[3]};
+    return cvd::alloc_pod(Vec4i{v[0], v[1], v[2], v[3]});
 }
 
 void std_VecVec4i_set(VecVec4i* self, size_t index, Vec4i val) {
@@ -614,7 +616,7 @@ Vec4f std_VecVec4f_get(VecVec4f* self, size_t index) {
 }
 Vec4f* std_VecVec4f_get_p(VecVec4f* self, int index) {
     auto v = (*self->ptr)->at(index);
-    return new Vec4f{v[0], v[1], v[2], v[3]};
+    return cvd::alloc_pod(Vec4f{v[0], v[1], v[2], v[3]});
 }
 
 void std_VecVec4f_set(VecVec4f* self, size_t index, Vec4f val) {
@@ -665,9 +667,9 @@ Vec6f std_VecVec6f_get(VecVec6f* self, size_t index) {
 }
 Vec6f* std_VecVec6f_get_p(VecVec6f* self, int index) {
     auto v = (*self->ptr)->at(index);
-    return new Vec6f{
+    return cvd::alloc_pod(Vec6f{
         .val1 = v[0], .val2 = v[1], .val3 = v[2], .val4 = v[3], .val5 = v[4], .val6 = v[5]
-    };
+    });
 }
 
 void std_VecVec6f_set(VecVec6f* self, size_t index, Vec6f val) {
@@ -714,7 +716,7 @@ VecDMatch* std_VecVecDMatch_get_p(VecVecDMatch* self, int index) {
 
 DMatch* std_VecVecDMatch_get_ij(VecVecDMatch* self, size_t i, size_t j) {
     auto dm = (*self->ptr)->at(i).at(j);
-    return new DMatch{dm.queryIdx, dm.trainIdx, dm.imgIdx, dm.distance};
+    return cvd::alloc_pod(DMatch{dm.queryIdx, dm.trainIdx, dm.imgIdx, dm.distance});
 }
 
 size_t std_VecVecDMatch_length_i(VecVecDMatch* self, size_t i) {
@@ -771,7 +773,7 @@ VecPoint* std_VecVecPoint_get_p(VecVecPoint* self, int index) {
 
 CvPoint* std_VecVecPoint_get_ij(VecVecPoint* self, size_t i, size_t j) {
     auto p = (*self->ptr)->at(i).at(j);
-    return new CvPoint{p.x, p.y};
+    return cvd::alloc_pod(CvPoint{p.x, p.y});
 }
 
 size_t std_VecVecPoint_length_i(VecVecPoint* self, size_t i) {
@@ -824,7 +826,7 @@ VecPoint2f* std_VecVecPoint2f_get_p(VecVecPoint2f* self, int index) {
 
 CvPoint2f* std_VecVecPoint2f_get_ij(VecVecPoint2f* self, size_t i, size_t j) {
     auto p = (*self->ptr)->at(i).at(j);
-    return new CvPoint2f{p.x, p.y};
+    return cvd::alloc_pod(CvPoint2f{p.x, p.y});
 }
 
 size_t std_VecVecPoint2f_length_i(VecVecPoint2f* self, size_t i) {
@@ -878,7 +880,7 @@ VecPoint3f* std_VecVecPoint3f_get_p(VecVecPoint3f* self, int index) {
 
 CvPoint3f* std_VecVecPoint3f_get_ij(VecVecPoint3f* self, size_t i, size_t j) {
     auto p = (*self->ptr)->at(i).at(j);
-    return new CvPoint3f{p.x, p.y, p.z};
+    return cvd::alloc_pod(CvPoint3f{p.x, p.y, p.z});
 }
 
 size_t std_VecVecPoint3f_length_i(VecVecPoint3f* self, size_t i) {
@@ -927,7 +929,7 @@ VecPoint3i* std_VecVecPoint3i_get_p(VecVecPoint3i* self, int index) {
 
 CvPoint3i* std_VecVecPoint3i_get_ij(VecVecPoint3i* self, size_t i, size_t j) {
     auto p = (*self->ptr)->at(i).at(j);
-    return new CvPoint3i{p.x, p.y, p.z};
+    return cvd::alloc_pod(CvPoint3i{p.x, p.y, p.z});
 }
 
 size_t std_VecVecPoint3i_length_i(VecVecPoint3i* self, size_t i) {

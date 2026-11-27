@@ -966,7 +966,7 @@ char* cv_SimpleBlobDetector_getDefaultName(SimpleBlobDetector self) {
 
 SimpleBlobDetectorParams* cv_SimpleBlobDetector_getParams(SimpleBlobDetector self) {
     auto params = CVDEREF(self)->getParams();
-    return new SimpleBlobDetectorParams{SimpleBlobDetectorParams_cpp2c(params)};
+    return cvd::alloc_pod(SimpleBlobDetectorParams{SimpleBlobDetectorParams_cpp2c(params)});
 }
 
 void cv_SimpleBlobDetector_setParams(SimpleBlobDetector self, SimpleBlobDetectorParams params) {
