@@ -35,9 +35,12 @@ class StereoBM extends CvStruct<cvg.StereoBM> {
   ///
   /// https://docs.opencv.org/4.x/d9/dba/classcv_1_1StereoBM.html#a119436b6cb382e0895dd0fa58229ec17
   factory StereoBM.create({int numDisparities = 0, int blockSize = 21}) {
-    final p = calloc<cvg.StereoBM>();
-    cvRun(() => cvg.cv_StereoBM_create(numDisparities, blockSize, p, ffi.nullptr));
-    return StereoBM._(p);
+    return StereoBM._(
+      cvCreate(
+        calloc<cvg.StereoBM>(),
+        (p) => cvg.cv_StereoBM_create(numDisparities, blockSize, p, ffi.nullptr),
+      ),
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.StereoBMPtr>(cvg.addresses.cv_StereoBM_close);
@@ -155,25 +158,26 @@ class StereoSGBM extends CvStruct<cvg.StereoSGBM> {
     int speckleRange = 0,
     int mode = MODE_SGBM,
   }) {
-    final p = calloc<cvg.StereoSGBM>();
-    cvRun(
-      () => cvg.cv_StereoSGBM_create(
-        minDisparity,
-        numDisparities,
-        blockSize,
-        P1,
-        P2,
-        disp12MaxDiff,
-        preFilterCap,
-        uniquenessRatio,
-        speckleWindowSize,
-        speckleRange,
-        mode,
-        p,
-        ffi.nullptr,
+    return StereoSGBM._(
+      cvCreate(
+        calloc<cvg.StereoSGBM>(),
+        (p) => cvg.cv_StereoSGBM_create(
+          minDisparity,
+          numDisparities,
+          blockSize,
+          P1,
+          P2,
+          disp12MaxDiff,
+          preFilterCap,
+          uniquenessRatio,
+          speckleWindowSize,
+          speckleRange,
+          mode,
+          p,
+          ffi.nullptr,
+        ),
       ),
     );
-    return StereoSGBM._(p);
   }
 
   static final finalizer = OcvFinalizer<cvg.StereoSGBMPtr>(cvg.addresses.cv_StereoSGBM_close);

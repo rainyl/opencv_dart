@@ -198,8 +198,18 @@ int addFunction(JSFunction fn, String sig) =>
 
 void removeFunction(int index) => module.callMethod('removeFunction'.toJS, index.toJS);
 
-/// Native function typedef -> (wasm signature, argument kinds), registered by the generated bindings.
-final callbackSignatures = <Type, (String, String)>{};
+/// Native function typedef -> (wasm signature, argument kinds, pointer builders), registered by the
+/// generated bindings.
+///
+/// The third entry rebuilds a `Pointer` argument with the pointee type the callback declares: a
+/// callback parameter is reified (`ffi.Pointer<CvStatus>`), and dart2js checks it on entry to the
+/// closure, so handing it the shim's generic `Pointer<Void>` throws. Entries are null where the
+/// declared pointee already is `ffi.Void`.
+final callbackSignatures = <Type, (String, String, List<Object? Function(int)?>?)>{};
 
-void registerCallback(Type nativeFunction, String wasmSig, String kinds) =>
-    callbackSignatures[nativeFunction] = (wasmSig, kinds);
+void registerCallback(
+  Type nativeFunction,
+  String wasmSig,
+  String kinds, [
+  List<Object? Function(int)?>? pointerArgs,
+]) => callbackSignatures[nativeFunction] = (wasmSig, kinds, pointerArgs);

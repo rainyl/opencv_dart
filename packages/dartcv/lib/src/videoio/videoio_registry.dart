@@ -44,78 +44,95 @@ class VideoIORegistry {
   /// Returns list of all available backends
   static List<VideoCaptureAPIs> getBackends() {
     final p = calloc<ffi.Pointer<ffi.Int>>();
-    final pszie = calloc<ffi.Int>();
-    cvRun(() => cvg.cv_video_registry_getBackends(p, pszie));
-    final backends = _backends(pszie.value, p.value);
-    calloc.free(p.value);
-    calloc.free(p);
-    calloc.free(pszie);
-    return backends;
+    final psize = calloc<ffi.Int>();
+    try {
+      cvRun(() => cvg.cv_video_registry_getBackends(p, psize));
+      return _backends(psize.value, p.value);
+    } finally {
+      // On the error path `p.value` is still the zeroed block, so freeing it is a no-op.
+      calloc.free(p.value);
+      calloc.free(p);
+      calloc.free(psize);
+    }
   }
 
   /// Returns list of available backends which works via `cv::VideoCapture(int index)`
   static List<VideoCaptureAPIs> getCameraBackends() {
     final p = calloc<ffi.Pointer<ffi.Int>>();
-    final pszie = calloc<ffi.Int>();
-    cvRun(() => cvg.cv_video_registry_getCameraBackends(p, pszie));
-    final backends = _backends(pszie.value, p.value);
-    calloc.free(p.value);
-    calloc.free(p);
-    calloc.free(pszie);
-    return backends;
+    final psize = calloc<ffi.Int>();
+    try {
+      cvRun(() => cvg.cv_video_registry_getCameraBackends(p, psize));
+      return _backends(psize.value, p.value);
+    } finally {
+      // On the error path `p.value` is still the zeroed block, so freeing it is a no-op.
+      calloc.free(p.value);
+      calloc.free(p);
+      calloc.free(psize);
+    }
   }
 
   /// Returns list of available backends which works via `cv::VideoCapture(filename)`
   static List<VideoCaptureAPIs> getStreamBackends() {
     final p = calloc<ffi.Pointer<ffi.Int>>();
-    final pszie = calloc<ffi.Int>();
-    cvRun(() => cvg.cv_video_registry_getStreamBackends(p, pszie));
-    final backends = _backends(pszie.value, p.value);
-    calloc.free(p.value);
-    calloc.free(p);
-    calloc.free(pszie);
-    return backends;
+    final psize = calloc<ffi.Int>();
+    try {
+      cvRun(() => cvg.cv_video_registry_getStreamBackends(p, psize));
+      return _backends(psize.value, p.value);
+    } finally {
+      // On the error path `p.value` is still the zeroed block, so freeing it is a no-op.
+      calloc.free(p.value);
+      calloc.free(p);
+      calloc.free(psize);
+    }
   }
 
   /// Returns list of available backends which works via `cv::VideoCapture(buffer)`
   static List<VideoCaptureAPIs> getStreamBufferedBackends() {
     final p = calloc<ffi.Pointer<ffi.Int>>();
-    final pszie = calloc<ffi.Int>();
-    cvRun(() => cvg.cv_video_registry_getStreamBufferedBackends(p, pszie));
-    final backends = _backends(pszie.value, p.value);
-    calloc.free(p.value);
-    calloc.free(p);
-    calloc.free(pszie);
-    return backends;
+    final psize = calloc<ffi.Int>();
+    try {
+      cvRun(() => cvg.cv_video_registry_getStreamBufferedBackends(p, psize));
+      return _backends(psize.value, p.value);
+    } finally {
+      // On the error path `p.value` is still the zeroed block, so freeing it is a no-op.
+      calloc.free(p.value);
+      calloc.free(p);
+      calloc.free(psize);
+    }
   }
 
   /// Returns list of available backends which works via `cv::VideoWriter()`
   static List<VideoCaptureAPIs> getWriterBackends() {
     final p = calloc<ffi.Pointer<ffi.Int>>();
-    final pszie = calloc<ffi.Int>();
-    cvRun(() => cvg.cv_video_registry_getWriterBackends(p, pszie));
-    final backends = _backends(pszie.value, p.value);
-    calloc.free(p.value);
-    calloc.free(p);
-    calloc.free(pszie);
-    return backends;
+    final psize = calloc<ffi.Int>();
+    try {
+      cvRun(() => cvg.cv_video_registry_getWriterBackends(p, psize));
+      return _backends(psize.value, p.value);
+    } finally {
+      // On the error path `p.value` is still the zeroed block, so freeing it is a no-op.
+      calloc.free(p.value);
+      calloc.free(p);
+      calloc.free(psize);
+    }
   }
 
   /// Returns true if backend is available
   static bool hasBackend(VideoCaptureAPIs api) {
-    final p = calloc<ffi.Bool>();
-    cvRun(() => cvg.cv_video_registry_hasBackend(api.value, p));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Bool>(),
+      (p) => cvg.cv_video_registry_hasBackend(api.value, p),
+      (p) => p.value,
+    );
     return rval;
   }
 
   /// Returns true if backend is built in (false if backend is used as plugin)
   static bool isBackendBuiltIn(VideoCaptureAPIs api) {
-    final p = calloc<ffi.Bool>();
-    cvRun(() => cvg.cv_video_registry_isBackendBuiltIn(api.value, p));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Bool>(),
+      (p) => cvg.cv_video_registry_isBackendBuiltIn(api.value, p),
+      (p) => p.value,
+    );
     return rval;
   }
 

@@ -161,9 +161,9 @@ Future<(double ret, Mat warpMatrix)> findTransformECCAsync(
     ),
     (c) {
       final rval = (p.value, warpMatrix);
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -196,11 +196,16 @@ extension TrackerMILAsync on TrackerMIL {
   Future<(bool, Rect)> updateAsync(Mat img, {Duration? timeout}) async {
     final bBox = calloc<cvg.CvRect>();
     final p = calloc<ffi.Bool>();
-    return cvRunAsync0((callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback), (c) {
-      final rval = (p.value, Rect.fromPointer(bBox));
-      calloc.free(p);
-      return c.complete(rval);
-    }, timeout: timeout);
+    return cvRunAsync0(
+      (callback) => cvideo.cv_TrackerMIL_update(ref, img.ref, bBox, p, callback),
+      (c) {
+        final rval = (p.value, Rect.fromPointer(bBox));
+        return c.complete(rval);
+      },
+      timeout: timeout,
+      release: () => calloc.free(p),
+      releaseOnFailure: () => calloc.free(bBox),
+    );
   }
 }
 
@@ -242,7 +247,7 @@ extension KalmanFilterAsync on KalmanFilter {
     int controlParams = 0,
     int type = MatType.CV_32F,
     Duration? timeout,
-  }) async {
+  }) {
     return cvRunAsync0(
       (callback) =>
           cvideo.cv_KalmanFilter_init_1(ref, dynamParams, measureParams, controlParams, type, callback),

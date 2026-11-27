@@ -7113,7 +7113,29 @@ class _SymbolAddresses {
 }
 
 void $registerTypes() {
-  $rt.registerCallback(ErrorCallbackFunction, 'viiiiii', 'ipppip');
-  $rt.registerCallback(LogCallbackExFunction, 'viiiiiiiiii', 'ipupuipupu');
-  $rt.registerCallback(LogCallbackFunction, 'viii', 'ipu');
+  $rt.registerCallback(ErrorCallbackFunction, 'viiiiii', 'ipppip', <Object? Function(int)?>[
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    null,
+  ]);
+  $rt.registerCallback(LogCallbackExFunction, 'viiiiiiiiii', 'ipupuipupu', <Object? Function(int)?>[
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+  ]);
+  $rt.registerCallback(LogCallbackFunction, 'viii', 'ipu', <Object? Function(int)?>[
+    null,
+    (a) => ffi.Pointer<ffi.Char>.fromAddress(a),
+    null,
+  ]);
 }

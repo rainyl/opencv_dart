@@ -130,6 +130,35 @@ void throwIfFailed(ffi.Pointer<cvg.CvStatus> s) {
 // sync runner
 void cvRun(ffi.Pointer<cvg.CvStatus> Function() func) => throwIfFailed(func());
 
+/// Runs a native `*_create` that fills [p], and returns [p].
+ffi.Pointer<T> cvCreate<T extends ffi.NativeType>(
+  ffi.Pointer<T> p,
+  ffi.Pointer<cvg.CvStatus> Function(ffi.Pointer<T> out) create,
+) {
+  try {
+    cvRun(() => create(p));
+  } catch (_) {
+    calloc.free(p);
+    rethrow;
+  }
+  return p;
+}
+
+/// Runs a native call that writes one value into the fresh out-parameter block [p], hands that block
+/// to [read], and frees it whichever way the call went.
+R cvOut<T extends ffi.NativeType, R>(
+  ffi.Pointer<T> p,
+  ffi.Pointer<cvg.CvStatus> Function(ffi.Pointer<T> out) run,
+  R Function(ffi.Pointer<T> out) read,
+) {
+  try {
+    cvRun(() => run(p));
+    return read(p);
+  } finally {
+    calloc.free(p);
+  }
+}
+
 // async runner
 typedef VoidPtr = ffi.Pointer<ffi.Void>;
 
@@ -144,10 +173,25 @@ typedef VoidPtr = ffi.Pointer<ffi.Void>;
 /// completion and still writes the output arguments it was given. It throws an
 /// [AsyncTimeoutException], whose `completion` resolves when that has happened - the moment those
 /// arguments stop changing. The handles it was given are held by the job, so abandoning is safe.
+///
+/// [release] frees what [func] was handed (a `calloc` block, a `toNativeUtf8` path, an `Arena`) once
+/// the job can no longer touch it - on success, on failure and when the call is rejected, but not on a
+/// timeout, which only abandons the wait. Freeing it earlier leaks when the job fails or races the
+/// worker, which reads those arguments after this call returns.
+///
+/// A call the native entry point rejects is reported through the returned [Future], never thrown
+/// synchronously, so an `*Async` wrapper can be a plain `return cvRunAsync*(...)` without `async`.
+///
+/// [releaseOnFailure] frees what only a *successful* job hands over: an out-parameter block that
+/// [onComplete] passes to a wrapper (`Mat.fromPointer(p)`) is owned by that wrapper once it exists, so
+/// it cannot be in [release] (that would free it twice), and a job that fails never reaches
+/// [onComplete], which used to leak that block. It runs only on the error paths, exactly once.
 Future<T> cvRunAsync0<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_0 callback) func,
   void Function(Completer<T> completer) onComplete, {
   Duration? timeout,
+  void Function()? release,
+  void Function()? releaseOnFailure,
 }) {
   final completer = Completer<T>();
   // Resolves when the native job is done with the objects it was given, whether or not anyone is
@@ -155,12 +199,25 @@ Future<T> cvRunAsync0<T>(
   final completion = Completer<void>();
   late final ffi.NativeCallable<cvg.CvCallback_0Function> ccallback;
   var closed = false;
+  var released = false;
+  var releasedOnFailure = false;
+  void releaseFailed() {
+    if (releasedOnFailure) return;
+    releasedOnFailure = true;
+    releaseOnFailure?.call();
+  }
+
   void close() {
     if (!closed) {
       closed = true;
       ccallback.close();
     }
     if (!completion.isCompleted) completion.complete();
+    // Every path reaches here only after the native side is done with the arguments it was given.
+    if (!released) {
+      released = true;
+      release?.call();
+    }
   }
 
   void onResponse(ffi.Pointer<cvg.CvStatus> status) {
@@ -168,6 +225,7 @@ Future<T> cvRunAsync0<T>(
       throwIfFailed(status);
     } catch (e, s) {
       if (!completer.isCompleted) completer.completeError(e, s);
+      releaseFailed();
       close();
       return;
     }
@@ -188,9 +246,13 @@ Future<T> cvRunAsync0<T>(
   ccallback = ffi.NativeCallable<cvg.CvCallback_0Function>.listener(onResponse);
   try {
     throwIfFailed(func(ccallback.nativeFunction));
-  } catch (_) {
+  } catch (e, s) {
+    // The work never started, so nothing took the output over either. Reported as a failed future
+    // rather than rethrown: an `*Async` call never throws synchronously, which is what lets its
+    // wrapper be a plain `return cvRunAsync*(...)` instead of an `async` function.
+    releaseFailed();
     close();
-    rethrow;
+    return Future<T>.error(e, s);
   }
   if (timeout != null) {
     final watch = Stopwatch()..start();
@@ -204,23 +266,36 @@ Future<T> cvRunAsync0<T>(
   return completer.future;
 }
 
-const cvRunAsync = cvRunAsync0;
-
 Future<T> cvRunAsync1<T>(
   ffi.Pointer<cvg.CvStatus> Function(cvg.CvCallback_1 callback) func,
   void Function(Completer<T> completer, VoidPtr p) onComplete, {
   Duration? timeout,
+  void Function()? release,
+  void Function()? releaseOnFailure,
 }) {
   final completer = Completer<T>();
   final completion = Completer<void>();
   late final ffi.NativeCallable<cvg.CvCallback_1Function> ccallback;
   var closed = false;
+  var released = false;
+  var releasedOnFailure = false;
+  void releaseFailed() {
+    if (releasedOnFailure) return;
+    releasedOnFailure = true;
+    releaseOnFailure?.call();
+  }
+
   void close() {
     if (!closed) {
       closed = true;
       ccallback.close();
     }
     if (!completion.isCompleted) completion.complete();
+    // see cvRunAsync0: only the end of the job makes the arguments safe to free
+    if (!released) {
+      released = true;
+      release?.call();
+    }
   }
 
   void onResponse(ffi.Pointer<cvg.CvStatus> status, VoidPtr p) {
@@ -228,6 +303,7 @@ Future<T> cvRunAsync1<T>(
       throwIfFailed(status);
     } catch (e, s) {
       if (!completer.isCompleted) completer.completeError(e, s);
+      releaseFailed();
       close();
       return;
     }
@@ -244,9 +320,11 @@ Future<T> cvRunAsync1<T>(
   ccallback = ffi.NativeCallable<cvg.CvCallback_1Function>.listener(onResponse);
   try {
     throwIfFailed(func(ccallback.nativeFunction));
-  } catch (_) {
+  } catch (e, s) {
+    // see cvRunAsync0: the work never started, and the failure goes through the future
+    releaseFailed();
     close();
-    rethrow;
+    return Future<T>.error(e, s);
   }
   if (timeout != null) {
     final watch = Stopwatch()..start();

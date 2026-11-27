@@ -163,7 +163,7 @@ Future<void> main(List<String> args) async {
 Future<void> _run(_Options options, Logger logger) async {
   final packageDir = _packageDir();
   // In this package's checkout the CI layout stays the default (`build/wasm` is the cache key and
-  // `test/web_test.dart` loads `build/web`); from an application, `web/` is where a Flutter web
+  // `test/web/web_test.dart` loads `build/web`); from an application, `web/` is where a Flutter web
   // build picks the files up, and the build tree belongs to the application.
   final inPackage = _sameDirectory(packageDir, Directory.current);
   final base = inPackage ? packageDir : Directory.current;

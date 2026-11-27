@@ -32,9 +32,9 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
   /// Creates a Stitcher configured in one of the stitching modes.
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a308a47865a1f381e4429c8ec5e99549f
   factory Stitcher.create({StitcherMode mode = StitcherMode.PANORAMA}) {
-    final ptr_ = calloc<cvg.Stitcher>();
-    cvRun(() => cstitching.cv_Stitcher_create(mode.index, ptr_));
-    return Stitcher._(ptr_);
+    return Stitcher._(
+      cvCreate(calloc<cvg.Stitcher>(), (p) => cstitching.cv_Stitcher_create(mode.index, p)),
+    );
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a9b90774eabdf68c9ee864918d620538d
@@ -83,11 +83,14 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a4c25557af4d40a79a4d1f23d9548131d
   StitcherStatus estimateTransform(VecMat images, {VecMat? masks}) {
     final rptr = calloc<ffi.Int>();
-    masks ??= VecMat.fromList([]);
-    cvRun(() => cstitching.cv_Stitcher_estimateTransform(ref, images.ref, masks!.ref, rptr, ffi.nullptr));
-    final rval = StitcherStatus.fromInt(rptr.value);
-    calloc.free(rptr);
-    return rval;
+    try {
+      masks ??= VecMat.fromList([]);
+      cvRun(() => cstitching.cv_Stitcher_estimateTransform(ref, images.ref, masks!.ref, rptr, ffi.nullptr));
+      final rval = StitcherStatus.fromInt(rptr.value);
+      return rval;
+    } finally {
+      calloc.free(rptr);
+    }
   }
 
   /// These functions try to compose the given images (or images stored internally
@@ -96,15 +99,18 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#acc8409a6b2e548de1653f0dc5c2ccb02
   (StitcherStatus, Mat pano) composePanorama({VecMat? images}) {
     final rptr = calloc<ffi.Int>();
-    final rpano = Mat.empty();
-    images == null
-        ? cvRun(() => cstitching.cv_Stitcher_composePanorama(ref, rpano.ref, rptr, ffi.nullptr))
-        : cvRun(
-            () => cstitching.cv_Stitcher_composePanorama_1(ref, images.ref, rpano.ref, rptr, ffi.nullptr),
-          );
-    final rval = (StitcherStatus.fromInt(rptr.value), rpano);
-    calloc.free(rptr);
-    return rval;
+    try {
+      final rpano = Mat.empty();
+      images == null
+          ? cvRun(() => cstitching.cv_Stitcher_composePanorama(ref, rpano.ref, rptr, ffi.nullptr))
+          : cvRun(
+              () => cstitching.cv_Stitcher_composePanorama_1(ref, images.ref, rpano.ref, rptr, ffi.nullptr),
+            );
+      final rval = (StitcherStatus.fromInt(rptr.value), rpano);
+      return rval;
+    } finally {
+      calloc.free(rptr);
+    }
   }
 
   /// This is an overloaded member function, provided for convenience.
@@ -112,15 +118,18 @@ class Stitcher extends CvStruct<cvg.Stitcher> {
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a37ee5bacf229e9d0fb9f97c8f5ed1acd
   (StitcherStatus, Mat pano) stitch(VecMat images, {VecMat? masks}) {
     final rptr = calloc<ffi.Int>();
-    final rpano = Mat.empty();
-    masks == null
-        ? cvRun(() => cstitching.cv_Stitcher_stitch(ref, images.ref, rpano.ref, rptr, ffi.nullptr))
-        : cvRun(
-            () => cstitching.cv_Stitcher_stitch_1(ref, images.ref, masks.ref, rpano.ref, rptr, ffi.nullptr),
-          );
-    final rval = (StitcherStatus.fromInt(rptr.value), rpano);
-    calloc.free(rptr);
-    return rval;
+    try {
+      final rpano = Mat.empty();
+      masks == null
+          ? cvRun(() => cstitching.cv_Stitcher_stitch(ref, images.ref, rpano.ref, rptr, ffi.nullptr))
+          : cvRun(
+              () => cstitching.cv_Stitcher_stitch_1(ref, images.ref, masks.ref, rpano.ref, rptr, ffi.nullptr),
+            );
+      final rval = (StitcherStatus.fromInt(rptr.value), rpano);
+      return rval;
+    } finally {
+      calloc.free(rptr);
+    }
   }
 
   /// https://docs.opencv.org/4.x/d2/d8d/classcv_1_1Stitcher.html#a7fed80561a9b46a1a924ac6cb334ac85

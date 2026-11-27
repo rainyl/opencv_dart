@@ -24,20 +24,31 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   factory VideoCapture.fromPointer(cvg.VideoCapturePtr ptr) => VideoCapture._(ptr, false);
 
   factory VideoCapture.empty() {
-    final p = calloc<cvg.VideoCapture>();
-    cvRun(() => cvideoio.cv_VideoCapture_create(p));
-    return VideoCapture._(p);
+    return VideoCapture._(cvCreate(calloc<cvg.VideoCapture>(), cvideoio.cv_VideoCapture_create));
   }
 
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference.
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a57c0e81e83e60f36c83027dc2a188e80
   factory VideoCapture.create(String filename, {int apiPreference = CAP_ANY}) {
-    final p = calloc<cvg.VideoCapture>();
-    final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cvideoio.cv_VideoCapture_create_1(cname, apiPreference, p, ffi.nullptr));
-    calloc.free(cname);
-    return VideoCapture._(p);
+    // The file name is a raw `calloc` block that only this method frees: release it when the native
+    // create reports an error instead of skipping the free.
+    final arena = Arena();
+    try {
+      return VideoCapture._(
+        cvCreate(
+          calloc<cvg.VideoCapture>(),
+          (p) => cvideoio.cv_VideoCapture_create_1(
+            filename.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+            apiPreference,
+            p,
+            ffi.nullptr,
+          ),
+        ),
+      );
+    } finally {
+      arena.releaseAll();
+    }
   }
 
   factory VideoCapture.fromFile(String filename, {int apiPreference = CAP_ANY}) {
@@ -45,9 +56,12 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   }
 
   factory VideoCapture.fromDevice(int device, {int apiPreference = CAP_ANY}) {
-    final p = calloc<cvg.VideoCapture>();
-    cvRun(() => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, ffi.nullptr));
-    return VideoCapture._(p);
+    return VideoCapture._(
+      cvCreate(
+        calloc<cvg.VideoCapture>(),
+        (p) => cvideoio.cv_VideoCapture_create_2(device, apiPreference, p, ffi.nullptr),
+      ),
+    );
   }
 
   @override
@@ -87,11 +101,12 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
 
   (bool, Mat) read({Mat? m}) {
     m ??= Mat.empty();
-    final p = calloc<ffi.Bool>();
-    cvRun(() => cvideoio.cv_VideoCapture_read(ref, m!.ref, p, ffi.nullptr));
-    final rval = (p.value, m);
-    calloc.free(p);
-    return rval;
+    final rval = cvOut(
+      calloc<ffi.Bool>(),
+      (p) => cvideoio.cv_VideoCapture_read(ref, m!.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
+    return (rval, m);
   }
 
   /// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters.
@@ -100,13 +115,17 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   ///
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#aa6480e6972ef4c00d74814ec841a2939
   bool open(String uri, {int apiPreference = CAP_ANY}) {
-    final cname = uri.toNativeUtf8().cast<ffi.Char>();
-    final success = calloc<ffi.Bool>();
-    cvRun(() => cvideoio.cv_VideoCapture_open_1(ref, cname, apiPreference, success, ffi.nullptr));
-    final rval = success.value;
-    calloc.free(cname);
-    calloc.free(success);
-    return rval;
+    return using((arena) {
+      final cname = uri.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final success = calloc<ffi.Bool>();
+      try {
+        cvRun(() => cvideoio.cv_VideoCapture_open_1(ref, cname, apiPreference, success, ffi.nullptr));
+        final rval = success.value;
+        return rval;
+      } finally {
+        calloc.free(success);
+      }
+    });
   }
 
   /// Opens a camera for video capturing with API Preference and parameters.
@@ -114,10 +133,13 @@ class VideoCapture extends CvStruct<cvg.VideoCapture> {
   /// https://docs.opencv.org/4.x/d8/dfe/classcv_1_1VideoCapture.html#a10867868137c2d142aac30a0648d00fe
   bool openIndex(int index, {int apiPreference = CAP_ANY}) {
     final success = calloc<ffi.Bool>();
-    cvRun(() => cvideoio.cv_VideoCapture_open_3(ref, index, apiPreference, success, ffi.nullptr));
-    final rval = success.value;
-    calloc.free(success);
-    return rval;
+    try {
+      cvRun(() => cvideoio.cv_VideoCapture_open_3(ref, index, apiPreference, success, ffi.nullptr));
+      final rval = success.value;
+      return rval;
+    } finally {
+      calloc.free(success);
+    }
   }
 
   String get codec {
@@ -151,9 +173,7 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
   factory VideoWriter.fromPointer(cvg.VideoWriterPtr ptr) => VideoWriter._(ptr, false);
 
   factory VideoWriter.empty() {
-    final p = calloc<cvg.VideoWriter>();
-    cvRun(() => cvideoio.cv_VideoWriter_create(p));
-    return VideoWriter._(p);
+    return VideoWriter._(cvCreate(calloc<cvg.VideoWriter>(), cvideoio.cv_VideoWriter_create));
   }
 
   factory VideoWriter.fromFile(
@@ -164,37 +184,39 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     int? apiPreference,
     bool isColor = true,
   }) {
-    final p = calloc<cvg.VideoWriter>();
-    final cname = filename.toNativeUtf8();
     final codec_ = VideoWriter.fourcc(codec);
-    apiPreference == null
-        ? cvRun(
-            () => cvideoio.cv_VideoWriter_create_1(
-              cname.cast(),
-              codec_,
-              fps,
-              frameSize.$1,
-              frameSize.$2,
-              isColor,
-              p,
-              ffi.nullptr,
-            ),
-          )
-        : cvRun(
-            () => cvideoio.cv_VideoWriter_create_2(
-              cname.cast(),
-              apiPreference,
-              codec_,
-              fps,
-              frameSize.$1,
-              frameSize.$2,
-              isColor,
-              p,
-              ffi.nullptr,
-            ),
-          );
-    calloc.free(cname);
-    return VideoWriter._(p);
+    return using(
+      (arena) {
+        final cname = filename.toNativeUtf8(allocator: arena);
+        return VideoWriter._(
+          cvCreate(
+            calloc<cvg.VideoWriter>(),
+            (p) => apiPreference == null
+                ? cvideoio.cv_VideoWriter_create_1(
+                    cname.cast(),
+                    codec_,
+                    fps,
+                    frameSize.$1,
+                    frameSize.$2,
+                    isColor,
+                    p,
+                    ffi.nullptr,
+                  )
+                : cvideoio.cv_VideoWriter_create_2(
+                    cname.cast(),
+                    apiPreference,
+                    codec_,
+                    fps,
+                    frameSize.$1,
+                    frameSize.$2,
+                    isColor,
+                    p,
+                    ffi.nullptr,
+                  ),
+          ),
+        );
+      },
+    );
   }
 
   void open(
@@ -205,39 +227,43 @@ class VideoWriter extends CvStruct<cvg.VideoWriter> {
     int? apiPreference,
     bool isColor = true,
   }) {
-    final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    final codec_ = VideoWriter.fourcc(codec);
-    final p = calloc<ffi.Bool>();
-    apiPreference == null
-        ? cvRun(
-            () => cvideoio.cv_VideoWriter_open(
-              ref,
-              cname,
-              codec_,
-              fps,
-              frameSize.$1,
-              frameSize.$2,
-              isColor,
-              p,
-              ffi.nullptr,
-            ),
-          )
-        : cvRun(
-            () => cvideoio.cv_VideoWriter_open_1(
-              ref,
-              cname,
-              apiPreference,
-              codec_,
-              fps,
-              frameSize.$1,
-              frameSize.$2,
-              isColor,
-              p,
-              ffi.nullptr,
-            ),
-          );
-    calloc.free(cname);
-    calloc.free(p);
+    return using((arena) {
+      final cname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final codec_ = VideoWriter.fourcc(codec);
+      final p = calloc<ffi.Bool>();
+      try {
+        apiPreference == null
+            ? cvRun(
+                () => cvideoio.cv_VideoWriter_open(
+                  ref,
+                  cname,
+                  codec_,
+                  fps,
+                  frameSize.$1,
+                  frameSize.$2,
+                  isColor,
+                  p,
+                  ffi.nullptr,
+                ),
+              )
+            : cvRun(
+                () => cvideoio.cv_VideoWriter_open_1(
+                  ref,
+                  cname,
+                  apiPreference,
+                  codec_,
+                  fps,
+                  frameSize.$1,
+                  frameSize.$2,
+                  isColor,
+                  p,
+                  ffi.nullptr,
+                ),
+              );
+      } finally {
+        calloc.free(p);
+      }
+    });
   }
 
   void write(InputArray image) {

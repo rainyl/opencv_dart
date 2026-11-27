@@ -40,37 +40,44 @@ class Layer extends CvStruct<cvg.Layer> {
   }
 
   /// GetName returns name for this layer.
-  String get name {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cdnn.cv_dnn_Layer_getName(ref, p));
-    final r = p.value.toDartString();
-    calloc.free(p.value);
-    calloc.free(p);
-    return r;
-  }
+  String get name => cvOut(
+    calloc<ffi.Pointer<ffi.Char>>(),
+    (p) => cdnn.cv_dnn_Layer_getName(ref, p),
+    (p) {
+      // The string lives outside the out-parameter block: copy it, then free it.
+      final name = p.value.toDartString();
+      calloc.free(p.value);
+      return name;
+    },
+  );
 
   /// GetType returns type for this layer.
-  String get type {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cdnn.cv_dnn_Layer_getType(ref, p));
-    final r = p.value.toDartString();
-    calloc.free(p.value);
-    calloc.free(p);
-    return r;
-  }
+  String get type => cvOut(
+    calloc<ffi.Pointer<ffi.Char>>(),
+    (p) => cdnn.cv_dnn_Layer_getType(ref, p),
+    (p) {
+      final type = p.value.toDartString();
+      calloc.free(p.value);
+      return type;
+    },
+  );
 
   /// InputNameToIndex returns index of input blob in input array.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d6c/classcv_1_1dnn_1_1Layer.html#a60ffc8238f3fa26cd3f49daa7ac0884b
   int inputNameToIndex(String name) {
-    final cName = name.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cdnn.cv_dnn_Layer_inputNameToIndex(ref, cName, p));
-    final rval = p.value;
-    calloc.free(p);
-    calloc.free(cName);
-    return rval;
+    return using((arena) {
+      final cName = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<ffi.Int>();
+      try {
+        cvRun(() => cdnn.cv_dnn_Layer_inputNameToIndex(ref, cName, p));
+        final rval = p.value;
+        return rval;
+      } finally {
+        calloc.free(p);
+      }
+    });
   }
 
   /// OutputNameToIndex returns index of output blob in output array.
@@ -78,13 +85,17 @@ class Layer extends CvStruct<cvg.Layer> {
   /// For further details, please see:
   /// https://docs.opencv.org/master/d3/d6c/classcv_1_1dnn_1_1Layer.html#a60ffc8238f3fa26cd3f49daa7ac0884b
   int outputNameToIndex(String name) {
-    final cName = name.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cdnn.cv_dnn_Layer_outputNameToIndex(ref, cName, p));
-    final rval = p.value;
-    calloc.free(p);
-    calloc.free(cName);
-    return rval;
+    return using((arena) {
+      final cName = name.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final p = calloc<ffi.Int>();
+      try {
+        cvRun(() => cdnn.cv_dnn_Layer_outputNameToIndex(ref, cName, p));
+        final rval = p.value;
+        return rval;
+      } finally {
+        calloc.free(p);
+      }
+    });
   }
 
   @override
@@ -103,28 +114,25 @@ class Net extends CvStruct<cvg.Net> {
   }
   factory Net.fromPointer(cvg.NetPtr ptr, [bool attach = true]) => Net._(ptr, attach);
 
-  factory Net.empty() {
-    final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.cv_dnn_Net_create(p));
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.empty() => Net._(cvCreate(calloc<cvg.Net>(), cdnn.cv_dnn_Net_create));
 
   /// Read deep learning network represented in one of the supported formats.
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga4823489a689bf4edfae7447eb807b067
-  factory Net.fromFile(String path, {String config = "", String framework = ""}) {
-    final cPath = path.toNativeUtf8().cast<ffi.Char>();
-    final cConfig = config.toNativeUtf8().cast<ffi.Char>();
-    final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.cv_dnn_Net_readNet(cPath, cConfig, cFramework, p, ffi.nullptr));
-    calloc.free(cPath);
-    calloc.free(cConfig);
-    calloc.free(cFramework);
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.fromFile(String path, {String config = "", String framework = ""}) => using(
+    (arena) => Net._(
+      cvCreate(
+        calloc<cvg.Net>(),
+        (p) => cdnn.cv_dnn_Net_readNet(
+          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          config.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          framework.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+          ffi.nullptr,
+        ),
+      ),
+    ),
+  );
 
   /// Read deep learning network represented in one of the supported formats.
   ///
@@ -132,76 +140,112 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga138439da76f26266fdefec9723f6c5cd
   factory Net.fromBytes(String framework, Uint8List bufferModel, {Uint8List? bufferConfig}) {
     bufferConfig ??= Uint8List(0);
-    final cFramework = framework.toNativeUtf8().cast<ffi.Char>();
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetBytes(cFramework, bufM.ref, bufC.ref, p, ffi.nullptr));
-    calloc.free(cFramework);
-    final net = Net._(p);
-    return net;
+    try {
+      return using(
+        (arena) => Net._(
+          cvCreate(
+            calloc<cvg.Net>(),
+            (p) => cdnn.cv_dnn_Net_readNetBytes(
+              framework.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+              bufM.ref,
+              bufC.ref,
+              p,
+              ffi.nullptr,
+            ),
+          ),
+        ),
+      );
+    } finally {
+      bufM.dispose();
+      bufC.dispose();
+    }
   }
 
   /// Reads a network model stored in Caffe framework's format.
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga7117752a0216d9f84a9677eefdabf514
-  factory Net.fromCaffe(String prototxt, String caffeModel) {
-    final cProto = prototxt.toNativeUtf8().cast<ffi.Char>();
-    final cCaffe = caffeModel.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromCaffe(cProto, cCaffe, p, ffi.nullptr));
-    calloc.free(cProto);
-    calloc.free(cCaffe);
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.fromCaffe(String prototxt, String caffeModel) => using(
+    (arena) => Net._(
+      cvCreate(
+        calloc<cvg.Net>(),
+        (p) => cdnn.cv_dnn_Net_readNetFromCaffe(
+          prototxt.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          caffeModel.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+          ffi.nullptr,
+        ),
+      ),
+    ),
+  );
 
   /// Reads a network model stored in Caffe model in memory.
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga5b1fd56ca658f10c3bd544ea46f57164
   factory Net.fromCaffeBytes(Uint8List bufferProto, Uint8List bufferModel) {
-    final p = calloc<cvg.Net>();
     final bufP = VecUChar.fromList(bufferProto);
     final bufM = VecUChar.fromList(bufferModel);
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromCaffeBytes(bufP.ref, bufM.ref, p, ffi.nullptr));
-    final net = Net._(p);
-    return net;
+    try {
+      return Net._(
+        cvCreate(
+          calloc<cvg.Net>(),
+          (p) => cdnn.cv_dnn_Net_readNetFromCaffeBytes(bufP.ref, bufM.ref, p, ffi.nullptr),
+        ),
+      );
+    } finally {
+      bufP.dispose();
+      bufM.dispose();
+    }
   }
 
   /// Reads a network model ONNX.
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gafd98356f905742ff082e3e4e193633a3
-  factory Net.fromOnnx(String path) {
-    final p = calloc<cvg.Net>();
-    final cpath = path.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromONNX(cpath, p, ffi.nullptr));
-    calloc.free(cpath);
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.fromOnnx(String path) => using(
+    (arena) => Net._(
+      cvCreate(
+        calloc<cvg.Net>(),
+        (p) => cdnn.cv_dnn_Net_readNetFromONNX(
+          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+          ffi.nullptr,
+        ),
+      ),
+    ),
+  );
 
   /// Reads a network model from ONNX in-memory buffer.
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gac1a00e8bae54070e5837c15b1482997d
   factory Net.fromOnnxBytes(Uint8List bufferModel) {
-    final p = calloc<cvg.Net>();
     final bufM = VecUChar.fromList(bufferModel);
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromONNXBytes(bufM.ref, p, ffi.nullptr));
-    final net = Net._(p);
-    return net;
+    try {
+      return Net._(
+        cvCreate(
+          calloc<cvg.Net>(),
+          (p) => cdnn.cv_dnn_Net_readNetFromONNXBytes(bufM.ref, p, ffi.nullptr),
+        ),
+      );
+    } finally {
+      bufM.dispose();
+    }
   }
 
   /// Reads a network model stored in TensorFlow framework's format.
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga91c313cd8269ddddaf3cb8299df2d4cb
-  factory Net.fromTensorflow(String path, {String config = ""}) {
-    final p = calloc<cvg.Net>();
-    final cpath = path.toNativeUtf8().cast<ffi.Char>();
-    final cconf = config.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromTensorflow(cpath, cconf, p, ffi.nullptr));
-    calloc.free(cpath);
-    calloc.free(cconf);
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.fromTensorflow(String path, {String config = ""}) => using(
+    (arena) => Net._(
+      cvCreate(
+        calloc<cvg.Net>(),
+        (p) => cdnn.cv_dnn_Net_readNetFromTensorflow(
+          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          config.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+          ffi.nullptr,
+        ),
+      ),
+    ),
+  );
 
   /// Reads a network model stored in TensorFlow framework's format.
   ///
@@ -210,45 +254,68 @@ class Net extends CvStruct<cvg.Net> {
     bufferConfig ??= Uint8List(0);
     final bufM = VecUChar.fromList(bufferModel);
     final bufC = VecUChar.fromList(bufferConfig);
-    final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromTensorflowBytes(bufM.ref, bufC.ref, p, ffi.nullptr));
-    final net = Net._(p);
-    return net;
+    try {
+      return Net._(
+        cvCreate(
+          calloc<cvg.Net>(),
+          (p) => cdnn.cv_dnn_Net_readNetFromTensorflowBytes(bufM.ref, bufC.ref, p, ffi.nullptr),
+        ),
+      );
+    } finally {
+      bufM.dispose();
+      bufC.dispose();
+    }
   }
 
   /// Reads a network model stored in TFLite framework's format.
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gae563b9ed2bc79838499a22727ad6c604
-  factory Net.fromTFLite(String path) {
-    final p = calloc<cvg.Net>();
-    final cpath = path.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromTFLite(cpath, p, ffi.nullptr));
-    calloc.free(cpath);
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.fromTFLite(String path) => using(
+    (arena) => Net._(
+      cvCreate(
+        calloc<cvg.Net>(),
+        (p) => cdnn.cv_dnn_Net_readNetFromTFLite(
+          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          p,
+          ffi.nullptr,
+        ),
+      ),
+    ),
+  );
 
   /// Reads a network model stored in TensorFlow framework's format.
   ///
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#gab913e8da754b3d8e463389894365bd0c
   factory Net.fromTFLiteBytes(Uint8List bufferModel) {
     final bufM = VecUChar.fromList(bufferModel);
-    final p = calloc<cvg.Net>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromTFLiteBytes(bufM.ref, p, ffi.nullptr));
-    final net = Net._(p);
-    return net;
+    try {
+      return Net._(
+        cvCreate(
+          calloc<cvg.Net>(),
+          (p) => cdnn.cv_dnn_Net_readNetFromTFLiteBytes(bufM.ref, p, ffi.nullptr),
+        ),
+      );
+    } finally {
+      bufM.dispose();
+    }
   }
 
   /// Reads a network model stored in Torch7 framework's format.
   /// https://docs.opencv.org/4.x/d6/d0f/group__dnn.html#ga73785dd1e95cd3070ef36f3109b053fe
-  factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) {
-    final p = calloc<cvg.Net>();
-    final cpath = path.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cdnn.cv_dnn_Net_readNetFromTorch(cpath, isBinary, evaluate, p, ffi.nullptr));
-    calloc.free(cpath);
-    final net = Net._(p);
-    return net;
-  }
+  factory Net.fromTorch(String path, {bool isBinary = true, bool evaluate = true}) => using(
+    (arena) => Net._(
+      cvCreate(
+        calloc<cvg.Net>(),
+        (p) => cdnn.cv_dnn_Net_readNetFromTorch(
+          path.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          isBinary,
+          evaluate,
+          p,
+          ffi.nullptr,
+        ),
+      ),
+    ),
+  );
 
   /// Empty returns true if there are no layers in the network.
   ///
@@ -256,24 +323,26 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#a6a5778787d5b8770deab5eda6968e66c
   bool get isEmpty => cdnn.cv_dnn_Net_empty(ref);
 
-  String dump() {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(() => cdnn.cv_dnn_Net_dump(ref, p));
-    final ret = p.value.cast<Utf8>().toDartString();
-    calloc.free(p.value);
-    calloc.free(p);
-    return ret;
-  }
+  String dump() => cvOut(
+    calloc<ffi.Pointer<ffi.Char>>(),
+    (p) => cdnn.cv_dnn_Net_dump(ref, p),
+    (p) {
+      final dump = p.value.toDartString();
+      calloc.free(p.value);
+      return dump;
+    },
+  );
 
   /// SetInput sets the new value for the layer output blob.
   ///
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a5e74adacffd6aa53d56046581de7fcbd
   void setInput(InputArray blob, {String name = "", double scalefactor = 1.0, Scalar? mean}) {
-    mean ??= Scalar();
-    final cname = name.toNativeUtf8();
-    cvRun(() => cdnn.cv_dnn_Net_setInput(ref, blob.ref, cname.cast(), scalefactor, mean!.ref, ffi.nullptr));
-    calloc.free(cname);
+    return using((arena) {
+      mean ??= Scalar();
+      final cname = name.toNativeUtf8(allocator: arena);
+      cvRun(() => cdnn.cv_dnn_Net_setInput(ref, blob.ref, cname.cast(), scalefactor, mean!.ref, ffi.nullptr));
+    });
   }
 
   /// Forward runs forward pass to compute output of layer with name outputName.
@@ -281,11 +350,12 @@ class Net extends CvStruct<cvg.Net> {
   /// For further details, please see:
   /// https://docs.opencv.org/4.x/db/d30/classcv_1_1dnn_1_1Net.html#a98ed94cb6ef7063d3697259566da310b
   Mat forward({String outputName = ""}) {
-    final m = Mat.empty();
-    final cOutName = outputName.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ptr, ffi.nullptr));
-    calloc.free(cOutName);
-    return m;
+    return using((arena) {
+      final m = Mat.empty();
+      final cOutName = outputName.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => cdnn.cv_dnn_Net_forward(ref, cOutName, m.ptr, ffi.nullptr));
+      return m;
+    });
   }
 
   /// OpenVINO not supported yet, this is not available
@@ -354,11 +424,14 @@ class Net extends CvStruct<cvg.Net> {
   /// https://docs.opencv.org/master/db/d30/classcv_1_1dnn_1_1Net.html#a06ce946f675f75d1c020c5ddbc78aedc
   (int, VecF64 layersTimes) getPerfProfile() {
     final p = calloc<ffi.Int64>();
-    final p1 = VecF64();
-    cvRun(() => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1.ptr, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
-    return (rval, p1);
+    try {
+      final p1 = VecF64();
+      cvRun(() => cdnn.cv_dnn_Net_getPerfProfile(ref, p, p1.ptr, ffi.nullptr));
+      final rval = p.value;
+      return (rval, p1);
+    } finally {
+      calloc.free(p);
+    }
   }
 
   /// GetUnconnectedOutLayers returns indexes of layers with unconnected outputs.

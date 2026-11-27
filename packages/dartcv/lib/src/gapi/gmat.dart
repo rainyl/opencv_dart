@@ -18,20 +18,18 @@ import '../package_ffi.dart';
 class GMat extends CvStruct<cvg.GMat> {
   GMat.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast());
+      // `detach: this` is what `freeNative` detaches: without it `dispose()` frees the native
+      // object and the finalizer frees it a second time when the wrapper is collected.
+      finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   factory GMat.empty() {
-    final p = calloc<cvg.GMat>();
-    cvRun(() => cvg.gapi_GMat_New_Empty(p));
-    return GMat.fromPointer(p);
+    return GMat.fromPointer(cvCreate(calloc<cvg.GMat>(), cvg.gapi_GMat_New_Empty));
   }
 
   factory GMat.fromMat(Mat mat) {
-    final p = calloc<cvg.GMat>();
-    cvRun(() => cvg.gapi_GMat_New_FromMat(mat.ref, p));
-    return GMat.fromPointer(p);
+    return GMat.fromPointer(cvCreate(calloc<cvg.GMat>(), (p) => cvg.gapi_GMat_New_FromMat(mat.ref, p)));
   }
 
   static final finalizer = OcvFinalizer<cvg.GMatPtr>(cvg.addresses.gapi_GMat_Close);

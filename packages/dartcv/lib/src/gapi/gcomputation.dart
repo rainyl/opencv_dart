@@ -19,35 +19,37 @@ import 'gscalar.dart';
 class GComputation extends CvStruct<cvg.GComputation> {
   GComputation.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast());
+      // `detach: this` is what `freeNative` detaches: without it `dispose()` frees the native
+      // object and the finalizer frees it a second time when the wrapper is collected.
+      finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   factory GComputation.mimo(GMat inMat, GMat outMat) {
-    final p = calloc<cvg.GComputation>();
-    cvRun(() => cvg.gapi_GComputation_New(inMat.ref, outMat.ref, p));
-    return GComputation.fromPointer(p);
+    return GComputation.fromPointer(
+      cvCreate(calloc<cvg.GComputation>(), (p) => cvg.gapi_GComputation_New(inMat.ref, outMat.ref, p)),
+    );
   }
 
   factory GComputation.miso(GMat inMat, GScalar outScalar) {
-    final p = calloc<cvg.GComputation>();
-    cvRun(() => cvg.gapi_GComputation_New_1(inMat.ref, outScalar.ref, p));
-    return GComputation.fromPointer(p);
+    return GComputation.fromPointer(
+      cvCreate(calloc<cvg.GComputation>(), (p) => cvg.gapi_GComputation_New_1(inMat.ref, outScalar.ref, p)),
+    );
   }
 
   factory GComputation.mimimo(GMat in1, GMat in2, GMat out) {
-    final p = calloc<cvg.GComputation>();
-    cvRun(() => cvg.gapi_GComputation_New_2(in1.ref, in2.ref, out.ref, p));
-    return GComputation.fromPointer(p);
+    return GComputation.fromPointer(
+      cvCreate(calloc<cvg.GComputation>(), (p) => cvg.gapi_GComputation_New_2(in1.ref, in2.ref, out.ref, p)),
+    );
   }
 
   factory GComputation.mimiso(GMat in1, GMat in2, GScalar out) {
-    final p = calloc<cvg.GComputation>();
-    cvRun(() => cvg.gapi_GComputation_New_3(in1.ref, in2.ref, out.ref, p));
-    return GComputation.fromPointer(p);
+    return GComputation.fromPointer(
+      cvCreate(calloc<cvg.GComputation>(), (p) => cvg.gapi_GComputation_New_3(in1.ref, in2.ref, out.ref, p)),
+    );
   }
 
-  Future<Mat> apply(Mat inMat) async =>
+  Future<Mat> apply(Mat inMat) =>
       cvRunAsync1((callback) => cvg.gapi_GComputation_apply(ref, inMat.ref, callback), (c, p) {
         c.complete(Mat.fromPointer(p.cast()));
       });
@@ -55,21 +57,21 @@ class GComputation extends CvStruct<cvg.GComputation> {
   // Mat applyMIMO(Mat inMat) => apply(inMat);
 
   Scalar applyMISO(Mat inMat) {
-    final p = calloc<cvg.Scalar>();
-    cvRun(() => cvg.gapi_GComputation_apply_1(ref, inMat.ref, p));
-    return Scalar.fromPointer(p);
+    return Scalar.fromPointer(
+      cvCreate(calloc<cvg.Scalar>(), (p) => cvg.gapi_GComputation_apply_1(ref, inMat.ref, p)),
+    );
   }
 
   Mat applyMIMIMO(Mat in1, Mat in2) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => cvg.gapi_GComputation_apply_2(ref, in1.ref, in2.ref, p));
-    return Mat.fromPointer(p);
+    return Mat.fromPointer(
+      cvCreate(calloc<cvg.Mat>(), (p) => cvg.gapi_GComputation_apply_2(ref, in1.ref, in2.ref, p)),
+    );
   }
 
   Scalar applyMIMISO(Mat in1, Mat in2) {
-    final p = calloc<cvg.Scalar>();
-    cvRun(() => cvg.gapi_GComputation_apply_3(ref, in1.ref, in2.ref, p));
-    return Scalar.fromPointer(p);
+    return Scalar.fromPointer(
+      cvCreate(calloc<cvg.Scalar>(), (p) => cvg.gapi_GComputation_apply_3(ref, in1.ref, in2.ref, p)),
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.GComputationPtr>(cvg.addresses.gapi_GComputation_Close);

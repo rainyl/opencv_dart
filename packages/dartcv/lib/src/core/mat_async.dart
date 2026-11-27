@@ -23,6 +23,7 @@ extension MatAsync on Mat {
       (callback) => ccore.cv_Mat_create_5(s.ref, rows, cols, type.value, p, callback),
       (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
       timeout: timeout,
+      releaseOnFailure: () => calloc.free(p),
     );
   }
 
@@ -45,6 +46,7 @@ extension MatAsync on Mat {
     return cvRunAsync0<Mat>(
       (callback) => ccore.cv_Mat_eye(rows, cols, type.value, p, callback),
       (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
+      releaseOnFailure: () => calloc.free(p),
     );
   }
 
@@ -53,6 +55,7 @@ extension MatAsync on Mat {
     return cvRunAsync0<Mat>(
       (callback) => ccore.cv_Mat_zeros(rows, cols, type.value, p, callback),
       (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
+      releaseOnFailure: () => calloc.free(p),
     );
   }
 
@@ -61,6 +64,7 @@ extension MatAsync on Mat {
     return cvRunAsync0<Mat>(
       (callback) => ccore.cv_Mat_ones(rows, cols, type.value, p, callback),
       (c) => c.complete(Mat.fromPointer(p, externalSize: rows * cols * type.elemSize)),
+      releaseOnFailure: () => calloc.free(p),
     );
   }
 
@@ -73,7 +77,7 @@ extension MatAsync on Mat {
     );
   }
 
-  Future<void> copyToAsync(Mat dst, {Mat? mask}) async => cvRunAsync0(
+  Future<void> copyToAsync(Mat dst, {Mat? mask}) => cvRunAsync0(
     (callback) => mask == null
         ? ccore.cv_Mat_copyTo(ref, dst.ref, callback)
         : ccore.cv_Mat_copyTo_1(ref, dst.ref, mask.ref, callback),
@@ -137,6 +141,7 @@ extension MatAsync on Mat {
             : ccore.cv_Mat_mean_1(ref, mask.ref, s, callback);
       },
       (c) => c.complete(Scalar.fromPointer(s)),
+      releaseOnFailure: () => calloc.free(s),
     );
   }
 
@@ -153,10 +158,11 @@ extension MatAsync on Mat {
     return cvRunAsync0<Scalar>(
       (callback) => ccore.cv_sum(ref, s, callback),
       (c) => c.complete(Scalar.fromPointer(s)),
+      releaseOnFailure: () => calloc.free(s),
     );
   }
 
   /// PatchNaNs converts NaN's to zeros.
-  Future<void> patchNaNsAsync({double val = 0.0}) async =>
+  Future<void> patchNaNsAsync({double val = 0.0}) =>
       cvRunAsync0<void>((callback) => ccore.cv_Mat_patchNaNs(ref, val, callback), (c) => c.complete());
 }

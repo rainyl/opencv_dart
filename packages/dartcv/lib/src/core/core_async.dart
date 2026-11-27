@@ -207,11 +207,15 @@ Future<(Mat dist, Mat nidx)> batchDistanceAsync(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
 Future<int> borderInterpolateAsync(int p, int len, int borderType, {Duration? timeout}) async {
   final ptr = calloc<ffi.Int>();
-  return cvRunAsync0((callback) => ccore.cv_borderInterpolate(p, len, borderType, ptr, callback), (c) {
-    final v = ptr.value;
-    calloc.free(ptr);
-    return c.complete(v);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_borderInterpolate(p, len, borderType, ptr, callback),
+    (c) {
+      final v = ptr.value;
+      return c.complete(v);
+    },
+    timeout: timeout,
+    release: () => calloc.free(ptr),
+  );
 }
 
 /// CalcCovarMatrix calculates the covariance matrix of a set of vectors.
@@ -272,13 +276,18 @@ Future<(bool, Point)> checkRangeAsync(
 }) async {
   final pos = calloc<cvg.CvPoint>();
   final pRval = calloc<ffi.Bool>();
-  return cvRunAsync0((callback) => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, callback), (
-    c,
-  ) {
-    final rval = pRval.value;
-    calloc.free(pRval);
-    return c.complete((rval, Point.fromPointer(pos)));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, callback),
+    (
+      c,
+    ) {
+      final rval = pRval.value;
+      return c.complete((rval, Point.fromPointer(pos)));
+    },
+    timeout: timeout,
+    release: () => calloc.free(pRval),
+    releaseOnFailure: () => calloc.free(pos),
+  );
 }
 
 /// Compare performs the per-element comparison of two arrays
@@ -389,11 +398,15 @@ Future<Mat> dctAsync(InputArray src, {OutputArray? dst, int flags = 0, Duration?
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf802bd9ca3e07b8b6170645ef0611d0c
 Future<double> determinantAsync(InputArray mtx, {Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => ccore.cv_determinant(mtx.ref, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_determinant(mtx.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// DFT performs a forward or inverse Discrete Fourier Transform (DFT)
@@ -452,9 +465,9 @@ Future<(bool ret, Mat eigenvalues, Mat eigenvectors)> eigenAsync(
     (callback) => ccore.cv_eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p, callback),
     (c) {
       final ret = p.value;
-      calloc.free(p);
       return c.complete((ret, eigenvalues!, eigenvectors!));
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -574,11 +587,15 @@ Future<(Mat mean, Mat result)> PCAProjectAsync(
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3119e3ea73010a6f810bb05aa36ac8d6
 Future<double> PSNRAsync(InputArray src1, InputArray src2, {double R = 255.0, Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => ccore.cv_PSNR(src1.ref, src2.ref, R, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_PSNR(src1.ref, src2.ref, R, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// Exp calculates the exponent of every array element.
@@ -663,11 +680,15 @@ Future<Mat> gemmAsync(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6577a2e59968936ae02eb2edde5de299
 Future<int> getOptimalDFTSizeAsync(int vecsize, {Duration? timeout}) async {
   final p = calloc<ffi.Int>();
-  return cvRunAsync0((callback) => ccore.cv_getOptimalDFTSize(vecsize, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_getOptimalDFTSize(vecsize, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// Hconcat applies horizontal concatenation to given matrices.
@@ -792,11 +813,15 @@ Future<(double rval, Mat dst)> invertAsync(
 }) async {
   dst ??= Mat.empty();
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => ccore.cv_invert(src.ref, dst!.ref, flags, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete((rval, dst!));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_invert(src.ref, dst!.ref, flags, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete((rval, dst!));
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// KMeans finds centers of clusters and groups input samples around the clusters.
@@ -829,9 +854,9 @@ Future<(double rval, Mat bestLabels, Mat centers)> kmeansAsync(
     ),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete((rval, bestLabels, centers!));
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -866,9 +891,9 @@ Future<(double rval, Mat bestLabels, Mat centers)> kmeansByPointsAsync(
     ),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete((rval, bestLabels, centers!));
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -942,12 +967,27 @@ Future<(Scalar mean, Scalar stddev)> meanStdDevAsync(
   final mean = calloc<cvg.Scalar>();
   final stddev = calloc<cvg.Scalar>();
   return mask == null
-      ? cvRunAsync0((callback) => ccore.cv_meanStdDev(src.ref, mean, stddev, callback), (c) {
-          return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
-        }, timeout: timeout)
-      : cvRunAsync0((callback) => ccore.cv_meanStdDev_1(src.ref, mean, stddev, mask.ref, callback), (c) {
-          return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
-        });
+      ? cvRunAsync0(
+          (callback) => ccore.cv_meanStdDev(src.ref, mean, stddev, callback),
+          (c) {
+            return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
+          },
+          timeout: timeout,
+          releaseOnFailure: () {
+            calloc.free(mean);
+            calloc.free(stddev);
+          },
+        )
+      : cvRunAsync0(
+          (callback) => ccore.cv_meanStdDev_1(src.ref, mean, stddev, mask.ref, callback),
+          (c) {
+            return c.complete((Scalar.fromPointer(mean), Scalar.fromPointer(stddev)));
+          },
+          releaseOnFailure: () {
+            calloc.free(mean);
+            calloc.free(stddev);
+          },
+        );
 }
 
 /// Merge creates one multi-channel array out of several single-channel ones.
@@ -990,11 +1030,13 @@ Future<(double minVal, double maxVal, int minIdx, int maxIdx)> minMaxIdxAsync(
     (callback) => ccore.cv_minMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP, mask!.ref, callback),
     (c) {
       final rval = (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
+      return c.complete(rval);
+    },
+    release: () {
       calloc.free(minValP);
       calloc.free(maxValP);
       calloc.free(minIdxP);
       calloc.free(maxIdxP);
-      return c.complete(rval);
     },
     timeout: timeout,
   );
@@ -1018,11 +1060,17 @@ Future<(double minVal, double maxVal, Point minLoc, Point maxLoc)> minMaxLocAsyn
     (callback) => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, callback),
     (c) {
       final rval = (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
-      calloc.free(minValP);
-      calloc.free(maxValP);
       return c.complete(rval);
     },
+    release: () {
+      calloc.free(minValP);
+      calloc.free(maxValP);
+    },
     timeout: timeout,
+    releaseOnFailure: () {
+      calloc.free(minLocP);
+      calloc.free(maxLocP);
+    },
   );
 }
 
@@ -1135,11 +1183,15 @@ Future<double> normAsync(
 }) async {
   mask ??= Mat.empty();
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => ccore.cv_norm(src1.ref, normType, mask!.ref, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_norm(src1.ref, normType, mask!.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// Norm calculates the absolute difference/relative norm of two arrays.
@@ -1155,13 +1207,17 @@ Future<double> norm1Async(
 }) async {
   final p = calloc<ffi.Double>();
   mask ??= Mat.empty();
-  return cvRunAsync0((callback) => ccore.cv_norm_1(src1.ref, src2.ref, normType, mask!.ref, p, callback), (
-    c,
-  ) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_norm_1(src1.ref, src2.ref, normType, mask!.ref, p, callback),
+    (
+      c,
+    ) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// PerspectiveTransform performs the perspective matrix transformation of vectors.
@@ -1193,11 +1249,15 @@ Future<(bool ret, Mat dst)> solveAsync(
 }) async {
   dst ??= Mat.empty();
   final p = calloc<ffi.Bool>();
-  return cvRunAsync0((callback) => ccore.cv_solve(src1.ref, src2.ref, dst!.ref, flags, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete((rval, dst!));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_solve(src1.ref, src2.ref, dst!.ref, flags, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete((rval, dst!));
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// SolveCubic finds the real roots of a cubic equation.
@@ -1211,11 +1271,15 @@ Future<(int rval, Mat roots)> solveCubicAsync(
 }) async {
   roots ??= Mat.empty();
   final p = calloc<ffi.Int>();
-  return cvRunAsync0((callback) => ccore.cv_solveCubic(coeffs.ref, roots!.ref, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete((rval, roots!));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_solveCubic(coeffs.ref, roots!.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete((rval, roots!));
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// SolvePoly finds the real or complex roots of a polynomial equation.
@@ -1230,11 +1294,15 @@ Future<(double rval, Mat roots)> solvePolyAsync(
 }) async {
   roots ??= Mat.empty();
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => ccore.cv_solvePoly(coeffs.ref, roots!.ref, maxIters, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete((rval, roots!));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_solvePoly(coeffs.ref, roots!.ref, maxIters, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete((rval, roots!));
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// Reduce reduces a matrix to a vector.
@@ -1408,9 +1476,14 @@ Future<Mat> subtractAsync(
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
 Future<Scalar> sumAsync(Mat src, {Duration? timeout}) async {
   final p = calloc<cvg.Scalar>();
-  return cvRunAsync0((callback) => ccore.cv_sum(src.ref, p, callback), (c) {
-    return c.complete(Scalar.fromPointer(p));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_sum(src.ref, p, callback),
+    (c) {
+      return c.complete(Scalar.fromPointer(p));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(p),
+  );
 }
 
 /// Trace returns the trace of a matrix.
@@ -1419,9 +1492,14 @@ Future<Scalar> sumAsync(Mat src, {Duration? timeout}) async {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Future<Scalar> traceAsync(InputArray mtx, {Duration? timeout}) async {
   final ptr = calloc<cvg.Scalar>();
-  return cvRunAsync0((callback) => ccore.cv_trace(mtx.ref, ptr, callback), (c) {
-    return c.complete(Scalar.fromPointer(ptr));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => ccore.cv_trace(mtx.ref, ptr, callback),
+    (c) {
+      return c.complete(Scalar.fromPointer(ptr));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(ptr),
+  );
 }
 
 /// Transform performs the matrix transformation of every array element.

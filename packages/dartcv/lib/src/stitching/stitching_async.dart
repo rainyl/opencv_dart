@@ -21,9 +21,9 @@ extension StitcherAsync on Stitcher {
       (callback) => cstitching.cv_Stitcher_estimateTransform(ref, images.ref, masks!.ref, rptr, callback),
       (c) {
         final rval = StitcherStatus.fromInt(rptr.value);
-        calloc.free(rptr);
         return c.complete(rval);
       },
+      release: () => calloc.free(rptr),
       timeout: timeout,
     );
   }

@@ -123,9 +123,9 @@ Future<(bool rval, Mat rvec, Mat tvec)> estimatePoseCharucoBoardAsync(
     ),
     (c) {
       final rval = pb.value;
-      calloc.free(pb);
       c.complete((rval, rvec!, tvec!));
     },
+    release: () => calloc.free(pb),
     timeout: timeout,
   );
 }

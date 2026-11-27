@@ -1511,6 +1511,11 @@ void $registerTypes() {
   ffi.$registerStruct<VecVecPoint2f>(4, 4, VecVecPoint2f.$view);
   ffi.$registerStruct<VecVecPoint3f>(4, 4, VecVecPoint3f.$view);
   ffi.$registerStruct<VecVecPoint3i>(4, 4, VecVecPoint3i.$view);
-  $rt.registerCallback(CvCallback_0Function, 'vi', 'p');
-  $rt.registerCallback(CvCallback_1Function, 'vii', 'pp');
+  $rt.registerCallback(CvCallback_0Function, 'vi', 'p', <Object? Function(int)?>[
+    (a) => ffi.Pointer<CvStatus>.fromAddress(a),
+  ]);
+  $rt.registerCallback(CvCallback_1Function, 'vii', 'pp', <Object? Function(int)?>[
+    (a) => ffi.Pointer<CvStatus>.fromAddress(a),
+    null,
+  ]);
 }

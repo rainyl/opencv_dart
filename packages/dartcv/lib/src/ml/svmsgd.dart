@@ -34,9 +34,7 @@ class SVMSGD extends CvStruct<cml.SVMSGD> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [SVMSGD.load].
   factory SVMSGD.create() {
-    final p = calloc<cml.SVMSGD>();
-    cvRun(() => cml.cv_ml_SVMSGD_create(p));
-    return SVMSGD._(p);
+    return SVMSGD._(cvCreate(calloc<cml.SVMSGD>(), cml.cv_ml_SVMSGD_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -58,16 +56,8 @@ class SVMSGD extends CvStruct<cml.SVMSGD> {
     ),
   );
 
-  factory SVMSGD._make(ffi.Pointer<cml.CvStatus> Function(cml.SVMSGDPtr p) func) {
-    final p = calloc<cml.SVMSGD>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return SVMSGD._(p);
-  }
+  factory SVMSGD._make(ffi.Pointer<cml.CvStatus> Function(cml.SVMSGDPtr p) func) =>
+      SVMSGD._(cvCreate(calloc<cml.SVMSGD>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.SVMSGDPtr>(cml.addresses.cv_ml_SVMSGD_close);
 

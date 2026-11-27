@@ -306,25 +306,26 @@ class EdgeBoxes extends CvStruct<cvg.EdgeBoxes> {
     double gamma = 2,
     double kappa = 1.5,
   }) {
-    final p = calloc<cvg.EdgeBoxes>();
-    cvRun(
-      () => ccontrib.cv_ximgproc_EdgeBoxes_create(
-        alpha,
-        beta,
-        eta,
-        minScore,
-        maxBoxes,
-        edgeMinMag,
-        edgeMergeThr,
-        clusterMinMag,
-        maxAspectRatio,
-        minBoxArea,
-        gamma,
-        kappa,
-        p,
+    return EdgeBoxes.fromPointer(
+      cvCreate(
+        calloc<cvg.EdgeBoxes>(),
+        (p) => ccontrib.cv_ximgproc_EdgeBoxes_create(
+          alpha,
+          beta,
+          eta,
+          minScore,
+          maxBoxes,
+          edgeMinMag,
+          edgeMergeThr,
+          clusterMinMag,
+          maxAspectRatio,
+          minBoxArea,
+          gamma,
+          kappa,
+          p,
+        ),
       ),
     );
-    return EdgeBoxes.fromPointer(p);
   }
 
   /// Returns array containing proposal boxes.
@@ -416,9 +417,9 @@ class RFFeatureGetter extends CvStruct<cvg.RFFeatureGetter> {
   }
 
   factory RFFeatureGetter.empty() {
-    final p = calloc<cvg.RFFeatureGetter>();
-    cvRun(() => ccontrib.cv_ximgproc_RFFeatureGetter_create(p));
-    return RFFeatureGetter.fromPointer(p);
+    return RFFeatureGetter.fromPointer(
+      cvCreate(calloc<cvg.RFFeatureGetter>(), ccontrib.cv_ximgproc_RFFeatureGetter_create),
+    );
   }
 
   Mat getFeatures(InputArray src, int gnrmRad, int gsmthRad, int shrink, int outNum, int gradNum) {
@@ -465,11 +466,22 @@ class StructuredEdgeDetection extends CvStruct<cvg.StructuredEdgeDetection> {
 
   /// https://docs.opencv.org/4.x/de/d51/group__ximgproc__edge.html#ga2aad8b0b32e05d82200348dcf5b32066
   factory StructuredEdgeDetection.create(String model) {
-    final cmodel = model.toNativeUtf8().cast<ffi.Char>();
-    final p = calloc<cvg.StructuredEdgeDetection>();
-    cvRun(() => ccontrib.cv_ximgproc_StructuredEdgeDetection_create(cmodel, p));
-    calloc.free(cmodel);
-    return StructuredEdgeDetection.fromPointer(p);
+    // A missing/bad model makes the native create throw; the path is a raw `calloc` block, so it has
+    // to be released on that path as well (leaking it per retry scales with the path length).
+    final arena = Arena();
+    try {
+      return StructuredEdgeDetection.fromPointer(
+        cvCreate(
+          calloc<cvg.StructuredEdgeDetection>(),
+          (p) => ccontrib.cv_ximgproc_StructuredEdgeDetection_create(
+            model.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+            p,
+          ),
+        ),
+      );
+    } finally {
+      arena.releaseAll();
+    }
   }
 
   /// The function computes orientation from edge image.
@@ -547,9 +559,12 @@ class GraphSegmentation extends CvStruct<cvg.GraphSegmentation> {
 
   /// https://docs.opencv.org/4.x/d5/df0/group__ximgproc__segmentation.html#gae067b832eee0d26aa30269a7ae423d2f
   factory GraphSegmentation.create({double sigma = 0.5, double k = 300, int minSize = 100}) {
-    final p = calloc<cvg.GraphSegmentation>();
-    cvRun(() => ccontrib.cv_ximgproc_GraphSegmentation_create(sigma, k, minSize, p));
-    return GraphSegmentation.fromPointer(p);
+    return GraphSegmentation.fromPointer(
+      cvCreate(
+        calloc<cvg.GraphSegmentation>(),
+        (p) => ccontrib.cv_ximgproc_GraphSegmentation_create(sigma, k, minSize, p),
+      ),
+    );
   }
 
   /// Segment an image and store output in dst.
@@ -704,9 +719,9 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
 
   /// Creates a smart pointer to a EdgeDrawing object and initializes it.
   factory EdgeDrawing.empty() {
-    final p = calloc<cvg.EdgeDrawing>();
-    cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_create(p));
-    return EdgeDrawing.fromPointer(p);
+    return EdgeDrawing.fromPointer(
+      cvCreate(calloc<cvg.EdgeDrawing>(), ccontrib.cv_ximgproc_EdgeDrawing_create),
+    );
   }
 
   /// Segment an image and store output in dst.
@@ -752,9 +767,12 @@ class EdgeDrawing extends CvStruct<cvg.EdgeDrawing> {
   }
 
   EdgeDrawingParams get params {
-    final p = calloc<cvg.EdgeDrawingParams>();
-    cvRun(() => ccontrib.cv_ximgproc_EdgeDrawing_getParams(ref, p, ffi.nullptr));
-    return EdgeDrawingParams.fromPointer(p);
+    return EdgeDrawingParams.fromPointer(
+      cvCreate(
+        calloc<cvg.EdgeDrawingParams>(),
+        (p) => ccontrib.cv_ximgproc_EdgeDrawing_getParams(ref, p, ffi.nullptr),
+      ),
+    );
   }
 
   set params(EdgeDrawingParams value) =>

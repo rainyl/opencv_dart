@@ -86,10 +86,10 @@ class Fisheye {
       ),
       (c) {
         final rval = prval.value;
-        calloc.free(prval);
         return c.complete((rval, rvecs!, tvecs!));
       },
       timeout: timeout,
+      release: () => calloc.free(prval),
     );
   }
 
@@ -412,10 +412,10 @@ class Fisheye {
       ),
       (c) {
         final rval = prval.value;
-        calloc.free(prval);
         return c.complete((rval, rvec!, tvec!));
       },
       timeout: timeout,
+      release: () => calloc.free(prval),
     );
   }
 
@@ -441,9 +441,9 @@ class Fisheye {
     tvec ??= Mat.empty();
     inliers ??= Mat.empty();
     criteria ??= TermCriteria(TERM_MAX_ITER + TERM_EPS, 10, 1e-8);
-    final prval = calloc<ffi.Bool>();
-    cvRun(
-      () => ccalib3d.cv_fisheye_solvePnPRansac(
+    final rval = cvOut(
+      calloc<ffi.Bool>(),
+      (prval) => ccalib3d.cv_fisheye_solvePnPRansac(
         objectPoints.ref,
         imagePoints.ref,
         cameraMatrix.ref,
@@ -460,9 +460,8 @@ class Fisheye {
         prval,
         ffi.nullptr,
       ),
+      (prval) => prval.value,
     );
-    final rval = prval.value;
-    calloc.free(prval);
     return (rval, rvec, tvec, inliers);
   }
 
@@ -510,10 +509,10 @@ class Fisheye {
       ),
       (c) {
         final rval = prval.value;
-        calloc.free(prval);
         return c.complete((rval, rvec!, tvec!, inliers!));
       },
       timeout: timeout,
+      release: () => calloc.free(prval),
     );
   }
 

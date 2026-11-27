@@ -27,9 +27,7 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
   factory MergeMertens.fromPointer(cvg.MergeMertensPtr ptr, [bool attach = true]) =>
       MergeMertens._(ptr.cast(), attach);
   factory MergeMertens.empty() {
-    final p = calloc<cvg.MergeMertens>();
-    cvRun(() => cphoto.cv_createMergeMertens(p));
-    return MergeMertens._(p);
+    return MergeMertens._(cvCreate(calloc<cvg.MergeMertens>(), cphoto.cv_createMergeMertens));
   }
 
   factory MergeMertens.create({
@@ -37,9 +35,12 @@ class MergeMertens extends CvStruct<cvg.MergeMertens> {
     double saturationWeight = 1.0,
     double exposureWeight = 0.0,
   }) {
-    final p = calloc<cvg.MergeMertens>();
-    cvRun(() => cphoto.cv_createMergeMertens_1(contrastWeight, saturationWeight, exposureWeight, p));
-    return MergeMertens._(p);
+    return MergeMertens._(
+      cvCreate(
+        calloc<cvg.MergeMertens>(),
+        (p) => cphoto.cv_createMergeMertens_1(contrastWeight, saturationWeight, exposureWeight, p),
+      ),
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.MergeMertensPtr>(cphoto.addresses.cv_MergeMertens_close);
@@ -89,9 +90,7 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.empty() {
-    final p = calloc<cvg.AlignMTB>();
-    cvRun(() => cphoto.cv_createAlignMTB(p));
-    return AlignMTB._(p);
+    return AlignMTB._(cvCreate(calloc<cvg.AlignMTB>(), cphoto.cv_createAlignMTB));
   }
 
   /// returns an AlignMTB for converts images to median threshold bitmaps.
@@ -103,9 +102,9 @@ class AlignMTB extends CvStruct<cvg.AlignMTB> {
   /// https://docs.opencv.org/master/d7/db6/classcv_1_1AlignMTB.html
   /// https://docs.opencv.org/master/d6/df5/group__photo__hdr.html#ga2f1fafc885a5d79dbfb3542e08db0244
   factory AlignMTB.create({int maxBits = 6, int excludeRange = 4, bool cut = true}) {
-    final p = calloc<cvg.AlignMTB>();
-    cvRun(() => cphoto.cv_createAlignMTB_1(maxBits, excludeRange, cut, p));
-    return AlignMTB._(p);
+    return AlignMTB._(
+      cvCreate(calloc<cvg.AlignMTB>(), (p) => cphoto.cv_createAlignMTB_1(maxBits, excludeRange, cut, p)),
+    );
   }
 
   static final finalizer = OcvFinalizer<cvg.AlignMTBPtr>(cphoto.addresses.cv_AlignMTB_close);

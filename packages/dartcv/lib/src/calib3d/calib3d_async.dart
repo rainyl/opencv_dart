@@ -57,9 +57,9 @@ Future<(double rmsErr, Mat cameraMatrix, Mat distCoeffs, Mat rvecs, Mat tvecs)> 
     ),
     (c) {
       final rmsErr = cRmsErr.value;
-      calloc.free(cRmsErr);
       return c.complete((rmsErr, cameraMatrix, distCoeffs, rvecs!, tvecs!));
     },
+    release: () => calloc.free(cRmsErr),
     timeout: timeout,
   );
 }
@@ -188,9 +188,9 @@ Future<(int rval, VecMat rotations, VecMat translations, VecMat normals)> decomp
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rotations!, translations!, normals!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -247,7 +247,7 @@ Future<Mat> drawChessboardCornersAsync(
   VecPoint2f corners,
   bool patternWasFound, {
   Duration? timeout,
-}) async {
+}) {
   return cvRunAsync0(
     (callback) => ccalib3d.cv_drawChessboardCorners(
       image.ref,
@@ -274,7 +274,7 @@ Future<void> drawFrameAxesAsync(
   double length, {
   int thickness = 3,
   Duration? timeout,
-}) async {
+}) {
   return cvRunAsync0(
     (callback) => ccalib3d.cv_drawFrameAxes(
       image.ref,
@@ -390,9 +390,9 @@ Future<(int rval, Mat, Mat inliers)> estimateAffine3DAsync(
     ),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete((rval, out!, inliers!));
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -426,6 +426,7 @@ Future<Scalar> estimateChessboardSharpnessAsync(
     ),
     (c) => c.complete(Scalar.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -459,9 +460,9 @@ Future<(int rval, Mat out, Mat inliers)> estimateTranslation3DAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, out!, inliers!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -534,9 +535,9 @@ Future<bool> find4QuadCornerSubpixAsync(
     (callback) => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, callback),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete(rval);
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -559,9 +560,9 @@ Future<(bool success, VecPoint2f corners)> findChessboardCornersAsync(
         ccalib3d.cv_findChessboardCorners(image.ref, patternSize.cvdRef, corners!.ptr, flags, r, callback),
     (c) {
       final rval = r.value;
-      calloc.free(r);
       return c.complete((rval, corners!));
     },
+    release: () => calloc.free(r),
     timeout: timeout,
   );
 }
@@ -582,9 +583,9 @@ Future<(bool, VecPoint2f corners)> findChessboardCornersSBAsync(
         ccalib3d.cv_findChessboardCornersSB(image.ref, patternSize.cvdRef, corners!.ptr, flags, b, callback),
     (c) {
       final rval = b.value;
-      calloc.free(b);
       return c.complete((rval, corners!));
     },
+    release: () => calloc.free(b),
     timeout: timeout,
   );
 }
@@ -614,9 +615,9 @@ Future<(bool, VecPoint2f corners, Mat meta)> findChessboardCornersSBWithMetaAsyn
     ),
     (c) {
       final rval = b.value;
-      calloc.free(b);
       return c.complete((rval, corners!, meta!));
     },
+    release: () => calloc.free(b),
     timeout: timeout,
   );
 }
@@ -640,9 +641,9 @@ Future<(bool, Mat)> findCirclesGridAsync(
         ccalib3d.cv_findCirclesGrid(image.ref, patternSize.ref, centers!.ref, flags, prval, callback),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, centers!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -683,6 +684,7 @@ Future<Mat> findEssentialMatAsync(
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -719,6 +721,7 @@ Future<Mat> findEssentialMatCameraMatrixAsync(
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -753,6 +756,7 @@ Future<Mat> findFundamentalMatAsync(
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -775,6 +779,7 @@ Future<Mat> findFundamentalMatUsacAsync(
         ccalib3d.cv_findFundamentalMat_1(points1.ref, points2.ref, mask!.ref, params.ref, prval, callback),
     (c) => c.complete(Mat.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -830,6 +835,7 @@ Future<Mat> findHomographyUsacAsync(
         ccalib3d.cv_findHomography_1(srcPoints.ref, dstPoints.ref, mask!.ref, params.ref, prval, callback),
     (c) => c.complete(Mat.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -857,6 +863,7 @@ Future<Mat> getDefaultNewCameraMatrixAsync(
     ),
     (c) => c.complete(Mat.fromPointer(prval)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -956,9 +963,9 @@ Future<(double rval, Mat map1, Mat map2)> initWideAngleProjMapAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, map1!, map2!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1051,9 +1058,9 @@ Future<(int rval, Mat R, Mat t)> recoverPoseAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, R!, t!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1096,9 +1103,9 @@ Future<(int rval, Mat R, Mat t, Mat triangulatedPoints)> recoverPoseCameraMatrix
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, R!, t!, triangulatedPoints!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1148,6 +1155,7 @@ Future<(Vec3d rval, Mat mtxR, Mat mtxQ)> RQDecomp3x3Async(
         ccalib3d.cv_RQDecomp3x3(src.ref, mtxR!.ref, mtxQ!.ref, Qx!.ref, Qy!.ref, Qz!.ref, prval, callback),
     (c) => c.complete((Vec3d.fromPointer(prval), mtxR!, mtxQ!)),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(prval),
   );
 }
 
@@ -1181,9 +1189,9 @@ Future<(int rval, VecMat rvecs, VecMat tvecs)> solveP3PAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvecs!, tvecs!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1220,9 +1228,9 @@ Future<(bool rval, Mat rvec, Mat tvec)> solvePnPAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvec!, tvec!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1268,9 +1276,9 @@ Future<(int rval, VecMat rvecs, VecMat tvecs, Mat reprojectionError)> solvePnPGe
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvecs!, tvecs!, reprojectionError!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1316,9 +1324,9 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvec!, tvec!, inliers!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }
@@ -1357,9 +1365,9 @@ Future<(bool rval, Mat rvec, Mat tvec, Mat inliers)> solvePnPRansacUsacAsync(
     ),
     (c) {
       final rval = prval.value;
-      calloc.free(prval);
       return c.complete((rval, rvec!, tvec!, inliers!));
     },
+    release: () => calloc.free(prval),
     timeout: timeout,
   );
 }

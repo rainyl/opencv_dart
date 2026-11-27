@@ -306,11 +306,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
-        calloc.free(v.value);
-        calloc.free(v);
         return c.complete((ss, straightQRcode!));
       },
       timeout: timeout,
+      release: () {
+        calloc.free(v.value);
+        calloc.free(v);
+      },
     );
   }
 
@@ -334,11 +336,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ss = v.value.cast<Utf8>().toDartString();
-        calloc.free(v.value);
-        calloc.free(v);
         return c.complete((ss, points!, straightQRcode!));
       },
       timeout: timeout,
+      release: () {
+        calloc.free(v.value);
+        calloc.free(v);
+      },
     );
   }
 
@@ -362,13 +366,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final s = v.value.cast<Utf8>().toDartString();
-        if (v.value != ffi.nullptr) {
-          calloc.free(v.value);
-        }
-        calloc.free(v);
         return c.complete((s, points, straightCode!));
       },
       timeout: timeout,
+      release: () {
+        calloc.free(v.value);
+        calloc.free(v);
+      },
     );
   }
 
@@ -383,9 +387,9 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       (callback) => cobjdetect.cv_QRCodeDetector_detect(ref, input.ref, pts.ptr, ret, callback),
       (c) {
         final rval = (ret.value, pts);
-        calloc.free(ret);
         return c.complete(rval);
       },
+      release: () => calloc.free(ret),
       timeout: timeout,
     );
   }
@@ -404,11 +408,13 @@ extension QRCodeDetectorAsync on QRCodeDetector {
           cobjdetect.cv_QRCodeDetector_decode(ref, img.ref, points!.ptr, straightCode!.ref, ret, callback),
       (c) {
         final info = ret.value.cast<Utf8>().toDartString();
-        calloc.free(ret.value);
-        calloc.free(ret);
         return c.complete((info, points, straightCode));
       },
       timeout: timeout,
+      release: () {
+        calloc.free(ret.value);
+        calloc.free(ret);
+      },
     );
   }
 
@@ -423,9 +429,9 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       (callback) => cobjdetect.cv_QRCodeDetector_detectMulti(ref, img.ref, points!.ptr, ret, callback),
       (c) {
         final rval = (ret.value, points!);
-        calloc.free(ret);
         return c.complete(rval);
       },
+      release: () => calloc.free(ret),
       timeout: timeout,
     );
   }
@@ -447,10 +453,11 @@ extension QRCodeDetectorAsync on QRCodeDetector {
       ),
       (c) {
         final ret = (rval.value, info.asStringList(), points, codes);
-        calloc.free(rval);
         info.dispose();
         return c.complete(ret);
       },
+
+      release: () => calloc.free(rval),
     );
   }
 }
@@ -507,9 +514,9 @@ extension FaceRecognizerSFAsync on FaceRecognizerSF {
       ),
       (c) {
         final rval = distance.value;
-        calloc.free(distance);
         return c.complete(rval);
       },
+      release: () => calloc.free(distance),
       timeout: timeout,
     );
   }

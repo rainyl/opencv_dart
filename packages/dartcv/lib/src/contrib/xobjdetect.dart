@@ -20,18 +20,15 @@ import '../package_ffi.dart';
 class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   WBDetector.fromPointer(super.ptr, [bool attach = true]) : super.fromPointer() {
     if (attach) {
-      finalizer.attach(this, ptr.cast());
+      finalizer.attach(this, ptr.cast(), detach: this);
     }
   }
 
   /// Create instance of WBDetector.
   ///
   /// https://docs.opencv.org/4.x/de/d0e/classcv_1_1xobjdetect_1_1WBDetector.html#a58377ae61694aac08ad842ac830972d9
-  factory WBDetector.create() {
-    final ptr = calloc<cvg.PtrWBDetector>();
-    cvRun(() => ccontrib.cv_xobjdetect_WBDetector_create(ptr));
-    return WBDetector.fromPointer(ptr);
-  }
+  factory WBDetector.create() =>
+      WBDetector.fromPointer(cvCreate(calloc<cvg.PtrWBDetector>(), ccontrib.cv_xobjdetect_WBDetector_create));
 
   static final finalizer = OcvFinalizer<cvg.PtrWBDetectorPtr>(
     ccontrib.addresses.cv_xobjdetect_WBDetector_close,
@@ -65,25 +62,27 @@ class WBDetector extends CvStruct<cvg.PtrWBDetector> {
   ///
   /// https://docs.opencv.org/4.x/de/d0e/classcv_1_1xobjdetect_1_1WBDetector.html#a3720fb425a2d16f6cd0625a2d8bc563e
   void train(String posSamples, String negImgs) {
-    final cp = posSamples.toNativeUtf8().cast<ffi.Char>();
-    final cn = negImgs.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => ccontrib.cv_xobjdetect_WBDetector_train(ref, cp, cn));
-    calloc.free(cp);
-    calloc.free(cn);
+    return using((arena) {
+      final cp = posSamples.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cn = negImgs.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => ccontrib.cv_xobjdetect_WBDetector_train(ref, cp, cn));
+    });
   }
 
   /// Read detector
   void read(String filename) {
-    final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => ccontrib.cv_xobjdetect_WBDetector_read(ref, cp));
-    calloc.free(cp);
+    return using((arena) {
+      final cp = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => ccontrib.cv_xobjdetect_WBDetector_read(ref, cp));
+    });
   }
 
   /// Write detector
   void write(String filename) {
-    final cp = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => ccontrib.cv_xobjdetect_WBDetector_write(ref, cp));
-    calloc.free(cp);
+    return using((arena) {
+      final cp = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => ccontrib.cv_xobjdetect_WBDetector_write(ref, cp));
+    });
   }
 
   @override

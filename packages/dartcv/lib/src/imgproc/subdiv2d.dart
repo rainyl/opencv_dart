@@ -25,15 +25,11 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   factory Subdiv2D.fromPointer(cvg.Subdiv2DPtr ptr) => Subdiv2D._(ptr);
 
   factory Subdiv2D.empty() {
-    final p = calloc<cvg.Subdiv2D>();
-    cvRun(() => cimgproc.cv_Subdiv2D_create(p));
-    return Subdiv2D._(p);
+    return Subdiv2D._(cvCreate(calloc<cvg.Subdiv2D>(), cimgproc.cv_Subdiv2D_create));
   }
 
   factory Subdiv2D.fromRect(Rect rect) {
-    final p = calloc<cvg.Subdiv2D>();
-    cvRun(() => cimgproc.cv_Subdiv2D_create_1(rect.ref, p));
-    return Subdiv2D._(p);
+    return Subdiv2D._(cvCreate(calloc<cvg.Subdiv2D>(), (p) => cimgproc.cv_Subdiv2D_create_1(rect.ref, p)));
   }
 
   static final finalizer = OcvFinalizer<cvg.Subdiv2DPtr>(cimgproc.addresses.cv_Subdiv2D_close);
@@ -49,11 +45,16 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aee192f95bf19c74619641496c457586d
   (int rval, Point2f dstpt) edgeDst(int edge) {
     final pp = calloc<cvg.CvPoint2f>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_edgeDst(ref, edge, pp, p, ffi.nullptr));
-    final rval = (p.value, Point2f.fromPointer(pp));
-    calloc.free(p);
-    return rval;
+    try {
+      return cvOut(
+        calloc<ffi.Int>(),
+        (p) => cimgproc.cv_Subdiv2D_edgeDst(ref, edge, pp, p, ffi.nullptr),
+        (p) => (p.value, Point2f.fromPointer(pp)),
+      );
+    } catch (_) {
+      calloc.free(pp);
+      rethrow;
+    }
   }
 
   /// Returns the edge origin.
@@ -61,11 +62,16 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a5563e3cae0a9b95df63e72f0c12f9389
   (int rval, Point2f orgpt) edgeOrg(int edge) {
     final pp = calloc<cvg.CvPoint2f>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_edgeOrg(ref, edge, pp, p, ffi.nullptr));
-    final rval = (p.value, Point2f.fromPointer(pp));
-    calloc.free(p);
-    return rval;
+    try {
+      return cvOut(
+        calloc<ffi.Int>(),
+        (p) => cimgproc.cv_Subdiv2D_edgeOrg(ref, edge, pp, p, ffi.nullptr),
+        (p) => (p.value, Point2f.fromPointer(pp)),
+      );
+    } catch (_) {
+      calloc.free(pp);
+      rethrow;
+    }
   }
 
   /// Finds the subdivision vertex closest to the given point.
@@ -78,11 +84,16 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a3ec256af000e129e08eb5f269ccdeb0f
   (int rval, Point2f nearestPt) findNearest(Point2f pt) {
     final pp = calloc<cvg.CvPoint2f>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_findNearest(ref, pt.ref, pp, p, ffi.nullptr));
-    final rval = (p.value, Point2f.fromPointer(pp));
-    calloc.free(p);
-    return rval;
+    try {
+      return cvOut(
+        calloc<ffi.Int>(),
+        (p) => cimgproc.cv_Subdiv2D_findNearest(ref, pt.ref, pp, p, ffi.nullptr),
+        (p) => (p.value, Point2f.fromPointer(pp)),
+      );
+    } catch (_) {
+      calloc.free(pp);
+      rethrow;
+    }
   }
 
   /// Returns one of the edges related to the given edge.
@@ -101,10 +112,11 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#af73f08576709bad7a36f8f8e5fc43c84
   int getEdge(int edge, int nextEdgeType) {
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_getEdge(ref, edge, nextEdgeType, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Int>(),
+      (p) => cimgproc.cv_Subdiv2D_getEdge(ref, edge, nextEdgeType, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -114,14 +126,17 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   List<Vec4f> getEdgeList() {
     final pv = calloc<ffi.Pointer<cvg.Vec4f>>();
     final psize = calloc<ffi.Size>();
-    cvRun(() => cimgproc.cv_Subdiv2D_getEdgeList(ref, pv, psize, ffi.nullptr));
-    final rval = List.generate(psize.value, (i) {
-      final v = pv.value[i];
-      return Vec4f(v.val1, v.val2, v.val3, v.val4);
-    });
-    calloc.free(psize);
-    calloc.free(pv);
-    return rval;
+    try {
+      cvRun(() => cimgproc.cv_Subdiv2D_getEdgeList(ref, pv, psize, ffi.nullptr));
+      final rval = List.generate(psize.value, (i) {
+        final v = pv.value[i];
+        return Vec4f(v.val1, v.val2, v.val3, v.val4);
+      });
+      calloc.free(pv);
+      return rval;
+    } finally {
+      calloc.free(psize);
+    }
   }
 
   /// Returns a list of the leading edge ID connected to each triangle.
@@ -142,14 +157,17 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   List<Vec6f> getTriangleList() {
     final pv = calloc<ffi.Pointer<cvg.Vec6f>>();
     final psize = calloc<ffi.Size>();
-    cvRun(() => cimgproc.cv_Subdiv2D_getTriangleList(ref, pv, psize, ffi.nullptr));
-    final rval = List.generate(psize.value, (i) {
-      final v = pv.value[i];
-      return Vec6f(v.val1, v.val2, v.val3, v.val4, v.val5, v.val6);
-    });
-    calloc.free(psize);
-    calloc.free(pv);
-    return rval;
+    try {
+      cvRun(() => cimgproc.cv_Subdiv2D_getTriangleList(ref, pv, psize, ffi.nullptr));
+      final rval = List.generate(psize.value, (i) {
+        final v = pv.value[i];
+        return Vec6f(v.val1, v.val2, v.val3, v.val4, v.val5, v.val6);
+      });
+      calloc.free(pv);
+      return rval;
+    } finally {
+      calloc.free(psize);
+    }
   }
 
   /// Returns vertex location from vertex ID.
@@ -157,11 +175,16 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a5297daca30f90d1e6d0cc5a75ba76351
   (Point2f rval, int firstEdge) getVertex(int vertex) {
     final pp = calloc<cvg.CvPoint2f>();
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_getVertex(ref, vertex, p, pp, ffi.nullptr));
-    final rval = (Point2f.fromPointer(pp), p.value);
-    calloc.free(p);
-    return rval;
+    try {
+      return cvOut(
+        calloc<ffi.Int>(),
+        (p) => cimgproc.cv_Subdiv2D_getVertex(ref, vertex, p, pp, ffi.nullptr),
+        (p) => (Point2f.fromPointer(pp), p.value),
+      );
+    } catch (_) {
+      calloc.free(pp);
+      rethrow;
+    }
   }
 
   /// Returns a list of all Voronoi facets.
@@ -185,10 +208,11 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a37223a499032ef57364f1372ad0c9c2e
   int insert(Point2f pt) {
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_insert(ref, pt.ref, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Int>(),
+      (p) => cimgproc.cv_Subdiv2D_insert(ref, pt.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -217,22 +241,25 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
     final pedge = calloc<ffi.Int>();
     final pvertex = calloc<ffi.Int>();
     final prval = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_locate(ref, pt.ref, pedge, pvertex, prval, ffi.nullptr));
-    final rval = (prval.value, pedge.value, pvertex.value);
-    calloc.free(pedge);
-    calloc.free(pvertex);
-    calloc.free(prval);
-    return rval;
+    try {
+      cvRun(() => cimgproc.cv_Subdiv2D_locate(ref, pt.ref, pedge, pvertex, prval, ffi.nullptr));
+      return (prval.value, pedge.value, pvertex.value);
+    } finally {
+      calloc.free(pedge);
+      calloc.free(pvertex);
+      calloc.free(prval);
+    }
   }
 
   /// Returns next edge around the edge origin.
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#a36ebf478e2546615c2db457106393acb
   int nextEdge(int edge) {
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_nextEdge(ref, edge, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Int>(),
+      (p) => cimgproc.cv_Subdiv2D_nextEdge(ref, edge, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
@@ -240,19 +267,21 @@ class Subdiv2D extends CvStruct<cvg.Subdiv2D> {
   ///
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aa1179507f651b67c22e06517fbc6a145
   int rotateEdge(int edge, int rotate) {
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_rotateEdge(ref, edge, rotate, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Int>(),
+      (p) => cimgproc.cv_Subdiv2D_rotateEdge(ref, edge, rotate, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 
   /// https://docs.opencv.org/4.x/df/dbf/classcv_1_1Subdiv2D.html#aabbb10b8d5b0311b7e22040fc0db56b4
   int symEdge(int edge) {
-    final p = calloc<ffi.Int>();
-    cvRun(() => cimgproc.cv_Subdiv2D_symEdge(ref, edge, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Int>(),
+      (p) => cimgproc.cv_Subdiv2D_symEdge(ref, edge, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 

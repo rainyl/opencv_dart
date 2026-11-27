@@ -128,14 +128,21 @@ drops the unused `dart:ffi` import ffigen writes into it, and both platforms imp
 - Doc comments travel with their declaration, so the web bindings document the same API as the
 native ones.
 
+The registration block is not just signatures: for every callback typedef it also records how to
+rebuild a `Pointer` argument with the pointee type the callback declares (e.g.
+`(a) => ffi.Pointer<CvStatus>.fromAddress(a)`). A callback parameter is reified, and dart2js checks it
+on entry to the closure, so the shim cannot hand it its generic `Pointer<Void>` - which is what broke
+every `*Async` call in the browser. Null entries are `Pointer<Void>` parameters, where the generic
+pointer is right.
+
 ## Testing
 
 ```bash
-dart test -p chrome test/web_test.dart
-dart test -p chrome -c dart2wasm test/web_test.dart
+dart test -p chrome test/web/web_test.dart
+dart test -p chrome -c dart2wasm test/web/web_test.dart
 ```
 
-`test/web_test.dart` runs every test file that compiles for the web (all but the ones using
+`test/web/web_test.dart` runs every test file that compiles for the web (all but the ones using
 `dart:io`, highgui and gapi) against `build/web/dartcv.wasm`, after copying the fixtures into the
 in-memory file system.
 

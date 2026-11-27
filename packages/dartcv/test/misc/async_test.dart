@@ -35,10 +35,24 @@ void main() async {
   /// A small image whose pixels can be compared cheaply.
   cv.Mat small() => cv.Mat.fromScalar(64, 64, cv.MatType.CV_8UC1, cv.Scalar.all(7));
 
+  test('an async call never throws synchronously', () {
+    // `cvRunAsync0` runs `func` synchronously to hand the work over; when the native side rejects
+    // that call the failure used to be rethrown here, which made `expect(() => xAsync(), throwsA(...))`
+    // work on some calls and not others. It now always arrives through the returned future, so an
+    // `*Async` wrapper can be a plain `return cvRunAsync*(...)` without `async`.
+    late Future<void> pending;
+    expect(
+      () => pending = cv.cvRunAsync0<void>((cb) => throw StateError('rejected'), (c) => c.complete()),
+      returnsNormally,
+    );
+    return expectLater(pending, throwsA(isA<StateError>()));
+  });
+
   test('the call returns immediately and the event loop keeps running', () async {
     final src = cv.Mat.zeros(2400, 2400, cv.MatType.CV_8UC3);
     final dst = cv.Mat.empty();
     await cv.gaussianBlurAsync(src, (11, 11), 0, dst: dst); // warm up
+    await waitUntilIdle(); // the counter lags the callback, and it counts the whole process
 
     var ticks = 0;
     final timer = Timer.periodic(const Duration(milliseconds: 1), (_) => ticks++);
@@ -56,7 +70,10 @@ void main() async {
           'the work ran on the caller thread (${callCost.inMilliseconds} ms before the Future '
           'was even returned)',
     );
-    expect(pendingWhileRunning, 1, reason: 'the job was not handed to the pool');
+    // `asyncPending()` is one counter for the whole process and is decremented after the worker calls
+    // back, while `dart test` runs suites in parallel isolates: assert that a job is queued, not an
+    // exact count (the warm-up's bookkeeping, or a neighbouring suite's job, can still be counted).
+    expect(pendingWhileRunning, greaterThanOrEqualTo(1), reason: 'the job was not handed to the pool');
     expect(ticks, greaterThan(0), reason: 'the event loop was blocked for the whole computation');
     await waitUntilIdle();
     expect(cv.asyncPending(), 0);
@@ -86,6 +103,48 @@ void main() async {
     await waitUntilIdle();
     expect(cv.asyncPending(), 0);
     src.dispose();
+  });
+
+  test('a failed job frees the block only a successful one hands over', () async {
+    // dnn passes its `Net` out-parameter to a wrapper in the completion callback, so the failure path
+    // has to free it itself (`releaseOnFailure`); freeing it from `release` as well would be a double
+    // free, which aborts the process rather than failing an expectation.
+    await expectLater(
+      cv.NetAsync.fromFileAsync('no-such-model.onnx'),
+      throwsA(isA<cv.CvException>()),
+    );
+    await waitUntilIdle();
+  });
+
+  test('a job that fails after a timeout is still freed exactly once', () async {
+    // A timeout abandons the wait, not the job: nothing may be freed then, and the failure that
+    // arrives afterwards has to run `releaseOnFailure` (this API hands its `Scalar` out-parameter to a
+    // wrapper only on success). Freeing it twice would abort the process instead of failing here.
+    final img = cv.Mat.zeros(16, 16, cv.MatType.CV_8UC1);
+    addTearDown(img.dispose);
+    // A missing model makes OpenCV log the whole path on every attempt.
+    final logLevel = cv.getLogLevel();
+    cv.setLogLevel(cv.LogLevel.SILENT);
+    addTearDown(() => cv.setLogLevel(logLevel));
+    try {
+      await cv.QualityBRISQUE.compute1Async(
+        'no-model.yml',
+        'no-range.yml',
+        img,
+        timeout: const Duration(microseconds: 1),
+      );
+      fail('expected a timeout');
+    } on cv.AsyncTimeoutException catch (e) {
+      await e.completion; // the job has reported by now, and the block was freed once
+    } on cv.CvException {
+      // The job failed before the timer fired; the failure path is what this test is about anyway.
+    }
+    // The same call without a timeout still fails cleanly: nothing was double freed or corrupted.
+    await expectLater(
+      cv.QualityBRISQUE.compute1Async('no-model.yml', 'no-range.yml', img),
+      throwsA(isA<cv.CvException>()),
+    );
+    await waitUntilIdle();
   });
 
   test('disposing an argument while the job runs is safe', () async {

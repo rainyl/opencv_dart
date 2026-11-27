@@ -28,9 +28,7 @@ class KNearest extends CvStruct<cml.KNearest> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [KNearest.load].
   factory KNearest.create() {
-    final p = calloc<cml.KNearest>();
-    cvRun(() => cml.cv_ml_KNearest_create(p));
-    return KNearest._(p);
+    return KNearest._(cvCreate(calloc<cml.KNearest>(), cml.cv_ml_KNearest_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -53,16 +51,8 @@ class KNearest extends CvStruct<cml.KNearest> {
     ),
   );
 
-  factory KNearest._make(ffi.Pointer<cml.CvStatus> Function(cml.KNearestPtr p) func) {
-    final p = calloc<cml.KNearest>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return KNearest._(p);
-  }
+  factory KNearest._make(ffi.Pointer<cml.CvStatus> Function(cml.KNearestPtr p) func) =>
+      KNearest._(cvCreate(calloc<cml.KNearest>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.KNearestPtr>(cml.addresses.cv_ml_KNearest_close);
 

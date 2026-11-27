@@ -1,4 +1,4 @@
-// Keeps test/web_test.dart's fixture lists in sync with the tests it runs.
+// Keeps test/web/web_test.dart's fixture lists in sync with the tests it runs.
 //
 // The browser suite copies fixtures into Emscripten's file system before the tests run, because a
 // test cannot read the repository from a page. A test file that starts using a new
@@ -6,7 +6,7 @@
 // file that exists locally. This test scans the sources instead, so the mistake shows up in a
 // normal `dart test` on the VM.
 //
-// @TestOn('vm') - it reads test/web_test.dart and the test files it lists with dart:io.
+// @TestOn('vm') - it reads test/web/web_test.dart and the test files it lists with dart:io.
 @TestOn('vm')
 library;
 
@@ -21,8 +21,8 @@ final _pathLiteral = RegExp(r'''["'](test/(?:images|data|font|models)/[^"'$]+)["
 final _writtenDirs = {'test/images_out'};
 
 void main() {
-  test('every fixture the web tests read is in test/web_test.dart', () {
-    final webTest = File('test/web_test.dart');
+  test('every fixture the web tests read is in test/web/web_test.dart', () {
+    final webTest = File('test/web/web_test.dart');
     expect(
       webTest.existsSync(),
       isTrue,
@@ -30,11 +30,11 @@ void main() {
     );
     final src = webTest.readAsStringSync();
 
-    // The files the browser suite runs, from its conditional imports.
+    // The files the browser suite runs, from its imports (which are relative to `test/web/`).
     final webFiles = RegExp(
       r"^import '([^']+_test\.dart)' as",
       multiLine: true,
-    ).allMatches(src).map((m) => 'test/${m.group(1)!}').toList();
+    ).allMatches(src).map((m) => Uri.parse('test/web/').resolve(m.group(1)!).toFilePath()).toList();
     expect(webFiles, isNotEmpty);
 
     final copied = _constList(src, '_fixtures')..addAll(_constList(src, '_optionalFixtures'));
@@ -55,14 +55,14 @@ void main() {
       }
     }
 
-    expect(missing, isEmpty, reason: 'fixtures missing from test/web_test.dart:\n${missing.join('\n')}');
+    expect(missing, isEmpty, reason: 'fixtures missing from test/web/web_test.dart:\n${missing.join('\n')}');
   });
 }
 
 /// The string entries of the `const <name> = [ ... ];` list in [src].
 List<String> _constList(String src, String name) {
   final start = src.indexOf('const $name = [');
-  expect(start, isNot(-1), reason: 'no `const $name = [` in test/web_test.dart');
+  expect(start, isNot(-1), reason: 'no `const $name = [` in test/web/web_test.dart');
   final end = src.indexOf('];', start);
   expect(end, isNot(-1), reason: 'unterminated `const $name` list');
   return RegExp("'([^']+)'").allMatches(src.substring(start, end)).map((m) => m.group(1)!).toList();

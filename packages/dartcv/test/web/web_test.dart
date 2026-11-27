@@ -1,7 +1,7 @@
 // Runs the package's own tests in a browser against the WebAssembly build:
 //
 //   dart tool/web/build_wasm.dart     # writes build/web/dartcv.{js,wasm}
-//   dart test -p chrome test/web_test.dart
+//   dart test -p chrome test/web/web_test.dart
 //
 // Every test file listed here compiles for the web unchanged; files that need dart:io, highgui or
 // gapi are left out. Fixtures are copied into the module's in-memory file system first, so the
@@ -21,64 +21,64 @@ import 'package:dartcv4/src/web/package_ffi.dart' as package_ffi;
 import 'package:dartcv4/src/web/runtime.dart' as rt;
 import 'package:test/test.dart';
 
-import 'calib3d/calib3d_fisheye_test.dart' as calib3d_calib3d_fisheye_test;
-import 'calib3d/calib3d_test.dart' as calib3d_calib3d_test;
-import 'calib3d/stereo_test.dart' as calib3d_stereo_test;
-import 'contrib/aruco_async_test.dart' as contrib_aruco_async_test;
-import 'contrib/aruco_test.dart' as contrib_aruco_test;
-import 'contrib/charuco_board_test.dart' as contrib_charuco_board_test;
-import 'contrib/charuco_detector_async_test.dart' as contrib_charuco_detector_async_test;
-import 'contrib/charuco_detector_test.dart' as contrib_charuco_detector_test;
-import 'contrib/freetype_test.dart' as contrib_freetype_test;
-import 'contrib/img_hash_async_test.dart' as contrib_img_hash_async_test;
-import 'contrib/img_hash_test.dart' as contrib_img_hash_test;
-import 'contrib/quality_test.dart' as contrib_quality_test;
-import 'contrib/wechat_qrcode_async_test.dart' as contrib_wechat_qrcode_async_test;
-import 'contrib/wechat_qrcode_test.dart' as contrib_wechat_qrcode_test;
-import 'contrib/ximgproc_test.dart' as contrib_ximgproc_test;
-import 'core/core_async_test.dart' as core_core_async_test;
-import 'core/mat_async_test.dart' as core_mat_async_test;
-import 'core/mat_test.dart' as core_mat_test;
-import 'core/others_test.dart' as core_others_test;
-import 'core/point_test.dart' as core_point_test;
-import 'core/point_view_test.dart' as core_point_view_test;
-import 'core/record_struct_test.dart' as core_record_struct_test;
-import 'core/rng_test.dart' as core_rng_test;
-import 'core/svd_test.dart' as core_svd_test;
-import 'core/umat_test.dart' as core_umat_test;
-import 'core/vec_test.dart' as core_vec_test;
-import 'dnn/dnn_async_test.dart' as dnn_dnn_async_test;
-import 'dnn/dnn_test.dart' as dnn_dnn_test;
-import 'features2d/features2d_async_test.dart' as features2d_features2d_async_test;
-import 'features2d/features2d_test.dart' as features2d_features2d_test;
-import 'imgcodecs_test.dart' as imgcodecs_test;
-import 'imgproc/clahe_test.dart' as imgproc_clahe_test;
-import 'imgproc/imgproc_async_test.dart' as imgproc_imgproc_async_test;
-import 'imgproc/imgproc_test.dart' as imgproc_imgproc_test;
-import 'imgproc/linesegmentdetector_test.dart' as imgproc_linesegmentdetector_test;
-import 'imgproc/subdiv2d_test.dart' as imgproc_subdiv2d_test;
-import 'ml/ann_mlp_test.dart' as ml_ann_mlp_test;
-import 'ml/boost_test.dart' as ml_boost_test;
-import 'ml/dtrees_test.dart' as ml_dtrees_test;
-import 'ml/em_test.dart' as ml_em_test;
-import 'ml/knearest_test.dart' as ml_knearest_test;
-import 'ml/logistic_regression_test.dart' as ml_logistic_regression_test;
-import 'ml/ml_async_test.dart' as ml_ml_async_test;
-import 'ml/normal_bayes_classifier_test.dart' as ml_normal_bayes_classifier_test;
-import 'ml/rtrees_test.dart' as ml_rtrees_test;
-import 'ml/stat_model_test.dart' as ml_stat_model_test;
-import 'ml/svm_test.dart' as ml_svm_test;
-import 'ml/svmsgd_test.dart' as ml_svmsgd_test;
-import 'ml/train_data_test.dart' as ml_train_data_test;
-import 'objdetect/objdetect_async_test.dart' as objdetect_objdetect_async_test;
-import 'objdetect/objdetect_test.dart' as objdetect_objdetect_test;
-import 'photo/photo_async_test.dart' as photo_photo_async_test;
-import 'photo/photo_test.dart' as photo_photo_test;
-import 'stitching/stitching_async_test.dart' as stitching_stitching_async_test;
-import 'stitching/stitching_test.dart' as stitching_stitching_test;
-import 'video/video_async_test.dart' as video_video_async_test;
-import 'video/video_test.dart' as video_video_test;
-import 'videoio/videoio_registry_test.dart' as videoio_videoio_registry_test;
+import '../calib3d/calib3d_fisheye_test.dart' as calib3d_calib3d_fisheye_test;
+import '../calib3d/calib3d_test.dart' as calib3d_calib3d_test;
+import '../calib3d/stereo_test.dart' as calib3d_stereo_test;
+import '../contrib/aruco_async_test.dart' as contrib_aruco_async_test;
+import '../contrib/aruco_test.dart' as contrib_aruco_test;
+import '../contrib/charuco_board_test.dart' as contrib_charuco_board_test;
+import '../contrib/charuco_detector_async_test.dart' as contrib_charuco_detector_async_test;
+import '../contrib/charuco_detector_test.dart' as contrib_charuco_detector_test;
+import '../contrib/freetype_test.dart' as contrib_freetype_test;
+import '../contrib/img_hash_async_test.dart' as contrib_img_hash_async_test;
+import '../contrib/img_hash_test.dart' as contrib_img_hash_test;
+import '../contrib/quality_test.dart' as contrib_quality_test;
+import '../contrib/wechat_qrcode_async_test.dart' as contrib_wechat_qrcode_async_test;
+import '../contrib/wechat_qrcode_test.dart' as contrib_wechat_qrcode_test;
+import '../contrib/ximgproc_test.dart' as contrib_ximgproc_test;
+import '../core/core_async_test.dart' as core_core_async_test;
+import '../core/mat_async_test.dart' as core_mat_async_test;
+import '../core/mat_test.dart' as core_mat_test;
+import '../core/others_test.dart' as core_others_test;
+import '../core/point_test.dart' as core_point_test;
+import '../core/point_view_test.dart' as core_point_view_test;
+import '../core/record_struct_test.dart' as core_record_struct_test;
+import '../core/rng_test.dart' as core_rng_test;
+import '../core/svd_test.dart' as core_svd_test;
+import '../core/umat_test.dart' as core_umat_test;
+import '../core/vec_test.dart' as core_vec_test;
+import '../dnn/dnn_async_test.dart' as dnn_dnn_async_test;
+import '../dnn/dnn_test.dart' as dnn_dnn_test;
+import '../features2d/features2d_async_test.dart' as features2d_features2d_async_test;
+import '../features2d/features2d_test.dart' as features2d_features2d_test;
+import '../imgcodecs_test.dart' as imgcodecs_test;
+import '../imgproc/clahe_test.dart' as imgproc_clahe_test;
+import '../imgproc/imgproc_async_test.dart' as imgproc_imgproc_async_test;
+import '../imgproc/imgproc_test.dart' as imgproc_imgproc_test;
+import '../imgproc/linesegmentdetector_test.dart' as imgproc_linesegmentdetector_test;
+import '../imgproc/subdiv2d_test.dart' as imgproc_subdiv2d_test;
+import '../ml/ann_mlp_test.dart' as ml_ann_mlp_test;
+import '../ml/boost_test.dart' as ml_boost_test;
+import '../ml/dtrees_test.dart' as ml_dtrees_test;
+import '../ml/em_test.dart' as ml_em_test;
+import '../ml/knearest_test.dart' as ml_knearest_test;
+import '../ml/logistic_regression_test.dart' as ml_logistic_regression_test;
+import '../ml/ml_async_test.dart' as ml_ml_async_test;
+import '../ml/normal_bayes_classifier_test.dart' as ml_normal_bayes_classifier_test;
+import '../ml/rtrees_test.dart' as ml_rtrees_test;
+import '../ml/stat_model_test.dart' as ml_stat_model_test;
+import '../ml/svm_test.dart' as ml_svm_test;
+import '../ml/svmsgd_test.dart' as ml_svmsgd_test;
+import '../ml/train_data_test.dart' as ml_train_data_test;
+import '../objdetect/objdetect_async_test.dart' as objdetect_objdetect_async_test;
+import '../objdetect/objdetect_test.dart' as objdetect_objdetect_test;
+import '../photo/photo_async_test.dart' as photo_photo_async_test;
+import '../photo/photo_test.dart' as photo_photo_test;
+import '../stitching/stitching_async_test.dart' as stitching_stitching_async_test;
+import '../stitching/stitching_test.dart' as stitching_stitching_test;
+import '../video/video_async_test.dart' as video_video_async_test;
+import '../video/video_test.dart' as video_video_test;
+import '../videoio/videoio_registry_test.dart' as videoio_videoio_registry_test;
 
 // test/models is downloaded by CI (release tag dnn_test_files); a missing model only fails its own test.
 const _optionalFixtures = [
@@ -163,7 +163,9 @@ Future<void> _preload() async {
   await Future.wait([
     for (final f in [..._fixtures, ..._optionalFixtures])
       () async {
-        final res = await _fetch(f).toDart;
+        // Fetched relative to this page (`/test/web/`), so the fixtures land in `test/<f>` of the
+        // module's file system, which is where the tests look for them.
+        final res = await _fetch('../$f').toDart;
         if (!(res['ok']! as JSBoolean).toDart) {
           if (_optionalFixtures.contains(f)) return;
           throw StateError('fetch $f failed');
@@ -176,7 +178,8 @@ Future<void> _preload() async {
 
 Future<void> main() async {
   // Before any group: the test files build Mats while declaring their tests.
-  await cv.initDartcv(moduleUrl: '../build/web/dartcv.js');
+  // From `/test/web/`, so the module the build tool wrote to `build/web` is two levels up.
+  await cv.initDartcv(moduleUrl: '../../build/web/dartcv.js');
   await _preload();
 
   group('runtime.dart', () {
@@ -207,7 +210,7 @@ Future<void> main() async {
     // The stamp is a named export of the ES module, so read it from the namespace, not from the
     // factory's instance (`rt.module`).
     test('the wasm module reports the package version', () async {
-      final namespace = await importModule('../build/web/dartcv.js'.toJS).toDart;
+      final namespace = await importModule('../../build/web/dartcv.js'.toJS).toDart;
       final reported = namespace['dartcvVersion'];
       expect(reported, isA<JSString>(), reason: 'rebuild build/web/dartcv.js');
       expect((reported! as JSString).toDart, packageVersion);

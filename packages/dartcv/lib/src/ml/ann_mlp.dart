@@ -30,9 +30,7 @@ class ANN_MLP extends CvStruct<cml.ANN_MLP> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [ANN_MLP.load].
   factory ANN_MLP.create() {
-    final p = calloc<cml.ANN_MLP>();
-    cvRun(() => cml.cv_ml_ANN_MLP_create(p));
-    return ANN_MLP._(p);
+    return ANN_MLP._(cvCreate(calloc<cml.ANN_MLP>(), cml.cv_ml_ANN_MLP_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -55,16 +53,8 @@ class ANN_MLP extends CvStruct<cml.ANN_MLP> {
     ),
   );
 
-  factory ANN_MLP._make(ffi.Pointer<cml.CvStatus> Function(cml.ANN_MLPPtr p) func) {
-    final p = calloc<cml.ANN_MLP>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return ANN_MLP._(p);
-  }
+  factory ANN_MLP._make(ffi.Pointer<cml.CvStatus> Function(cml.ANN_MLPPtr p) func) =>
+      ANN_MLP._(cvCreate(calloc<cml.ANN_MLP>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.ANN_MLPPtr>(cml.addresses.cv_ml_ANN_MLP_close);
 

@@ -53,17 +53,15 @@ void setLogLevel(LogLevel logLevel) {
 
 /// Gets the global logging level.
 LogLevel getLogLevel() {
-  final p = calloc<ffi.Int>();
-  cvRun(() => ccore.getLogLevel(p));
-  final level = p.value;
-  calloc.free(p);
+  final level = cvOut(calloc<ffi.Int>(), ccore.getLogLevel, (p) => p.value);
   return LogLevel.fromValue(level);
 }
 
 void writeLogMessage(LogLevel logLevel, String message) {
-  final cmsg = message.toNativeUtf8().cast<ffi.Char>();
-  ccore.writeLogMessage(logLevel.value, cmsg);
-  calloc.free(cmsg);
+  return using((arena) {
+    final cmsg = message.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    ccore.writeLogMessage(logLevel.value, cmsg);
+  });
 }
 
 /// Writes a log message.
@@ -77,21 +75,18 @@ void writeLogMessageEx(
   int? line,
   String? func,
 }) {
-  final cmsg = message.toNativeUtf8().cast<ffi.Char>();
+  return using((arena) {
+    final cmsg = message.toNativeUtf8(allocator: arena).cast<ffi.Char>();
 
-  if (tag == null && file == null && line == null && func == null) {
-    ccore.writeLogMessage(logLevel.value, cmsg);
-  } else {
-    final ctag = (tag ?? "").toNativeUtf8().cast<ffi.Char>();
-    final cfile = (file ?? "").toNativeUtf8().cast<ffi.Char>();
-    final cfunc = (func ?? "").toNativeUtf8().cast<ffi.Char>();
-    ccore.writeLogMessageEx(logLevel.value, ctag, cfile, line ?? -1, cfunc, cmsg);
-    calloc.free(ctag);
-    calloc.free(cfile);
-    calloc.free(cfunc);
-  }
-
-  calloc.free(cmsg);
+    if (tag == null && file == null && line == null && func == null) {
+      ccore.writeLogMessage(logLevel.value, cmsg);
+    } else {
+      final ctag = (tag ?? "").toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cfile = (file ?? "").toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      final cfunc = (func ?? "").toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      ccore.writeLogMessageEx(logLevel.value, ctag, cfile, line ?? -1, cfunc, cmsg);
+    }
+  });
 }
 
 void defaultLogCallback(LogLevel logLevel, String message) {
@@ -327,11 +322,11 @@ Mat bitwiseXOR(InputArray src1, InputArray src2, {OutputArray? dst, InputArray? 
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga247f571aa6244827d3d798f13892da58
 int borderInterpolate(int p, int len, int borderType) {
-  final ptr = calloc<ffi.Int>();
-  cvRun(() => ccore.cv_borderInterpolate(p, len, borderType, ptr, ffi.nullptr));
-  final v = ptr.value;
-  calloc.free(ptr);
-  return v;
+  return cvOut(
+    calloc<ffi.Int>(),
+    (ptr) => ccore.cv_borderInterpolate(p, len, borderType, ptr, ffi.nullptr),
+    (p) => p.value,
+  );
 }
 
 /// CalcCovarMatrix calculates the covariance matrix of a set of vectors.
@@ -379,10 +374,13 @@ int borderInterpolate(int p, int len, int borderType) {
 }) {
   final pos = calloc<cvg.CvPoint>();
   final pRval = calloc<ffi.Bool>();
-  cvRun(() => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, ffi.nullptr));
-  final rval = pRval.value;
-  calloc.free(pRval);
-  return (rval, Point.fromPointer(pos));
+  try {
+    cvRun(() => ccore.cv_checkRange(a.ref, quiet, pos, minVal, maxVal, pRval, ffi.nullptr));
+    final rval = pRval.value;
+    return (rval, Point.fromPointer(pos));
+  } finally {
+    calloc.free(pRval);
+  }
 }
 
 /// Compare performs the per-element comparison of two arrays
@@ -477,10 +475,11 @@ Mat dct(InputArray src, {OutputArray? dst, int flags = 0}) {
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gaf802bd9ca3e07b8b6170645ef0611d0c
 double determinant(InputArray mtx) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => ccore.cv_determinant(mtx.ref, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_determinant(mtx.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -517,10 +516,11 @@ Mat divide(InputArray src1, InputArray src2, {OutputArray? dst, double scale = 1
 }) {
   eigenvalues ??= Mat.empty();
   eigenvectors ??= Mat.empty();
-  final p = calloc<ffi.Bool>();
-  cvRun(() => ccore.cv_eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p, ffi.nullptr));
-  final ret = p.value;
-  calloc.free(p);
+  final ret = cvOut(
+    calloc<ffi.Bool>(),
+    (p) => ccore.cv_eigen(src.ref, eigenvalues!.ref, eigenvectors!.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return (ret, eigenvalues, eigenvectors);
 }
 
@@ -609,10 +609,11 @@ Mat gemm(
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga6577a2e59968936ae02eb2edde5de299
 int getOptimalDFTSize(int vecsize) {
-  final p = calloc<ffi.Int>();
-  cvRun(() => ccore.cv_getOptimalDFTSize(vecsize, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Int>(),
+    (p) => ccore.cv_getOptimalDFTSize(vecsize, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -625,10 +626,7 @@ int getOptimalDFTSize(int vecsize) {
 /// as single-channel. Or you may extract the particular channel using either
 /// extractImageCOI, or mixChannels, or split.
 bool hasNonZero(InputArray src) {
-  final p = calloc<ffi.Bool>();
-  cvRun(() => ccore.cv_hasNonZero(src.ref, p));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(calloc<ffi.Bool>(), (p) => ccore.cv_hasNonZero(src.ref, p), (p) => p.value);
   return rval;
 }
 
@@ -698,10 +696,11 @@ Mat insertChannel(InputArray src, InputOutputArray dst, int coi) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gad278044679d4ecf20f7622cc151aaaa2
 (double rval, Mat dst) invert(InputArray src, {OutputArray? dst, int flags = DECOMP_LU}) {
   dst ??= Mat.empty();
-  final p = calloc<ffi.Double>();
-  cvRun(() => ccore.cv_invert(src.ref, dst!.ref, flags, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_invert(src.ref, dst!.ref, flags, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return (rval, dst);
 }
 
@@ -814,13 +813,15 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   final maxValP = calloc<ffi.Double>();
   final minIdxP = calloc<ffi.Int>();
   final maxIdxP = calloc<ffi.Int>();
-  cvRun(() => ccore.cv_minMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP, mask!.ref, ffi.nullptr));
-  final rval = (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
-  calloc.free(minValP);
-  calloc.free(maxValP);
-  calloc.free(minIdxP);
-  calloc.free(maxIdxP);
-  return rval;
+  try {
+    cvRun(() => ccore.cv_minMaxIdx(src.ref, minValP, maxValP, minIdxP, maxIdxP, mask!.ref, ffi.nullptr));
+    return (minValP.value, maxValP.value, minIdxP.value, maxIdxP.value);
+  } finally {
+    calloc.free(minValP);
+    calloc.free(maxValP);
+    calloc.free(minIdxP);
+    calloc.free(maxIdxP);
+  }
 }
 
 /// MinMaxLoc finds the global minimum and maximum in an array.
@@ -833,11 +834,21 @@ Mat min(InputArray src1, InputArray src2, {OutputArray? dst}) {
   final maxValP = calloc<ffi.Double>();
   final minLocP = calloc<cvg.CvPoint>();
   final maxLocP = calloc<cvg.CvPoint>();
-  cvRun(() => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, ffi.nullptr));
-  final rval = (minValP.value, maxValP.value, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
-  calloc.free(minValP);
-  calloc.free(maxValP);
-  return rval;
+  late final double minVal, maxVal;
+  try {
+    cvRun(() => ccore.cv_minMaxLoc(src.ref, minValP, maxValP, minLocP, maxLocP, mask!.ref, ffi.nullptr));
+    // Read before the `finally` frees the blocks.
+    minVal = minValP.value;
+    maxVal = maxValP.value;
+  } catch (_) {
+    calloc.free(minLocP);
+    calloc.free(maxLocP);
+    rethrow;
+  } finally {
+    calloc.free(minValP);
+    calloc.free(maxValP);
+  }
+  return (minVal, maxVal, Point.fromPointer(minLocP), Point.fromPointer(maxLocP));
 }
 
 /// Copies specified channels from input arrays to the specified channels of output arrays.
@@ -892,10 +903,11 @@ Mat mulTransposed(
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
 double norm(InputArray src1, {int normType = NORM_L2, InputArray? mask}) {
   mask ??= Mat.empty();
-  final p = calloc<ffi.Double>();
-  cvRun(() => ccore.cv_norm(src1.ref, normType, mask!.ref, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_norm(src1.ref, normType, mask!.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -905,11 +917,14 @@ double norm(InputArray src1, {int normType = NORM_L2, InputArray? mask}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga7c331fb8dd951707e184ef4e3f21dd33
 double norm1(InputArray src1, InputArray src2, {int normType = NORM_L2, InputArray? mask}) {
   final p = calloc<ffi.Double>();
-  mask ??= Mat.empty();
-  cvRun(() => ccore.cv_norm_1(src1.ref, src2.ref, normType, mask!.ref, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
-  return rval;
+  try {
+    mask ??= Mat.empty();
+    cvRun(() => ccore.cv_norm_1(src1.ref, src2.ref, normType, mask!.ref, p, ffi.nullptr));
+    final rval = p.value;
+    return rval;
+  } finally {
+    calloc.free(p);
+  }
 }
 
 /// Normalize normalizes the norm or value range of an array.
@@ -1055,10 +1070,11 @@ Mat pow(InputArray src, double power, {OutputArray? dst}) {
 ///
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga3119e3ea73010a6f810bb05aa36ac8d6
 double PSNR(InputArray src1, InputArray src2, {double R = 255.0}) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => ccore.cv_PSNR(src1.ref, src2.ref, R, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_PSNR(src1.ref, src2.ref, R, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -1170,10 +1186,11 @@ Mat setIdentity(InputOutputArray mtx, {Scalar? s}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga12b43690dbd31fed96f213eefead2373
 (bool ret, Mat dst) solve(InputArray src1, InputArray src2, {OutputArray? dst, int flags = DECOMP_LU}) {
   dst ??= Mat.empty();
-  final p = calloc<ffi.Bool>();
-  cvRun(() => ccore.cv_solve(src1.ref, src2.ref, dst!.ref, flags, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Bool>(),
+    (p) => ccore.cv_solve(src1.ref, src2.ref, dst!.ref, flags, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return (rval, dst);
 }
 
@@ -1183,9 +1200,11 @@ Mat setIdentity(InputOutputArray mtx, {Scalar? s}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga1c3b0b925b085b6e96931ee309e6a1da
 (int rval, Mat roots) solveCubic(InputArray coeffs, {OutputArray? roots}) {
   roots ??= Mat.empty();
-  final p = calloc<ffi.Int>();
-  cvRun(() => ccore.cv_solveCubic(coeffs.ref, roots!.ref, p, ffi.nullptr));
-  final rval = p.value;
+  final rval = cvOut(
+    calloc<ffi.Int>(),
+    (p) => ccore.cv_solveCubic(coeffs.ref, roots!.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return (rval, roots);
 }
 
@@ -1195,10 +1214,11 @@ Mat setIdentity(InputOutputArray mtx, {Scalar? s}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#gac2f5e953016fabcdf793d762f4ec5dce
 (double rval, Mat roots) solvePoly(InputArray coeffs, {OutputArray? roots, int maxIters = 300}) {
   roots ??= Mat.empty();
-  final p = calloc<ffi.Double>();
-  cvRun(() => ccore.cv_solvePoly(coeffs.ref, roots!.ref, maxIters, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_solvePoly(coeffs.ref, roots!.ref, maxIters, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return (rval, roots);
 }
 
@@ -1265,9 +1285,7 @@ Mat subtract(InputArray src1, InputArray src2, {OutputArray? dst, InputArray? ma
 ///
 /// https://docs.opencv.org/4.x/d2/de8/group__core__array.html#ga716e10a2dd9e228e4d3c95818f106722
 Scalar sum(Mat src) {
-  final p = calloc<cvg.Scalar>();
-  cvRun(() => ccore.cv_sum(src.ref, p, ffi.nullptr));
-  return Scalar.fromPointer(p);
+  return Scalar.fromPointer(cvCreate(calloc<cvg.Scalar>(), (p) => ccore.cv_sum(src.ref, p, ffi.nullptr)));
 }
 
 /// SVBackSubst
@@ -1297,9 +1315,9 @@ Mat SVBackSubst(InputArray w, InputArray u, InputArray vh, InputArray rhs, {Outp
 /// For further details, please see:
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga3419ac19c7dcd2be4bd552a23e147dd8
 Scalar trace(InputArray mtx) {
-  final ptr = calloc<cvg.Scalar>();
-  cvRun(() => ccore.cv_trace(mtx.ref, ptr, ffi.nullptr));
-  return Scalar.fromPointer(ptr);
+  return Scalar.fromPointer(
+    cvCreate(calloc<cvg.Scalar>(), (ptr) => ccore.cv_trace(mtx.ref, ptr, ffi.nullptr)),
+  );
 }
 
 /// Transform performs the matrix transformation of every array element.
@@ -1340,9 +1358,7 @@ Mat transposeND(InputArray src, List<int> order, {OutputArray? dst}) {
 /// https://docs.opencv.org/master/d2/de8/group__core__array.html#ga75843061d150ad6564b5447e38e57722
 /// Disabled: double free
 Rng theRNG() {
-  final p = calloc<cvg.RNG>();
-  cvRun(() => ccore.cv_theRNG(p));
-  return Rng.fromTheRng(p);
+  return Rng.fromTheRng(cvCreate(calloc<cvg.RNG>(), ccore.cv_theRNG));
 }
 
 /// Vconcat applies vertical concatenation to given matrices.
@@ -1373,9 +1389,9 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   OutputArray? centers,
 }) {
   centers ??= Mat.empty();
-  final p = calloc<ffi.Double>();
-  cvRun(
-    () => ccore.cv_kmeans(
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_kmeans(
       data.ref,
       K,
       bestLabels.ref,
@@ -1386,9 +1402,8 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
       p,
       ffi.nullptr,
     ),
+    (p) => p.value,
   );
-  final rval = p.value;
-  calloc.free(p);
   return (rval, bestLabels, centers);
 }
 
@@ -1406,9 +1421,9 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
   OutputArray? centers,
 }) {
   centers ??= Mat.empty();
-  final p = calloc<ffi.Double>();
-  cvRun(
-    () => ccore.cv_kmeans_points(
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => ccore.cv_kmeans_points(
       pts.ref,
       K,
       bestLabels.ref,
@@ -1419,9 +1434,8 @@ Mat vconcat(InputArray src1, InputArray src2, {OutputArray? dst}) {
       p,
       ffi.nullptr,
     ),
+    (p) => p.value,
   );
-  final rval = p.value;
-  calloc.free(p);
   return (rval, bestLabels, centers);
 }
 

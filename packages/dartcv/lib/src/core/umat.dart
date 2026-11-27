@@ -30,9 +30,7 @@ class UMat extends CvStruct<cvg.UMat> {
 
   /// create an empty [UMat]
   factory UMat.empty({UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT}) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_1(flags.value, p));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_1(flags.value, p)));
   }
 
   /// constructs 2D matrix and fills it with the specified value.
@@ -58,9 +56,12 @@ class UMat extends CvStruct<cvg.UMat> {
 
     type ??= MatType.CV_8UC3;
     final scalar = Scalar(b.toDouble(), g.toDouble(), r.toDouble(), 0);
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_3(rows, cols, type!.value, scalar.ref, flags.value, p));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(
+        calloc<cvg.UMat>(),
+        (p) => ccore.cv_UMat_create_3(rows, cols, type!.value, scalar.ref, flags.value, p),
+      ),
+    );
   }
 
   /// constructs n-dimensional matrix
@@ -76,23 +77,25 @@ class UMat extends CvStruct<cvg.UMat> {
     Scalar? s,
     UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT,
   }) {
-    final p = calloc<cvg.UMat>();
     final cSizes = calloc<ffi.Int>(sizes.length);
     cSizes.cast<ffi.Int32>().asTypedList(sizes.length).setAll(0, sizes);
-    cvRun(
-      () => s == null
-          ? ccore.cv_UMat_create_4(sizes.length, cSizes, type.value, flags.value, p)
-          : ccore.cv_UMat_create_5(sizes.length, cSizes, type.value, s.ref, flags.value, p),
-    );
-    calloc.free(cSizes);
-    return UMat._(p);
+    try {
+      return UMat._(
+        cvCreate(
+          calloc<cvg.UMat>(),
+          (p) => s == null
+              ? ccore.cv_UMat_create_4(sizes.length, cSizes, type.value, flags.value, p)
+              : ccore.cv_UMat_create_5(sizes.length, cSizes, type.value, s.ref, flags.value, p),
+        ),
+      );
+    } finally {
+      calloc.free(cSizes);
+    }
   }
 
   /// copy constructor
   factory UMat.fromUMat(UMat umat) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_6(umat.ref, p));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_6(umat.ref, p)));
   }
 
   /// creates a matrix header for a part of the bigger matrix
@@ -103,11 +106,14 @@ class UMat extends CvStruct<cvg.UMat> {
   ///
   /// https://docs.opencv.org/4.x/d7/d45/classcv_1_1UMat.html#afeaabd3e9eef98ccef422a81176a4250
   factory UMat.fromRange(UMat umat, {int rowStart = 0, int? rowEnd, int colStart = 0, int? colEnd}) {
-    final p = calloc<cvg.UMat>();
     rowEnd ??= umat.rows;
     colEnd ??= umat.cols;
-    cvRun(() => ccore.cv_UMat_create_7(umat.ref, rowStart, rowEnd!, colStart, colEnd!, p));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(
+        calloc<cvg.UMat>(),
+        (p) => ccore.cv_UMat_create_7(umat.ref, rowStart, rowEnd!, colStart, colEnd!, p),
+      ),
+    );
   }
 
   /// ```c++
@@ -116,9 +122,7 @@ class UMat extends CvStruct<cvg.UMat> {
   ///
   /// https://docs.opencv.org/4.x/d7/d45/classcv_1_1UMat.html#aaa3fa04bb82fee6026cc2e85df96a796
   factory UMat.fromRect(UMat umat, Rect roi) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_9(umat.ref, roi.ref, p));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_9(umat.ref, roi.ref, p)));
   }
 
   factory UMat.zeros({
@@ -127,9 +131,9 @@ class UMat extends CvStruct<cvg.UMat> {
     MatType type = MatType.CV_8UC1,
     UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT,
   }) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_zeros(rows, cols, type.value, flags.value, p));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_zeros(rows, cols, type.value, flags.value, p)),
+    );
   }
 
   factory UMat.zerosND(
@@ -137,12 +141,18 @@ class UMat extends CvStruct<cvg.UMat> {
     MatType type, {
     UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT,
   }) {
-    final p = calloc<cvg.UMat>();
     final cSizes = calloc<ffi.Int>(sizes.length);
     cSizes.cast<ffi.Int32>().asTypedList(sizes.length).setAll(0, sizes);
-    cvRun(() => ccore.cv_UMat_create_zeros_1(sizes.length, cSizes, type.value, flags.value, p));
-    calloc.free(cSizes);
-    return UMat._(p);
+    try {
+      return UMat._(
+        cvCreate(
+          calloc<cvg.UMat>(),
+          (p) => ccore.cv_UMat_create_zeros_1(sizes.length, cSizes, type.value, flags.value, p),
+        ),
+      );
+    } finally {
+      calloc.free(cSizes);
+    }
   }
 
   factory UMat.ones(
@@ -151,9 +161,9 @@ class UMat extends CvStruct<cvg.UMat> {
     MatType type, {
     UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT,
   }) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_ones(rows, cols, type.value, flags.value, p));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_ones(rows, cols, type.value, flags.value, p)),
+    );
   }
 
   factory UMat.onesND(
@@ -161,12 +171,18 @@ class UMat extends CvStruct<cvg.UMat> {
     MatType type, {
     UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT,
   }) {
-    final p = calloc<cvg.UMat>();
     final cSizes = calloc<ffi.Int>(sizes.length);
     cSizes.cast<ffi.Int32>().asTypedList(sizes.length).setAll(0, sizes);
-    cvRun(() => ccore.cv_UMat_create_ones_1(sizes.length, cSizes, type.value, flags.value, p));
-    calloc.free(cSizes);
-    return UMat._(p);
+    try {
+      return UMat._(
+        cvCreate(
+          calloc<cvg.UMat>(),
+          (p) => ccore.cv_UMat_create_ones_1(sizes.length, cSizes, type.value, flags.value, p),
+        ),
+      );
+    } finally {
+      calloc.free(cSizes);
+    }
   }
 
   factory UMat.eye({
@@ -175,50 +191,44 @@ class UMat extends CvStruct<cvg.UMat> {
     MatType type = MatType.CV_8UC1,
     UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT,
   }) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_eye(rows, cols, type.value, flags.value, p));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_eye(rows, cols, type.value, flags.value, p)),
+    );
   }
 
   factory UMat.diag(UMat umat, {UMatUsageFlags flags = UMatUsageFlags.USAGE_DEFAULT}) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_create_diag(umat.ref, flags.value, p));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_create_diag(umat.ref, flags.value, p)));
   }
 
   /// https://docs.opencv.org/4.x/d7/d45/classcv_1_1UMat.html#a3d84c72c06ddd55d35b87c3d222d2674
   Mat getMat(AccessFlag accessFlags) {
-    final p = calloc<cvg.Mat>();
-    cvRun(() => ccore.cv_UMat_getMat(ref, accessFlags.value, p, ffi.nullptr));
-    return Mat.fromPointer(p);
+    return Mat.fromPointer(
+      cvCreate(calloc<cvg.Mat>(), (p) => ccore.cv_UMat_getMat(ref, accessFlags.value, p, ffi.nullptr)),
+    );
   }
 
   /// returns a new matrix header for the specified row
   UMat row(int i) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_row(ref, i, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_row(ref, i, p, ffi.nullptr)));
   }
 
   /// returns a new matrix header for the specified column
   UMat col(int i) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_col(ref, i, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_col(ref, i, p, ffi.nullptr)));
   }
 
   /// .. for the specified row span
   UMat rowRange(int start, int end) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_rowRange(ref, start, end, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_rowRange(ref, start, end, p, ffi.nullptr)),
+    );
   }
 
   /// ... for the specified column span
   UMat colRange(int start, int end) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_colRange(ref, start, end, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(
+      cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_colRange(ref, start, end, p, ffi.nullptr)),
+    );
   }
 
   /// ... for the specified diagonal
@@ -226,16 +236,12 @@ class UMat extends CvStruct<cvg.UMat> {
   ///  >0 - a diagonal from the upper half,
   ///  <0 - a diagonal from the lower half)
   UMat diag({int d = 0}) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_diag(ref, d, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_diag(ref, d, p, ffi.nullptr)));
   }
 
   /// returns deep copy of the matrix, i.e. the data is copied
   UMat clone() {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_clone(ref, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_clone(ref, p, ffi.nullptr)));
   }
 
   /// copies those matrix elements to "m" that are marked with non-zero mask elements.
@@ -271,45 +277,47 @@ class UMat extends CvStruct<cvg.UMat> {
   ///
   /// https://docs.opencv.org/4.x/d7/d45/classcv_1_1UMat.html#a25ac687266568c8b024debd187c15b9b
   UMat reshape(int cn, {int? rows, List<int>? newSizes}) {
-    final p = calloc<cvg.UMat>();
     if (newSizes == null) {
-      cvRun(() => ccore.cv_UMat_reshape(ref, cn, rows ?? 0, p, ffi.nullptr));
-    } else {
-      final cNewSizes = calloc<ffi.Int>(newSizes.length);
-      cNewSizes.cast<ffi.Int32>().asTypedList(newSizes.length).setAll(0, newSizes);
-      cvRun(() => ccore.cv_UMat_reshape_2(ref, cn, newSizes.length, cNewSizes, p, ffi.nullptr));
+      return UMat._(
+        cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_reshape(ref, cn, rows ?? 0, p, ffi.nullptr)),
+      );
+    }
+    final cNewSizes = calloc<ffi.Int>(newSizes.length);
+    cNewSizes.cast<ffi.Int32>().asTypedList(newSizes.length).setAll(0, newSizes);
+    try {
+      return UMat._(
+        cvCreate(
+          calloc<cvg.UMat>(),
+          (p) => ccore.cv_UMat_reshape_2(ref, cn, newSizes.length, cNewSizes, p, ffi.nullptr),
+        ),
+      );
+    } finally {
       calloc.free(cNewSizes);
     }
-    return UMat._(p);
   }
 
   /// matrix transposition by means of matrix expressions
   UMat t() {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_t(ref, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_t(ref, p, ffi.nullptr)));
   }
 
   /// matrix inversion by means of matrix expressions
   UMat inv({int method = DECOMP_LU}) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_inv(ref, method, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_inv(ref, method, p, ffi.nullptr)));
   }
 
   /// per-element matrix multiplication by means of matrix expressions
   UMat mul(UMat m, {double alpha = 1}) {
-    final p = calloc<cvg.UMat>();
-    cvRun(() => ccore.cv_UMat_mul(ref, m.ref, alpha, p, ffi.nullptr));
-    return UMat._(p);
+    return UMat._(cvCreate(calloc<cvg.UMat>(), (p) => ccore.cv_UMat_mul(ref, m.ref, alpha, p, ffi.nullptr)));
   }
 
   /// computes dot-product
   double dot(UMat m) {
-    final p = calloc<ffi.Double>();
-    cvRun(() => ccore.cv_UMat_dot(ref, m.ref, p, ffi.nullptr));
-    final rval = p.value;
-    calloc.free(p);
+    final rval = cvOut(
+      calloc<ffi.Double>(),
+      (p) => ccore.cv_UMat_dot(ref, m.ref, p, ffi.nullptr),
+      (p) => p.value,
+    );
     return rval;
   }
 

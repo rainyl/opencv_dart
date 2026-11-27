@@ -22,9 +22,9 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
       WeChatQRCode._(ptr, attach);
 
   factory WeChatQRCode.empty() {
-    final p = calloc<cvg.WeChatQRCode>();
-    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_create(p));
-    return WeChatQRCode._(p);
+    return WeChatQRCode._(
+      cvCreate(calloc<cvg.WeChatQRCode>(), ccontrib.cv_wechat_qrcode_WeChatQRCode_create),
+    );
   }
 
   /// Initialize the WeChatQRCode.
@@ -38,15 +38,26 @@ class WeChatQRCode extends CvStruct<cvg.WeChatQRCode> {
     String superResolutionPrototxtPath = "",
     String superResolutionCaffeModelPath = "",
   ]) {
+    // The four paths are raw `calloc` blocks owned by the arena: release them when the native create
+    // throws (a missing model), which used to skip `releaseAll`.
     final arena = Arena();
-    final p = calloc<cvg.WeChatQRCode>();
-    final dp = detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    final dm = detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    final srp = superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    final srm = superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>();
-    cvRun(() => ccontrib.cv_wechat_qrcode_WeChatQRCode_create_1(dp, dm, srp, srm, p, ffi.nullptr));
-    arena.releaseAll();
-    return WeChatQRCode._(p);
+    try {
+      return WeChatQRCode._(
+        cvCreate(
+          calloc<cvg.WeChatQRCode>(),
+          (p) => ccontrib.cv_wechat_qrcode_WeChatQRCode_create_1(
+            detectorPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+            detectorCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+            superResolutionPrototxtPath.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+            superResolutionCaffeModelPath.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+            p,
+            ffi.nullptr,
+          ),
+        ),
+      );
+    } finally {
+      arena.releaseAll();
+    }
   }
 
   /// Both detects and decodes QR code. To simplify the usage, there is a only API: detectAndDecode.

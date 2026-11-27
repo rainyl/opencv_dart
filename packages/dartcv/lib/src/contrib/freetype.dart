@@ -31,11 +31,14 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
   /// [filename] FontFile Name, if not null, will call [loadFontData] internally.
   /// [idx] face_index to select a font faces in a single file.
   factory FreeType2.create({String? filename, int idx = 0}) {
-    final p = calloc<cvg.FreeType2>();
-    cvRun(() => ccontrib.cv_freetype_FreeType2_create(p));
-    final ft = FreeType2._(p);
+    final ft = FreeType2._(cvCreate(calloc<cvg.FreeType2>(), ccontrib.cv_freetype_FreeType2_create));
     if (filename != null) {
-      ft.loadFontData(filename, idx);
+      try {
+        ft.loadFontData(filename, idx);
+      } catch (_) {
+        ft.dispose();
+        rethrow;
+      }
     }
     return ft;
   }
@@ -47,20 +50,27 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
   /// [filename] FontFile Name
   /// [idx] face_index to select a font faces in a single file.
   void loadFontData(String filename, int idx) {
-    final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    cvRun(() => ccontrib.cv_freetype_FreeType2_loadFontData(ref, cname, idx, ffi.nullptr));
-    calloc.free(cname);
+    return using((arena) {
+      final cname = filename.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(() => ccontrib.cv_freetype_FreeType2_loadFontData(ref, cname, idx, ffi.nullptr));
+    });
   }
 
   /// async version of [loadFontData]
-  Future<void> loadFontDataAsync(String filename, int idx, {Duration? timeout}) async {
-    final cname = filename.toNativeUtf8().cast<ffi.Char>();
-    await cvRunAsync0((callback) => ccontrib.cv_freetype_FreeType2_loadFontData(ref, cname, idx, callback), (
-      c,
-    ) {
-      calloc.free(cname);
-      c.complete();
-    }, timeout: timeout);
+  Future<void> loadFontDataAsync(String filename, int idx, {Duration? timeout}) {
+    // The name is freed by `release` once the job reports, not when this call returns.
+    final arena = Arena();
+    return cvRunAsync0(
+      (callback) => ccontrib.cv_freetype_FreeType2_loadFontData(
+        ref,
+        filename.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+        idx,
+        callback,
+      ),
+      (c) => c.complete(),
+      timeout: timeout,
+      release: arena.releaseAll,
+    );
   }
 
   /// Load font data.
@@ -147,22 +157,23 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
     int lineType = LINE_8,
     bool bottomLeftOrigin = false,
   }) {
-    final ctext = text.toNativeUtf8().cast<ffi.Char>();
-    cvRun(
-      () => ccontrib.cv_freetype_FreeType2_putText(
-        ref,
-        img.ref,
-        ctext,
-        org.ref,
-        fontHeight,
-        color.ref,
-        thickness,
-        lineType,
-        bottomLeftOrigin,
-        ffi.nullptr,
-      ),
-    );
-    calloc.free(ctext);
+    return using((arena) {
+      final ctext = text.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+      cvRun(
+        () => ccontrib.cv_freetype_FreeType2_putText(
+          ref,
+          img.ref,
+          ctext,
+          org.ref,
+          fontHeight,
+          color.ref,
+          thickness,
+          lineType,
+          bottomLeftOrigin,
+          ffi.nullptr,
+        ),
+      );
+    });
   }
 
   /// Async version of [putText]
@@ -196,13 +207,13 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
     int lineType = LINE_8,
     bool bottomLeftOrigin = false,
     Duration? timeout,
-  }) async {
-    final ctext = text.toNativeUtf8().cast<ffi.Char>();
+  }) {
+    final arena = Arena();
     return cvRunAsync0(
       (callback) => ccontrib.cv_freetype_FreeType2_putText(
         ref,
         img.ref,
-        ctext,
+        text.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
         org.ref,
         fontHeight,
         color.ref,
@@ -211,11 +222,9 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
         bottomLeftOrigin,
         callback,
       ),
-      (c) {
-        calloc.free(ctext);
-        return c.complete();
-      },
+      (c) => c.complete(),
       timeout: timeout,
+      release: arena.releaseAll,
     );
   }
 
@@ -275,23 +284,29 @@ class FreeType2 extends CvStruct<cvg.FreeType2> {
   ///
   /// Also see [putText]
   (Size size, int baseline) getTextSize(String text, int fontHeight, int thickness) {
+    final arena = Arena();
     final pBaseline = calloc<ffi.Int>();
     final pSize = calloc<cvg.CvSize>();
-    final textPtr = text.toNativeUtf8().cast<ffi.Char>();
-    cvRun(
-      () => ccontrib.cv_freetype_FreeType2_getTextSize(
-        ref,
-        textPtr,
-        fontHeight,
-        thickness,
-        pBaseline,
-        pSize,
-        ffi.nullptr,
-      ),
-    );
-    final rval = (Size.fromPointer(pSize), pBaseline.value);
-    calloc.free(pBaseline);
-    return rval;
+    try {
+      cvRun(
+        () => ccontrib.cv_freetype_FreeType2_getTextSize(
+          ref,
+          text.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+          fontHeight,
+          thickness,
+          pBaseline,
+          pSize,
+          ffi.nullptr,
+        ),
+      );
+      return (Size.fromPointer(pSize), pBaseline.value);
+    } catch (_) {
+      calloc.free(pSize);
+      rethrow;
+    } finally {
+      calloc.free(pBaseline);
+      arena.releaseAll();
+    }
   }
 
   static final finalizer = OcvFinalizer<cvg.FreeType2Ptr>(

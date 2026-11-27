@@ -30,9 +30,7 @@ class Boost extends CvStruct<cml.Boost> {
 
   /// Creates an empty model. Use one of the train methods to train it, or [Boost.load].
   factory Boost.create() {
-    final p = calloc<cml.Boost>();
-    cvRun(() => cml.cv_ml_Boost_create(p));
-    return Boost._(p);
+    return Boost._(cvCreate(calloc<cml.Boost>(), cml.cv_ml_Boost_create));
   }
 
   /// Loads a model saved with [save] from [filepath]. Throws [CvException] when the file
@@ -54,16 +52,8 @@ class Boost extends CvStruct<cml.Boost> {
     ),
   );
 
-  factory Boost._make(ffi.Pointer<cml.CvStatus> Function(cml.BoostPtr p) func) {
-    final p = calloc<cml.Boost>();
-    try {
-      cvRun(() => func(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return Boost._(p);
-  }
+  factory Boost._make(ffi.Pointer<cml.CvStatus> Function(cml.BoostPtr p) func) =>
+      Boost._(cvCreate(calloc<cml.Boost>(), (p) => func(p)));
 
   static final finalizer = OcvFinalizer<cml.BoostPtr>(cml.addresses.cv_ml_Boost_close);
 

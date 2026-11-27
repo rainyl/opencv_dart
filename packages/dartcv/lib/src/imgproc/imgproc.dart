@@ -89,10 +89,11 @@ VecPoint2f approxPolyN2f(
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
 double arcLength(VecPoint curve, bool closed) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_arcLength(curve.ref, closed, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => cimgproc.cv_arcLength(curve.ref, closed, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -102,10 +103,11 @@ double arcLength(VecPoint curve, bool closed) {
 ///
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
 double arcLength2f(VecPoint2f curve, bool closed) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_arcLength2f(curve.ref, closed, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => cimgproc.cv_arcLength2f(curve.ref, closed, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -229,10 +231,11 @@ Mat calcBackProject(VecMat src, VecI32 channels, Mat hist, VecF32 ranges, {Mat? 
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
 double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -240,10 +243,11 @@ double compareHist(Mat hist1, Mat hist2, {int method = 0}) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 (bool, Point, Point) clipLine(Rect imgRect, Point pt1, Point pt2) {
-  final p = calloc<ffi.Bool>();
-  cvRun(() => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Bool>(),
+    (p) => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return (rval, pt1, pt2);
 }
 
@@ -471,23 +475,26 @@ Mat erode(
   mask ??= Mat.empty();
   final pRect = calloc<cvg.CvRect>();
   final pRval = calloc<ffi.Int>();
-  cvRun(
-    () => cimgproc.cv_floodFill(
-      image.ref,
-      mask!.ref,
-      seedPoint.ref,
-      newVal.ref,
-      pRect,
-      loDiff!.ref,
-      upDiff!.ref,
-      flags,
-      pRval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = pRval.value;
-  calloc.free(pRval);
-  return (rval, image, mask, Rect.fromPointer(pRect));
+  try {
+    cvRun(
+      () => cimgproc.cv_floodFill(
+        image.ref,
+        mask!.ref,
+        seedPoint.ref,
+        newVal.ref,
+        pRect,
+        loDiff!.ref,
+        upDiff!.ref,
+        flags,
+        pRval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = pRval.value;
+    return (rval, image, mask, Rect.fromPointer(pRect));
+  } finally {
+    calloc.free(pRval);
+  }
 }
 
 /// BoundingRect calculates the up-right bounding rectangle of a point set.
@@ -495,9 +502,9 @@ Mat erode(
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Rect boundingRect(VecPoint points) {
-  final rect = calloc<cvg.CvRect>();
-  cvRun(() => cimgproc.cv_boundingRect(points.ref, rect, ffi.nullptr));
-  return Rect.fromPointer(rect);
+  return Rect.fromPointer(
+    cvCreate(calloc<cvg.CvRect>(), (rect) => cimgproc.cv_boundingRect(points.ref, rect, ffi.nullptr)),
+  );
 }
 
 /// BoundingRect calculates the up-right bounding rectangle of a point set.
@@ -505,9 +512,9 @@ Rect boundingRect(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Rect boundingRect2f(VecPoint2f points) {
-  final rect = calloc<cvg.CvRect>();
-  cvRun(() => cimgproc.cv_boundingRect2f(points.ref, rect, ffi.nullptr));
-  return Rect.fromPointer(rect);
+  return Rect.fromPointer(
+    cvCreate(calloc<cvg.CvRect>(), (rect) => cimgproc.cv_boundingRect2f(points.ref, rect, ffi.nullptr)),
+  );
 }
 
 /// BoxPoints finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
@@ -526,10 +533,11 @@ VecPoint2f boxPoints(RotatedRect rect, {VecPoint2f? pts}) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 double contourArea(VecPoint contour) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_contourArea(contour.ref, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => cimgproc.cv_contourArea(contour.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -538,10 +546,11 @@ double contourArea(VecPoint contour) {
 /// For further details, please see:
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 double contourArea2f(VecPoint2f contour) {
-  final p = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_contourArea2f(contour.ref, p, ffi.nullptr));
-  final rval = p.value;
-  calloc.free(p);
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => cimgproc.cv_contourArea2f(contour.ref, p, ffi.nullptr),
+    (p) => p.value,
+  );
   return rval;
 }
 
@@ -550,9 +559,9 @@ double contourArea2f(VecPoint2f contour) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 RotatedRect minAreaRect(VecPoint points) {
-  final p = calloc<cvg.RotatedRect>();
-  cvRun(() => cimgproc.cv_minAreaRect(points.ref, p, ffi.nullptr));
-  return RotatedRect.fromPointer(p);
+  return RotatedRect.fromPointer(
+    cvCreate(calloc<cvg.RotatedRect>(), (p) => cimgproc.cv_minAreaRect(points.ref, p, ffi.nullptr)),
+  );
 }
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
@@ -560,9 +569,9 @@ RotatedRect minAreaRect(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 RotatedRect minAreaRect2f(VecPoint2f points) {
-  final p = calloc<cvg.RotatedRect>();
-  cvRun(() => cimgproc.cv_minAreaRect2f(points.ref, p, ffi.nullptr));
-  return RotatedRect.fromPointer(p);
+  return RotatedRect.fromPointer(
+    cvCreate(calloc<cvg.RotatedRect>(), (p) => cimgproc.cv_minAreaRect2f(points.ref, p, ffi.nullptr)),
+  );
 }
 
 /// FitEllipse Fits an ellipse around a set of 2D points.
@@ -570,9 +579,9 @@ RotatedRect minAreaRect2f(VecPoint2f points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 RotatedRect fitEllipse(VecPoint points) {
-  final p = calloc<cvg.RotatedRect>();
-  cvRun(() => cimgproc.cv_fitEllipse(points.ref, p, ffi.nullptr));
-  return RotatedRect.fromPointer(p);
+  return RotatedRect.fromPointer(
+    cvCreate(calloc<cvg.RotatedRect>(), (p) => cimgproc.cv_fitEllipse(points.ref, p, ffi.nullptr)),
+  );
 }
 
 /// FitEllipse Fits an ellipse around a set of 2D points.
@@ -580,9 +589,9 @@ RotatedRect fitEllipse(VecPoint points) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 RotatedRect fitEllipse2f(VecPoint2f points) {
-  final p = calloc<cvg.RotatedRect>();
-  cvRun(() => cimgproc.cv_fitEllipse2f(points.ref, p, ffi.nullptr));
-  return RotatedRect.fromPointer(p);
+  return RotatedRect.fromPointer(
+    cvCreate(calloc<cvg.RotatedRect>(), (p) => cimgproc.cv_fitEllipse2f(points.ref, p, ffi.nullptr)),
+  );
 }
 
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
@@ -592,10 +601,13 @@ RotatedRect fitEllipse2f(VecPoint2f points) {
 (Point2f center, double radius) minEnclosingCircle(VecPoint points) {
   final center = calloc<cvg.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
-  cvRun(() => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, ffi.nullptr));
-  final rval = (Point2f.fromPointer(center), pRadius.value);
-  calloc.free(pRadius);
-  return rval;
+  try {
+    cvRun(() => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, ffi.nullptr));
+    final rval = (Point2f.fromPointer(center), pRadius.value);
+    return rval;
+  } finally {
+    calloc.free(pRadius);
+  }
 }
 
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
@@ -605,10 +617,13 @@ RotatedRect fitEllipse2f(VecPoint2f points) {
 (Point2f center, double radius) minEnclosingCircle2f(VecPoint2f points) {
   final center = calloc<cvg.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
-  cvRun(() => cimgproc.cv_minEnclosingCircle2f(points.ref, center, pRadius, ffi.nullptr));
-  final rval = (Point2f.fromPointer(center), pRadius.value);
-  calloc.free(pRadius);
-  return rval;
+  try {
+    cvRun(() => cimgproc.cv_minEnclosingCircle2f(points.ref, center, pRadius, ffi.nullptr));
+    final rval = (Point2f.fromPointer(center), pRadius.value);
+    return rval;
+  } finally {
+    calloc.free(pRadius);
+  }
 }
 
 /// FindContours finds contours in a binary image.
@@ -639,10 +654,13 @@ RotatedRect fitEllipse2f(VecPoint2f points) {
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
 double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
   final r = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, r, ffi.nullptr));
-  final rval = r.value;
-  calloc.free(r);
-  return rval;
+  try {
+    cvRun(() => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, r, ffi.nullptr));
+    final rval = r.value;
+    return rval;
+  } finally {
+    calloc.free(r);
+  }
 }
 
 /// PointPolygonTest performs a point-in-contour test.
@@ -651,10 +669,13 @@ double pointPolygonTest(VecPoint points, Point2f pt, bool measureDist) {
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga1a539e8db2135af2566103705d7a5722
 double pointPolygonTest2f(VecPoint2f points, Point2f pt, bool measureDist) {
   final r = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_pointPolygonTest2f(points.ref, pt.ref, measureDist, r, ffi.nullptr));
-  final rval = r.value;
-  calloc.free(r);
-  return rval;
+  try {
+    cvRun(() => cimgproc.cv_pointPolygonTest2f(points.ref, pt.ref, measureDist, r, ffi.nullptr));
+    final rval = r.value;
+    return rval;
+  } finally {
+    calloc.free(r);
+  }
 }
 
 /// ConnectedComponents computes the connected components labeled image of boolean image.
@@ -662,13 +683,12 @@ double pointPolygonTest2f(VecPoint2f points, Point2f pt, bool measureDist) {
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaedef8c7340499ca391d459122e51bef5
 int connectedComponents(Mat image, Mat labels, int connectivity, int ltype, int ccltype) {
-  final p = calloc<ffi.Int>();
-  cvRun(
-    () =>
+  final rval = cvOut(
+    calloc<ffi.Int>(),
+    (p) =>
         cimgproc.cv_connectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p, ffi.nullptr),
+    (p) => p.value,
   );
-  final rval = p.value;
-  calloc.free(p);
   return rval;
 }
 
@@ -686,9 +706,9 @@ int connectedComponentsWithStats(
   int ltype,
   int ccltype,
 ) {
-  final p = calloc<ffi.Int>();
-  cvRun(
-    () => cimgproc.cv_connectedComponents_1(
+  final rval = cvOut(
+    calloc<ffi.Int>(),
+    (p) => cimgproc.cv_connectedComponents_1(
       src.ref,
       labels.ref,
       stats.ref,
@@ -699,9 +719,8 @@ int connectedComponentsWithStats(
       p,
       ffi.nullptr,
     ),
+    (p) => p.value,
   );
-  final rval = p.value;
-  calloc.free(p);
   return rval;
 }
 
@@ -722,9 +741,9 @@ Mat matchTemplate(Mat image, Mat templ, int method, {OutputArray? result, Mat? m
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
 Moments moments(Mat src, {bool binaryImage = false}) {
-  final m = calloc<cvg.Moment>();
-  cvRun(() => cimgproc.cv_moments(src.ref, binaryImage, m, ffi.nullptr));
-  return Moments.fromPointer(m);
+  return Moments.fromPointer(
+    cvCreate(calloc<cvg.Moment>(), (m) => cimgproc.cv_moments(src.ref, binaryImage, m, ffi.nullptr)),
+  );
 }
 
 /// PyrDown blurs an image and downsamples it.
@@ -753,9 +772,9 @@ Mat pyrUp(Mat src, {Mat? dst, (int, int) dstsize = (0, 0), int borderType = BORD
 /// For further details, please see:
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga94756fad83d9d24d29c9bf478558c40a
 Scalar morphologyDefaultBorderValue() {
-  final s = calloc<cvg.Scalar>();
-  cvRun(() => cimgproc.cv_morphologyDefaultBorderValue(s, ffi.nullptr));
-  return Scalar.fromPointer(s);
+  return Scalar.fromPointer(
+    cvCreate(calloc<cvg.Scalar>(), (s) => cimgproc.cv_morphologyDefaultBorderValue(s, ffi.nullptr)),
+  );
 }
 
 /// MorphologyEx performs advanced morphological transformations.
@@ -1230,15 +1249,23 @@ Mat HoughLinesPointSet(
   InputArray? mask,
 }) {
   dst ??= mask == null ? Mat.empty() : Mat.zeros(src.rows, src.cols, src.type);
-  final p = calloc<ffi.Double>();
-  cvRun(
-    () => mask == null
+  final rval = cvOut(
+    calloc<ffi.Double>(),
+    (p) => mask == null
         ? cimgproc.cv_threshold(src.ref, dst!.ref, thresh, maxval, type, p, ffi.nullptr)
-        : cimgproc.cv_thresholdWithMask(src.ref, dst!.ref, mask.ref, thresh, maxval, type, p, ffi.nullptr),
+        : cimgproc.cv_thresholdWithMask(
+            src.ref,
+            dst!.ref,
+            mask.ref,
+            thresh,
+            maxval,
+            type,
+            p,
+            ffi.nullptr,
+          ),
+    (p) => p.value,
   );
-  final rval = (p.value, dst);
-  calloc.free(p);
-  return rval;
+  return (rval, dst);
 }
 
 /// AdaptiveThreshold applies a fixed-level threshold to each array element.
@@ -1432,13 +1459,29 @@ Mat polylines(
 /// For further details, please see:
 /// http:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga3d2abfcb995fd2db908c8288199dba82
 (Size size, int baseline) getTextSize(String text, int fontFace, double fontScale, int thickness) {
+  final arena = Arena();
   final pBaseline = calloc<ffi.Int>();
   final size = calloc<cvg.CvSize>();
-  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
-  cvRun(() => cimgproc.cv_getTextSize(textPtr, fontFace, fontScale, thickness, pBaseline, size, ffi.nullptr));
-  final rval = (Size.fromPointer(size), pBaseline.value);
-  calloc.free(pBaseline);
-  return rval;
+  try {
+    cvRun(
+      () => cimgproc.cv_getTextSize(
+        text.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+        fontFace,
+        fontScale,
+        thickness,
+        pBaseline,
+        size,
+        ffi.nullptr,
+      ),
+    );
+    return (Size.fromPointer(size), pBaseline.value);
+  } catch (_) {
+    calloc.free(size);
+    rethrow;
+  } finally {
+    calloc.free(pBaseline);
+    arena.releaseAll();
+  }
 }
 
 /// PutTextWithParams draws a text string.
@@ -1459,23 +1502,24 @@ Mat putText(
   int lineType = LINE_8,
   bool bottomLeftOrigin = false,
 }) {
-  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
-  cvRun(
-    () => cimgproc.cv_putText_1(
-      img.ref,
-      textPtr,
-      org.ref,
-      fontFace,
-      fontScale,
-      color.ref,
-      thickness,
-      lineType,
-      bottomLeftOrigin,
-      ffi.nullptr,
-    ),
-  );
-  calloc.free(textPtr);
-  return img;
+  return using((arena) {
+    final textPtr = text.toNativeUtf8(allocator: arena).cast<ffi.Char>();
+    cvRun(
+      () => cimgproc.cv_putText_1(
+        img.ref,
+        textPtr,
+        org.ref,
+        fontFace,
+        fontScale,
+        color.ref,
+        thickness,
+        lineType,
+        bottomLeftOrigin,
+        ffi.nullptr,
+      ),
+    );
+    return img;
+  });
 }
 
 /// Resize resizes an image.
@@ -1827,10 +1871,13 @@ Mat fitLine2f(VecPoint2f points, int distType, double param, double reps, double
 /// https:///docs.opencv.org/4.x/d3/dc0/group__imgproc__shape.html#gaadc90cb16e2362c9bd6e7363e6e4c317
 double matchShapes(VecPoint contour1, VecPoint contour2, int method, double parameter) {
   final r = calloc<ffi.Double>();
-  cvRun(() => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, r, ffi.nullptr));
-  final rval = r.value;
-  calloc.free(r);
-  return rval;
+  try {
+    cvRun(() => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, r, ffi.nullptr));
+    final rval = r.value;
+    return rval;
+  } finally {
+    calloc.free(r);
+  }
 }
 
 /// Inverts an affine transformation.
@@ -1851,12 +1898,17 @@ Mat invertAffineTransform(InputArray M, {OutputArray? iM}) {
 /// https:///docs.opencv.org/master/d7/df3/group__imgproc__motion.html#ga552420a2ace9ef3fb053cd630fdb4952
 (Point2f rval, double response) phaseCorrelate(InputArray src1, InputArray src2, {InputArray? window}) {
   window ??= Mat.empty();
-  final p = calloc<ffi.Double>();
   final pp = calloc<cvg.CvPoint2f>();
-  cvRun(() => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, ffi.nullptr));
-  final rval = (Point2f.fromPointer(pp), p.value);
-  calloc.free(p);
-  return rval;
+  try {
+    return cvOut(
+      calloc<ffi.Double>(),
+      (p) => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, ffi.nullptr),
+      (p) => (Point2f.fromPointer(pp), p.value),
+    );
+  } catch (_) {
+    calloc.free(pp);
+    rethrow;
+  }
 }
 
 /// Adds the square of a source image to the accumulator image.
@@ -1940,9 +1992,12 @@ bool isContourConvex2f(VecPoint2f contour) => cimgproc.cv_isContourConvex2f(cont
   bool handleNested = true,
 }) {
   final r = calloc<ffi.Float>();
-  p12 ??= VecPoint();
-  cvRun(() => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, p12!.ptr, handleNested, r, ffi.nullptr));
-  final rval = (r.value, p12);
-  calloc.free(r);
-  return rval;
+  try {
+    p12 ??= VecPoint();
+    cvRun(() => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, p12!.ptr, handleNested, r, ffi.nullptr));
+    final rval = (r.value, p12);
+    return rval;
+  } finally {
+    calloc.free(r);
+  }
 }

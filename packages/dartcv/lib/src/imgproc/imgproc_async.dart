@@ -113,11 +113,15 @@ Future<VecPoint2f> approxPolyN2fAsync(
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
 Future<double> arcLengthAsync(VecPoint curve, bool closed, {Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => cimgproc.cv_arcLength(curve.ref, closed, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_arcLength(curve.ref, closed, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// ArcLength calculates a contour perimeter or a curve length.
@@ -127,11 +131,15 @@ Future<double> arcLengthAsync(VecPoint curve, bool closed, {Duration? timeout}) 
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga8d26483c636be6b35c3ec6335798a47c
 Future<double> arcLength2fAsync(VecPoint2f curve, bool closed, {Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => cimgproc.cv_arcLength2f(curve.ref, closed, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_arcLength2f(curve.ref, closed, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// ConvexHull finds the convex hull of a point set.
@@ -300,11 +308,15 @@ Future<Mat> calcBackProjectAsync(
 /// https:///docs.opencv.org/master/d6/dc7/group__imgproc__hist.html#gaf4190090efa5c47cb367cf97a9a519bd
 Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0, Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_compareHist(hist1.ref, hist2.ref, method, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// ClipLine clips the line against the image rectangle.
@@ -312,11 +324,15 @@ Future<double> compareHistAsync(Mat hist1, Mat hist2, {int method = 0, Duration?
 /// https:///docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf483cb46ad6b049bc35ec67052ef1c2c
 Future<(bool, Point, Point)> clipLineAsync(Rect imgRect, Point pt1, Point pt2, {Duration? timeout}) async {
   final p = calloc<ffi.Bool>();
-  return cvRunAsync0((callback) => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete((rval, pt1, pt2));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_clipLine(imgRect.ref, pt1.ref, pt2.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete((rval, pt1, pt2));
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// BilateralFilter applies a bilateral filter to an image.
@@ -585,10 +601,11 @@ Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
     ),
     (c) {
       final rval = pRval.value;
-      calloc.free(pRval);
       return c.complete((rval, image, mask!, Rect.fromPointer(pRect)));
     },
+    release: () => calloc.free(pRval),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(pRect),
   );
 }
 
@@ -598,9 +615,14 @@ Future<(int rval, Mat image, Mat mask, Rect rect)> floodFillAsync(
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Future<Rect> boundingRectAsync(VecPoint points, {Duration? timeout}) async {
   final rect = calloc<cvg.CvRect>();
-  return cvRunAsync0((callback) => cimgproc.cv_boundingRect(points.ref, rect, callback), (c) {
-    return c.complete(Rect.fromPointer(rect));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_boundingRect(points.ref, rect, callback),
+    (c) {
+      return c.complete(Rect.fromPointer(rect));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(rect),
+  );
 }
 
 /// BoundingRect calculates the up-right bounding rectangle of a point set.
@@ -609,9 +631,14 @@ Future<Rect> boundingRectAsync(VecPoint points, {Duration? timeout}) async {
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#gacb413ddce8e48ff3ca61ed7cf626a366
 Future<Rect> boundingRect2fAsync(VecPoint2f points, {Duration? timeout}) async {
   final rect = calloc<cvg.CvRect>();
-  return cvRunAsync0((callback) => cimgproc.cv_boundingRect2f(points.ref, rect, callback), (c) {
-    return c.complete(Rect.fromPointer(rect));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_boundingRect2f(points.ref, rect, callback),
+    (c) {
+      return c.complete(Rect.fromPointer(rect));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(rect),
+  );
 }
 
 /// BoxPoints finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
@@ -632,11 +659,15 @@ Future<VecPoint2f> boxPointsAsync(RotatedRect rect, {VecPoint2f? pts, Duration? 
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 Future<double> contourAreaAsync(VecPoint contour, {Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => cimgproc.cv_contourArea(contour.ref, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_contourArea(contour.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// ContourArea calculates a contour area.
@@ -645,11 +676,15 @@ Future<double> contourAreaAsync(VecPoint contour, {Duration? timeout}) async {
 /// https:///docs.opencv.org/3.3.0/d3/dc0/group__imgproc__shape.html#ga2c759ed9f497d4a618048a2f56dc97f1
 Future<double> contourArea2fAsync(VecPoint2f contour, {Duration? timeout}) async {
   final p = calloc<ffi.Double>();
-  return cvRunAsync0((callback) => cimgproc.cv_contourArea2f(contour.ref, p, callback), (c) {
-    final rval = p.value;
-    calloc.free(p);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_contourArea2f(contour.ref, p, callback),
+    (c) {
+      final rval = p.value;
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(p),
+  );
 }
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
@@ -658,9 +693,14 @@ Future<double> contourArea2fAsync(VecPoint2f contour, {Duration? timeout}) async
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 Future<RotatedRect> minAreaRectAsync(VecPoint points, {Duration? timeout}) async {
   final p = calloc<cvg.RotatedRect>();
-  return cvRunAsync0((callback) => cimgproc.cv_minAreaRect(points.ref, p, callback), (c) {
-    return c.complete(RotatedRect.fromPointer(p));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_minAreaRect(points.ref, p, callback),
+    (c) {
+      return c.complete(RotatedRect.fromPointer(p));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(p),
+  );
 }
 
 /// MinAreaRect finds a rotated rectangle of the minimum area enclosing the input 2D point set.
@@ -669,9 +709,14 @@ Future<RotatedRect> minAreaRectAsync(VecPoint points, {Duration? timeout}) async
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga3d476a3417130ae5154aea421ca7ead9
 Future<RotatedRect> minAreaRect2fAsync(VecPoint2f points, {Duration? timeout}) async {
   final p = calloc<cvg.RotatedRect>();
-  return cvRunAsync0((callback) => cimgproc.cv_minAreaRect2f(points.ref, p, callback), (c) {
-    return c.complete(RotatedRect.fromPointer(p));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_minAreaRect2f(points.ref, p, callback),
+    (c) {
+      return c.complete(RotatedRect.fromPointer(p));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(p),
+  );
 }
 
 /// FitEllipse Fits an ellipse around a set of 2D points.
@@ -680,9 +725,14 @@ Future<RotatedRect> minAreaRect2fAsync(VecPoint2f points, {Duration? timeout}) a
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#gaf259efaad93098103d6c27b9e4900ffa
 Future<RotatedRect> fitEllipseAsync(VecPoint points, {Duration? timeout}) async {
   final p = calloc<cvg.RotatedRect>();
-  return cvRunAsync0((callback) => cimgproc.cv_fitEllipse(points.ref, p, callback), (c) {
-    return c.complete(RotatedRect.fromPointer(p));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_fitEllipse(points.ref, p, callback),
+    (c) {
+      return c.complete(RotatedRect.fromPointer(p));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(p),
+  );
 }
 
 /// FitEllipse Fits an ellipse around a set of 2D points.
@@ -691,9 +741,14 @@ Future<RotatedRect> fitEllipseAsync(VecPoint points, {Duration? timeout}) async 
 /// https:///docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga8ce13c24081bbc7151e9326f412190f1
 Future<RotatedRect> fitEllipse2fAsync(VecPoint2f points, {Duration? timeout}) async {
   final p = calloc<cvg.RotatedRect>();
-  return cvRunAsync0((callback) => cimgproc.cv_fitEllipse2f(points.ref, p, callback), (c) {
-    return c.complete(RotatedRect.fromPointer(p));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_fitEllipse2f(points.ref, p, callback),
+    (c) {
+      return c.complete(RotatedRect.fromPointer(p));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(p),
+  );
 }
 
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
@@ -703,13 +758,18 @@ Future<RotatedRect> fitEllipse2fAsync(VecPoint2f points, {Duration? timeout}) as
 Future<(Point2f center, double radius)> minEnclosingCircleAsync(VecPoint points, {Duration? timeout}) async {
   final center = calloc<cvg.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
-  return cvRunAsync0((callback) => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, callback), (
-    c,
-  ) {
-    final rval = (Point2f.fromPointer(center), pRadius.value);
-    calloc.free(pRadius);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_minEnclosingCircle(points.ref, center, pRadius, callback),
+    (
+      c,
+    ) {
+      final rval = (Point2f.fromPointer(center), pRadius.value);
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(pRadius),
+    releaseOnFailure: () => calloc.free(center),
+  );
 }
 
 /// MinEnclosingCircle finds a circle of the minimum area enclosing the input 2D point set.
@@ -722,13 +782,18 @@ Future<(Point2f center, double radius)> minEnclosingCircle2fAsync(
 }) async {
   final center = calloc<cvg.CvPoint2f>();
   final pRadius = calloc<ffi.Float>();
-  return cvRunAsync0((callback) => cimgproc.cv_minEnclosingCircle2f(points.ref, center, pRadius, callback), (
-    c,
-  ) {
-    final rval = (Point2f.fromPointer(center), pRadius.value);
-    calloc.free(pRadius);
-    return c.complete(rval);
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_minEnclosingCircle2f(points.ref, center, pRadius, callback),
+    (
+      c,
+    ) {
+      final rval = (Point2f.fromPointer(center), pRadius.value);
+      return c.complete(rval);
+    },
+    timeout: timeout,
+    release: () => calloc.free(pRadius),
+    releaseOnFailure: () => calloc.free(center),
+  );
 }
 
 /// FindContours finds contours in a binary image.
@@ -788,9 +853,9 @@ Future<double> pointPolygonTestAsync(
     (callback) => cimgproc.cv_pointPolygonTest(points.ref, pt.ref, measureDist, p, callback),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -810,9 +875,9 @@ Future<double> pointPolygonTest2fAsync(
     (callback) => cimgproc.cv_pointPolygonTest2f(points.ref, pt.ref, measureDist, p, callback),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -835,9 +900,9 @@ Future<int> connectedComponentsAsync(
         cimgproc.cv_connectedComponents(image.ref, labels.ref, connectivity, ltype, ccltype, p, callback),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -872,9 +937,9 @@ Future<int> connectedComponentsWithStatsAsync(
     ),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -909,9 +974,14 @@ Future<Mat> matchTemplateAsync(
 /// https:///docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga556a180f43cab22649c23ada36a8a139
 Future<Moments> momentsAsync(Mat src, {bool binaryImage = false, Duration? timeout}) async {
   final m = calloc<cvg.Moment>();
-  return cvRunAsync0((callback) => cimgproc.cv_moments(src.ref, binaryImage, m, callback), (c) {
-    return c.complete(Moments.fromPointer(m));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_moments(src.ref, binaryImage, m, callback),
+    (c) {
+      return c.complete(Moments.fromPointer(m));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(m),
+  );
 }
 
 /// PyrDown blurs an image and downsamples it.
@@ -963,9 +1033,14 @@ Future<Mat> pyrUpAsync(
 /// https:///docs.opencv.org/master/d4/d86/group__imgproc__filter.html#ga94756fad83d9d24d29c9bf478558c40a
 Future<Scalar> morphologyDefaultBorderValueAsync({Duration? timeout}) async {
   final s = calloc<cvg.Scalar>();
-  return cvRunAsync0((callback) => cimgproc.cv_morphologyDefaultBorderValue(s, callback), (c) {
-    return c.complete(Scalar.fromPointer(s));
-  }, timeout: timeout);
+  return cvRunAsync0(
+    (callback) => cimgproc.cv_morphologyDefaultBorderValue(s, callback),
+    (c) {
+      return c.complete(Scalar.fromPointer(s));
+    },
+    timeout: timeout,
+    releaseOnFailure: () => calloc.free(s),
+  );
 }
 
 /// MorphologyEx performs advanced morphological transformations.
@@ -1528,9 +1603,9 @@ Future<(double, Mat dst)> thresholdAsync(
         : cimgproc.cv_thresholdWithMask(src.ref, dst!.ref, mask.ref, thresh, maxval, type, p, callback),
     (c) {
       final rval = (p.value, dst!);
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -1773,15 +1848,27 @@ Future<(Size size, int baseline)> getTextSizeAsync(
 }) {
   final pBaseline = calloc<ffi.Int>();
   final size = calloc<cvg.CvSize>();
-  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
+  final arena = Arena();
   return cvRunAsync0(
-    (callback) => cimgproc.cv_getTextSize(textPtr, fontFace, fontScale, thickness, pBaseline, size, callback),
+    (callback) => cimgproc.cv_getTextSize(
+      text.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
+      fontFace,
+      fontScale,
+      thickness,
+      pBaseline,
+      size,
+      callback,
+    ),
     (c) {
       final rval = (Size.fromPointer(size), pBaseline.value);
-      calloc.free(pBaseline);
       return c.complete(rval);
     },
+    release: () {
+      calloc.free(pBaseline);
+      arena.releaseAll();
+    },
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(size),
   );
 }
 
@@ -1804,11 +1891,11 @@ Future<Mat> putTextAsync(
   bool bottomLeftOrigin = false,
   Duration? timeout,
 }) {
-  final textPtr = text.toNativeUtf8().cast<ffi.Char>();
+  final arena = Arena();
   return cvRunAsync0(
     (callback) => cimgproc.cv_putText_1(
       img.ref,
-      textPtr,
+      text.toNativeUtf8(allocator: arena).cast<ffi.Char>(),
       org.ref,
       fontFace,
       fontScale,
@@ -1818,11 +1905,9 @@ Future<Mat> putTextAsync(
       bottomLeftOrigin,
       callback,
     ),
-    (c) {
-      calloc.free(textPtr);
-      return c.complete(img);
-    },
+    (c) => c.complete(img),
     timeout: timeout,
+    release: arena.releaseAll,
   );
 }
 
@@ -2300,9 +2385,9 @@ Future<double> matchShapesAsync(
     (callback) => cimgproc.cv_matchShapes(contour1.ref, contour2.ref, method, parameter, p, callback),
     (c) {
       final rval = p.value;
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
   );
 }
@@ -2337,10 +2422,11 @@ Future<(Point2f rval, double response)> phaseCorrelateAsync(
     (callback) => cimgproc.cv_phaseCorrelate(src1.ref, src2.ref, window!.ref, p, pp, callback),
     (c) {
       final rval = (Point2f.fromPointer(pp), p.value);
-      calloc.free(p);
       return c.complete(rval);
     },
+    release: () => calloc.free(p),
     timeout: timeout,
+    releaseOnFailure: () => calloc.free(pp),
   );
 }
 
@@ -2457,9 +2543,9 @@ Future<(double rval, VecPoint p12)> intersectConvexConvexAsync(
     (callback) => cimgproc.cv_intersectConvexConvex(p1.ref, p2.ref, p12!.ptr, handleNested, r, callback),
     (c) {
       final rval = (r.value, p12!);
-      calloc.free(r);
       return c.complete(rval);
     },
+    release: () => calloc.free(r),
     timeout: timeout,
   );
 }

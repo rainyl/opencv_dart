@@ -13,6 +13,18 @@
   test; `test/core/lifetime_test.dart` covers create/use/release, out-parameter reuse and views.
 - new: **real async**: `*Async` calls run on a worker thread instead of blocking the caller (errors and a `Duration? timeout` come back through the `Future`, a racing synchronous call is refused), with `setAsyncThreads()`/`asyncPending()`/`asyncDrain()` to tune the pool and the web staying single-threaded; breaking, since `CvCallback_0`/`CvCallback_1` now receive the work's `CvStatus*`.
 
+- fix: `X.create()` / `X.empty()` free the wrapper struct they `calloc` when the native create fails,
+  instead of leaking it once per failed attempt.
+- fix: every factory that loads a model or a file.
+- fix: a call that returns an out-parameter struct directly frees it on the error path too.
+- fix: `cvRunAsync0`/`cvRunAsync1` take a `release` callback that frees the out-parameters.
+- fix: an out-parameter block that only a successful job hands to a wrapper is freed by the new
+  `releaseOnFailure` when the job fails, instead of leaking on every failed call.
+- fix: the web shim rebuilds a pointer callback argument with the pointee type the callback declares
+  instead of the generic `Pointer<Void>` that dart2js refuses to pass to such a parameter.
+- fix: `WBDetector`, `FlannIndexParams`, `GMat`, `GScalar` and `GComputation` attach their finalizer
+  with a `detach: this` token, which `freeNative` needs.
+
 ## 2.3.3
 
 - fix: the native build declares its non-Dart inputs as build-hook dependencies: `src/CMakeLists.txt`, `src/cmake/**`, `src/dartcv/**` and, while it is used, the tree-shaking keep-list `dartcv_keep.txt`.

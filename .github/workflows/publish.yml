@@ -243,8 +243,8 @@ jobs:
       - name: Run tests in Chrome (dart2js and dart2wasm)
         working-directory: packages/dartcv
         run: |
-          dart test -p chrome test/web_test.dart
-          dart test -p chrome -c dart2wasm test/web_test.dart
+          dart test -p chrome test/web/web_test.dart
+          dart test -p chrome -c dart2wasm test/web/web_test.dart
       - name: Build the opencv_dart example for the web against this dartcv4
         shell: bash
         working-directory: packages/opencv_dart/example

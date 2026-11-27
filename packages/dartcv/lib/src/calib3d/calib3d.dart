@@ -38,25 +38,27 @@ import 'usac_params.dart';
   rvecs ??= Mat.empty();
   tvecs ??= Mat.empty();
   final cRmsErr = calloc<ffi.Double>();
-
-  cvRun(
-    () => ccalib3d.cv_calibrateCamera(
-      objectPoints.ref,
-      imagePoints.ref,
-      imageSize.cvdRef,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvecs!.ref,
-      tvecs!.ref,
-      flags,
-      criteria.cvdRef,
-      cRmsErr,
-      ffi.nullptr,
-    ),
-  );
-  final rmsErr = cRmsErr.value;
-  calloc.free(cRmsErr);
-  return (rmsErr, cameraMatrix, distCoeffs, rvecs, tvecs);
+  try {
+    cvRun(
+      () => ccalib3d.cv_calibrateCamera(
+        objectPoints.ref,
+        imagePoints.ref,
+        imageSize.cvdRef,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvecs!.ref,
+        tvecs!.ref,
+        flags,
+        criteria.cvdRef,
+        cRmsErr,
+        ffi.nullptr,
+      ),
+    );
+    final rmsErr = cRmsErr.value;
+    return (rmsErr, cameraMatrix, distCoeffs, rvecs, tvecs);
+  } finally {
+    calloc.free(cRmsErr);
+  }
 }
 
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gacd8162cfd39138d0bc29e4b53d080673
@@ -147,20 +149,23 @@ Mat convertPointsToHomogeneous(InputArray src, {OutputArray? dst}) {
   translations ??= VecMat();
   normals ??= VecMat();
   final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_decomposeHomographyMat(
-      H.ref,
-      K.ref,
-      rotations!.ref,
-      translations!.ref,
-      normals!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, rotations, translations, normals);
+  try {
+    cvRun(
+      () => ccalib3d.cv_decomposeHomographyMat(
+        H.ref,
+        K.ref,
+        rotations!.ref,
+        translations!.ref,
+        normals!.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, rotations, translations, normals);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Decomposes a projection matrix into a rotation matrix and a camera intrinsic matrix.
@@ -330,9 +335,9 @@ void drawFrameAxes(
 }) {
   out ??= Mat.empty();
   inliers ??= Mat.empty();
-  final p = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_estimateAffine3D_1(
+  final rval = cvOut(
+    calloc<ffi.Int>(),
+    (p) => ccalib3d.cv_estimateAffine3D_1(
       src.ref,
       dst.ref,
       out!.ref,
@@ -342,9 +347,8 @@ void drawFrameAxes(
       p,
       ffi.nullptr,
     ),
+    (p) => p.value,
   );
-  final rval = p.value;
-  calloc.free(p);
   return (rval, out, inliers);
 }
 
@@ -362,20 +366,21 @@ Scalar estimateChessboardSharpness(
   OutputArray? sharpness,
 }) {
   sharpness ??= Mat.empty();
-  final prval = calloc<cvg.Scalar>();
-  cvRun(
-    () => ccalib3d.cv_estimateChessboardSharpness(
-      image.ref,
-      patternSize.cvdRef,
-      corners.ref,
-      riseDistance,
-      vertical,
-      sharpness!.ref,
-      prval,
-      ffi.nullptr,
+  return Scalar.fromPointer(
+    cvCreate(
+      calloc<cvg.Scalar>(),
+      (prval) => ccalib3d.cv_estimateChessboardSharpness(
+        image.ref,
+        patternSize.cvdRef,
+        corners.ref,
+        riseDistance,
+        vertical,
+        sharpness!.ref,
+        prval,
+        ffi.nullptr,
+      ),
     ),
   );
-  return Scalar.fromPointer(prval);
 }
 
 /// Computes an optimal translation between two 3D point sets.
@@ -394,21 +399,24 @@ Scalar estimateChessboardSharpness(
   out ??= Mat.empty();
   inliers ??= Mat.empty();
   final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_estimateTranslation3D(
-      src.ref,
-      dst.ref,
-      out!.ref,
-      inliers!.ref,
-      ransacThreshold,
-      confidence,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, out, inliers);
+  try {
+    cvRun(
+      () => ccalib3d.cv_estimateTranslation3D(
+        src.ref,
+        dst.ref,
+        out!.ref,
+        inliers!.ref,
+        ransacThreshold,
+        confidence,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, out, inliers);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Filters homography decompositions based on additional information.
@@ -465,12 +473,15 @@ void filterSpeckles(
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gab8816c8a176e1d78893b843b3f01557a
 bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) regionSize) {
   final prval = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, ffi.nullptr),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return rval;
+  try {
+    cvRun(
+      () => ccalib3d.cv_find4QuadCornerSubpix(img.ref, corners.ref, regionSize.cvdRef, prval, ffi.nullptr),
+    );
+    final rval = prval.value;
+    return rval;
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// FindChessboardCorners finds the positions of internal corners of the chessboard.
@@ -485,19 +496,22 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
 }) {
   corners ??= VecPoint2f();
   final r = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_findChessboardCorners(
-      image.ref,
-      patternSize.cvdRef,
-      corners!.ptr,
-      flags,
-      r,
-      ffi.nullptr,
-    ),
-  );
-  final rval = r.value;
-  calloc.free(r);
-  return (rval, corners);
+  try {
+    cvRun(
+      () => ccalib3d.cv_findChessboardCorners(
+        image.ref,
+        patternSize.cvdRef,
+        corners!.ptr,
+        flags,
+        r,
+        ffi.nullptr,
+      ),
+    );
+    final rval = r.value;
+    return (rval, corners);
+  } finally {
+    calloc.free(r);
+  }
 }
 
 /// Finds the positions of internal corners of the chessboard using a sector based approach.
@@ -510,9 +524,9 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
   VecPoint2f? corners,
 }) {
   final corners = VecPoint2f();
-  final p = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_findChessboardCornersSB(
+  final rval = cvOut(
+    calloc<ffi.Bool>(),
+    (p) => ccalib3d.cv_findChessboardCornersSB(
       image.ref,
       patternSize.cvdRef,
       corners.ptr,
@@ -520,9 +534,8 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
       p,
       ffi.nullptr,
     ),
+    (p) => p.value,
   );
-  final rval = p.value;
-  calloc.free(p);
   return (rval, corners);
 }
 
@@ -539,20 +552,23 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
   corners ??= VecPoint2f();
   meta ??= Mat.empty();
   final b = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_findChessboardCornersSB_1(
-      image.ref,
-      patternSize.cvdRef,
-      corners!.ptr,
-      flags,
-      meta!.ref,
-      b,
-      ffi.nullptr,
-    ),
-  );
-  final rval = b.value;
-  calloc.free(b);
-  return (rval, corners, meta);
+  try {
+    cvRun(
+      () => ccalib3d.cv_findChessboardCornersSB_1(
+        image.ref,
+        patternSize.cvdRef,
+        corners!.ptr,
+        flags,
+        meta!.ref,
+        b,
+        ffi.nullptr,
+      ),
+    );
+    final rval = b.value;
+    return (rval, corners, meta);
+  } finally {
+    calloc.free(b);
+  }
 }
 
 /// Finds centers in the grid of circles.
@@ -568,12 +584,15 @@ bool find4QuadCornerSubpix(InputArray img, InputOutputArray corners, (int, int) 
 }) {
   centers ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_findCirclesGrid(image.ref, patternSize.ref, centers!.ref, flags, prval, ffi.nullptr),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, centers);
+  try {
+    cvRun(
+      () => ccalib3d.cv_findCirclesGrid(image.ref, patternSize.ref, centers!.ref, flags, prval, ffi.nullptr),
+    );
+    final rval = prval.value;
+    return (rval, centers);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -593,24 +612,25 @@ Mat findEssentialMat(
   OutputArray? mask,
 }) {
   mask ??= Mat.empty();
-  final prval = calloc<cvg.Mat>();
   pp ??= Point2d(0, 0);
-  cvRun(
-    () => ccalib3d.cv_findEssentialMat(
-      points1.ref,
-      points2.ref,
-      focal,
-      pp!.ref,
-      method,
-      prob,
-      threshold,
-      maxIters,
-      mask!.ref,
-      prval,
-      ffi.nullptr,
+  return Mat.fromPointer(
+    cvCreate(
+      calloc<cvg.Mat>(),
+      (prval) => ccalib3d.cv_findEssentialMat(
+        points1.ref,
+        points2.ref,
+        focal,
+        pp!.ref,
+        method,
+        prob,
+        threshold,
+        maxIters,
+        mask!.ref,
+        prval,
+        ffi.nullptr,
+      ),
     ),
   );
-  return Mat.fromPointer(prval);
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -629,22 +649,23 @@ Mat findEssentialMatCameraMatrix(
   OutputArray? mask,
 }) {
   mask ??= Mat.empty();
-  final prval = calloc<cvg.Mat>();
-  cvRun(
-    () => ccalib3d.cv_findEssentialMat_1(
-      points1.ref,
-      points2.ref,
-      cameraMatrix.ref,
-      method,
-      prob,
-      threshold,
-      maxIters,
-      mask!.ref,
-      prval,
-      ffi.nullptr,
+  return Mat.fromPointer(
+    cvCreate(
+      calloc<cvg.Mat>(),
+      (prval) => ccalib3d.cv_findEssentialMat_1(
+        points1.ref,
+        points2.ref,
+        cameraMatrix.ref,
+        method,
+        prob,
+        threshold,
+        maxIters,
+        mask!.ref,
+        prval,
+        ffi.nullptr,
+      ),
     ),
   );
-  return Mat.fromPointer(prval);
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -662,21 +683,22 @@ Mat findFundamentalMat(
   OutputArray? mask,
 }) {
   mask ??= Mat.empty();
-  final prval = calloc<cvg.Mat>();
-  cvRun(
-    () => ccalib3d.cv_findFundamentalMat(
-      points1.ref,
-      points2.ref,
-      method,
-      ransacReprojThreshold,
-      confidence,
-      maxIters,
-      mask!.ref,
-      prval,
-      ffi.nullptr,
+  return Mat.fromPointer(
+    cvCreate(
+      calloc<cvg.Mat>(),
+      (prval) => ccalib3d.cv_findFundamentalMat(
+        points1.ref,
+        points2.ref,
+        method,
+        ransacReprojThreshold,
+        confidence,
+        maxIters,
+        mask!.ref,
+        prval,
+        ffi.nullptr,
+      ),
     ),
   );
-  return Mat.fromPointer(prval);
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -686,12 +708,19 @@ Mat findFundamentalMat(
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#gae850fad056e407befb9e2db04dd9e509
 Mat findFundamentalMatUsac(InputArray points1, InputArray points2, UsacParams params, {OutputArray? mask}) {
   mask ??= Mat.empty();
-  final prval = calloc<cvg.Mat>();
-  cvRun(
-    () =>
-        ccalib3d.cv_findFundamentalMat_1(points1.ref, points2.ref, mask!.ref, params.ref, prval, ffi.nullptr),
+  return Mat.fromPointer(
+    cvCreate(
+      calloc<cvg.Mat>(),
+      (prval) => ccalib3d.cv_findFundamentalMat_1(
+        points1.ref,
+        points2.ref,
+        mask!.ref,
+        params.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    ),
   );
-  return Mat.fromPointer(prval);
 }
 
 /// FindHomography finds an optimal homography matrix using 4 or more point pairs (as opposed to GetPerspectiveTransform, which uses exactly 4)
@@ -732,12 +761,19 @@ Mat findHomography(
 /// https://docs.opencv.org/4.11.0/d9/d0c/group__calib3d.html#ga4b3841447530523e5272ec05c5d1e411
 Mat findHomographyUsac(InputArray srcPoints, InputArray dstPoints, UsacParams params, {OutputArray? mask}) {
   mask ??= Mat.empty();
-  final prval = calloc<cvg.Mat>();
-  cvRun(
-    () =>
-        ccalib3d.cv_findHomography_1(srcPoints.ref, dstPoints.ref, mask!.ref, params.ref, prval, ffi.nullptr),
+  return Mat.fromPointer(
+    cvCreate(
+      calloc<cvg.Mat>(),
+      (prval) => ccalib3d.cv_findHomography_1(
+        srcPoints.ref,
+        dstPoints.ref,
+        mask!.ref,
+        params.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    ),
   );
-  return Mat.fromPointer(prval);
 }
 
 /// Returns the default new camera matrix.
@@ -840,24 +876,27 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
   map1 ??= Mat.empty();
   map2 ??= Mat.empty();
   final prval = calloc<ffi.Float>();
-  cvRun(
-    () => ccalib3d.cv_initWideAngleProjMap(
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      imageSize.ref,
-      destImageWidth,
-      m1type,
-      map1!.ref,
-      map2!.ref,
-      projType,
-      alpha,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, map1, map2);
+  try {
+    cvRun(
+      () => ccalib3d.cv_initWideAngleProjMap(
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        imageSize.ref,
+        destImageWidth,
+        m1type,
+        map1!.ref,
+        map2!.ref,
+        projType,
+        alpha,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, map1, map2);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Computes partial derivatives of the matrix product for each multiplied matrix.
@@ -921,23 +960,26 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
   mask ??= Mat.empty();
   pp ??= Point2d(0, 0);
   final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_recoverPose_1(
-      E.ref,
-      points1.ref,
-      points2.ref,
-      R!.ref,
-      t!.ref,
-      focal,
-      pp!.ref,
-      mask!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, R, t);
+  try {
+    cvRun(
+      () => ccalib3d.cv_recoverPose_1(
+        E.ref,
+        points1.ref,
+        points2.ref,
+        R!.ref,
+        t!.ref,
+        focal,
+        pp!.ref,
+        mask!.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, R, t);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 // Recovers the relative camera rotation and the translation from an estimated essential matrix and the corresponding points in two images, using chirality check. Returns the number of inliers that pass the check.
@@ -961,24 +1003,27 @@ Mat getDefaultNewCameraMatrix(InputArray cameraMatrix, {Size? imgsize, bool cent
   mask ??= Mat.empty();
   triangulatedPoints ??= Mat.empty();
   final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_recoverPose(
-      E.ref,
-      points1.ref,
-      points2.ref,
-      cameraMatrix.ref,
-      R!.ref,
-      t!.ref,
-      distanceThresh,
-      mask!.ref,
-      triangulatedPoints!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, R, t, triangulatedPoints);
+  try {
+    cvRun(
+      () => ccalib3d.cv_recoverPose(
+        E.ref,
+        points1.ref,
+        points2.ref,
+        cameraMatrix.ref,
+        R!.ref,
+        t!.ref,
+        distanceThresh,
+        mask!.ref,
+        triangulatedPoints!.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, R, t, triangulatedPoints);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 // void cv::reprojectImageTo3D (InputArray disparity, OutputArray _3dImage, InputArray Q, bool handleMissingValues=false, int ddepth=-1)
@@ -1063,22 +1108,25 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
   rvecs ??= VecMat();
   tvecs ??= VecMat();
   final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_solveP3P(
-      objectPoints.ref,
-      imagePoints.ref,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvecs!.ptr,
-      tvecs!.ptr,
-      flags,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, rvecs, tvecs);
+  try {
+    cvRun(
+      () => ccalib3d.cv_solveP3P(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvecs!.ptr,
+        tvecs!.ptr,
+        flags,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, rvecs, tvecs);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
@@ -1097,23 +1145,26 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
   rvec ??= Mat.empty();
   tvec ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_solvePnP(
-      objectPoints.ref,
-      imagePoints.ref,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvec!.ref,
-      tvec!.ref,
-      useExtrinsicGuess,
-      flags,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, rvec, tvec);
+  try {
+    cvRun(
+      () => ccalib3d.cv_solvePnP(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        useExtrinsicGuess,
+        flags,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, rvec, tvec);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
@@ -1138,26 +1189,29 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
   tvec ??= Mat.empty();
   reprojectionError ??= Mat.empty();
   final prval = calloc<ffi.Int>();
-  cvRun(
-    () => ccalib3d.cv_solvePnPGeneric(
-      objectPoints.ref,
-      imagePoints.ref,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvecs!.ptr,
-      tvecs!.ptr,
-      useExtrinsicGuess,
-      flags,
-      rvec!.ref,
-      tvec!.ref,
-      reprojectionError!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, rvecs, tvecs, reprojectionError);
+  try {
+    cvRun(
+      () => ccalib3d.cv_solvePnPGeneric(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvecs!.ptr,
+        tvecs!.ptr,
+        useExtrinsicGuess,
+        flags,
+        rvec!.ref,
+        tvec!.ref,
+        reprojectionError!.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, rvecs, tvecs, reprojectionError);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
@@ -1181,27 +1235,30 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
   tvec ??= Mat.empty();
   inliers ??= Mat.empty();
   final prval = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_solvePnPRansac(
-      objectPoints.ref,
-      imagePoints.ref,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvec!.ref,
-      tvec!.ref,
-      useExtrinsicGuess,
-      iterationsCount,
-      reprojectionError,
-      confidence,
-      inliers!.ref,
-      flags,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, rvec, tvec, inliers);
+  try {
+    cvRun(
+      () => ccalib3d.cv_solvePnPRansac(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        useExtrinsicGuess,
+        iterationsCount,
+        reprojectionError,
+        confidence,
+        inliers!.ref,
+        flags,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, rvec, tvec, inliers);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
@@ -1222,23 +1279,26 @@ double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F) =>
   inliers ??= Mat.empty();
   params ??= UsacParams();
   final prval = calloc<ffi.Bool>();
-  cvRun(
-    () => ccalib3d.cv_solvePnPRansac_1(
-      objectPoints.ref,
-      imagePoints.ref,
-      cameraMatrix.ref,
-      distCoeffs.ref,
-      rvec!.ref,
-      tvec!.ref,
-      inliers!.ref,
-      params!.ref,
-      prval,
-      ffi.nullptr,
-    ),
-  );
-  final rval = prval.value;
-  calloc.free(prval);
-  return (rval, rvec, tvec, inliers);
+  try {
+    cvRun(
+      () => ccalib3d.cv_solvePnPRansac_1(
+        objectPoints.ref,
+        imagePoints.ref,
+        cameraMatrix.ref,
+        distCoeffs.ref,
+        rvec!.ref,
+        tvec!.ref,
+        inliers!.ref,
+        params!.ref,
+        prval,
+        ffi.nullptr,
+      ),
+    );
+    final rval = prval.value;
+    return (rval, rvec, tvec, inliers);
+  } finally {
+    calloc.free(prval);
+  }
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the

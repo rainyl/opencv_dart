@@ -44,7 +44,7 @@ Future<void> arucoDrawDetectedMarkersAsync(
   VecI32 markerIds,
   Scalar borderColor, {
   Duration? timeout,
-}) async {
+}) {
   return cvRunAsync0(
     (callback) => ccontrib.cv_aruco_drawDetectedMarkers(
       img.ref,

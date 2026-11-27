@@ -3,9 +3,9 @@
 
 // Sync vs async: what the worker thread costs and what it buys.
 //
-//   dart run test/perf_async.dart
+//   dart run test/misc/perf_async.dart
 //
-// Like test/perf_mat.dart, this is a manual script: it is not named `*_test.dart`, so `dart test`
+// Like test/misc/perf_mat.dart, this is a manual script: it is not named `*_test.dart`, so `dart test`
 // does not pick it up.
 //
 // Both sides run the same OpenCV call on the same preallocated destination, so the difference is the

@@ -41,16 +41,7 @@ class Mat extends CvStruct<cvg.Mat> {
   factory Mat._create(
     int? externalSize,
     ffi.Pointer<cvg.CvStatus> Function(ffi.Pointer<cvg.Mat> p) create,
-  ) {
-    final p = calloc<cvg.Mat>();
-    try {
-      cvRun(() => create(p));
-    } catch (_) {
-      calloc.free(p);
-      rethrow;
-    }
-    return Mat._(p, externalSize: externalSize);
-  }
+  ) => Mat._(cvCreate(calloc<cvg.Mat>(), create), externalSize: externalSize);
 
   //SECTION - Constructors
 
@@ -1202,7 +1193,13 @@ class Mat extends CvStruct<cvg.Mat> {
   (Size wholeSize, Point ofs) locateROI() {
     final pWholeSize = calloc<cvg.CvSize>();
     final pOfs = calloc<cvg.CvPoint>();
-    cvRun(() => ccore.cv_Mat_locateROI(ref, pWholeSize, pOfs, ffi.nullptr));
+    try {
+      cvRun(() => ccore.cv_Mat_locateROI(ref, pWholeSize, pOfs, ffi.nullptr));
+    } catch (_) {
+      calloc.free(pWholeSize);
+      calloc.free(pOfs);
+      rethrow;
+    }
     return (Size.fromPointer(pWholeSize), Point.fromPointer(pOfs));
   }
 
@@ -1394,11 +1391,14 @@ class Mat extends CvStruct<cvg.Mat> {
   }
 
   Scalar mean({Mat? mask}) {
-    final s = calloc<cvg.Scalar>();
-    mask == null
-        ? cvRun(() => ccore.cv_Mat_mean(ref, s, ffi.nullptr))
-        : cvRun(() => ccore.cv_Mat_mean_1(ref, mask.ref, s, ffi.nullptr));
-    return Scalar.fromPointer(s);
+    return Scalar.fromPointer(
+      cvCreate(
+        calloc<cvg.Scalar>(),
+        (s) => mask == null
+            ? ccore.cv_Mat_mean(ref, s, ffi.nullptr)
+            : ccore.cv_Mat_mean_1(ref, mask.ref, s, ffi.nullptr),
+      ),
+    );
   }
 
   /// Calculates standard deviation, per channel.
@@ -1406,9 +1406,13 @@ class Mat extends CvStruct<cvg.Mat> {
   /// [Scalar] order is same as [Mat], i.e., BGR -> BGR
   Scalar stdDev() {
     final mean = calloc<cvg.Scalar>();
-    final sd = calloc<cvg.Scalar>();
-    cvRun(() => ccore.cv_meanStdDev(ref, mean, sd, ffi.nullptr));
-    return Scalar.fromPointer(sd);
+    try {
+      return Scalar.fromPointer(
+        cvCreate(calloc<cvg.Scalar>(), (sd) => ccore.cv_meanStdDev(ref, mean, sd, ffi.nullptr)),
+      );
+    } finally {
+      calloc.free(mean);
+    }
   }
 
   /// Similar to [stdDev]
@@ -1424,9 +1428,7 @@ class Mat extends CvStruct<cvg.Mat> {
 
   /// Sum calculates the per-channel pixel sum of an image.
   Scalar sum() {
-    final s = calloc<cvg.Scalar>();
-    cvRun(() => ccore.cv_sum(ref, s, ffi.nullptr));
-    return Scalar.fromPointer(s);
+    return Scalar.fromPointer(cvCreate(calloc<cvg.Scalar>(), (s) => ccore.cv_sum(ref, s, ffi.nullptr)));
   }
 
   /// PatchNaNs converts NaN's to zeros.
@@ -1524,15 +1526,16 @@ class Mat extends CvStruct<cvg.Mat> {
     int f64Precision = 16,
     bool multiLine = true,
   }) {
-    final p = calloc<ffi.Pointer<ffi.Char>>();
-    cvRun(
-      () => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p),
+    final rval = cvOut(
+      calloc<ffi.Pointer<ffi.Char>>(),
+      (p) => ccore.cv_Mat_toFmtString(ref, fmtType, f16Precision, f32Precision, f64Precision, multiLine, p),
+      (p) {
+        // The string lives outside the out-parameter block: copy it, then free it.
+        final rval = p.value.toDartString();
+        if (p.value != ffi.nullptr) calloc.free(p.value);
+        return rval;
+      },
     );
-    final rval = p.value.toDartString();
-    if (p.value != ffi.nullptr) {
-      calloc.free(p.value);
-    }
-    calloc.free(p);
     return rval;
   }
 
